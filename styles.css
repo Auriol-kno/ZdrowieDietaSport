@@ -179,3 +179,4 @@ body { padding-bottom: 116px; }
 .col { padding: 8px 5px; }
 .col .pill { padding: 6px 6px; font-size: 11px; line-height: 14px; }
 main:has(.cols3) { padding-left: 8px; padding-right: 8px; }
+.chip.we { background: #f1e6e6; color: #8a5656; }

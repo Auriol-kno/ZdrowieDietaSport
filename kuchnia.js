@@ -105,6 +105,26 @@ function stepsHtml(r) {
     (k.dev ? `<div class="row wrap"><span class="pill dev">${DEV[k.dev]}</span>${k.p ? `<strong>${esc(k.p)}</strong>` : ''}</div>` : '') + '</li>').join('') + '</ol>';
 }
 
+function planBox(r, defMeal) {
+  const pm = ku.pm || defMeal, pd = ku.pd || (ku.target ? ku.target.day : dayKey());
+  const t = dayKey();
+  const quick = [];
+  for (let n = 0; n < 7; n++) {
+    const iso = ZdsRecipes.dayAfter(t, n);
+    quick.push([iso, n === 0 ? 'Dziś' : n === 1 ? 'Jutro' : DAYN[new Date(iso + 'T12:00:00').getDay()] + ' ' + iso.slice(8) + '.' + iso.slice(5, 7)]);
+  }
+  const mn = (MEALS.find((m) => m[0] === pm) || [])[1] || '';
+  const dn = (quick.find((q) => q[0] === pd) || [0, pd.slice(8) + '.' + pd.slice(5, 7)])[1];
+  const plural = ku.port === 1 ? 'porcję' : ku.port < 5 ? 'porcje' : 'porcji';
+  return '<div class="card planadd"><h2>Dodaj do planu</h2><div class="muted">Posiłek</div><div class="chips scroll">' +
+    MEALS.map((m) => `<button type="button" class="chip" data-action="k-pm" data-v="${m[0]}" aria-pressed="${m[0] === pm}">${m[1]}</button>`).join('') +
+    '</div><div class="muted">Dzień</div><div class="chips scroll">' +
+    quick.map((q) => `<button type="button" class="chip${isWeekend(q[0]) ? ' we' : ''}" data-action="k-pd" data-v="${q[0]}" aria-pressed="${q[0] === pd}">${q[1]}</button>`).join('') +
+    '</div><div class="field"><label for="pday" class="muted">Inny dzień</label>' +
+    `<input type="date" id="pday" value="${esc(pd)}"></div>` +
+    `<button type="button" data-action="k-plan-add">Dodaj ${ku.port} ${plural}: ${esc(mn)}, ${esc(dn)}</button></div>`;
+}
+
 function viewRecipe() {
   const r = rget(ku.rid);
   if (!r) { ku.rid = null; return viewRecipes(); }
@@ -115,15 +135,9 @@ function viewRecipe() {
   const mealOpts = (sel) => MEALS.map((m) => `<option value="${m[0]}"${m[0] === sel ? ' selected' : ''}>${m[1]}</option>`).join('');
   let h = '<button type="button" class="ghost small" data-action="k-back">← Wszystkie przepisy</button>' +
     `<h1>${esc(r.name)}</h1>` + (flash ? `<div class="note">${esc(flash)}</div>` : '');
-  if (!kid) {
-    h += '<div class="card planadd"><h2>Dodaj do planu</h2><div class="grid">' +
-      `<div class="field"><label for="pday" class="muted">Dzień</label><input type="date" id="pday" value="${esc(ku.target ? ku.target.day : dayKey())}"></div>` +
-      `<div class="field"><label for="pmeal" class="muted">Posiłek</label><select id="pmeal">${mealOpts(defMeal)}</select></div></div>` +
-      `<button type="button" data-action="k-plan-add">Dodaj ${ku.port} ${ku.port === 1 ? 'porcję' : ku.port < 5 ? 'porcje' : 'porcji'} do planu</button></div>`;
-  }
   h += `<p class="muted">${esc(r.opis || '')}</p>` +
     `<div class="row wrap">${pillSt(c.st)}${devPills(r)}<span class="muted">${r.czas} min${!kid && r.kcal ? ' · ok. ' + r.kcal + ' kcal na porcję (szac.)' : ''}</span></div>` +
-    banner(c) +
+    banner(c) + (kid ? '' : planBox(r, defMeal)) +
     `<div class="card"><div class="row sb"><h2>Składniki</h2><div class="row"><button type="button" class="small ghost" data-action="k-port" data-d="-1" aria-label="Mniej porcji">−</button>` +
     `<strong>${ku.port} ${ku.port === 1 ? 'porcja' : ku.port < 5 ? 'porcje' : 'porcji'}</strong><button type="button" class="small ghost" data-action="k-port" data-d="1" aria-label="Więcej porcji">+</button></div></div>` +
     ingList(r, c) + '</div>' +
@@ -361,7 +375,7 @@ function kAction(a, t) {
     case 'k-open': {
       const r = rget(t.dataset.id);
       if (!r) return;
-      ku.rid = r.id; ku.cook = null; ku.port = r.porcje; tab = 'przepisy'; top(); break;
+      ku.rid = r.id; ku.cook = null; ku.port = r.porcje; ku.pm = null; ku.pd = null; tab = 'przepisy'; top(); break;
     }
     case 'k-back': ku.rid = null; top(); break;
     case 'k-untarget': ku.target = null; break;
@@ -372,12 +386,14 @@ function kAction(a, t) {
     case 'k-cook-exit': ku.cook = null; ku.timer = null; wakeOff(); top(); break;
     case 'k-timer': ku.timer = { rid: ku.cook.rid, i: ku.cook.i, end: Date.now() + Number(t.dataset.s) * 1000, done: false }; break;
     case 'k-timer-stop': ku.timer = null; break;
+    case 'k-pm': ku.pm = t.dataset.v; break;
+    case 'k-pd': ku.pd = t.dataset.v; break;
     case 'k-plan-add': {
-      const dayv = $('#pday').value || dayKey();
-      const key = dayv + '|' + $('#pmeal').value;
+      const dayv = $('#pday').value || ku.pd || dayKey();
+      const key = dayv + '|' + (ku.pm || (ku.target && ku.target.meal) || (rget(ku.rid).posilki[0]) || 'ii');
       (state.plan[key] = state.plan[key] || []).push({ rid: ku.rid, portions: ku.port });
-      ku.sel = dayv; ku.month = dayv.slice(0, 7);
-      if (ku.target) { ku.target = null; ku.rid = null; tab = 'plan'; top(); } else ku.flash = 'Dodano do planu.';
+      ku.sel = dayv; ku.month = dayv.slice(0, 7); ku.pm = null; ku.pd = null;
+      if (ku.target) { ku.target = null; ku.rid = null; tab = 'plan'; top(); } else { top(); ku.flash = 'Dodano do planu: ' + dayv.slice(8) + '.' + dayv.slice(5, 7) + '.'; }
       save(); break;
     }
     case 'k-plan-rm': {

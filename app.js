@@ -318,6 +318,7 @@ document.addEventListener('input', (e) => {
 
 document.addEventListener('change', (e) => {
   if (e.target.id === 'profile') { state.current = e.target.value; save(); return render(); }
+  if (e.target.id === 'pday' && e.target.value) { ku.pd = e.target.value; return render(); }
   if (e.target.id === 'ccat') { chk.cat = e.target.value; return render(); }
   if (e.target.id === 'rdev') { ku.dev = e.target.value; return render(); }
   if (e.target.id === 'rmeal') { ku.meal = e.target.value; return render(); }
