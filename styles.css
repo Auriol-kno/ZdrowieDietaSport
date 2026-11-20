@@ -126,3 +126,17 @@ details summary { cursor: pointer; font-weight: 700; }
 @media (prefers-reduced-motion: reduce) { * { transition: none !important; } }
 .widget .row { gap: 8px; }
 .widget .row button { white-space: nowrap; padding: 0 12px; }
+
+/* Większe pola dotyku: min. 44 px, główne przyciski 52 px */
+button { min-height: 52px; padding: 0 22px; }
+button.small { min-height: 46px; min-width: 46px; padding: 0 16px; }
+.chip { min-height: 46px; padding: 0 18px; }
+.chk { width: 48px; min-height: 48px; }
+.tabs { padding: 8px; }
+.tabs button { min-height: 66px; padding: 0 2px; }
+.linkish { min-height: 44px; padding: 8px 0; display: inline-flex; align-items: center; }
+.meal li, .drinklist li, .ing li { min-height: 48px; }
+.shop { padding: 10px 0; }
+.row, .chips { gap: 12px; }
+select, input[type=text], input[type=number], input[type=email] { min-height: 52px; }
+body { padding-bottom: 116px; }
