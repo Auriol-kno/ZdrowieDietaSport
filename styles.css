@@ -9,7 +9,7 @@ body { margin: 0; background: var(--bg); color: var(--ink); font: 16px/1.5 Inter
 .top { position: sticky; top: 0; z-index: 2; background: var(--bg); border-bottom: 1px solid var(--line); }
 .top-row { display: flex; gap: 8px; max-width: 640px; margin: 0 auto; padding: 10px 16px; }
 select, input, button { font: inherit; color: inherit; }
-select, input[type=text], input[type=number] { min-height: 44px; padding: 0 12px; border: 1px solid #c9c3b4; border-radius: 12px; background: #fff; }
+select, input[type=text], input[type=number], input[type=email] { min-height: 44px; padding: 0 12px; border: 1px solid #c9c3b4; border-radius: 12px; background: #fff; }
 #profile { flex: 1; font-weight: 600; }
 button { min-height: 44px; border: 0; border-radius: 12px; padding: 0 16px; font-weight: 600; cursor: pointer; background: var(--green); color: #fff; }
 button.ghost { background: #fff; color: var(--ink); border: 1px solid #c9c3b4; }

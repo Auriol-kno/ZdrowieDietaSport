@@ -26,13 +26,15 @@ function defaults() {
     current: f.id,
     pin: '',
     days: {},
+    synced: {},
+    fam: null,
   };
 }
 
 function load() {
   try {
     const s = JSON.parse(localStorage.getItem(KEY));
-    if (s && Array.isArray(s.profiles) && s.profiles.length) return s;
+    if (s && Array.isArray(s.profiles) && s.profiles.length) { s.synced = s.synced || {}; s.fam = s.fam || null; return s; }
   } catch (e) { /* brak danych lub pamięć niedostępna */ }
   return defaults();
 }
@@ -42,8 +44,13 @@ let parent = false;
 let tab = 'dzis';
 let rules = { kategorie: [] };
 
-function save() {
+let syncTimer = null;
+function save(noSync) {
   try { localStorage.setItem(KEY, JSON.stringify(state)); } catch (e) { /* pamięć niedostępna */ }
+  if (!noSync && state.fam && typeof ZdsSync !== 'undefined' && ZdsSync.enabled()) {
+    clearTimeout(syncTimer);
+    syncTimer = setTimeout(() => runSync(true), 4000);
+  }
 }
 
 const cur = () => state.profiles.find((p) => p.id === state.current) || state.profiles[0];
@@ -159,12 +166,11 @@ function viewProfiles() {
     html += `<div class="card" data-pid="${p.id}"><div class="grid">` +
       `<div class="field"><label for="pn-${p.id}">Imię</label><input type="text" id="pn-${p.id}" data-field="name" value="${esc(p.name)}"></div>` +
       `<div class="field"><label for="pr-${p.id}">Rola</label><select id="pr-${p.id}" data-field="role">` +
-      ['dziecko', 'dorosły'].map((r) => `<option${r === p.role ? ' selected' : ''}>${r}</option>`).join('') + '</select></div>' +
+      ['dziecko', 'dorosły', 'rodzic'].map((r) => `<option${r === p.role ? ' selected' : ''}>${r}</option>`).join('') + '</select></div>' +
       `<div class="field"><label for="pk-${p.id}">Cel kcal (0 = brak)</label><input type="number" id="pk-${p.id}" data-field="kcal" min="0" value="${p.kcal}"></div>` +
       `<div class="field"><span>&nbsp;</span><button type="button" class="ghost" data-action="rm-profile" data-id="${p.id}">Usuń profil</button></div></div></div>`;
   }
-  html += '<button type="button" data-action="add-profile">Dodaj profil</button>' +
-    '<div class="note">Synchronizacja między telefonami: wkrótce. Na razie dane są tylko na tym urządzeniu.</div>';
+  html += '<button type="button" data-action="add-profile">Dodaj profil</button>' + syncCard();
   return html;
 }
 
@@ -202,7 +208,9 @@ document.addEventListener('click', (e) => {
   if (t.dataset.tab) { tab = t.dataset.tab; return render(); }
   const a = t.dataset.action;
   if (!a) return;
+  if (a.startsWith('sync-')) return syncAction(a);
   const d = day();
+  if (['water', 'done', 'del'].includes(a)) d.u = Date.now();
   if (a === 'water') d.water = Math.max(0, d.water + Number(t.dataset.d));
   else if (a === 'done') { const m = meal(d, t.dataset.meal); m.done = !m.done; }
   else if (a === 'del') meal(d, t.dataset.meal).items.splice(Number(t.dataset.i), 1);
@@ -210,6 +218,8 @@ document.addEventListener('click', (e) => {
   else if (a === 'rm-profile') {
     if (state.profiles.length < 2) return alert('Musi zostać co najmniej jeden profil.');
     if (!confirm('Usunąć ten profil?')) return;
+    const gone = state.profiles.find((p) => p.id === t.dataset.id);
+    if (gone && gone.remoteId && state.fam && state.fam.role === 'rodzic') ZdsSync.removeMember(gone.remoteId).catch(() => {});
     state.profiles = state.profiles.filter((p) => p.id !== t.dataset.id);
     if (state.current === t.dataset.id) state.current = state.profiles[0].id;
   }
@@ -223,7 +233,9 @@ document.addEventListener('submit', (e) => {
   const name = f.querySelector('input[type=text]').value.trim();
   const kcal = f.querySelector('input[type=number]').value;
   if (!name) return;
-  meal(day(), f.dataset.meal).items.push({ name, kcal: kcal === '' ? 0 : Number(kcal) });
+  const d = day();
+  meal(d, f.dataset.meal).items.push({ name, kcal: kcal === '' ? 0 : Number(kcal) });
+  d.u = Date.now();
   save(); render();
 });
 
@@ -239,8 +251,127 @@ document.addEventListener('change', (e) => {
     const f = e.target.dataset.field;
     p[f] = f === 'kcal' ? Math.max(0, Number(e.target.value) || 0) : e.target.value.trim() || p[f];
     save(); render();
+    if (p.remoteId && state.fam && state.fam.role === 'rodzic') ZdsSync.pushMember(state.fam.id, p).catch(() => {});
   }
 });
+
+// ---------- synchronizacja (Supabase) ----------
+const su = { session: false, msg: '', err: false, busy: false, preview: null, code: '' };
+
+function syncCard() {
+  if (typeof ZdsSync === 'undefined' || !ZdsSync.enabled()) {
+    return '<div class="card"><h2>Synchronizacja</h2><p class="muted">Wyłączona: wpisz adres i klucz Supabase w pliku config.js. Do tego czasu dane są tylko na tym urządzeniu.</p></div>';
+  }
+  let h = '<div class="card"><h2>Synchronizacja</h2>';
+  if (su.msg) h += `<p class="note${su.err ? ' warn' : ''}">${esc(su.msg)}</p>`;
+  if (!su.session) {
+    h += '<div class="field"><label for="s-email">E-mail</label><input type="email" id="s-email" autocomplete="email"></div>' +
+      '<p class="muted">Wyślemy link logowania. Bez hasła.</p><button type="button" data-action="sync-login">Wyślij link logowania</button>';
+  } else if (!state.fam) {
+    h += '<p class="muted">Wpisz swoje imię tak samo jak w profilu powyżej, wtedy profile się połączą.</p>' +
+      '<h2>Utwórz rodzinę</h2><div class="grid">' +
+      '<div class="field"><label for="s-fam">Nazwa rodziny</label><input type="text" id="s-fam"></div>' +
+      '<div class="field"><label for="s-me">Twoje imię</label><input type="text" id="s-me"></div></div>' +
+      '<button type="button" data-action="sync-create">Utwórz</button>' +
+      '<h2>Dołącz kodem</h2><div class="field"><label for="s-code">Kod zaproszenia</label><input type="text" id="s-code" autocapitalize="characters" value="' + esc(su.code) + '"></div>' +
+      '<button type="button" class="ghost" data-action="sync-preview">Dalej</button>';
+    if (su.preview) {
+      h += '<div class="field"><label for="s-claim">To jestem ja</label><select id="s-claim">' +
+        su.preview.map((m) => `<option value="${esc(m.member_id)}">${esc(m.name)} (${esc(m.role)})</option>`).join('') +
+        '<option value="">Nowa osoba</option></select></div>' +
+        '<div class="field"><label for="s-me2">Imię (dla nowej osoby)</label><input type="text" id="s-me2"></div>' +
+        '<button type="button" data-action="sync-join">Dołącz</button>';
+    }
+  } else {
+    h += `<p class="muted">Rodzina: <strong>${esc(state.fam.name || '')}</strong> · rola: ${esc(state.fam.role)}</p>` +
+      '<div class="row"><button type="button" data-action="sync-now">Synchronizuj teraz</button>' +
+      '<button type="button" class="ghost" data-action="sync-out">Wyloguj</button></div>';
+    if (state.fam.role === 'rodzic') {
+      h += '<div class="row" style="margin-top:8px"><button type="button" class="small ghost" data-action="sync-code">Pokaż kod zaproszenia</button>' +
+        '<button type="button" class="small ghost" data-action="sync-newcode">Nowy kod</button></div>';
+    }
+  }
+  return h + '</div>';
+}
+
+async function runSync(silent) {
+  if (su.busy || !state.fam) return;
+  su.busy = true;
+  try {
+    await ZdsSync.init();
+    const r = await ZdsSync.syncAll(state.fam.id, state.fam.role, { state, mkId: uid });
+    save(true);
+    if (!silent) { su.msg = `Zsynchronizowano: wysłano ${r.pushed}, pobrano ${r.pulled}.`; su.err = false; }
+  } catch (e) {
+    su.msg = 'Synchronizacja nie powiodła się: ' + e.message; su.err = true;
+  }
+  su.busy = false;
+  const ae = document.activeElement;
+  if (!(silent && ae && ae.closest && ae.closest('#view') && /INPUT|SELECT/.test(ae.tagName))) render();
+}
+
+const val = (id) => { const el = document.getElementById(id); return el ? el.value.trim() : ''; };
+
+async function setMembership() {
+  const m = await ZdsSync.myMembership();
+  if (m) state.fam = { id: m.family_id, role: m.role, name: m.families && m.families.name };
+  save(true);
+}
+
+async function syncAction(a) {
+  try {
+    if (a === 'sync-login') {
+      const email = val('s-email');
+      if (!email) throw new Error('Wpisz e-mail.');
+      await ZdsSync.signIn(email);
+      su.msg = 'Wysłano link logowania na ' + email + '. Otwórz go na tym telefonie.'; su.err = false;
+    } else if (a === 'sync-create') {
+      const fam = val('s-fam'), me = val('s-me');
+      if (!fam || !me) throw new Error('Wpisz nazwę rodziny i swoje imię.');
+      await ZdsSync.createFamily(fam, me);
+      await setMembership();
+      su.msg = 'Rodzina utworzona.'; su.err = false;
+      await runSync(true);
+    } else if (a === 'sync-preview') {
+      su.code = val('s-code');
+      if (!su.code) throw new Error('Wpisz kod zaproszenia.');
+      su.preview = await ZdsSync.familyPreview(su.code);
+      su.msg = su.preview.length ? '' : 'Brak wolnych profili. Możesz dołączyć jako nowa osoba (wybierz „Nowa osoba").'; su.err = false;
+      if (!su.preview.length) su.preview = [];
+    } else if (a === 'sync-join') {
+      const claim = val('s-claim'), name = val('s-me2');
+      if (!claim && !name) throw new Error('Wpisz imię nowej osoby.');
+      await ZdsSync.joinFamily(su.code, name, claim || null);
+      await setMembership();
+      su.preview = null; su.msg = 'Dołączono do rodziny.'; su.err = false;
+      await runSync(true);
+    } else if (a === 'sync-code') {
+      su.msg = 'Kod zaproszenia: ' + await ZdsSync.inviteCode(state.fam.id); su.err = false;
+    } else if (a === 'sync-newcode') {
+      if (!confirm('Stary kod przestanie działać. Wygenerować nowy?')) return;
+      su.msg = 'Nowy kod zaproszenia: ' + await ZdsSync.newInviteCode(state.fam.id); su.err = false;
+    } else if (a === 'sync-now') {
+      return runSync(false);
+    } else if (a === 'sync-out') {
+      await ZdsSync.signOut();
+      state.fam = null; su.session = false; su.msg = 'Wylogowano. Dane lokalne zostały na telefonie.'; su.err = false; save(true);
+    }
+  } catch (e) {
+    su.msg = e.message; su.err = true;
+  }
+  render();
+}
+
+async function initSync() {
+  if (typeof ZdsSync === 'undefined' || !ZdsSync.enabled()) return;
+  try {
+    await ZdsSync.init();
+    su.session = Boolean(await ZdsSync.session());
+    if (su.session && !state.fam) await setMembership();
+    if (su.session && state.fam) await runSync(true);
+  } catch (e) { /* brak sieci: działamy lokalnie */ }
+  render();
+}
 
 async function init() {
   try {
@@ -248,8 +379,9 @@ async function init() {
     rules = await r.json();
   } catch (e) { /* offline bez cache: wyszukiwarka pusta */ }
   render();
+  initSync();
   if ('serviceWorker' in navigator) navigator.serviceWorker.register('sw.js').catch(() => {});
 }
 
 if (typeof document !== 'undefined' && document.getElementById('view')) init();
-if (typeof module !== 'undefined') module.exports = { norm, searchRules, setRules: (r) => { rules = r; } };
+if (typeof module !== 'undefined') module.exports = { norm, searchRules, setRules: (r) => { rules = r; }, syncCard, su, getState: () => state };
