@@ -171,3 +171,11 @@ body { padding-bottom: 116px; }
 .grid > .field { min-width: 0; }
 .grid > .field input, .grid > .field select { width: 100%; min-width: 0; }
 .col .pill { border-radius: 12px; overflow-wrap: break-word; hyphens: auto; font-size: 11.5px; }
+/* Sprawdź: pastylki nie mogą się zgniatać ani nakładać */
+.col .pills { display: block; }
+.col .pill { display: block; flex: none; height: auto; min-height: 0; margin: 0 0 6px; padding: 7px 9px; font-size: 12px; line-height: 16px; font-weight: 600; hyphens: none; overflow-wrap: break-word; word-break: normal; text-align: left; }
+.col .pill > span[aria-hidden] { display: none; }
+.cols3 { gap: 6px; }
+.col { padding: 8px 5px; }
+.col .pill { padding: 6px 6px; font-size: 11px; line-height: 14px; }
+main:has(.cols3) { padding-left: 8px; padding-right: 8px; }
