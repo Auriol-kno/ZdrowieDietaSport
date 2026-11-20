@@ -204,10 +204,13 @@ function colsHtml() {
     if (chk.cat && c.nazwa !== chk.cat) continue;
     for (const [st, key] of KEYS) for (const it of c[key]) if (!nq || norm(it).includes(nq)) cols[st].push(it);
   }
+  const top = state.chkTop || [];
+  const rank = (it) => { const i = top.indexOf(it); return i < 0 ? 1e9 : i; };
+  for (const k of Object.keys(cols)) cols[k] = cols[k].map((it, i) => [it, i]).sort((a, b) => rank(a[0]) - rank(b[0]) || a[1] - b[1]).map((x) => x[0]);
   const L = kid ? { ok: 'Można', lim: 'Czasem i mało', no: 'Nie teraz' } : { ok: 'Można', lim: 'Z ograniczeniami', no: 'Nie można' };
   return '<div class="cols3">' + ['ok', 'lim', 'no'].map((st) =>
     `<section class="col ${st}" aria-label="${L[st]}"><h2><span aria-hidden="true">${MARK[st]}</span> ${L[st]} <span class="muted">${cols[st].length}</span></h2>` +
-    `<div class="pills">${cols[st].map((it) => `<span class="pill ${st} tiny">${esc(cap(it))}</span>`).join('') || '<span class="muted">–</span>'}</div></section>`).join('') + '</div>';
+    `<div class="pills">${cols[st].map((it) => `<button type="button" class="pill ${st} tiny" data-action="chk-top" data-it="${esc(it)}" aria-pressed="${(state.chkTop || []).includes(it)}">${esc(cap(it))}</button>`).join('') || '<span class="muted">–</span>'}</div></section>`).join('') + '</div>';
 }
 function viewCheck() {
   return '<h1>Czy mogę to zjeść?</h1><div class="grid">' +
@@ -285,6 +288,12 @@ document.addEventListener('click', (e) => {
   if (a === 'water') d.water = Math.max(0, d.water + Number(t.dataset.d));
   else if (a === 'done') { const m = meal(d, t.dataset.meal); m.done = !m.done; }
   else if (a === 'del') meal(d, t.dataset.meal).items.splice(Number(t.dataset.i), 1);
+  else if (a === 'chk-top') {
+    const it = t.dataset.it; state.chkTop = [it].concat((state.chkTop || []).filter((x) => x !== it)).slice(0, 30);
+    save(true); $('#cols').innerHTML = colsHtml();
+    document.querySelectorAll('#cols .pills').forEach((p) => { p.scrollTop = 0; });
+    return;
+  }
   else if (a === 'pick-profile') { state.current = t.dataset.id; addOpen = null; }
   else if (a === 'stats-share') return statsShare();
   else if (a === 'stats-mail') return statsMail();

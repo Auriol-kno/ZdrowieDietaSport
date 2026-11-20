@@ -262,7 +262,7 @@ function customPlanForm(iso, mk) {
     '<input type="number" id="cdk" placeholder="kcal" min="0" inputmode="numeric"><button type="submit" class="small">Dodaj</button></form>';
 }
 
-function dayCard(iso) {
+function dayCard(iso, alt) {
   const kid = isKid(), map = byIdMap();
   let kcal = 0, body = '';
   for (const [mk, mn, hr] of MEALS) {
@@ -285,7 +285,7 @@ function dayCard(iso) {
     if (items) body += `<ul>${items}</ul>`;
     body += '</div>';
   }
-  return `<div class="card daycard${isWeekend(iso) ? ' we' : ''}"><div class="row sb"><div class="row"><h2>${esc(dayTitle(iso))}</h2>${dayChip(iso)}</div>` +
+  return `<div class="card daycard${isWeekend(iso) ? ' we' : ''}${alt ? ' alt' : ''}"><div class="row sb"><div class="row"><h2>${esc(dayTitle(iso))}</h2>${dayChip(iso)}</div>` +
     (!kid && kcal ? `<span class="muted">ok. ${kcal} kcal${cur().kcal ? ' z ' + cur().kcal : ''}</span>` : '') + `</div>${body}</div>`;
 }
 
@@ -321,7 +321,7 @@ function viewPlan() {
     `<span class="row"><strong>${start.slice(8)}.${start.slice(5, 7)} – ${ZdsRecipes.dayAfter(start, 6).slice(8)}.${ZdsRecipes.dayAfter(start, 6).slice(5, 7)}</strong>` +
     (ku.weekOff ? '<button type="button" class="small ghost" data-action="k-wk" data-d="0">Dziś</button>' : '') + '</span>' +
     '<button type="button" class="small ghost" data-action="k-wk" data-d="1" aria-label="Następny tydzień">›</button></div>';
-  for (let n = 0; n < 7; n++) h += dayCard(ZdsRecipes.dayAfter(start, n));
+  for (let n = 0; n < 7; n++) h += dayCard(ZdsRecipes.dayAfter(start, n), n % 2 === 1);
   return h;
 }
 
