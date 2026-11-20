@@ -179,8 +179,8 @@ function viewToday() {
       `<span class="row">${kid ? `<button type="button" class="plus" data-action="kid-add" data-meal="${key}" aria-label="Dopisz, co zjadłeś na ${esc(name)}" aria-expanded="${addOpen === key}">+</button>` : ''}` +
       `<button type="button" class="small ${m.done ? 'done' : 'ghost'}" data-action="done" data-meal="${key}" aria-pressed="${m.done}">${m.done ? '✓ Zjedzone' : 'Zjedzone'}</button></span></div>`;
     if (m.items.length) {
-      html += '<ul>' + m.items.map((it, i) => `<li class="${it.kid ? 'kiditem' : ''}"><span>${esc(it.name)}${!kid && it.kcal ? ` <span class="muted">· ${esc(it.kcal)} kcal</span>` : ''} ${itemPill(it.name)}</span>` +
-        (!kid || it.kid ? `<button type="button" class="small ghost" data-action="del" data-meal="${key}" data-i="${i}" aria-label="Usuń ${esc(it.name)}">✕</button>` : '') + '</li>').join('') + '</ul>';
+      html += '<ul>' + m.items.map((it, i) => `<li class="${it.kid ? 'kiditem' : ''}"><span>${esc(it.name)}${!kid && it.kcal ? ` <span class="muted">· ${esc(it.kcal)} kcal</span>` : ''}</span><span class="li-end">${itemPill(it.name)}` +
+        (!kid || it.kid ? `<button type="button" class="small ghost" data-action="del" data-meal="${key}" data-i="${i}" aria-label="Usuń ${esc(it.name)}">✕</button>` : '') + '</span></li>').join('') + '</ul>';
     }
     if (kid) {
       if (addOpen === key) html += `<form data-meal="${key}" class="kidform"><label class="sr" for="n-${key}">Co zjadłeś?</label><input type="text" id="n-${key}" placeholder="np. marchewka" required autocomplete="off"><button type="submit" class="small">Dodaj</button></form>`;

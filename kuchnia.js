@@ -221,8 +221,8 @@ function drinksCard() {
     h += '<ul class="drinklist">' + list.map((x, i) => {
       const o = ku.drinks.find((y) => y.id === x.id);
       const pill = o && o.rule ? pillSt(ZdsRecipes.matchRule(ku.idx, o.rule) ? ZdsRecipes.matchRule(ku.idx, o.rule).st : 'ok') : itemPill(x.name);
-      return `<li class="${x.kid ? 'kiditem' : ''}"><span>${esc(x.name)} <span class="muted">${esc(x.ml)} ml</span> ${pill}</span>` +
-        `<button type="button" class="small ghost" data-action="k-drink-del" data-i="${i}" aria-label="Usuń ${esc(x.name)}">✕</button></li>`;
+      return `<li class="${x.kid ? 'kiditem' : ''}"><span>${esc(x.name)} <span class="muted">${esc(x.ml)} ml</span></span><span class="li-end">${pill}` +
+        `<button type="button" class="small ghost" data-action="k-drink-del" data-i="${i}" aria-label="Usuń ${esc(x.name)}">✕</button></span></li>`;
     }).join('') + '</ul>';
   }
   if (!kid && cups) {
