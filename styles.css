@@ -207,3 +207,14 @@ li.kiditem > span:first-child { color: #6a3fb5; font-weight: 700; }
 .streak span.g { background: #22a447; color: #fff; } .streak span.p { background: #f2dca3; color: #7a5a10; }
 .qbar { display: flex; height: 14px; border-radius: 8px; overflow: hidden; background: var(--track); margin-bottom: 6px; }
 .qbar i.ok { background: #22a447; } .qbar i.lim { background: #e0a526; } .qbar i.no { background: #d0463b; } .qbar i.unk { background: #b9b2a8; }
+/* Okrągły plusik syna */
+.meal .plus { width: 44px; height: 44px; min-height: 44px; min-width: 44px; padding: 0; margin: 0; border-radius: 50%; font-size: 26px; line-height: 1; font-weight: 800; display: grid; place-items: center; background: #efe6fb; color: #6a3fb5; box-shadow: var(--up-s); }
+.meal .plus[aria-expanded="true"] { box-shadow: var(--in); }
+/* Działy w innym odcieniu */
+.card.sport { background: #f6e5d3; }
+.card.sport h2 { color: #a5561c; }
+.card.drinks { background: #dfeaf5; }
+.card.drinks h2 { color: #2c6aa0; }
+.card.sport input, .card.drinks input { background: #fffaf4; }
+main { padding-top: 14px; }
+.tabs button[hidden] { display: none; }

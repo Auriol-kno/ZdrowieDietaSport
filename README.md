@@ -71,3 +71,9 @@ Air fryer jest dozwolony (potwierdzone przez użytkownika 20.11.2026). Ustawieni
 - Dziś: aktywność z czasem (synchronizowana razem z dniem).
 - Sprawdź: trzy przewijane kolumny (można / z ograniczeniami / nie można).
 - Tryb rodzica jest teraz w zakładce Profile.
+
+## Wpisy syna, statystyki, przepisy z kurczakiem
+
+- Syn dopisuje dania (okrągły plusik przy posiłku) i napoje; jego wpisy są fioletowe i od razu ocenione według zaleceń.
+- Profile: wybór profilu, tryb rodzica, statystyki (kalorie, ciągłość, woda, aktywność, jakość) i eksport do arkusza CSV (udostępnianie albo e-mail z podsumowaniem).
+- Zakładka Przepisy widoczna tylko w trybie rodzica. W bazie 82 przepisy, w tym 31 dań z kurczakiem.

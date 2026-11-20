@@ -20,7 +20,7 @@ const dayKey = () => new Date().toLocaleDateString('sv-SE');
 const uid = () => Math.random().toString(36).slice(2, 9);
 
 function defaults() {
-  const f = { id: uid(), name: 'Franciszek', nick: 'Franek', role: 'dziecko', kcal: 1750 };
+  const f = { id: uid(), name: 'Franek', nick: 'Franek', role: 'dziecko', kcal: 1750 };
   return {
     profiles: [f, { id: uid(), name: 'Dorosły 1', role: 'dorosły', kcal: 0 }, { id: uid(), name: 'Dorosły 2', role: 'dorosły', kcal: 0 }],
     current: f.id,
@@ -41,7 +41,7 @@ function load() {
     if (s && Array.isArray(s.profiles) && s.profiles.length) {
       s.synced = s.synced || {}; s.fam = s.fam || null;
       s.plan = s.plan || {}; s.pantry = s.pantry || []; s.shop = s.shop || { checked: {} }; s.shop.checked = s.shop.checked || {}; s.recipes = s.recipes || [];
-      for (const p of s.profiles) if (p.nick === undefined && p.name === 'Franciszek') p.nick = 'Franek';
+      for (const p of s.profiles) if (p.name === 'Franciszek') { p.name = 'Franek'; p.nick = 'Franek'; }
       return s;
     }
   } catch (e) { /* brak danych lub pamięć niedostępna */ }
@@ -139,7 +139,7 @@ function itemPill(name) {
 const QUICK_ACT = [['Spacer', 30], ['Rower', 45], ['Pływanie', 45], ['Piłka nożna', 60], ['Bieganie', 30], ['Siłownia', 45], ['Taniec', 30], ['Hulajnoga', 30], ['W-F w szkole', 45]];
 function activityCard(d) {
   const list = d.activities || [], tot = list.reduce((a, x) => a + x.min, 0);
-  return `<div class="card"><div class="row sb"><h2>Aktywność</h2><span class="muted">${tot ? tot + ' min' : 'jeszcze nic'}</span></div>` +
+  return `<div class="card sport"><div class="row sb"><h2>Aktywność</h2><span class="muted">${tot ? tot + ' min' : 'jeszcze nic'}</span></div>` +
     '<div class="chips scroll">' + QUICK_ACT.map(([n, m]) => `<button type="button" class="chip" data-action="act-pick" data-name="${esc(n)}" data-min="${m}">${esc(n)}</button>`).join('') + '</div>' +
     '<form data-act="1"><label class="sr" for="an">Aktywność</label><input type="text" id="an" placeholder="Aktywność" required autocomplete="off">' +
     '<label class="sr" for="am">Minuty</label><input type="number" id="am" value="30" min="1" max="1440" inputmode="numeric" required><button type="submit" class="small">Dodaj</button></form>' +
@@ -176,15 +176,14 @@ function viewToday() {
   for (const [key, name, time] of MEALS) {
     const m = meal(d, key);
     html += `<div class="meal"><div class="row sb"><div><strong>${name}</strong> <span class="muted">${time}</span></div>` +
-      `<button type="button" class="small ${m.done ? 'done' : 'ghost'}" data-action="done" data-meal="${key}" aria-pressed="${m.done}">${m.done ? '✓ Zjedzone' : 'Zjedzone'}</button></div>`;
+      `<span class="row">${kid ? `<button type="button" class="plus" data-action="kid-add" data-meal="${key}" aria-label="Dopisz, co zjadłeś na ${esc(name)}" aria-expanded="${addOpen === key}">+</button>` : ''}` +
+      `<button type="button" class="small ${m.done ? 'done' : 'ghost'}" data-action="done" data-meal="${key}" aria-pressed="${m.done}">${m.done ? '✓ Zjedzone' : 'Zjedzone'}</button></span></div>`;
     if (m.items.length) {
       html += '<ul>' + m.items.map((it, i) => `<li class="${it.kid ? 'kiditem' : ''}"><span>${esc(it.name)}${!kid && it.kcal ? ` <span class="muted">· ${esc(it.kcal)} kcal</span>` : ''} ${itemPill(it.name)}</span>` +
         (!kid || it.kid ? `<button type="button" class="small ghost" data-action="del" data-meal="${key}" data-i="${i}" aria-label="Usuń ${esc(it.name)}">✕</button>` : '') + '</li>').join('') + '</ul>';
     }
     if (kid) {
-      html += addOpen === key
-        ? `<form data-meal="${key}" class="kidform"><label class="sr" for="n-${key}">Co zjadłeś?</label><input type="text" id="n-${key}" placeholder="np. marchewka" required autocomplete="off"><button type="submit" class="small">Dodaj</button></form>`
-        : `<button type="button" class="plus" data-action="kid-add" data-meal="${key}" aria-label="Dopisz, co zjadłeś na ${esc(name)}">+ Dopisz</button>`;
+      if (addOpen === key) html += `<form data-meal="${key}" class="kidform"><label class="sr" for="n-${key}">Co zjadłeś?</label><input type="text" id="n-${key}" placeholder="np. marchewka" required autocomplete="off"><button type="submit" class="small">Dodaj</button></form>`;
     } else {
       html += `<form data-meal="${key}"><label class="sr" for="n-${key}">Danie</label><input type="text" id="n-${key}" placeholder="Danie" required>` +
         `<label class="sr" for="k-${key}">kcal</label><input type="number" id="k-${key}" placeholder="kcal" min="0" inputmode="numeric">` +
@@ -218,7 +217,9 @@ function viewCheck() {
     `<div id="cols">${colsHtml()}</div>`;
 }
 function viewProfiles() {
-  let html = '<h1>Profile</h1><div class="card"><div class="row sb"><div><h2>Tryb rodzica</h2>' +
+  let html = '<h1>Profile</h1><div class="card"><h2>Kto korzysta</h2><div class="chips">' +
+    state.profiles.map((p) => `<button type="button" class="chip" data-action="pick-profile" data-id="${p.id}" aria-pressed="${p.id === state.current}">${esc(p.name)}</button>`).join('') + '</div></div>' +
+    '<div class="card"><div class="row sb"><div><h2>Tryb rodzica</h2>' +
     `<span class="muted">${parent ? 'Włączony: widać kalorie, plan i zakupy.' : 'Wyłączony: widok dziecka.'}</span></div>` +
     `<button type="button" class="small ${parent ? '' : 'ghost'}" data-action="parent-toggle" aria-pressed="${parent}">${parent ? 'Wyłącz' : 'Włącz'}</button></div></div>`;
   if (isKid()) return html + '<div class="note warn">Reszta profili jest widoczna tylko w trybie rodzica.</div>';
@@ -237,8 +238,8 @@ function viewProfiles() {
 }
 
 function render() {
-  const sel = $('#profile');
-  sel.innerHTML = state.profiles.map((p) => `<option value="${p.id}"${p.id === state.current ? ' selected' : ''}>${esc(p.name)}</option>`).join('');
+  if (isKid() && tab === 'przepisy') tab = 'dzis';
+  const rt = document.querySelector('.tabs [data-tab=przepisy]'); if (rt) rt.hidden = isKid();
   document.body.classList.toggle('kid', isKid());
   document.querySelectorAll('.tabs button').forEach((b) => {
     if (b.dataset.tab === tab) b.setAttribute('aria-current', 'page'); else b.removeAttribute('aria-current');
@@ -284,7 +285,10 @@ document.addEventListener('click', (e) => {
   if (a === 'water') d.water = Math.max(0, d.water + Number(t.dataset.d));
   else if (a === 'done') { const m = meal(d, t.dataset.meal); m.done = !m.done; }
   else if (a === 'del') meal(d, t.dataset.meal).items.splice(Number(t.dataset.i), 1);
-  else if (a === 'kid-add') { addOpen = t.dataset.meal; render(); const i = $('#n-' + addOpen); if (i) i.focus(); return; }
+  else if (a === 'pick-profile') { state.current = t.dataset.id; addOpen = null; }
+  else if (a === 'stats-share') return statsShare();
+  else if (a === 'stats-mail') return statsMail();
+  else if (a === 'kid-add') { addOpen = addOpen === t.dataset.meal ? null : t.dataset.meal; render(); const i = $('#n-' + addOpen); if (i) i.focus(); return; }
   else if (a === 'st-range') { st.range = Number(t.dataset.v); return render(); }
   else if (a === 'act-del') { (d.activities = d.activities || []).splice(Number(t.dataset.i), 1); d.u = Date.now(); }
   else if (a === 'act-pick') { $('#an').value = t.dataset.name; $('#am').value = t.dataset.min; $('#am').focus(); return; }
@@ -345,8 +349,8 @@ document.addEventListener('input', (e) => {
 });
 
 document.addEventListener('change', (e) => {
-  if (e.target.id === 'profile') { state.current = e.target.value; save(); return render(); }
   if (e.target.id === 'pday' && e.target.value) { ku.pd = e.target.value; return render(); }
+  if (e.target.id === 'smail') { state.statsMail = e.target.value.trim(); save(true); return; }
   if (e.target.id === 'ccat') { chk.cat = e.target.value; return render(); }
   if (e.target.id === 'rdev') { ku.dev = e.target.value; return render(); }
   if (e.target.id === 'rmeal') { ku.meal = e.target.value; return render(); }

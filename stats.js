@@ -96,7 +96,59 @@ function statsCard() {
     [['ok', q.ok], ['lim', q.lim], ['no', q.no], ['unk', q.unk]].map(([k, v]) => v ? `<i class="${k}" style="width:${(v / tot * 100).toFixed(1)}%"></i>` : '').join('') + '</div>' +
     `<div class="row wrap small"><span class="pill ok tiny">Dozwolone ${q.ok}</span><span class="pill lim tiny">Ograniczone ${q.lim}</span><span class="pill no tiny">Zakazane ${q.no}</span><span class="pill tiny">Spoza listy ${q.unk}</span></div>` +
     (bad.length ? `<div class="note warn">Zakazane w tym okresie: ${esc(bad.join(', '))}.</div>` : '');
+  h += '<h3>Wyślij arkusz</h3><div class="field"><label for="smail" class="muted">Adres e-mail</label>' +
+    `<input type="email" id="smail" value="${esc(state.statsMail || '')}" placeholder="np. mama@example.com" autocomplete="email" inputmode="email"></div>` +
+    '<div class="row wrap"><button type="button" data-action="stats-share">Wyślij arkusz (.csv)</button><button type="button" class="ghost" data-action="stats-mail">Otwórz e-mail z podsumowaniem</button></div>' +
+    '<p class="muted small">„Wyślij arkusz” otwiera menu udostępniania telefonu: wybierz Mail, arkusz jest w załączniku, a adres trzeba wkleić w polu Do (kopiujemy go do schowka). Arkusz otwiera się w Excelu, Numbers i Arkuszach Google.</p>';
   return h + '</div>';
+}
+
+const num = (v) => String(v).replace('.', ',');
+function statsCsv() {
+  const p = cur(), rows = statsData(p.id, st.range);
+  const head = ['Data', 'Dzień', 'Kalorie (zjedzone)', 'Cel kcal', 'Posiłki zjedzone (z 5)', 'Woda (l)', 'Aktywność (min)', 'Aktywności', 'Dozwolone', 'Ograniczone', 'Zakazane', 'Spoza listy', 'Wpisy syna', 'Dzień zgodny z dietą', 'Zakazane produkty'];
+  const q = (v) => { const t = String(v); return /[;"\n]/.test(t) ? '"' + t.replace(/"/g, '""') + '"' : t; };
+  const lines = [head.join(';')];
+  for (const r of rows) {
+    const d = state.days[r.iso + '|' + p.id] || {};
+    lines.push([r.iso, DAYN[new Date(r.iso + 'T12:00:00').getDay()], r.kcal, p.kcal || '', r.done, num((r.water / 1000).toFixed(2)), r.act,
+      (d.activities || []).map((a) => a.name + ' ' + a.min + ' min').join(', '), r.ok, r.lim, r.no, r.unk, r.kid, r.good ? 'tak' : 'nie', r.bad.join(', ')].map(q).join(';'));
+  }
+  const used = rows.filter((r) => r.has), n = used.length || 1, s = streaks(rows);
+  lines.push('', 'Podsumowanie;' + q(p.name + ', ostatnie ' + st.range + ' dni'),
+    'Średnio kcal;' + Math.round(used.reduce((a, r) => a + r.kcal, 0) / n),
+    'Seria zgodnych dni (obecna);' + s.curr, 'Najdłuższa seria;' + s.best,
+    'Aktywność razem (min);' + rows.reduce((a, r) => a + r.act, 0));
+  return '\ufeff' + lines.join('\r\n');
+}
+function statsName() { return 'statystyki-' + cur().name.toLowerCase().replace(/\s+/g, '-') + '-' + dayKey() + '.csv'; }
+function mailAddr() {
+  const i = document.getElementById('smail'); const v = (i ? i.value : state.statsMail || '').trim();
+  if (i) { state.statsMail = v; save(true); }
+  if (!/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(v)) { alert('Wpisz poprawny adres e-mail.'); if (i) i.focus(); return null; }
+  return v;
+}
+async function statsShare() {
+  const to = mailAddr(); if (!to) return;
+  const blob = new Blob([statsCsv()], { type: 'text/csv' });
+  const file = new File([blob], statsName(), { type: 'text/csv' });
+  try { await navigator.clipboard.writeText(to); } catch (e) { /* schowek niedostępny */ }
+  if (navigator.canShare && navigator.canShare({ files: [file] })) {
+    try { await navigator.share({ files: [file], title: 'Statystyki diety', text: 'Statystyki diety (' + cur().name + ') dla ' + to }); return; } catch (e) { if (e && e.name === 'AbortError') return; }
+  }
+  const a = document.createElement('a'); a.href = URL.createObjectURL(blob); a.download = file.name;
+  document.body.appendChild(a); a.click(); a.remove();
+  alert('Arkusz zapisany jako ' + file.name + '. Dołącz go do maila do ' + to + '.');
+}
+function statsMail() {
+  const to = mailAddr(); if (!to) return;
+  const p = cur(), rows = statsData(p.id, st.range), used = rows.filter((r) => r.has), n = used.length || 1, s = streaks(rows);
+  let body = 'Statystyki diety: ' + p.name + ', ostatnie ' + st.range + ' dni\n\n' +
+    'Średnio: ' + Math.round(used.reduce((a, r) => a + r.kcal, 0) / n) + ' kcal' + (p.kcal ? ' (cel ' + p.kcal + ')' : '') + '\n' +
+    'Seria zgodnych dni: ' + s.curr + ' (najdłuższa ' + s.best + ')\n' +
+    'Aktywność: ' + rows.reduce((a, r) => a + r.act, 0) + ' min\n\nData | kcal | posiłki | woda l | ruch min | zgodny\n';
+  for (const r of rows) body += r.iso + ' | ' + r.kcal + ' | ' + r.done + '/5 | ' + num((r.water / 1000).toFixed(1)) + ' | ' + r.act + ' | ' + (r.good ? 'tak' : 'nie') + '\n';
+  location.href = 'mailto:' + encodeURIComponent(to) + '?subject=' + encodeURIComponent('Statystyki diety: ' + p.name) + '&body=' + encodeURIComponent(body);
 }
 
 function kpi(label, val, sub) {

@@ -3258,6 +3258,2941 @@
      "t": "Nałóż twarożek z koperkiem."
     }
    ]
+  },
+  {
+   "id": "kurczak-ziola-piekarnik",
+   "name": "Pierś pieczona w ziołach z kaszą gryczaną i brokułami",
+   "posilki": [
+    "obiad"
+   ],
+   "porcje": 3,
+   "czas": 40,
+   "urz": [],
+   "kcal": 430,
+   "kat": "danie",
+   "opis": "Klasyka na obiad: pieczona pierś, kasza i brokuł na parze.",
+   "skladniki": [
+    {
+     "n": "filet z kurczaka",
+     "q": 450,
+     "u": "g",
+     "s": "Mięso i ryby",
+     "rule": "kurczak"
+    },
+    {
+     "n": "zioła prowansalskie",
+     "q": 1,
+     "u": "łyżeczka",
+     "s": "Tłuszcze i przyprawy",
+     "rule": "zioła prowansalskie"
+    },
+    {
+     "n": "czosnek",
+     "q": 2,
+     "u": "ząbek",
+     "s": "Warzywa",
+     "rule": "czosnek"
+    },
+    {
+     "n": "oliwa z oliwek",
+     "q": 1,
+     "u": "łyżeczka",
+     "s": "Tłuszcze i przyprawy",
+     "rule": "oliwa z oliwek"
+    },
+    {
+     "n": "kasza gryczana",
+     "q": 150,
+     "u": "g",
+     "s": "Zboża i pieczywo",
+     "rule": "kasza gryczana"
+    },
+    {
+     "n": "brokuły",
+     "q": 1,
+     "u": "szt",
+     "s": "Warzywa",
+     "rule": "brokuły"
+    },
+    {
+     "n": "sól",
+     "q": 0.5,
+     "u": "łyżeczka",
+     "s": "Tłuszcze i przyprawy",
+     "rule": "sól",
+     "drobny": true
+    }
+   ],
+   "kroki": [
+    {
+     "t": "Pierś natrzyj ziołami, czosnkiem, oliwą i solą. Odstaw na 15 minut."
+    },
+    {
+     "t": "Piecz w naczyniu żaroodpornym pod przykryciem.",
+     "p": "180°C · 25 min",
+     "timer": 1500
+    },
+    {
+     "t": "Ugotuj kaszę według przepisu na opakowaniu."
+    },
+    {
+     "t": "Brokuł podziel na różyczki i ugotuj na parze, około 6 minut.",
+     "timer": 360
+    },
+    {
+     "t": "Pierś pokrój w plastry i podaj z kaszą i brokułem."
+    }
+   ]
+  },
+  {
+   "id": "udka-rozmaryn-marchew",
+   "name": "Udka pieczone z rozmarynem i marchewką",
+   "posilki": [
+    "obiad"
+   ],
+   "porcje": 3,
+   "czas": 55,
+   "urz": [],
+   "kcal": 480,
+   "kat": "danie",
+   "opis": "Soczyste udka bez skóry pieczone razem z marchewką.",
+   "skladniki": [
+    {
+     "n": "udka z kurczaka bez skóry",
+     "q": 700,
+     "u": "g",
+     "s": "Mięso i ryby",
+     "rule": "kurczak"
+    },
+    {
+     "n": "rozmaryn",
+     "q": 1,
+     "u": "łyżeczka",
+     "s": "Tłuszcze i przyprawy",
+     "rule": "rozmaryn"
+    },
+    {
+     "n": "czosnek",
+     "q": 3,
+     "u": "ząbek",
+     "s": "Warzywa",
+     "rule": "czosnek"
+    },
+    {
+     "n": "marchewka świeża",
+     "q": 4,
+     "u": "szt",
+     "s": "Warzywa",
+     "rule": "świeża marchewka"
+    },
+    {
+     "n": "cebula",
+     "q": 1,
+     "u": "szt",
+     "s": "Warzywa",
+     "rule": "cebula"
+    },
+    {
+     "n": "oliwa z oliwek",
+     "q": 1,
+     "u": "łyżeczka",
+     "s": "Tłuszcze i przyprawy",
+     "rule": "oliwa z oliwek"
+    },
+    {
+     "n": "kasza jęczmienna mazurska",
+     "q": 150,
+     "u": "g",
+     "s": "Zboża i pieczywo",
+     "rule": "kasza jęczmienna mazurska"
+    },
+    {
+     "n": "sól",
+     "q": 0.5,
+     "u": "łyżeczka",
+     "s": "Tłuszcze i przyprawy",
+     "rule": "sól",
+     "drobny": true
+    }
+   ],
+   "kroki": [
+    {
+     "t": "Udka natrzyj rozmarynem, czosnkiem, oliwą i solą."
+    },
+    {
+     "t": "Marchewkę pokrój w słupki, cebulę w piórka. Ułóż w naczyniu, a na nich udka."
+    },
+    {
+     "t": "Piecz pod przykryciem, ostatnie 10 minut bez przykrycia.",
+     "p": "190°C · 45 min",
+     "timer": 2700
+    },
+    {
+     "t": "Ugotuj kaszę według przepisu na opakowaniu."
+    },
+    {
+     "t": "Podaj udka z warzywami i kaszą."
+    }
+   ]
+  },
+  {
+   "id": "podudzia-af-papryka",
+   "name": "Podudzia z air fryera w słodkiej papryce z ryżem",
+   "posilki": [
+    "obiad"
+   ],
+   "porcje": 3,
+   "czas": 40,
+   "urz": [
+    "af"
+   ],
+   "kcal": 470,
+   "kat": "danie",
+   "opis": "Chrupiące z wierzchu, bez panierki i bez smażenia.",
+   "skladniki": [
+    {
+     "n": "podudzia z kurczaka bez skóry",
+     "q": 800,
+     "u": "g",
+     "s": "Mięso i ryby",
+     "rule": "kurczak"
+    },
+    {
+     "n": "papryka łagodna",
+     "q": 2,
+     "u": "łyżeczka",
+     "s": "Tłuszcze i przyprawy",
+     "rule": "papryka łagodna"
+    },
+    {
+     "n": "czosnek",
+     "q": 2,
+     "u": "ząbek",
+     "s": "Warzywa",
+     "rule": "czosnek"
+    },
+    {
+     "n": "oliwa z oliwek",
+     "q": 1,
+     "u": "łyżeczka",
+     "s": "Tłuszcze i przyprawy",
+     "rule": "oliwa z oliwek"
+    },
+    {
+     "n": "ryż brązowy",
+     "q": 150,
+     "u": "g",
+     "s": "Zboża i pieczywo",
+     "rule": "ryż brązowy"
+    },
+    {
+     "n": "ogórek zielony",
+     "q": 1,
+     "u": "szt",
+     "s": "Warzywa",
+     "rule": "ogórek zielony"
+    },
+    {
+     "n": "jogurt naturalny",
+     "q": 100,
+     "u": "g",
+     "s": "Nabiał i jaja",
+     "rule": "jogurt naturalny"
+    },
+    {
+     "n": "sól",
+     "q": 0.5,
+     "u": "łyżeczka",
+     "s": "Tłuszcze i przyprawy",
+     "rule": "sól",
+     "drobny": true
+    }
+   ],
+   "kroki": [
+    {
+     "t": "Podudzia natrzyj papryką, czosnkiem, oliwą i solą."
+    },
+    {
+     "t": "Piecz, w połowie czasu obróć.",
+     "dev": "af",
+     "p": "190°C · 25 min",
+     "timer": 1500
+    },
+    {
+     "t": "Ugotuj ryż według przepisu na opakowaniu."
+    },
+    {
+     "t": "Ogórek zetrzyj lub pokrój i wymieszaj z jogurtem i solą jako mizerię."
+    }
+   ]
+  },
+  {
+   "id": "kurczak-koperkowy",
+   "name": "Gotowany kurczak w sosie koperkowym z ryżem",
+   "posilki": [
+    "obiad"
+   ],
+   "porcje": 3,
+   "czas": 35,
+   "urz": [],
+   "kcal": 420,
+   "kat": "danie",
+   "opis": "Delikatny obiad gotowany, sos na jogurcie zamiast śmietany.",
+   "skladniki": [
+    {
+     "n": "filet z kurczaka",
+     "q": 450,
+     "u": "g",
+     "s": "Mięso i ryby",
+     "rule": "kurczak"
+    },
+    {
+     "n": "marchewka świeża",
+     "q": 2,
+     "u": "szt",
+     "s": "Warzywa",
+     "rule": "świeża marchewka"
+    },
+    {
+     "n": "cebula",
+     "q": 1,
+     "u": "szt",
+     "s": "Warzywa",
+     "rule": "cebula"
+    },
+    {
+     "n": "ziele angielskie",
+     "q": 3,
+     "u": "szt",
+     "s": "Tłuszcze i przyprawy",
+     "rule": "ziele angielskie"
+    },
+    {
+     "n": "woda",
+     "q": 800,
+     "u": "ml",
+     "s": "Inne",
+     "neutral": true
+    },
+    {
+     "n": "jogurt naturalny",
+     "q": 200,
+     "u": "g",
+     "s": "Nabiał i jaja",
+     "rule": "jogurt naturalny"
+    },
+    {
+     "n": "koperek",
+     "q": 1,
+     "u": "pęczek",
+     "s": "Warzywa",
+     "rule": "koper"
+    },
+    {
+     "n": "ryż brązowy",
+     "q": 150,
+     "u": "g",
+     "s": "Zboża i pieczywo",
+     "rule": "ryż brązowy"
+    },
+    {
+     "n": "sól",
+     "q": 0.5,
+     "u": "łyżeczka",
+     "s": "Tłuszcze i przyprawy",
+     "rule": "sól",
+     "drobny": true
+    }
+   ],
+   "kroki": [
+    {
+     "t": "Do garnka włóż pierś, marchewkę, cebulę i ziele angielskie, zalej wodą."
+    },
+    {
+     "t": "Gotuj na małym ogniu.",
+     "p": "20 min",
+     "timer": 1200
+    },
+    {
+     "t": "Ugotuj ryż według przepisu na opakowaniu."
+    },
+    {
+     "t": "Szklankę wywaru lekko przestudź i wymieszaj z jogurtem i koperkiem, żeby jogurt się nie zważył."
+    },
+    {
+     "t": "Pierś pokrój, polej sosem, podaj z ryżem i marchewką z wywaru."
+    }
+   ]
+  },
+  {
+   "id": "rosol-kurczak",
+   "name": "Rosół z kurczaka z makaronem razowym",
+   "posilki": [
+    "obiad",
+    "kolacja"
+   ],
+   "porcje": 3,
+   "czas": 100,
+   "urz": [],
+   "kcal": 300,
+   "kat": "danie",
+   "opis": "Domowy rosół na udkach bez skóry, bez kostek rosołowych.",
+   "skladniki": [
+    {
+     "n": "udka z kurczaka bez skóry",
+     "q": 600,
+     "u": "g",
+     "s": "Mięso i ryby",
+     "rule": "kurczak"
+    },
+    {
+     "n": "marchewka świeża",
+     "q": 3,
+     "u": "szt",
+     "s": "Warzywa",
+     "rule": "świeża marchewka"
+    },
+    {
+     "n": "cebula",
+     "q": 1,
+     "u": "szt",
+     "s": "Warzywa",
+     "rule": "cebula"
+    },
+    {
+     "n": "lubczyk",
+     "q": 1,
+     "u": "łyżeczka",
+     "s": "Tłuszcze i przyprawy",
+     "rule": "lubczyk"
+    },
+    {
+     "n": "ziele angielskie",
+     "q": 3,
+     "u": "szt",
+     "s": "Tłuszcze i przyprawy",
+     "rule": "ziele angielskie"
+    },
+    {
+     "n": "woda",
+     "q": 2000,
+     "u": "ml",
+     "s": "Inne",
+     "neutral": true
+    },
+    {
+     "n": "makaron razowy",
+     "q": 150,
+     "u": "g",
+     "s": "Zboża i pieczywo",
+     "rule": "makaron razowy"
+    },
+    {
+     "n": "koperek",
+     "q": 1,
+     "u": "pęczek",
+     "s": "Warzywa",
+     "rule": "koper"
+    },
+    {
+     "n": "sól",
+     "q": 0.5,
+     "u": "łyżeczka",
+     "s": "Tłuszcze i przyprawy",
+     "rule": "sól",
+     "drobny": true
+    }
+   ],
+   "kroki": [
+    {
+     "t": "Udka zalej zimną wodą, zagotuj i zbierz szumowiny."
+    },
+    {
+     "t": "Dodaj marchewkę, opaloną cebulę, lubczyk i ziele angielskie. Gotuj na bardzo małym ogniu.",
+     "p": "90 min",
+     "timer": 5400
+    },
+    {
+     "t": "Ugotuj makaron według przepisu na opakowaniu."
+    },
+    {
+     "t": "Podawaj z makaronem, marchewką, mięsem z udek i koperkiem."
+    }
+   ]
+  },
+  {
+   "id": "kurczak-varoma-quinoa",
+   "name": "Pierś z Varomy z warzywami i quinoa",
+   "posilki": [
+    "obiad"
+   ],
+   "porcje": 3,
+   "czas": 40,
+   "urz": [
+    "tm6"
+   ],
+   "kcal": 410,
+   "kat": "danie",
+   "opis": "Cały obiad na parze w Thermomiksie.",
+   "skladniki": [
+    {
+     "n": "filet z kurczaka",
+     "q": 450,
+     "u": "g",
+     "s": "Mięso i ryby",
+     "rule": "kurczak"
+    },
+    {
+     "n": "tymianek",
+     "q": 1,
+     "u": "łyżeczka",
+     "s": "Tłuszcze i przyprawy",
+     "rule": "tymianek"
+    },
+    {
+     "n": "quinoa",
+     "q": 150,
+     "u": "g",
+     "s": "Zboża i pieczywo",
+     "rule": "quinoa"
+    },
+    {
+     "n": "woda",
+     "q": 900,
+     "u": "ml",
+     "s": "Inne",
+     "neutral": true
+    },
+    {
+     "n": "brokuły",
+     "q": 1,
+     "u": "szt",
+     "s": "Warzywa",
+     "rule": "brokuły"
+    },
+    {
+     "n": "marchewka świeża",
+     "q": 3,
+     "u": "szt",
+     "s": "Warzywa",
+     "rule": "świeża marchewka"
+    },
+    {
+     "n": "fasolka szparagowa",
+     "q": 200,
+     "u": "g",
+     "s": "Warzywa",
+     "rule": "fasolka szparagowa"
+    },
+    {
+     "n": "sól",
+     "q": 0.5,
+     "u": "łyżeczka",
+     "s": "Tłuszcze i przyprawy",
+     "rule": "sól",
+     "drobny": true
+    }
+   ],
+   "kroki": [
+    {
+     "t": "Pierś pokrój w paski, oprósz tymiankiem i solą, ułóż w tacy Varoma."
+    },
+    {
+     "t": "Warzywa pokrój i włóż do pojemnika Varoma."
+    },
+    {
+     "t": "Quinoa przepłucz i włóż do koszyka, do naczynia wlej wodę."
+    },
+    {
+     "t": "Gotuj na parze.",
+     "dev": "tm6",
+     "p": "Varoma · obr. 1 · 25 min",
+     "timer": 1500
+    }
+   ],
+   "uwagi": "Ustawienia TM6 są orientacyjne."
+  },
+  {
+   "id": "kurczak-imbir-jaglana",
+   "name": "Kurczak duszony z imbirem i marchewką z kaszą jaglaną",
+   "posilki": [
+    "obiad"
+   ],
+   "porcje": 3,
+   "czas": 35,
+   "urz": [],
+   "kcal": 420,
+   "kat": "danie",
+   "opis": "Łagodny, lekko korzenny smak, dobry dla dzieci.",
+   "skladniki": [
+    {
+     "n": "filet z kurczaka",
+     "q": 450,
+     "u": "g",
+     "s": "Mięso i ryby",
+     "rule": "kurczak"
+    },
+    {
+     "n": "imbir świeży",
+     "q": 1,
+     "u": "łyżeczka",
+     "s": "Tłuszcze i przyprawy",
+     "rule": "imbir"
+    },
+    {
+     "n": "marchewka świeża",
+     "q": 3,
+     "u": "szt",
+     "s": "Warzywa",
+     "rule": "świeża marchewka"
+    },
+    {
+     "n": "zielony groszek",
+     "q": 150,
+     "u": "g",
+     "s": "Warzywa",
+     "rule": "zielony groszek"
+    },
+    {
+     "n": "cebula",
+     "q": 1,
+     "u": "szt",
+     "s": "Warzywa",
+     "rule": "cebula"
+    },
+    {
+     "n": "oliwa z oliwek",
+     "q": 1,
+     "u": "łyżeczka",
+     "s": "Tłuszcze i przyprawy",
+     "rule": "oliwa z oliwek"
+    },
+    {
+     "n": "woda",
+     "q": 200,
+     "u": "ml",
+     "s": "Inne",
+     "neutral": true
+    },
+    {
+     "n": "kasza jaglana",
+     "q": 150,
+     "u": "g",
+     "s": "Zboża i pieczywo",
+     "rule": "kasza jaglana"
+    },
+    {
+     "n": "sól",
+     "q": 0.5,
+     "u": "łyżeczka",
+     "s": "Tłuszcze i przyprawy",
+     "rule": "sól",
+     "drobny": true
+    }
+   ],
+   "kroki": [
+    {
+     "t": "Kurczaka pokrój w kostkę, cebulę posiekaj, marchewkę w plasterki."
+    },
+    {
+     "t": "Na łyżeczce oliwy zeszklij cebulę, dodaj kurczaka, imbir i wodę. Duś pod przykryciem.",
+     "p": "15 min",
+     "timer": 900
+    },
+    {
+     "t": "Dodaj marchewkę i groszek, duś jeszcze do miękkości.",
+     "p": "10 min",
+     "timer": 600
+    },
+    {
+     "t": "Ugotuj kaszę według przepisu na opakowaniu."
+    }
+   ]
+  },
+  {
+   "id": "kurczak-pomidory-bazylia",
+   "name": "Kurczak duszony w pomidorach z bazylią i makaronem razowym",
+   "posilki": [
+    "obiad"
+   ],
+   "porcje": 3,
+   "czas": 35,
+   "urz": [],
+   "kcal": 460,
+   "kat": "danie",
+   "opis": "Domowy sos ze świeżych pomidorów zamiast słoika.",
+   "skladniki": [
+    {
+     "n": "filet z kurczaka",
+     "q": 450,
+     "u": "g",
+     "s": "Mięso i ryby",
+     "rule": "kurczak"
+    },
+    {
+     "n": "pomidor",
+     "q": 5,
+     "u": "szt",
+     "s": "Warzywa",
+     "rule": "pomidor"
+    },
+    {
+     "n": "cebula",
+     "q": 1,
+     "u": "szt",
+     "s": "Warzywa",
+     "rule": "cebula"
+    },
+    {
+     "n": "czosnek",
+     "q": 2,
+     "u": "ząbek",
+     "s": "Warzywa",
+     "rule": "czosnek"
+    },
+    {
+     "n": "bazylia",
+     "q": 1,
+     "u": "garść",
+     "s": "Tłuszcze i przyprawy",
+     "rule": "bazylia"
+    },
+    {
+     "n": "oliwa z oliwek",
+     "q": 1,
+     "u": "łyżeczka",
+     "s": "Tłuszcze i przyprawy",
+     "rule": "oliwa z oliwek"
+    },
+    {
+     "n": "makaron razowy",
+     "q": 200,
+     "u": "g",
+     "s": "Zboża i pieczywo",
+     "rule": "makaron razowy"
+    },
+    {
+     "n": "sól",
+     "q": 0.5,
+     "u": "łyżeczka",
+     "s": "Tłuszcze i przyprawy",
+     "rule": "sól",
+     "drobny": true
+    }
+   ],
+   "kroki": [
+    {
+     "t": "Pomidory sparz, obierz i pokrój. Cebulę i czosnek posiekaj."
+    },
+    {
+     "t": "Na łyżeczce oliwy zeszklij cebulę, dodaj pokrojonego kurczaka i pomidory. Duś.",
+     "p": "20 min",
+     "timer": 1200
+    },
+    {
+     "t": "Ugotuj makaron według przepisu na opakowaniu."
+    },
+    {
+     "t": "Na koniec dodaj bazylię i wymieszaj z makaronem."
+    }
+   ]
+  },
+  {
+   "id": "nuggetsy-owsiane-af",
+   "name": "Nuggetsy z kurczaka w płatkach owsianych",
+   "posilki": [
+    "obiad"
+   ],
+   "porcje": 3,
+   "czas": 30,
+   "urz": [
+    "af"
+   ],
+   "kcal": 400,
+   "kat": "danie",
+   "opis": "Bez głębokiego tłuszczu, obtoczone w płatkach owsianych.",
+   "skladniki": [
+    {
+     "n": "filet z kurczaka",
+     "q": 450,
+     "u": "g",
+     "s": "Mięso i ryby",
+     "rule": "kurczak"
+    },
+    {
+     "n": "jajka",
+     "q": 1,
+     "u": "szt",
+     "s": "Nabiał i jaja",
+     "rule": "jajka"
+    },
+    {
+     "n": "płatki owsiane górskie",
+     "q": 80,
+     "u": "g",
+     "s": "Zboża i pieczywo",
+     "rule": "płatki owsiane górskie"
+    },
+    {
+     "n": "papryka łagodna",
+     "q": 1,
+     "u": "łyżeczka",
+     "s": "Tłuszcze i przyprawy",
+     "rule": "papryka łagodna"
+    },
+    {
+     "n": "jogurt naturalny",
+     "q": 150,
+     "u": "g",
+     "s": "Nabiał i jaja",
+     "rule": "jogurt naturalny"
+    },
+    {
+     "n": "czosnek",
+     "q": 1,
+     "u": "ząbek",
+     "s": "Warzywa",
+     "rule": "czosnek"
+    },
+    {
+     "n": "fasolka szparagowa",
+     "q": 300,
+     "u": "g",
+     "s": "Warzywa",
+     "rule": "fasolka szparagowa"
+    },
+    {
+     "n": "sól",
+     "q": 0.5,
+     "u": "łyżeczka",
+     "s": "Tłuszcze i przyprawy",
+     "rule": "sól",
+     "drobny": true
+    }
+   ],
+   "kroki": [
+    {
+     "t": "Kurczaka pokrój w kawałki. Płatki rozkrusz w dłoniach z papryką i solą."
+    },
+    {
+     "t": "Kawałki zanurz w roztrzepanym jajku, potem obtocz w płatkach."
+    },
+    {
+     "t": "Piecz w jednej warstwie, w połowie obróć.",
+     "dev": "af",
+     "p": "190°C · 12 min",
+     "timer": 720
+    },
+    {
+     "t": "Jogurt wymieszaj z czosnkiem na dip. Fasolkę ugotuj na parze.",
+     "timer": 480
+    }
+   ]
+  },
+  {
+   "id": "szaszlyki-kurczak-af",
+   "name": "Szaszłyki z kurczaka z papryką i cebulą",
+   "posilki": [
+    "obiad"
+   ],
+   "porcje": 3,
+   "czas": 30,
+   "urz": [
+    "af"
+   ],
+   "kcal": 380,
+   "kat": "danie",
+   "opis": "Kolorowe szaszłyki z air fryera z kaszą.",
+   "skladniki": [
+    {
+     "n": "filet z kurczaka",
+     "q": 450,
+     "u": "g",
+     "s": "Mięso i ryby",
+     "rule": "kurczak"
+    },
+    {
+     "n": "papryka czerwona",
+     "q": 1,
+     "u": "szt",
+     "s": "Warzywa",
+     "rule": "papryka czerwona"
+    },
+    {
+     "n": "papryka żółta",
+     "q": 1,
+     "u": "szt",
+     "s": "Warzywa",
+     "rule": "żółta"
+    },
+    {
+     "n": "cebula",
+     "q": 1,
+     "u": "szt",
+     "s": "Warzywa",
+     "rule": "cebula"
+    },
+    {
+     "n": "oregano",
+     "q": 1,
+     "u": "łyżeczka",
+     "s": "Tłuszcze i przyprawy",
+     "rule": "oregano"
+    },
+    {
+     "n": "oliwa z oliwek",
+     "q": 1,
+     "u": "łyżeczka",
+     "s": "Tłuszcze i przyprawy",
+     "rule": "oliwa z oliwek"
+    },
+    {
+     "n": "kasza gryczana",
+     "q": 150,
+     "u": "g",
+     "s": "Zboża i pieczywo",
+     "rule": "kasza gryczana"
+    },
+    {
+     "n": "sól",
+     "q": 0.5,
+     "u": "łyżeczka",
+     "s": "Tłuszcze i przyprawy",
+     "rule": "sól",
+     "drobny": true
+    }
+   ],
+   "kroki": [
+    {
+     "t": "Kurczaka, paprykę i cebulę pokrój w kostkę, wymieszaj z oregano, oliwą i solą."
+    },
+    {
+     "t": "Nadziewaj na krótkie patyczki."
+    },
+    {
+     "t": "Piecz, w połowie obróć.",
+     "dev": "af",
+     "p": "190°C · 14 min",
+     "timer": 840
+    },
+    {
+     "t": "Ugotuj kaszę według przepisu na opakowaniu."
+    }
+   ]
+  },
+  {
+   "id": "udka-miod-gorczyca",
+   "name": "Udka w miodzie i gorczycy z kaszą jęczmienną",
+   "posilki": [
+    "obiad"
+   ],
+   "porcje": 3,
+   "czas": 55,
+   "urz": [],
+   "kcal": 500,
+   "kat": "danie",
+   "opis": "Delikatnie słodkie, bez gotowych sosów.",
+   "skladniki": [
+    {
+     "n": "udka z kurczaka bez skóry",
+     "q": 700,
+     "u": "g",
+     "s": "Mięso i ryby",
+     "rule": "kurczak"
+    },
+    {
+     "n": "miód",
+     "q": 1,
+     "u": "łyżka",
+     "s": "Inne",
+     "rule": "miód"
+    },
+    {
+     "n": "gorczyca",
+     "q": 2,
+     "u": "łyżeczka",
+     "s": "Tłuszcze i przyprawy",
+     "rule": "gorczyca"
+    },
+    {
+     "n": "czosnek",
+     "q": 2,
+     "u": "ząbek",
+     "s": "Warzywa",
+     "rule": "czosnek"
+    },
+    {
+     "n": "kasza jęczmienna mazurska",
+     "q": 150,
+     "u": "g",
+     "s": "Zboża i pieczywo",
+     "rule": "kasza jęczmienna mazurska"
+    },
+    {
+     "n": "fasolka szparagowa",
+     "q": 300,
+     "u": "g",
+     "s": "Warzywa",
+     "rule": "fasolka szparagowa"
+    },
+    {
+     "n": "sól",
+     "q": 0.5,
+     "u": "łyżeczka",
+     "s": "Tłuszcze i przyprawy",
+     "rule": "sól",
+     "drobny": true
+    }
+   ],
+   "kroki": [
+    {
+     "t": "Gorczycę lekko rozgnieć, wymieszaj z miodem, czosnkiem i solą. Natrzyj udka."
+    },
+    {
+     "t": "Piecz w naczyniu pod przykryciem.",
+     "p": "190°C · 45 min",
+     "timer": 2700
+    },
+    {
+     "t": "Ugotuj kaszę według przepisu na opakowaniu."
+    },
+    {
+     "t": "Fasolkę ugotuj na parze i podaj obok.",
+     "timer": 480
+    }
+   ]
+  },
+  {
+   "id": "salatka-kurczak-rzymska",
+   "name": "Sałatka z pieczoną piersią i sosem jogurtowym",
+   "posilki": [
+    "kolacja",
+    "obiad"
+   ],
+   "porcje": 3,
+   "czas": 30,
+   "urz": [],
+   "kcal": 350,
+   "kat": "danie",
+   "opis": "Lekka kolacja z dużą ilością warzyw.",
+   "skladniki": [
+    {
+     "n": "filet z kurczaka",
+     "q": 300,
+     "u": "g",
+     "s": "Mięso i ryby",
+     "rule": "kurczak"
+    },
+    {
+     "n": "sałata rzymska",
+     "q": 1,
+     "u": "szt",
+     "s": "Warzywa",
+     "rule": "sałata rzymska"
+    },
+    {
+     "n": "pomidor",
+     "q": 2,
+     "u": "szt",
+     "s": "Warzywa",
+     "rule": "pomidor"
+    },
+    {
+     "n": "ogórek zielony",
+     "q": 1,
+     "u": "szt",
+     "s": "Warzywa",
+     "rule": "ogórek zielony"
+    },
+    {
+     "n": "papryka czerwona",
+     "q": 1,
+     "u": "szt",
+     "s": "Warzywa",
+     "rule": "papryka czerwona"
+    },
+    {
+     "n": "jogurt naturalny",
+     "q": 100,
+     "u": "g",
+     "s": "Nabiał i jaja",
+     "rule": "jogurt naturalny"
+    },
+    {
+     "n": "czosnek",
+     "q": 1,
+     "u": "ząbek",
+     "s": "Warzywa",
+     "rule": "czosnek"
+    },
+    {
+     "n": "zioła prowansalskie",
+     "q": 1,
+     "u": "łyżeczka",
+     "s": "Tłuszcze i przyprawy",
+     "rule": "zioła prowansalskie"
+    },
+    {
+     "n": "pieczywo razowe",
+     "q": 3,
+     "u": "kromka",
+     "s": "Zboża i pieczywo",
+     "rule": "pieczywo razowe"
+    },
+    {
+     "n": "sól",
+     "q": 0.5,
+     "u": "łyżeczka",
+     "s": "Tłuszcze i przyprawy",
+     "rule": "sól",
+     "drobny": true
+    }
+   ],
+   "kroki": [
+    {
+     "t": "Pierś oprósz ziołami i solą, upiecz w air fryerze albo w piekarniku.",
+     "p": "180°C · 18 min",
+     "timer": 1080
+    },
+    {
+     "t": "Sałatę porwij, warzywa pokrój."
+    },
+    {
+     "t": "Jogurt wymieszaj z czosnkiem i solą. Pokrojoną pierś ułóż na sałatce i polej sosem."
+    }
+   ]
+  },
+  {
+   "id": "piers-ser-kozi-pomidor",
+   "name": "Pierś faszerowana serem kozim i pomidorem",
+   "posilki": [
+    "obiad"
+   ],
+   "porcje": 3,
+   "czas": 45,
+   "urz": [],
+   "kcal": 440,
+   "kat": "danie",
+   "opis": "Soczysta, bo nadzienie trzyma wilgoć.",
+   "skladniki": [
+    {
+     "n": "filet z kurczaka",
+     "q": 500,
+     "u": "g",
+     "s": "Mięso i ryby",
+     "rule": "kurczak"
+    },
+    {
+     "n": "ser kozi",
+     "q": 80,
+     "u": "g",
+     "s": "Nabiał i jaja",
+     "rule": "ser kozi"
+    },
+    {
+     "n": "pomidor",
+     "q": 2,
+     "u": "szt",
+     "s": "Warzywa",
+     "rule": "pomidor"
+    },
+    {
+     "n": "bazylia",
+     "q": 1,
+     "u": "garść",
+     "s": "Tłuszcze i przyprawy",
+     "rule": "bazylia"
+    },
+    {
+     "n": "oregano",
+     "q": 1,
+     "u": "łyżeczka",
+     "s": "Tłuszcze i przyprawy",
+     "rule": "oregano"
+    },
+    {
+     "n": "quinoa",
+     "q": 150,
+     "u": "g",
+     "s": "Zboża i pieczywo",
+     "rule": "quinoa"
+    },
+    {
+     "n": "rukola",
+     "q": 2,
+     "u": "garść",
+     "s": "Warzywa",
+     "rule": "rukola"
+    },
+    {
+     "n": "sól",
+     "q": 0.5,
+     "u": "łyżeczka",
+     "s": "Tłuszcze i przyprawy",
+     "rule": "sól",
+     "drobny": true
+    }
+   ],
+   "kroki": [
+    {
+     "t": "W każdym filecie natnij kieszonkę."
+    },
+    {
+     "t": "Włóż plaster sera, plaster pomidora i listki bazylii. Spnij wykałaczką, oprósz oregano i solą."
+    },
+    {
+     "t": "Pieczenie w piekarniku (bez tłuszczu na blasze, na papierze do pieczenia).",
+     "p": "180°C · 30 min",
+     "timer": 1800
+    },
+    {
+     "t": "Ugotuj quinoa według przepisu na opakowaniu."
+    },
+    {
+     "t": "Podaj z rukolą i resztą pomidora."
+    }
+   ]
+  },
+  {
+   "id": "zapiekanka-kurczak-ryz",
+   "name": "Zapiekanka z kurczakiem, ryżem i brokułem",
+   "posilki": [
+    "obiad"
+   ],
+   "porcje": 3,
+   "czas": 55,
+   "urz": [],
+   "kcal": 480,
+   "kat": "danie",
+   "opis": "Jedno naczynie, zalewa z jogurtu i jajek zamiast sera żółtego.",
+   "skladniki": [
+    {
+     "n": "filet z kurczaka",
+     "q": 400,
+     "u": "g",
+     "s": "Mięso i ryby",
+     "rule": "kurczak"
+    },
+    {
+     "n": "ryż brązowy",
+     "q": 150,
+     "u": "g",
+     "s": "Zboża i pieczywo",
+     "rule": "ryż brązowy"
+    },
+    {
+     "n": "brokuły",
+     "q": 1,
+     "u": "szt",
+     "s": "Warzywa",
+     "rule": "brokuły"
+    },
+    {
+     "n": "jajka",
+     "q": 2,
+     "u": "szt",
+     "s": "Nabiał i jaja",
+     "rule": "jajka"
+    },
+    {
+     "n": "jogurt naturalny",
+     "q": 200,
+     "u": "g",
+     "s": "Nabiał i jaja",
+     "rule": "jogurt naturalny"
+    },
+    {
+     "n": "ser owczy",
+     "q": 50,
+     "u": "g",
+     "s": "Nabiał i jaja",
+     "rule": "ser owczy"
+    },
+    {
+     "n": "majeranek",
+     "q": 1,
+     "u": "łyżeczka",
+     "s": "Tłuszcze i przyprawy",
+     "rule": "majeranek"
+    },
+    {
+     "n": "sól",
+     "q": 0.5,
+     "u": "łyżeczka",
+     "s": "Tłuszcze i przyprawy",
+     "rule": "sól",
+     "drobny": true
+    }
+   ],
+   "kroki": [
+    {
+     "t": "Ugotuj ryż według przepisu na opakowaniu."
+    },
+    {
+     "t": "Kurczaka pokrój w kostkę, brokuł w małe różyczki."
+    },
+    {
+     "t": "W naczyniu wymieszaj ryż, kurczaka i brokuł. Jajka roztrzep z jogurtem, majerankiem i solą, zalej."
+    },
+    {
+     "t": "Posyp pokruszonym serem i piecz.",
+     "p": "180°C · 30 min",
+     "timer": 1800
+    }
+   ]
+  },
+  {
+   "id": "pulpety-kurczak-koperek",
+   "name": "Pulpety z kurczaka w sosie koperkowym",
+   "posilki": [
+    "obiad"
+   ],
+   "porcje": 3,
+   "czas": 45,
+   "urz": [],
+   "kcal": 430,
+   "kat": "danie",
+   "opis": "Gotowane pulpety, miękkie i delikatne.",
+   "skladniki": [
+    {
+     "n": "mielony filet z kurczaka",
+     "q": 500,
+     "u": "g",
+     "s": "Mięso i ryby",
+     "rule": "kurczak"
+    },
+    {
+     "n": "jajka",
+     "q": 1,
+     "u": "szt",
+     "s": "Nabiał i jaja",
+     "rule": "jajka"
+    },
+    {
+     "n": "płatki owsiane górskie",
+     "q": 30,
+     "u": "g",
+     "s": "Zboża i pieczywo",
+     "rule": "płatki owsiane górskie"
+    },
+    {
+     "n": "cebula",
+     "q": 1,
+     "u": "szt",
+     "s": "Warzywa",
+     "rule": "cebula"
+    },
+    {
+     "n": "woda",
+     "q": 700,
+     "u": "ml",
+     "s": "Inne",
+     "neutral": true
+    },
+    {
+     "n": "marchewka świeża",
+     "q": 2,
+     "u": "szt",
+     "s": "Warzywa",
+     "rule": "świeża marchewka"
+    },
+    {
+     "n": "jogurt naturalny",
+     "q": 200,
+     "u": "g",
+     "s": "Nabiał i jaja",
+     "rule": "jogurt naturalny"
+    },
+    {
+     "n": "koperek",
+     "q": 1,
+     "u": "pęczek",
+     "s": "Warzywa",
+     "rule": "koper"
+    },
+    {
+     "n": "kasza jaglana",
+     "q": 150,
+     "u": "g",
+     "s": "Zboża i pieczywo",
+     "rule": "kasza jaglana"
+    },
+    {
+     "n": "sól",
+     "q": 0.5,
+     "u": "łyżeczka",
+     "s": "Tłuszcze i przyprawy",
+     "rule": "sól",
+     "drobny": true
+    }
+   ],
+   "kroki": [
+    {
+     "t": "Mięso wymieszaj z jajkiem, płatkami, startą cebulą i solą. Uformuj kulki."
+    },
+    {
+     "t": "W garnku zagotuj wodę z marchewką, wkładaj pulpety i gotuj na małym ogniu.",
+     "p": "20 min",
+     "timer": 1200
+    },
+    {
+     "t": "Ugotuj kaszę według przepisu na opakowaniu."
+    },
+    {
+     "t": "Szklankę wywaru przestudź, wymieszaj z jogurtem i koperkiem, polej pulpety."
+    }
+   ]
+  },
+  {
+   "id": "kotleciki-kurczak-af",
+   "name": "Kotleciki z kurczaka z air fryera z fasolką",
+   "posilki": [
+    "obiad"
+   ],
+   "porcje": 3,
+   "czas": 35,
+   "urz": [
+    "af"
+   ],
+   "kcal": 420,
+   "kat": "danie",
+   "opis": "Mielone z dodatkiem warzyw, bez smażenia.",
+   "skladniki": [
+    {
+     "n": "mielony filet z kurczaka",
+     "q": 500,
+     "u": "g",
+     "s": "Mięso i ryby",
+     "rule": "kurczak"
+    },
+    {
+     "n": "jajka",
+     "q": 1,
+     "u": "szt",
+     "s": "Nabiał i jaja",
+     "rule": "jajka"
+    },
+    {
+     "n": "marchewka świeża",
+     "q": 1,
+     "u": "szt",
+     "s": "Warzywa",
+     "rule": "świeża marchewka"
+    },
+    {
+     "n": "cebula",
+     "q": 1,
+     "u": "szt",
+     "s": "Warzywa",
+     "rule": "cebula"
+    },
+    {
+     "n": "majeranek",
+     "q": 1,
+     "u": "łyżeczka",
+     "s": "Tłuszcze i przyprawy",
+     "rule": "majeranek"
+    },
+    {
+     "n": "fasolka szparagowa",
+     "q": 300,
+     "u": "g",
+     "s": "Warzywa",
+     "rule": "fasolka szparagowa"
+    },
+    {
+     "n": "kasza gryczana",
+     "q": 150,
+     "u": "g",
+     "s": "Zboża i pieczywo",
+     "rule": "kasza gryczana"
+    },
+    {
+     "n": "sól",
+     "q": 0.5,
+     "u": "łyżeczka",
+     "s": "Tłuszcze i przyprawy",
+     "rule": "sól",
+     "drobny": true
+    }
+   ],
+   "kroki": [
+    {
+     "t": "Mięso wymieszaj z jajkiem, startą marchewką, cebulą, majerankiem i solą. Uformuj małe kotleciki."
+    },
+    {
+     "t": "Piecz, w połowie obróć.",
+     "dev": "af",
+     "p": "185°C · 14 min",
+     "timer": 840
+    },
+    {
+     "t": "Ugotuj kaszę według przepisu na opakowaniu."
+    },
+    {
+     "t": "Fasolkę ugotuj na parze.",
+     "timer": 480
+    }
+   ]
+  },
+  {
+   "id": "kurczak-para-imbir-ryz-dziki",
+   "name": "Kurczak na parze z imbirem i ryżem dzikim",
+   "posilki": [
+    "obiad"
+   ],
+   "porcje": 3,
+   "czas": 45,
+   "urz": [],
+   "kcal": 400,
+   "kat": "danie",
+   "opis": "Bardzo lekki obiad gotowany na parze.",
+   "skladniki": [
+    {
+     "n": "filet z kurczaka",
+     "q": 450,
+     "u": "g",
+     "s": "Mięso i ryby",
+     "rule": "kurczak"
+    },
+    {
+     "n": "imbir świeży",
+     "q": 1,
+     "u": "łyżeczka",
+     "s": "Tłuszcze i przyprawy",
+     "rule": "imbir"
+    },
+    {
+     "n": "czosnek",
+     "q": 1,
+     "u": "ząbek",
+     "s": "Warzywa",
+     "rule": "czosnek"
+    },
+    {
+     "n": "ryż dziki",
+     "q": 150,
+     "u": "g",
+     "s": "Zboża i pieczywo",
+     "rule": "ryż dziki"
+    },
+    {
+     "n": "brokuły",
+     "q": 1,
+     "u": "szt",
+     "s": "Warzywa",
+     "rule": "brokuły"
+    },
+    {
+     "n": "marchewka świeża",
+     "q": 2,
+     "u": "szt",
+     "s": "Warzywa",
+     "rule": "świeża marchewka"
+    },
+    {
+     "n": "sól",
+     "q": 0.5,
+     "u": "łyżeczka",
+     "s": "Tłuszcze i przyprawy",
+     "rule": "sól",
+     "drobny": true
+    }
+   ],
+   "kroki": [
+    {
+     "t": "Kurczaka pokrój w paski, wymieszaj z imbirem, czosnkiem i solą."
+    },
+    {
+     "t": "Gotuj na parze razem z marchewką i brokułem.",
+     "p": "15 min",
+     "timer": 900
+    },
+    {
+     "t": "Ugotuj ryż dziki (około 40 minut) według przepisu na opakowaniu."
+    }
+   ]
+  },
+  {
+   "id": "kurczak-jogurt-oregano",
+   "name": "Kurczak marynowany w jogurcie z oregano i sałatką",
+   "posilki": [
+    "obiad"
+   ],
+   "porcje": 3,
+   "czas": 40,
+   "urz": [],
+   "kcal": 420,
+   "kat": "danie",
+   "opis": "Marynata z jogurtu robi mięso bardzo miękkie.",
+   "skladniki": [
+    {
+     "n": "filet z kurczaka",
+     "q": 450,
+     "u": "g",
+     "s": "Mięso i ryby",
+     "rule": "kurczak"
+    },
+    {
+     "n": "jogurt naturalny",
+     "q": 150,
+     "u": "g",
+     "s": "Nabiał i jaja",
+     "rule": "jogurt naturalny"
+    },
+    {
+     "n": "oregano",
+     "q": 1,
+     "u": "łyżeczka",
+     "s": "Tłuszcze i przyprawy",
+     "rule": "oregano"
+    },
+    {
+     "n": "czosnek",
+     "q": 2,
+     "u": "ząbek",
+     "s": "Warzywa",
+     "rule": "czosnek"
+    },
+    {
+     "n": "kasza gryczana",
+     "q": 150,
+     "u": "g",
+     "s": "Zboża i pieczywo",
+     "rule": "kasza gryczana"
+    },
+    {
+     "n": "pomidor",
+     "q": 2,
+     "u": "szt",
+     "s": "Warzywa",
+     "rule": "pomidor"
+    },
+    {
+     "n": "ogórek zielony",
+     "q": 1,
+     "u": "szt",
+     "s": "Warzywa",
+     "rule": "ogórek zielony"
+    },
+    {
+     "n": "ser owczy",
+     "q": 40,
+     "u": "g",
+     "s": "Nabiał i jaja",
+     "rule": "ser owczy"
+    },
+    {
+     "n": "sól",
+     "q": 0.5,
+     "u": "łyżeczka",
+     "s": "Tłuszcze i przyprawy",
+     "rule": "sól",
+     "drobny": true
+    }
+   ],
+   "kroki": [
+    {
+     "t": "Kurczaka zalej jogurtem z oregano, czosnkiem i solą. Odstaw na co najmniej 30 minut."
+    },
+    {
+     "t": "Pieczenie w piekarniku (bez tłuszczu na blasze, na papierze do pieczenia).",
+     "p": "190°C · 25 min",
+     "timer": 1500
+    },
+    {
+     "t": "Ugotuj kaszę według przepisu na opakowaniu."
+    },
+    {
+     "t": "Pomidory, ogórka i ser pokrój na sałatkę."
+    }
+   ]
+  },
+  {
+   "id": "udka-kapusta-kiszona",
+   "name": "Udka duszone z kapustą kiszoną",
+   "posilki": [
+    "obiad"
+   ],
+   "porcje": 3,
+   "czas": 70,
+   "urz": [],
+   "kcal": 450,
+   "kat": "danie",
+   "opis": "Kiszonki są w zaleceniach. Danie na chłodne dni.",
+   "skladniki": [
+    {
+     "n": "udka z kurczaka bez skóry",
+     "q": 700,
+     "u": "g",
+     "s": "Mięso i ryby",
+     "rule": "kurczak"
+    },
+    {
+     "n": "kapusta kiszona",
+     "q": 500,
+     "u": "g",
+     "s": "Warzywa",
+     "rule": "kiszonki"
+    },
+    {
+     "n": "cebula",
+     "q": 1,
+     "u": "szt",
+     "s": "Warzywa",
+     "rule": "cebula"
+    },
+    {
+     "n": "marchewka świeża",
+     "q": 1,
+     "u": "szt",
+     "s": "Warzywa",
+     "rule": "świeża marchewka"
+    },
+    {
+     "n": "kmin rzymski",
+     "q": 1,
+     "u": "łyżeczka",
+     "s": "Tłuszcze i przyprawy",
+     "rule": "kmin rzymski"
+    },
+    {
+     "n": "ziele angielskie",
+     "q": 3,
+     "u": "szt",
+     "s": "Tłuszcze i przyprawy",
+     "rule": "ziele angielskie"
+    },
+    {
+     "n": "woda",
+     "q": 300,
+     "u": "ml",
+     "s": "Inne",
+     "neutral": true
+    },
+    {
+     "n": "kasza gryczana",
+     "q": 150,
+     "u": "g",
+     "s": "Zboża i pieczywo",
+     "rule": "kasza gryczana"
+    },
+    {
+     "n": "sól",
+     "q": 0.5,
+     "u": "łyżeczka",
+     "s": "Tłuszcze i przyprawy",
+     "rule": "sól",
+     "drobny": true
+    }
+   ],
+   "kroki": [
+    {
+     "t": "Kapustę odciśnij i posiekaj. Cebulę pokrój, marchewkę zetrzyj."
+    },
+    {
+     "t": "Udka, kapustę, cebulę, marchewkę i przyprawy włóż do garnka, podlej wodą. Duś pod przykryciem.",
+     "p": "60 min",
+     "timer": 3600
+    },
+    {
+     "t": "Ugotuj kaszę według przepisu na opakowaniu."
+    }
+   ]
+  },
+  {
+   "id": "potrawka-kurczak-groszek",
+   "name": "Potrawka z kurczaka z groszkiem i marchewką",
+   "posilki": [
+    "obiad"
+   ],
+   "porcje": 3,
+   "czas": 35,
+   "urz": [
+    "tm6"
+   ],
+   "kcal": 420,
+   "kat": "danie",
+   "opis": "Szybka potrawka z Thermomiksa.",
+   "skladniki": [
+    {
+     "n": "filet z kurczaka",
+     "q": 450,
+     "u": "g",
+     "s": "Mięso i ryby",
+     "rule": "kurczak"
+    },
+    {
+     "n": "zielony groszek",
+     "q": 200,
+     "u": "g",
+     "s": "Warzywa",
+     "rule": "zielony groszek"
+    },
+    {
+     "n": "marchewka świeża",
+     "q": 2,
+     "u": "szt",
+     "s": "Warzywa",
+     "rule": "świeża marchewka"
+    },
+    {
+     "n": "cebula",
+     "q": 1,
+     "u": "szt",
+     "s": "Warzywa",
+     "rule": "cebula"
+    },
+    {
+     "n": "woda",
+     "q": 250,
+     "u": "ml",
+     "s": "Inne",
+     "neutral": true
+    },
+    {
+     "n": "jogurt naturalny",
+     "q": 150,
+     "u": "g",
+     "s": "Nabiał i jaja",
+     "rule": "jogurt naturalny"
+    },
+    {
+     "n": "koperek",
+     "q": 1,
+     "u": "pęczek",
+     "s": "Warzywa",
+     "rule": "koper"
+    },
+    {
+     "n": "ryż brązowy",
+     "q": 150,
+     "u": "g",
+     "s": "Zboża i pieczywo",
+     "rule": "ryż brązowy"
+    },
+    {
+     "n": "sól",
+     "q": 0.5,
+     "u": "łyżeczka",
+     "s": "Tłuszcze i przyprawy",
+     "rule": "sól",
+     "drobny": true
+    }
+   ],
+   "kroki": [
+    {
+     "t": "Cebulę posiekaj.",
+     "dev": "tm6",
+     "p": "obr. 5 · 4 s"
+    },
+    {
+     "t": "Dodaj pokrojonego kurczaka, marchewkę i wodę. Gotuj.",
+     "dev": "tm6",
+     "p": "100°C · wstecz · obr. łyżki · 15 min",
+     "timer": 900
+    },
+    {
+     "t": "Dodaj groszek i gotuj dalej.",
+     "dev": "tm6",
+     "p": "100°C · wstecz · obr. łyżki · 5 min",
+     "timer": 300
+    },
+    {
+     "t": "Lekko przestudź i wmieszaj jogurt z koperkiem. Podaj z ryżem."
+    }
+   ],
+   "uwagi": "Ustawienia TM6 są orientacyjne."
+  },
+  {
+   "id": "zupa-kurczak-jaglana",
+   "name": "Zupa z kurczakiem, kaszą jaglaną i marchewką",
+   "posilki": [
+    "obiad",
+    "kolacja"
+   ],
+   "porcje": 3,
+   "czas": 45,
+   "urz": [],
+   "kcal": 320,
+   "kat": "danie",
+   "opis": "Sycąca zupa na obiad albo kolację.",
+   "skladniki": [
+    {
+     "n": "filet z kurczaka",
+     "q": 300,
+     "u": "g",
+     "s": "Mięso i ryby",
+     "rule": "kurczak"
+    },
+    {
+     "n": "kasza jaglana",
+     "q": 60,
+     "u": "g",
+     "s": "Zboża i pieczywo",
+     "rule": "kasza jaglana"
+    },
+    {
+     "n": "marchewka świeża",
+     "q": 3,
+     "u": "szt",
+     "s": "Warzywa",
+     "rule": "świeża marchewka"
+    },
+    {
+     "n": "cebula",
+     "q": 1,
+     "u": "szt",
+     "s": "Warzywa",
+     "rule": "cebula"
+    },
+    {
+     "n": "zielony groszek",
+     "q": 100,
+     "u": "g",
+     "s": "Warzywa",
+     "rule": "zielony groszek"
+    },
+    {
+     "n": "lubczyk",
+     "q": 1,
+     "u": "łyżeczka",
+     "s": "Tłuszcze i przyprawy",
+     "rule": "lubczyk"
+    },
+    {
+     "n": "woda",
+     "q": 1500,
+     "u": "ml",
+     "s": "Inne",
+     "neutral": true
+    },
+    {
+     "n": "koperek",
+     "q": 1,
+     "u": "pęczek",
+     "s": "Warzywa",
+     "rule": "koper"
+    },
+    {
+     "n": "sól",
+     "q": 0.5,
+     "u": "łyżeczka",
+     "s": "Tłuszcze i przyprawy",
+     "rule": "sól",
+     "drobny": true
+    }
+   ],
+   "kroki": [
+    {
+     "t": "Kurczaka zalej wodą, zagotuj i zbierz szumowiny."
+    },
+    {
+     "t": "Dodaj marchewkę, cebulę, lubczyk i gotuj.",
+     "p": "20 min",
+     "timer": 1200
+    },
+    {
+     "t": "Dodaj przepłukaną kaszę i groszek, gotuj do miękkości.",
+     "p": "15 min",
+     "timer": 900
+    },
+    {
+     "t": "Kurczaka pokrój i wrzuć z powrotem, posyp koperkiem."
+    }
+   ]
+  },
+  {
+   "id": "kurczak-papryka-quinoa",
+   "name": "Kurczak duszony z trzema paprykami i quinoa",
+   "posilki": [
+    "obiad"
+   ],
+   "porcje": 3,
+   "czas": 35,
+   "urz": [],
+   "kcal": 430,
+   "kat": "danie",
+   "opis": "Kolorowe danie, dużo witaminy C.",
+   "skladniki": [
+    {
+     "n": "filet z kurczaka",
+     "q": 450,
+     "u": "g",
+     "s": "Mięso i ryby",
+     "rule": "kurczak"
+    },
+    {
+     "n": "papryka czerwona",
+     "q": 1,
+     "u": "szt",
+     "s": "Warzywa",
+     "rule": "papryka czerwona"
+    },
+    {
+     "n": "papryka żółta",
+     "q": 1,
+     "u": "szt",
+     "s": "Warzywa",
+     "rule": "żółta"
+    },
+    {
+     "n": "papryka zielona",
+     "q": 1,
+     "u": "szt",
+     "s": "Warzywa",
+     "rule": "zielona"
+    },
+    {
+     "n": "cebula",
+     "q": 1,
+     "u": "szt",
+     "s": "Warzywa",
+     "rule": "cebula"
+    },
+    {
+     "n": "papryka łagodna",
+     "q": 1,
+     "u": "łyżeczka",
+     "s": "Tłuszcze i przyprawy",
+     "rule": "papryka łagodna"
+    },
+    {
+     "n": "oliwa z oliwek",
+     "q": 1,
+     "u": "łyżeczka",
+     "s": "Tłuszcze i przyprawy",
+     "rule": "oliwa z oliwek"
+    },
+    {
+     "n": "woda",
+     "q": 150,
+     "u": "ml",
+     "s": "Inne",
+     "neutral": true
+    },
+    {
+     "n": "quinoa",
+     "q": 150,
+     "u": "g",
+     "s": "Zboża i pieczywo",
+     "rule": "quinoa"
+    },
+    {
+     "n": "sól",
+     "q": 0.5,
+     "u": "łyżeczka",
+     "s": "Tłuszcze i przyprawy",
+     "rule": "sól",
+     "drobny": true
+    }
+   ],
+   "kroki": [
+    {
+     "t": "Kurczaka i paprykę pokrój w paski, cebulę w piórka."
+    },
+    {
+     "t": "Na łyżeczce oliwy zeszklij cebulę, dodaj kurczaka, paprykę, przyprawę i wodę. Duś.",
+     "p": "15 min",
+     "timer": 900
+    },
+    {
+     "t": "Ugotuj quinoa według przepisu na opakowaniu."
+    }
+   ]
+  },
+  {
+   "id": "podudzia-prowansalskie-warzywa",
+   "name": "Podudzia z ziołami prowansalskimi i pieczonymi warzywami",
+   "posilki": [
+    "obiad"
+   ],
+   "porcje": 3,
+   "czas": 55,
+   "urz": [],
+   "kcal": 470,
+   "kat": "danie",
+   "opis": "Wszystko piecze się w jednym naczyniu.",
+   "skladniki": [
+    {
+     "n": "podudzia z kurczaka bez skóry",
+     "q": 800,
+     "u": "g",
+     "s": "Mięso i ryby",
+     "rule": "kurczak"
+    },
+    {
+     "n": "zioła prowansalskie",
+     "q": 2,
+     "u": "łyżeczka",
+     "s": "Tłuszcze i przyprawy",
+     "rule": "zioła prowansalskie"
+    },
+    {
+     "n": "marchewka świeża",
+     "q": 3,
+     "u": "szt",
+     "s": "Warzywa",
+     "rule": "świeża marchewka"
+    },
+    {
+     "n": "papryka czerwona",
+     "q": 1,
+     "u": "szt",
+     "s": "Warzywa",
+     "rule": "papryka czerwona"
+    },
+    {
+     "n": "cebula",
+     "q": 1,
+     "u": "szt",
+     "s": "Warzywa",
+     "rule": "cebula"
+    },
+    {
+     "n": "czosnek",
+     "q": 3,
+     "u": "ząbek",
+     "s": "Warzywa",
+     "rule": "czosnek"
+    },
+    {
+     "n": "oliwa z oliwek",
+     "q": 1,
+     "u": "łyżka",
+     "s": "Tłuszcze i przyprawy",
+     "rule": "oliwa z oliwek"
+    },
+    {
+     "n": "kasza jęczmienna mazurska",
+     "q": 150,
+     "u": "g",
+     "s": "Zboża i pieczywo",
+     "rule": "kasza jęczmienna mazurska"
+    },
+    {
+     "n": "sól",
+     "q": 0.5,
+     "u": "łyżeczka",
+     "s": "Tłuszcze i przyprawy",
+     "rule": "sól",
+     "drobny": true
+    }
+   ],
+   "kroki": [
+    {
+     "t": "Warzywa pokrój w duże kawałki, wymieszaj z oliwą, ziołami i solą."
+    },
+    {
+     "t": "Ułóż w naczyniu, na wierzch połóż natarte ziołami podudzia."
+    },
+    {
+     "t": "Piecz pod przykryciem, ostatnie 15 minut bez.",
+     "p": "190°C · 45 min",
+     "timer": 2700
+    },
+    {
+     "t": "Ugotuj kaszę według przepisu na opakowaniu."
+    }
+   ],
+   "uwagi": "Łyżka oliwy na całe naczynie dla 3 osób."
+  },
+  {
+   "id": "piers-af-tymianek",
+   "name": "Pierś z air fryera w tymianku z quinoa i rukolą",
+   "posilki": [
+    "obiad"
+   ],
+   "porcje": 3,
+   "czas": 30,
+   "urz": [
+    "af"
+   ],
+   "kcal": 400,
+   "kat": "danie",
+   "opis": "Szybki obiad w 30 minut.",
+   "skladniki": [
+    {
+     "n": "filet z kurczaka",
+     "q": 450,
+     "u": "g",
+     "s": "Mięso i ryby",
+     "rule": "kurczak"
+    },
+    {
+     "n": "tymianek",
+     "q": 1,
+     "u": "łyżeczka",
+     "s": "Tłuszcze i przyprawy",
+     "rule": "tymianek"
+    },
+    {
+     "n": "czosnek",
+     "q": 1,
+     "u": "ząbek",
+     "s": "Warzywa",
+     "rule": "czosnek"
+    },
+    {
+     "n": "oliwa z oliwek",
+     "q": 1,
+     "u": "łyżeczka",
+     "s": "Tłuszcze i przyprawy",
+     "rule": "oliwa z oliwek"
+    },
+    {
+     "n": "quinoa",
+     "q": 150,
+     "u": "g",
+     "s": "Zboża i pieczywo",
+     "rule": "quinoa"
+    },
+    {
+     "n": "rukola",
+     "q": 2,
+     "u": "garść",
+     "s": "Warzywa",
+     "rule": "rukola"
+    },
+    {
+     "n": "pomidor",
+     "q": 2,
+     "u": "szt",
+     "s": "Warzywa",
+     "rule": "pomidor"
+    },
+    {
+     "n": "sól",
+     "q": 0.5,
+     "u": "łyżeczka",
+     "s": "Tłuszcze i przyprawy",
+     "rule": "sól",
+     "drobny": true
+    }
+   ],
+   "kroki": [
+    {
+     "t": "Pierś przekrój wzdłuż na cieńsze płaty, natrzyj tymiankiem, czosnkiem, oliwą i solą."
+    },
+    {
+     "t": "Piecz, w połowie obróć.",
+     "dev": "af",
+     "p": "190°C · 14 min",
+     "timer": 840
+    },
+    {
+     "t": "Ugotuj quinoa według przepisu na opakowaniu."
+    },
+    {
+     "t": "Podaj z rukolą i pomidorami."
+    }
+   ]
+  },
+  {
+   "id": "pasta-kurczak-koper",
+   "name": "Pasta z kurczaka z koperkiem na kanapki",
+   "posilki": [
+    "kolacja",
+    "ii"
+   ],
+   "porcje": 3,
+   "czas": 25,
+   "urz": [],
+   "kcal": 300,
+   "kat": "danie",
+   "opis": "Na kolację albo do szkoły. Wykorzystaj pierś z obiadu.",
+   "skladniki": [
+    {
+     "n": "filet z kurczaka",
+     "q": 250,
+     "u": "g",
+     "s": "Mięso i ryby",
+     "rule": "kurczak"
+    },
+    {
+     "n": "jogurt naturalny",
+     "q": 80,
+     "u": "g",
+     "s": "Nabiał i jaja",
+     "rule": "jogurt naturalny"
+    },
+    {
+     "n": "koperek",
+     "q": 1,
+     "u": "pęczek",
+     "s": "Warzywa",
+     "rule": "koper"
+    },
+    {
+     "n": "ogórek zielony",
+     "q": 1,
+     "u": "szt",
+     "s": "Warzywa",
+     "rule": "ogórek zielony"
+    },
+    {
+     "n": "pieczywo razowe",
+     "q": 6,
+     "u": "kromka",
+     "s": "Zboża i pieczywo",
+     "rule": "pieczywo razowe"
+    },
+    {
+     "n": "sałata zielona",
+     "q": 1,
+     "u": "szt",
+     "s": "Warzywa",
+     "rule": "sałata zielona"
+    },
+    {
+     "n": "sól",
+     "q": 0.5,
+     "u": "łyżeczka",
+     "s": "Tłuszcze i przyprawy",
+     "rule": "sól",
+     "drobny": true
+    }
+   ],
+   "kroki": [
+    {
+     "t": "Pierś ugotuj w osolonej wodzie i ostudź.",
+     "p": "20 min",
+     "timer": 1200
+    },
+    {
+     "t": "Drobno posiekaj albo zmiksuj z jogurtem, koperkiem i solą."
+    },
+    {
+     "t": "Posmaruj pieczywo, dodaj sałatę i plasterki ogórka."
+    }
+   ]
+  },
+  {
+   "id": "kurczak-majeranek-amarantus",
+   "name": "Kurczak w majeranku z amarantusem i fasolką",
+   "posilki": [
+    "obiad"
+   ],
+   "porcje": 3,
+   "czas": 35,
+   "urz": [],
+   "kcal": 410,
+   "kat": "danie",
+   "opis": "Amarantus to ciekawa odmiana od kaszy.",
+   "skladniki": [
+    {
+     "n": "filet z kurczaka",
+     "q": 450,
+     "u": "g",
+     "s": "Mięso i ryby",
+     "rule": "kurczak"
+    },
+    {
+     "n": "majeranek",
+     "q": 2,
+     "u": "łyżeczka",
+     "s": "Tłuszcze i przyprawy",
+     "rule": "majeranek"
+    },
+    {
+     "n": "cebula",
+     "q": 1,
+     "u": "szt",
+     "s": "Warzywa",
+     "rule": "cebula"
+    },
+    {
+     "n": "oliwa z oliwek",
+     "q": 1,
+     "u": "łyżeczka",
+     "s": "Tłuszcze i przyprawy",
+     "rule": "oliwa z oliwek"
+    },
+    {
+     "n": "woda",
+     "q": 150,
+     "u": "ml",
+     "s": "Inne",
+     "neutral": true
+    },
+    {
+     "n": "amarantus",
+     "q": 150,
+     "u": "g",
+     "s": "Zboża i pieczywo",
+     "rule": "amarantus"
+    },
+    {
+     "n": "fasolka szparagowa",
+     "q": 300,
+     "u": "g",
+     "s": "Warzywa",
+     "rule": "fasolka szparagowa"
+    },
+    {
+     "n": "sól",
+     "q": 0.5,
+     "u": "łyżeczka",
+     "s": "Tłuszcze i przyprawy",
+     "rule": "sól",
+     "drobny": true
+    }
+   ],
+   "kroki": [
+    {
+     "t": "Kurczaka pokrój w kostkę, oprósz majerankiem i solą."
+    },
+    {
+     "t": "Z cebulą na łyżeczce oliwy krótko podsmaż na małym ogniu, podlej wodą i duś.",
+     "p": "15 min",
+     "timer": 900
+    },
+    {
+     "t": "Ugotuj amarantus według przepisu na opakowaniu."
+    },
+    {
+     "t": "Fasolkę ugotuj na parze.",
+     "timer": 480
+    }
+   ]
+  },
+  {
+   "id": "kurczak-meksyk-lagodny",
+   "name": "Łagodny kurczak po meksykańsku z ryżem",
+   "posilki": [
+    "obiad"
+   ],
+   "porcje": 3,
+   "czas": 35,
+   "urz": [],
+   "kcal": 450,
+   "kat": "danie",
+   "opis": "Kmin, kolendra i słodka papryka, bez ostrych przypraw.",
+   "skladniki": [
+    {
+     "n": "filet z kurczaka",
+     "q": 450,
+     "u": "g",
+     "s": "Mięso i ryby",
+     "rule": "kurczak"
+    },
+    {
+     "n": "papryka czerwona",
+     "q": 1,
+     "u": "szt",
+     "s": "Warzywa",
+     "rule": "papryka czerwona"
+    },
+    {
+     "n": "papryka żółta",
+     "q": 1,
+     "u": "szt",
+     "s": "Warzywa",
+     "rule": "żółta"
+    },
+    {
+     "n": "zielony groszek",
+     "q": 150,
+     "u": "g",
+     "s": "Warzywa",
+     "rule": "zielony groszek"
+    },
+    {
+     "n": "pomidor",
+     "q": 3,
+     "u": "szt",
+     "s": "Warzywa",
+     "rule": "pomidor"
+    },
+    {
+     "n": "cebula",
+     "q": 1,
+     "u": "szt",
+     "s": "Warzywa",
+     "rule": "cebula"
+    },
+    {
+     "n": "kmin rzymski",
+     "q": 1,
+     "u": "łyżeczka",
+     "s": "Tłuszcze i przyprawy",
+     "rule": "kmin rzymski"
+    },
+    {
+     "n": "kolendra",
+     "q": 1,
+     "u": "łyżeczka",
+     "s": "Tłuszcze i przyprawy",
+     "rule": "kolendra"
+    },
+    {
+     "n": "ryż brązowy",
+     "q": 150,
+     "u": "g",
+     "s": "Zboża i pieczywo",
+     "rule": "ryż brązowy"
+    },
+    {
+     "n": "sól",
+     "q": 0.5,
+     "u": "łyżeczka",
+     "s": "Tłuszcze i przyprawy",
+     "rule": "sól",
+     "drobny": true
+    }
+   ],
+   "kroki": [
+    {
+     "t": "Cebulę, paprykę i pomidory pokrój w kostkę."
+    },
+    {
+     "t": "Kurczaka pokrój, dodaj warzywa, przyprawy i odrobinę wody. Duś pod przykryciem.",
+     "p": "20 min",
+     "timer": 1200
+    },
+    {
+     "t": "Dodaj groszek na ostatnie 5 minut."
+    },
+    {
+     "t": "Ugotuj ryż według przepisu na opakowaniu."
+    }
+   ]
+  },
+  {
+   "id": "makaron-kurczak-pomidory-tm6",
+   "name": "Makaron razowy z kurczakiem i pomidorami z TM6",
+   "posilki": [
+    "obiad"
+   ],
+   "porcje": 3,
+   "czas": 30,
+   "urz": [
+    "tm6"
+   ],
+   "kcal": 470,
+   "kat": "danie",
+   "opis": "Sos i mięso z Thermomiksa, makaron osobno.",
+   "skladniki": [
+    {
+     "n": "filet z kurczaka",
+     "q": 400,
+     "u": "g",
+     "s": "Mięso i ryby",
+     "rule": "kurczak"
+    },
+    {
+     "n": "pomidor",
+     "q": 4,
+     "u": "szt",
+     "s": "Warzywa",
+     "rule": "pomidor"
+    },
+    {
+     "n": "cebula",
+     "q": 1,
+     "u": "szt",
+     "s": "Warzywa",
+     "rule": "cebula"
+    },
+    {
+     "n": "czosnek",
+     "q": 1,
+     "u": "ząbek",
+     "s": "Warzywa",
+     "rule": "czosnek"
+    },
+    {
+     "n": "oregano",
+     "q": 1,
+     "u": "łyżeczka",
+     "s": "Tłuszcze i przyprawy",
+     "rule": "oregano"
+    },
+    {
+     "n": "oliwa z oliwek",
+     "q": 1,
+     "u": "łyżeczka",
+     "s": "Tłuszcze i przyprawy",
+     "rule": "oliwa z oliwek"
+    },
+    {
+     "n": "makaron razowy",
+     "q": 200,
+     "u": "g",
+     "s": "Zboża i pieczywo",
+     "rule": "makaron razowy"
+    },
+    {
+     "n": "sól",
+     "q": 0.5,
+     "u": "łyżeczka",
+     "s": "Tłuszcze i przyprawy",
+     "rule": "sól",
+     "drobny": true
+    }
+   ],
+   "kroki": [
+    {
+     "t": "Cebulę i czosnek posiekaj.",
+     "dev": "tm6",
+     "p": "obr. 5 · 4 s"
+    },
+    {
+     "t": "Dodaj oliwę i podgrzej.",
+     "dev": "tm6",
+     "p": "100°C · obr. 1 · 2 min",
+     "timer": 120
+    },
+    {
+     "t": "Dodaj pokrojone pomidory, kurczaka i oregano.",
+     "dev": "tm6",
+     "p": "100°C · wstecz · obr. łyżki · 18 min",
+     "timer": 1080
+    },
+    {
+     "t": "Ugotuj makaron według przepisu na opakowaniu."
+    }
+   ],
+   "uwagi": "Ustawienia TM6 są orientacyjne."
+  },
+  {
+   "id": "udka-af-kmin",
+   "name": "Udka z air fryera z kminem i ogórkiem kiszonym",
+   "posilki": [
+    "obiad"
+   ],
+   "porcje": 3,
+   "czas": 40,
+   "urz": [
+    "af"
+   ],
+   "kcal": 460,
+   "kat": "danie",
+   "opis": "Chrupiąca skórka bez skóry: przyprawy robią robotę.",
+   "skladniki": [
+    {
+     "n": "udka z kurczaka bez skóry",
+     "q": 700,
+     "u": "g",
+     "s": "Mięso i ryby",
+     "rule": "kurczak"
+    },
+    {
+     "n": "kmin rzymski",
+     "q": 1,
+     "u": "łyżeczka",
+     "s": "Tłuszcze i przyprawy",
+     "rule": "kmin rzymski"
+    },
+    {
+     "n": "papryka łagodna",
+     "q": 1,
+     "u": "łyżeczka",
+     "s": "Tłuszcze i przyprawy",
+     "rule": "papryka łagodna"
+    },
+    {
+     "n": "czosnek",
+     "q": 2,
+     "u": "ząbek",
+     "s": "Warzywa",
+     "rule": "czosnek"
+    },
+    {
+     "n": "kasza gryczana",
+     "q": 150,
+     "u": "g",
+     "s": "Zboża i pieczywo",
+     "rule": "kasza gryczana"
+    },
+    {
+     "n": "ogórki kiszone",
+     "q": 3,
+     "u": "szt",
+     "s": "Warzywa",
+     "rule": "kiszonki"
+    },
+    {
+     "n": "sól",
+     "q": 0.5,
+     "u": "łyżeczka",
+     "s": "Tłuszcze i przyprawy",
+     "rule": "sól",
+     "drobny": true
+    }
+   ],
+   "kroki": [
+    {
+     "t": "Udka natrzyj kminem, papryką, czosnkiem i solą."
+    },
+    {
+     "t": "Piecz, w połowie obróć.",
+     "dev": "af",
+     "p": "185°C · 25 min",
+     "timer": 1500
+    },
+    {
+     "t": "Ugotuj kaszę według przepisu na opakowaniu."
+    }
+   ]
+  },
+  {
+   "id": "kurczak-brokul-fasolka-ryz-dziki",
+   "name": "Kurczak duszony z brokułem i fasolką z ryżem dzikim",
+   "posilki": [
+    "obiad"
+   ],
+   "porcje": 3,
+   "czas": 45,
+   "urz": [],
+   "kcal": 410,
+   "kat": "danie",
+   "opis": "Zielony talerz pełen warzyw.",
+   "skladniki": [
+    {
+     "n": "filet z kurczaka",
+     "q": 450,
+     "u": "g",
+     "s": "Mięso i ryby",
+     "rule": "kurczak"
+    },
+    {
+     "n": "brokuły",
+     "q": 1,
+     "u": "szt",
+     "s": "Warzywa",
+     "rule": "brokuły"
+    },
+    {
+     "n": "fasolka szparagowa",
+     "q": 200,
+     "u": "g",
+     "s": "Warzywa",
+     "rule": "fasolka szparagowa"
+    },
+    {
+     "n": "czosnek",
+     "q": 2,
+     "u": "ząbek",
+     "s": "Warzywa",
+     "rule": "czosnek"
+    },
+    {
+     "n": "imbir świeży",
+     "q": 1,
+     "u": "łyżeczka",
+     "s": "Tłuszcze i przyprawy",
+     "rule": "imbir"
+    },
+    {
+     "n": "woda",
+     "q": 150,
+     "u": "ml",
+     "s": "Inne",
+     "neutral": true
+    },
+    {
+     "n": "ryż dziki",
+     "q": 150,
+     "u": "g",
+     "s": "Zboża i pieczywo",
+     "rule": "ryż dziki"
+    },
+    {
+     "n": "sól",
+     "q": 0.5,
+     "u": "łyżeczka",
+     "s": "Tłuszcze i przyprawy",
+     "rule": "sól",
+     "drobny": true
+    }
+   ],
+   "kroki": [
+    {
+     "t": "Ugotuj ryż dziki (około 40 minut) według przepisu na opakowaniu."
+    },
+    {
+     "t": "Kurczaka pokrój w paski, duś z czosnkiem, imbirem i wodą.",
+     "p": "10 min",
+     "timer": 600
+    },
+    {
+     "t": "Dodaj brokuł i fasolkę, duś do miękkości.",
+     "p": "8 min",
+     "timer": 480
+    }
+   ]
+  },
+  {
+   "id": "leczo-kurczak",
+   "name": "Leczo z kurczakiem",
+   "posilki": [
+    "obiad"
+   ],
+   "porcje": 3,
+   "czas": 40,
+   "urz": [],
+   "kcal": 380,
+   "kat": "danie",
+   "opis": "Dużo papryki i pomidorów, bez kiełbasy.",
+   "skladniki": [
+    {
+     "n": "filet z kurczaka",
+     "q": 400,
+     "u": "g",
+     "s": "Mięso i ryby",
+     "rule": "kurczak"
+    },
+    {
+     "n": "papryka czerwona",
+     "q": 2,
+     "u": "szt",
+     "s": "Warzywa",
+     "rule": "papryka czerwona"
+    },
+    {
+     "n": "papryka żółta",
+     "q": 1,
+     "u": "szt",
+     "s": "Warzywa",
+     "rule": "żółta"
+    },
+    {
+     "n": "pomidor",
+     "q": 4,
+     "u": "szt",
+     "s": "Warzywa",
+     "rule": "pomidor"
+    },
+    {
+     "n": "cebula",
+     "q": 1,
+     "u": "szt",
+     "s": "Warzywa",
+     "rule": "cebula"
+    },
+    {
+     "n": "czosnek",
+     "q": 2,
+     "u": "ząbek",
+     "s": "Warzywa",
+     "rule": "czosnek"
+    },
+    {
+     "n": "papryka łagodna",
+     "q": 1,
+     "u": "łyżeczka",
+     "s": "Tłuszcze i przyprawy",
+     "rule": "papryka łagodna"
+    },
+    {
+     "n": "oliwa z oliwek",
+     "q": 1,
+     "u": "łyżeczka",
+     "s": "Tłuszcze i przyprawy",
+     "rule": "oliwa z oliwek"
+    },
+    {
+     "n": "kasza jaglana",
+     "q": 150,
+     "u": "g",
+     "s": "Zboża i pieczywo",
+     "rule": "kasza jaglana"
+    },
+    {
+     "n": "sól",
+     "q": 0.5,
+     "u": "łyżeczka",
+     "s": "Tłuszcze i przyprawy",
+     "rule": "sól",
+     "drobny": true
+    }
+   ],
+   "kroki": [
+    {
+     "t": "Cebulę i czosnek posiekaj, paprykę i pomidory pokrój w kostkę."
+    },
+    {
+     "t": "Na łyżeczce oliwy zeszklij cebulę, dodaj kurczaka i chwilę duś.",
+     "p": "5 min",
+     "timer": 300
+    },
+    {
+     "t": "Dodaj warzywa i paprykę w proszku, duś pod przykryciem.",
+     "p": "20 min",
+     "timer": 1200
+    },
+    {
+     "t": "Ugotuj kaszę według przepisu na opakowaniu."
+    }
+   ]
+  },
+  {
+   "id": "kurczak-pieczony-caly-tydzien",
+   "name": "Pieczona pierś na zapas (do obiadu i kanapek)",
+   "posilki": [
+    "obiad",
+    "kolacja",
+    "ii"
+   ],
+   "porcje": 3,
+   "czas": 35,
+   "urz": [],
+   "kcal": 140,
+   "kat": "danie",
+   "opis": "Upiecz raz, używaj przez 2–3 dni w lodówce.",
+   "skladniki": [
+    {
+     "n": "filet z kurczaka",
+     "q": 800,
+     "u": "g",
+     "s": "Mięso i ryby",
+     "rule": "kurczak"
+    },
+    {
+     "n": "zioła prowansalskie",
+     "q": 2,
+     "u": "łyżeczka",
+     "s": "Tłuszcze i przyprawy",
+     "rule": "zioła prowansalskie"
+    },
+    {
+     "n": "czosnek",
+     "q": 2,
+     "u": "ząbek",
+     "s": "Warzywa",
+     "rule": "czosnek"
+    },
+    {
+     "n": "oliwa z oliwek",
+     "q": 1,
+     "u": "łyżeczka",
+     "s": "Tłuszcze i przyprawy",
+     "rule": "oliwa z oliwek"
+    },
+    {
+     "n": "sól",
+     "q": 0.5,
+     "u": "łyżeczka",
+     "s": "Tłuszcze i przyprawy",
+     "rule": "sól",
+     "drobny": true
+    }
+   ],
+   "kroki": [
+    {
+     "t": "Pierś natrzyj ziołami, czosnkiem, oliwą i solą."
+    },
+    {
+     "t": "Pieczenie w piekarniku (bez tłuszczu na blasze, na papierze do pieczenia).",
+     "p": "180°C · 25 min",
+     "timer": 1500
+    },
+    {
+     "t": "Ostudź, przechowuj w lodówce w zamkniętym pojemniku do 3 dni."
+    }
+   ],
+   "uwagi": "Kalorie dotyczą samego mięsa, bez dodatków."
   }
  ]
 }

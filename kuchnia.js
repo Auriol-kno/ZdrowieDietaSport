@@ -212,9 +212,9 @@ function drinksCard() {
   const list = d.drinks || [];
   const total = list.reduce((a, x) => a + (Number(x.ml) || 0), 0);
   const cups = list.filter((x) => (ku.drinks.find((o) => o.id === x.id) || {}).kawa).length;
-  let h = `<div class="card"><div class="row sb"><h2>Inne napoje</h2><span class="muted">${total ? total + ' ml' : 'jeszcze nic'}</span></div>` +
+  let h = `<div class="card drinks"><div class="row sb"><h2>Inne napoje</h2><span class="muted">${total ? total + ' ml' : 'jeszcze nic'}</span></div>` +
     '<p class="muted">Woda liczy się osobno do celu 2 l. Tu dopisz herbatę, napar, sok albo kefir.</p>' +
-    '<div class="chips">' + opts.map((o) => `<button type="button" class="chip" data-action="k-drink" data-id="${esc(o.id)}">+ ${esc(o.name)}</button>`).join('') + '</div>';
+    '<div class="chips scroll">' + opts.map((o) => `<button type="button" class="chip" data-action="k-drink" data-id="${esc(o.id)}">+ ${esc(o.name)}</button>`).join('') + '</div>';
   h += '<form data-drink="1" class="kidform"><label class="sr" for="dn">Co piłeś?</label><input type="text" id="dn" placeholder="Wpisz, co piłeś" required autocomplete="off">' +
     '<label class="sr" for="dml">ml</label><input type="number" id="dml" value="250" min="10" max="3000" step="10" inputmode="numeric"><button type="submit" class="small">Dodaj</button></form>';
   if (list.length) {
@@ -277,8 +277,8 @@ function dayCard(iso) {
       const name = r ? r.name : e.name;
       kcal += r ? (r.kcal || 0) : (Number(e.kcal) || 0);
       const late = r && ZdsRecipes.checkRecipe(ku.idx, r).fruit && (mk === 'przekaska' || mk === 'kolacja');
-      const label = r ? `<button type="button" class="linkish" data-action="k-open" data-id="${esc(r.id)}">${esc(name)}</button> <span class="muted">× ${e.portions}</span>`
-        : `<span>${esc(name)}</span>${!kid && e.kcal ? ` <span class="muted">· ${esc(e.kcal)} kcal</span>` : ''}`;
+      const label = r && !kid ? `<button type="button" class="linkish" data-action="k-open" data-id="${esc(r.id)}">${esc(name)}</button> <span class="muted">× ${e.portions}</span>`
+        : r ? `<span>${esc(name)}</span>` : `<span>${esc(name)}</span>${!kid && e.kcal ? ` <span class="muted">· ${esc(e.kcal)} kcal</span>` : ''}`;
       return `<li><span>${label}${late ? '<br><span class="inline-warn">Owoce po 16:00 nie są zalecane</span>' : ''}</span>` +
         (kid ? '' : `<button type="button" class="small ghost" data-action="k-plan-rm" data-day="${iso}" data-meal="${mk}" data-i="${i}" aria-label="Usuń z planu">×</button>`) + '</li>';
     }).join('');
