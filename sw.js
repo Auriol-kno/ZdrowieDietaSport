@@ -1,5 +1,5 @@
-const CACHE = 'zds-v4';
-const ASSETS = ['./', 'index.html', 'styles.css', 'app.js', 'config.js', 'sync.js', 'recipes.js', 'kuchnia.js', 'data/rules.json', 'data/recipes.json', 'data/napoje.json', 'manifest.webmanifest', 'icons/icon.svg'];
+const CACHE = 'zds-v5';
+const ASSETS = ['./', 'index.html', 'styles.css', 'app.js', 'config.js', 'sync.js', 'recipes.js', 'kuchnia.js', 'data/rules.json', 'data/recipes.json', 'data/napoje.json', 'manifest.webmanifest', 'icons/icon.svg', 'icons/icon-192.png', 'icons/icon-512.png', 'icons/apple-touch-icon.png'];
 
 self.addEventListener('install', (e) => {
   e.waitUntil(caches.open(CACHE).then((c) => c.addAll(ASSETS)).then(() => self.skipWaiting()));

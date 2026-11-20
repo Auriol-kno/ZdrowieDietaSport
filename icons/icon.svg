@@ -1,1 +1,13 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><rect width="512" height="512" rx="112" fill="#2e7d4f"/><path d="M256 120c-60 0-104 40-104 104 0 70 44 168 104 168s104-98 104-168c0-64-44-104-104-104z" fill="#fff"/><path d="M256 120c0-34 20-58 52-66" fill="none" stroke="#fff" stroke-width="22" stroke-linecap="round"/></svg>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" role="img" aria-label="ZdrowieDietaSport">
+  <rect width="512" height="512" fill="#ece6df"/>
+  <rect x="92" y="92" width="312" height="312" rx="96" fill="#fdfbf8"/>
+  <rect x="120" y="120" width="312" height="312" rx="96" fill="#cdc2b4"/>
+  <rect x="106" y="106" width="312" height="312" rx="96" fill="#ece6df"/>
+  <g transform="translate(46 39) scale(4.2)">
+    <path d="M50 36 C42 29 27 33 27 51 C27 66 37 78 45 78 C48 78 50 77 50 77 C50 77 52 78 55 78 C63 78 73 66 73 51 C73 33 58 29 50 36Z" fill="#3f7d70"/>
+    <path d="M62 37 C70 41 73 51 70 61 C67 71 60 77 55 78 C61 70 64 58 62 37Z" fill="#33695d"/>
+    <path d="M33 47 C34 42 37 39 41 38" fill="none" stroke="#ffffff" stroke-opacity="0.55" stroke-width="2.6" stroke-linecap="round"/>
+    <path d="M52 33 C52 24 58 19 65 19 C65 27 59 32 52 33Z" fill="#7fb0a5"/>
+    <path d="M50 36 L52 27" stroke="#3f7d70" stroke-width="2.6" stroke-linecap="round" fill="none"/>
+  </g>
+</svg>
