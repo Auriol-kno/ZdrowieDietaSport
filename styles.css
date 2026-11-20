@@ -234,3 +234,8 @@ main { padding-top: 14px; }
 .card.sport form, .card.drinks form { display: grid; grid-template-columns: 1fr 76px auto; gap: 6px; align-items: center; }
 .card.sport form input, .card.drinks form input { min-width: 0; width: 100%; }
 .card.sport form button, .card.drinks form button { padding: 0 14px; }
+/* Wpisy syna: wyraźnie ciemniejsze tło niż karta */
+li.kiditem { background: #d8c9f2; border: 1px solid #c3aeea; margin: 4px 0; padding-top: 4px; padding-bottom: 4px; }
+li.kiditem > span:first-child { color: #3f1f80; }
+li.kiditem .pill { background: rgba(255, 255, 255, .7); }
+li.kiditem button { background: rgba(255, 255, 255, .55); box-shadow: none; }
