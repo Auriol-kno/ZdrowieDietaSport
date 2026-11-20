@@ -20,7 +20,7 @@ const dayKey = () => new Date().toLocaleDateString('sv-SE');
 const uid = () => Math.random().toString(36).slice(2, 9);
 
 function defaults() {
-  const f = { id: uid(), name: 'Franciszek', role: 'dziecko', kcal: 1750 };
+  const f = { id: uid(), name: 'Franciszek', nick: 'Franek', role: 'dziecko', kcal: 1750 };
   return {
     profiles: [f, { id: uid(), name: 'Dorosły 1', role: 'dorosły', kcal: 0 }, { id: uid(), name: 'Dorosły 2', role: 'dorosły', kcal: 0 }],
     current: f.id,
@@ -41,6 +41,7 @@ function load() {
     if (s && Array.isArray(s.profiles) && s.profiles.length) {
       s.synced = s.synced || {}; s.fam = s.fam || null;
       s.plan = s.plan || {}; s.pantry = s.pantry || []; s.shop = s.shop || { checked: {} }; s.shop.checked = s.shop.checked || {}; s.recipes = s.recipes || [];
+      for (const p of s.profiles) if (p.nick === undefined && p.name === 'Franciszek') p.nick = 'Franek';
       return s;
     }
   } catch (e) { /* brak danych lub pamięć niedostępna */ }
@@ -128,6 +129,13 @@ function ring(done, total) {
     `<text x="34" y="39" text-anchor="middle" font-size="16" font-weight="700" fill="currentColor">${done}/${total}</text></svg>`;
 }
 
+let addOpen = null;
+function itemPill(name) {
+  if (typeof ku === 'undefined' || !ku.idx) return '';
+  const m = ZdsRecipes.matchRule(ku.idx, name);
+  if (!m) return '<span class="pill tiny unk">nie ma na liście</span>';
+  return `<span class="pill ${m.st} tiny"><span aria-hidden="true">${MARK[m.st]}</span>${(isKid() ? LABEL_KID : LABEL)[m.st]}</span>`;
+}
 const QUICK_ACT = [['Spacer', 30], ['Rower', 45], ['Pływanie', 45], ['Piłka nożna', 60], ['Bieganie', 30], ['Siłownia', 45], ['Taniec', 30], ['Hulajnoga', 30], ['W-F w szkole', 45]];
 function activityCard(d) {
   const list = d.activities || [], tot = list.reduce((a, x) => a + x.min, 0);
@@ -146,9 +154,9 @@ function viewToday() {
   const now = new Date();
   let html = `<div class="hero"><div class="hero-plate"><span class="hero-day">${now.getDate()}</span>` +
     `<span class="hero-month">${now.toLocaleDateString('pl-PL', { month: 'long' })}</span></div>` +
-    `<div><h1>${kid ? `Cześć, ${esc(p.name)}!` : esc(p.name)}</h1><div class="hero-sub">${now.toLocaleDateString('pl-PL', { weekday: 'long' })}</div></div></div>`;
+    `<div><h1>Cześć, ${esc(p.nick || p.name)}!</h1><div class="hero-sub">${now.toLocaleDateString('pl-PL', { weekday: 'long' })}</div></div></div>`;
 
-  const waterW = `<div class="card widget"><h2>Woda</h2>${gauge(pct, 'teal', 'Woda', `${d.water * GLASS_ML / 1000} z 2 l`)}` +
+  const waterW = `<div class="card widget"><h2>Woda</h2>${gauge(pct, 'water', 'Woda', `${d.water * GLASS_ML / 1000} z 2 l`)}` +
     `<div class="row"><button type="button" class="small" data-action="water" data-d="1" aria-label="Dodaj szklankę">+ 250 ml</button>` +
     `<button type="button" class="small ghost" data-action="water" data-d="-1" aria-label="Odejmij szklankę">−</button></div></div>`;
   let side;
@@ -156,7 +164,7 @@ function viewToday() {
     const e = eatenKcal(d), kp = Math.min(100, Math.round((e / p.kcal) * 100));
     side = `<div class="card widget"><h2>Kalorie</h2>${gauge(kp, 'rose', 'Kalorie', `${e} z ${p.kcal} kcal`)}<span class="muted">Zostało ${Math.max(0, p.kcal - e)} kcal</span></div>`;
   } else {
-    side = `<div class="card widget"><h2>Posiłki</h2>${gauge(Math.round((done / MEALS.length) * 100), 'rose', 'Posiłki', `${done} z ${MEALS.length}`)}<span class="muted">${kid ? 'Dobra robota!' : 'Zjedzone dziś'}</span></div>`;
+    side = `<div class="card widget"><h2>Posiłki</h2>${gauge(Math.round((done / MEALS.length) * 100), 'meal', 'Posiłki', `${done} z ${MEALS.length}`)}<span class="muted">${kid ? 'Dobra robota!' : 'Zjedzone dziś'}</span></div>`;
   }
   html += `<div class="widgets">${waterW}${side}</div>`;
 
@@ -170,12 +178,14 @@ function viewToday() {
     html += `<div class="meal"><div class="row sb"><div><strong>${name}</strong> <span class="muted">${time}</span></div>` +
       `<button type="button" class="small ${m.done ? 'done' : 'ghost'}" data-action="done" data-meal="${key}" aria-pressed="${m.done}">${m.done ? '✓ Zjedzone' : 'Zjedzone'}</button></div>`;
     if (m.items.length) {
-      html += '<ul>' + m.items.map((it, i) => `<li><span>${esc(it.name)}${!kid && it.kcal ? ` <span class="muted">· ${esc(it.kcal)} kcal</span>` : ''}</span>` +
-        (!kid ? `<button type="button" class="small ghost" data-action="del" data-meal="${key}" data-i="${i}" aria-label="Usuń ${esc(it.name)}">✕</button>` : '') + '</li>').join('') + '</ul>';
-    } else if (kid) {
-      html += '<div class="muted">Rodzic jeszcze nie dopisał dań.</div>';
+      html += '<ul>' + m.items.map((it, i) => `<li class="${it.kid ? 'kiditem' : ''}"><span>${esc(it.name)}${!kid && it.kcal ? ` <span class="muted">· ${esc(it.kcal)} kcal</span>` : ''} ${itemPill(it.name)}</span>` +
+        (!kid || it.kid ? `<button type="button" class="small ghost" data-action="del" data-meal="${key}" data-i="${i}" aria-label="Usuń ${esc(it.name)}">✕</button>` : '') + '</li>').join('') + '</ul>';
     }
-    if (!kid) {
+    if (kid) {
+      html += addOpen === key
+        ? `<form data-meal="${key}" class="kidform"><label class="sr" for="n-${key}">Co zjadłeś?</label><input type="text" id="n-${key}" placeholder="np. marchewka" required autocomplete="off"><button type="submit" class="small">Dodaj</button></form>`
+        : `<button type="button" class="plus" data-action="kid-add" data-meal="${key}" aria-label="Dopisz, co zjadłeś na ${esc(name)}">+ Dopisz</button>`;
+    } else {
       html += `<form data-meal="${key}"><label class="sr" for="n-${key}">Danie</label><input type="text" id="n-${key}" placeholder="Danie" required>` +
         `<label class="sr" for="k-${key}">kcal</label><input type="number" id="k-${key}" placeholder="kcal" min="0" inputmode="numeric">` +
         '<button type="submit" class="small">Dodaj</button></form>';
@@ -212,9 +222,11 @@ function viewProfiles() {
     `<span class="muted">${parent ? 'Włączony: widać kalorie, plan i zakupy.' : 'Wyłączony: widok dziecka.'}</span></div>` +
     `<button type="button" class="small ${parent ? '' : 'ghost'}" data-action="parent-toggle" aria-pressed="${parent}">${parent ? 'Wyłącz' : 'Włącz'}</button></div></div>`;
   if (isKid()) return html + '<div class="note warn">Reszta profili jest widoczna tylko w trybie rodzica.</div>';
+  if (typeof statsCard === 'function') html += statsCard();
   for (const p of state.profiles) {
     html += `<div class="card" data-pid="${p.id}"><div class="grid">` +
       `<div class="field"><label for="pn-${p.id}">Imię</label><input type="text" id="pn-${p.id}" data-field="name" value="${esc(p.name)}"></div>` +
+      `<div class="field"><label for="pz-${p.id}">Powitanie (zdrobnienie)</label><input type="text" id="pz-${p.id}" data-field="nick" value="${esc(p.nick || '')}" placeholder="np. Franek"></div>` +
       `<div class="field"><label for="pr-${p.id}">Rola</label><select id="pr-${p.id}" data-field="role">` +
       ['dziecko', 'dorosły', 'rodzic'].map((r) => `<option${r === p.role ? ' selected' : ''}>${r}</option>`).join('') + '</select></div>' +
       `<div class="field"><label for="pk-${p.id}">Cel kcal (0 = brak)</label><input type="number" id="pk-${p.id}" data-field="kcal" min="0" value="${p.kcal}"></div>` +
@@ -272,6 +284,8 @@ document.addEventListener('click', (e) => {
   if (a === 'water') d.water = Math.max(0, d.water + Number(t.dataset.d));
   else if (a === 'done') { const m = meal(d, t.dataset.meal); m.done = !m.done; }
   else if (a === 'del') meal(d, t.dataset.meal).items.splice(Number(t.dataset.i), 1);
+  else if (a === 'kid-add') { addOpen = t.dataset.meal; render(); const i = $('#n-' + addOpen); if (i) i.focus(); return; }
+  else if (a === 'st-range') { st.range = Number(t.dataset.v); return render(); }
   else if (a === 'act-del') { (d.activities = d.activities || []).splice(Number(t.dataset.i), 1); d.u = Date.now(); }
   else if (a === 'act-pick') { $('#an').value = t.dataset.name; $('#am').value = t.dataset.min; $('#am').focus(); return; }
   else if (a === 'add-profile') { const p = { id: uid(), name: 'Nowy profil', role: 'dorosły', kcal: 0 }; state.profiles.push(p); }
@@ -291,6 +305,16 @@ document.addEventListener('submit', (e) => {
   if (rf) { e.preventDefault(); return kSubmitRecipe(rf); }
   const cf = e.target.closest('form[data-cplan]');
   if (cf) { e.preventDefault(); return kSubmitCustom(cf); }
+  const df = e.target.closest('form[data-drink]');
+  if (df) {
+    e.preventDefault();
+    const nm = df.querySelector('input[type=text]').value.trim(), ml = Number(df.querySelector('input[type=number]').value) || 250;
+    if (!nm) return;
+    const dd = day(); const x = { id: 'wlasny', name: nm, ml: Math.min(3000, Math.round(ml)) };
+    if (isKid()) x.kid = true;
+    (dd.drinks = dd.drinks || []).push(x); dd.u = Date.now();
+    save(); return render();
+  }
   const af = e.target.closest('form[data-act]');
   if (af) {
     e.preventDefault();
@@ -303,10 +327,14 @@ document.addEventListener('submit', (e) => {
   if (!f) return;
   e.preventDefault();
   const name = f.querySelector('input[type=text]').value.trim();
-  const kcal = f.querySelector('input[type=number]').value;
+  const ki = f.querySelector('input[type=number]');
+  const kcal = ki ? ki.value : '';
   if (!name) return;
   const d = day();
-  meal(d, f.dataset.meal).items.push({ name, kcal: kcal === '' ? 0 : Number(kcal) });
+  const item = { name, kcal: kcal === '' ? 0 : Number(kcal) };
+  if (isKid()) item.kid = true;
+  meal(d, f.dataset.meal).items.push(item);
+  addOpen = null;
   d.u = Date.now();
   save(); render();
 });
@@ -327,7 +355,7 @@ document.addEventListener('change', (e) => {
   if (box && e.target.dataset.field) {
     const p = state.profiles.find((x) => x.id === box.dataset.pid);
     const f = e.target.dataset.field;
-    p[f] = f === 'kcal' ? Math.max(0, Number(e.target.value) || 0) : e.target.value.trim() || p[f];
+    p[f] = f === 'kcal' ? Math.max(0, Number(e.target.value) || 0) : f === 'nick' ? e.target.value.trim() : e.target.value.trim() || p[f];
     save(); render();
     if (p.remoteId && state.fam && state.fam.role === 'rodzic') ZdsSync.pushMember(state.fam.id, p).catch(() => {});
   }

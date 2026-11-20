@@ -2600,6 +2600,664 @@
      "t": "Jabłka i marchewkę wyciśnij w wyciskarce, rozcieńcz wodą (mniej więcej pół na pół)."
     }
    ]
+  },
+  {
+   "id": "kefir-borowki",
+   "name": "Kefir z borówkami",
+   "posilki": [
+    "ii"
+   ],
+   "porcje": 1,
+   "czas": 3,
+   "urz": [],
+   "kcal": 130,
+   "kat": "przekaska",
+   "opis": "Szybka przekąska do szkoły. Owoce do 16:00.",
+   "skladniki": [
+    {
+     "n": "kefir",
+     "q": 250,
+     "u": "ml",
+     "s": "Nabiał i jaja",
+     "rule": "kefir"
+    },
+    {
+     "n": "borówki amerykańskie",
+     "q": 60,
+     "u": "g",
+     "s": "Owoce",
+     "rule": "borówki amerykańskie"
+    }
+   ],
+   "kroki": [
+    {
+     "t": "Kefir przelej do kubka, wsyp umyte borówki."
+    }
+   ]
+  },
+  {
+   "id": "pomidorki-ser-kozi",
+   "name": "Pomidorki z serem kozim i bazylią",
+   "posilki": [
+    "przekaska",
+    "ii"
+   ],
+   "porcje": 2,
+   "czas": 5,
+   "urz": [],
+   "kcal": 110,
+   "kat": "przekaska",
+   "opis": "Kolorowe szaszłyczki na wykałaczkach.",
+   "skladniki": [
+    {
+     "n": "pomidor",
+     "q": 2,
+     "u": "szt",
+     "s": "Warzywa",
+     "rule": "pomidor"
+    },
+    {
+     "n": "ser kozi",
+     "q": 60,
+     "u": "g",
+     "s": "Nabiał i jaja",
+     "rule": "ser kozi"
+    },
+    {
+     "n": "bazylia",
+     "q": 1,
+     "u": "garść",
+     "s": "Tłuszcze i przyprawy",
+     "rule": "bazylia"
+    }
+   ],
+   "kroki": [
+    {
+     "t": "Pomidory pokrój w ćwiartki, ser w kostkę."
+    },
+    {
+     "t": "Nadziewaj na wykałaczki na zmianę z listkiem bazylii."
+    }
+   ]
+  },
+  {
+   "id": "brokuly-af",
+   "name": "Chrupiące różyczki brokuła z air fryera",
+   "posilki": [
+    "przekaska",
+    "obiad"
+   ],
+   "porcje": 3,
+   "czas": 15,
+   "urz": [
+    "af"
+   ],
+   "kcal": 60,
+   "kat": "przekaska",
+   "opis": "Warzywna przekąska, którą się chrupie jak chipsy.",
+   "skladniki": [
+    {
+     "n": "brokuły",
+     "q": 1,
+     "u": "szt",
+     "s": "Warzywa",
+     "rule": "brokuły"
+    },
+    {
+     "n": "oliwa z oliwek",
+     "q": 1,
+     "u": "łyżeczka",
+     "s": "Tłuszcze i przyprawy",
+     "rule": "oliwa z oliwek"
+    },
+    {
+     "n": "czosnek",
+     "q": 1,
+     "u": "ząbek",
+     "s": "Warzywa",
+     "rule": "czosnek"
+    },
+    {
+     "n": "sól",
+     "q": 0.5,
+     "u": "łyżeczka",
+     "s": "Tłuszcze i przyprawy",
+     "rule": "sól",
+     "drobny": true
+    }
+   ],
+   "kroki": [
+    {
+     "t": "Brokuł podziel na małe różyczki, wymieszaj z oliwą, czosnkiem i solą."
+    },
+    {
+     "t": "Piecz, w połowie czasu wstrząśnij koszem.",
+     "dev": "af",
+     "p": "180°C · 8 min",
+     "timer": 480
+    }
+   ]
+  },
+  {
+   "id": "kiwi-jogurt",
+   "name": "Kiwi z jogurtem naturalnym",
+   "posilki": [
+    "ii"
+   ],
+   "porcje": 1,
+   "czas": 3,
+   "urz": [],
+   "kcal": 120,
+   "kat": "przekaska",
+   "opis": "Dużo witaminy C, bez cukru.",
+   "skladniki": [
+    {
+     "n": "kiwi",
+     "q": 1,
+     "u": "szt",
+     "s": "Owoce",
+     "rule": "kiwi"
+    },
+    {
+     "n": "jogurt naturalny",
+     "q": 150,
+     "u": "g",
+     "s": "Nabiał i jaja",
+     "rule": "jogurt naturalny"
+    }
+   ],
+   "kroki": [
+    {
+     "t": "Kiwi obierz i pokrój, wymieszaj z jogurtem."
+    }
+   ]
+  },
+  {
+   "id": "maslanka-maliny",
+   "name": "Maślanka z malinami",
+   "posilki": [
+    "ii"
+   ],
+   "porcje": 1,
+   "czas": 3,
+   "urz": [],
+   "kcal": 120,
+   "kat": "przekaska",
+   "opis": "Orzeźwiająca przekąska. Owoce do 16:00.",
+   "skladniki": [
+    {
+     "n": "maślanka",
+     "q": 250,
+     "u": "ml",
+     "s": "Nabiał i jaja",
+     "rule": "maślanka (mleko, żywe kultury bakterii)"
+    },
+    {
+     "n": "maliny",
+     "q": 60,
+     "u": "g",
+     "s": "Owoce",
+     "rule": "maliny"
+    }
+   ],
+   "kroki": [
+    {
+     "t": "Maliny lekko rozgnieć widelcem i wymieszaj z maślanką."
+    }
+   ]
+  },
+  {
+   "id": "pumpernikiel-twarozek",
+   "name": "Pumpernikiel z twarożkiem i ogórkiem",
+   "posilki": [
+    "przekaska",
+    "ii"
+   ],
+   "porcje": 2,
+   "czas": 5,
+   "urz": [],
+   "kcal": 150,
+   "kat": "przekaska",
+   "opis": "Sycąca przekąska po treningu.",
+   "skladniki": [
+    {
+     "n": "pumpernikiel",
+     "q": 2,
+     "u": "kromka",
+     "s": "Zboża i pieczywo",
+     "rule": "pumpernikiel"
+    },
+    {
+     "n": "twaróg półtłusty",
+     "q": 80,
+     "u": "g",
+     "s": "Nabiał i jaja",
+     "rule": "twaróg półtłusty"
+    },
+    {
+     "n": "ogórek zielony",
+     "q": 1,
+     "u": "szt",
+     "s": "Warzywa",
+     "rule": "ogórek zielony"
+    },
+    {
+     "n": "koperek",
+     "q": 1,
+     "u": "garść",
+     "s": "Warzywa",
+     "rule": "koper"
+    }
+   ],
+   "kroki": [
+    {
+     "t": "Twaróg rozgnieć z posiekanym koperkiem."
+    },
+    {
+     "t": "Posmaruj pumpernikiel, ułóż plasterki ogórka i przekrój na pół."
+    }
+   ]
+  },
+  {
+   "id": "roladki-indyk-papryka",
+   "name": "Roladki z indyka z papryką",
+   "posilki": [
+    "przekaska",
+    "ii"
+   ],
+   "porcje": 2,
+   "czas": 5,
+   "urz": [],
+   "kcal": 90,
+   "kat": "przekaska",
+   "opis": "Białkowa przekąska bez pieczywa.",
+   "skladniki": [
+    {
+     "n": "chuda wędlina z indyka",
+     "q": 80,
+     "u": "g",
+     "s": "Mięso i ryby",
+     "rule": "chude wędliny"
+    },
+    {
+     "n": "papryka żółta",
+     "q": 1,
+     "u": "szt",
+     "s": "Warzywa",
+     "rule": "żółta"
+    },
+    {
+     "n": "sałata rzymska",
+     "q": 4,
+     "u": "szt",
+     "s": "Warzywa",
+     "rule": "sałata rzymska"
+    }
+   ],
+   "kroki": [
+    {
+     "t": "Paprykę pokrój w słupki."
+    },
+    {
+     "t": "Na plaster wędliny połóż listek sałaty i słupek papryki, zwiń w rulonik."
+    }
+   ]
+  },
+  {
+   "id": "muffinki-jajeczne-af",
+   "name": "Mini muffinki jajeczne z warzywami",
+   "posilki": [
+    "przekaska",
+    "sniadanie"
+   ],
+   "porcje": 6,
+   "czas": 20,
+   "urz": [
+    "af"
+   ],
+   "kcal": 70,
+   "kat": "przekaska",
+   "opis": "Można zrobić wieczorem i zabrać do szkoły.",
+   "skladniki": [
+    {
+     "n": "jajka",
+     "q": 4,
+     "u": "szt",
+     "s": "Nabiał i jaja",
+     "rule": "jajka"
+    },
+    {
+     "n": "papryka czerwona",
+     "q": 1,
+     "u": "szt",
+     "s": "Warzywa",
+     "rule": "papryka czerwona"
+    },
+    {
+     "n": "brokuły",
+     "q": 100,
+     "u": "g",
+     "s": "Warzywa",
+     "rule": "brokuły"
+    },
+    {
+     "n": "ser kozi",
+     "q": 40,
+     "u": "g",
+     "s": "Nabiał i jaja",
+     "rule": "ser kozi"
+    },
+    {
+     "n": "oregano",
+     "q": 1,
+     "u": "łyżeczka",
+     "s": "Tłuszcze i przyprawy",
+     "rule": "oregano"
+    },
+    {
+     "n": "sól",
+     "q": 0.5,
+     "u": "łyżeczka",
+     "s": "Tłuszcze i przyprawy",
+     "rule": "sól",
+     "drobny": true
+    }
+   ],
+   "kroki": [
+    {
+     "t": "Warzywa pokrój drobno, rozłóż do silikonowych foremek."
+    },
+    {
+     "t": "Jajka roztrzep z oregano i solą, zalej warzywa, posyp serem."
+    },
+    {
+     "t": "Piecz do ścięcia jajek.",
+     "dev": "af",
+     "p": "160°C · 10–12 min",
+     "timer": 660
+    }
+   ]
+  },
+  {
+   "id": "fasolka-czosnek",
+   "name": "Fasolka szparagowa z czosnkiem",
+   "posilki": [
+    "przekaska",
+    "obiad"
+   ],
+   "porcje": 3,
+   "czas": 12,
+   "urz": [],
+   "kcal": 60,
+   "kat": "przekaska",
+   "opis": "Ciepła przekąska na popołudnie.",
+   "skladniki": [
+    {
+     "n": "fasolka szparagowa",
+     "q": 400,
+     "u": "g",
+     "s": "Warzywa",
+     "rule": "fasolka szparagowa"
+    },
+    {
+     "n": "oliwa z oliwek",
+     "q": 1,
+     "u": "łyżeczka",
+     "s": "Tłuszcze i przyprawy",
+     "rule": "oliwa z oliwek"
+    },
+    {
+     "n": "czosnek",
+     "q": 1,
+     "u": "ząbek",
+     "s": "Warzywa",
+     "rule": "czosnek"
+    },
+    {
+     "n": "sól",
+     "q": 0.5,
+     "u": "łyżeczka",
+     "s": "Tłuszcze i przyprawy",
+     "rule": "sól",
+     "drobny": true
+    }
+   ],
+   "kroki": [
+    {
+     "t": "Fasolkę ugotuj na parze, około 8 minut."
+    },
+    {
+     "t": "Wymieszaj z oliwą, przeciśniętym czosnkiem i solą."
+    }
+   ]
+  },
+  {
+   "id": "lody-jogurtowe-maliny",
+   "name": "Lody jogurtowe z malinami",
+   "posilki": [
+    "ii"
+   ],
+   "porcje": 4,
+   "czas": 10,
+   "urz": [
+    "tm6"
+   ],
+   "kcal": 70,
+   "kat": "przekaska",
+   "opis": "Domowe lody bez cukru. Mrożenie około 4 godzin.",
+   "skladniki": [
+    {
+     "n": "jogurt naturalny",
+     "q": 300,
+     "u": "g",
+     "s": "Nabiał i jaja",
+     "rule": "jogurt naturalny"
+    },
+    {
+     "n": "maliny",
+     "q": 150,
+     "u": "g",
+     "s": "Owoce",
+     "rule": "maliny"
+    },
+    {
+     "n": "ksylitol",
+     "q": 1,
+     "u": "łyżka",
+     "s": "Inne",
+     "rule": "ksylitol"
+    }
+   ],
+   "kroki": [
+    {
+     "t": "Zmiksuj jogurt z malinami i ksylitolem.",
+     "dev": "tm6",
+     "p": "obr. 6 · 20 s"
+    },
+    {
+     "t": "Przelej do foremek na lody i zamroź na około 4 godziny."
+    }
+   ]
+  },
+  {
+   "id": "groszek-mieta-ser",
+   "name": "Zielony groszek z miętą i serem owczym",
+   "posilki": [
+    "przekaska"
+   ],
+   "porcje": 2,
+   "czas": 8,
+   "urz": [],
+   "kcal": 120,
+   "kat": "przekaska",
+   "opis": "Słodkawy groszek z odrobiną słonego sera.",
+   "skladniki": [
+    {
+     "n": "zielony groszek",
+     "q": 200,
+     "u": "g",
+     "s": "Warzywa",
+     "rule": "zielony groszek"
+    },
+    {
+     "n": "ser owczy",
+     "q": 40,
+     "u": "g",
+     "s": "Nabiał i jaja",
+     "rule": "ser owczy"
+    },
+    {
+     "n": "mięta",
+     "q": 1,
+     "u": "garść",
+     "s": "Tłuszcze i przyprawy",
+     "rule": "mięta"
+    }
+   ],
+   "kroki": [
+    {
+     "t": "Groszek ugotuj na parze, około 5 minut, i lekko ostudź."
+    },
+    {
+     "t": "Wymieszaj z pokruszonym serem i posiekaną miętą."
+    }
+   ]
+  },
+  {
+   "id": "marchewka-chrzan-dip",
+   "name": "Słupki marchewki z twarożkowym dipem",
+   "posilki": [
+    "przekaska"
+   ],
+   "porcje": 2,
+   "czas": 8,
+   "urz": [],
+   "kcal": 90,
+   "kat": "przekaska",
+   "opis": "Chrupanie z dipem zamiast paluszków.",
+   "skladniki": [
+    {
+     "n": "marchewka świeża",
+     "q": 2,
+     "u": "szt",
+     "s": "Warzywa",
+     "rule": "świeża marchewka"
+    },
+    {
+     "n": "twaróg półtłusty",
+     "q": 80,
+     "u": "g",
+     "s": "Nabiał i jaja",
+     "rule": "twaróg półtłusty"
+    },
+    {
+     "n": "jogurt naturalny",
+     "q": 40,
+     "u": "g",
+     "s": "Nabiał i jaja",
+     "rule": "jogurt naturalny"
+    },
+    {
+     "n": "koperek",
+     "q": 1,
+     "u": "garść",
+     "s": "Warzywa",
+     "rule": "koper"
+    }
+   ],
+   "kroki": [
+    {
+     "t": "Marchewkę obierz i pokrój w słupki."
+    },
+    {
+     "t": "Twaróg wymieszaj z jogurtem i koperkiem na gładki dip."
+    }
+   ]
+  },
+  {
+   "id": "truskawki-jogurt-mieta",
+   "name": "Truskawki z jogurtem i miętą",
+   "posilki": [
+    "ii"
+   ],
+   "porcje": 1,
+   "czas": 4,
+   "urz": [],
+   "kcal": 100,
+   "kat": "przekaska",
+   "opis": "Owoce do 16:00.",
+   "skladniki": [
+    {
+     "n": "truskawki",
+     "q": 120,
+     "u": "g",
+     "s": "Owoce",
+     "rule": "truskawki"
+    },
+    {
+     "n": "jogurt naturalny",
+     "q": 120,
+     "u": "g",
+     "s": "Nabiał i jaja",
+     "rule": "jogurt naturalny"
+    },
+    {
+     "n": "mięta",
+     "q": 3,
+     "u": "szt",
+     "s": "Tłuszcze i przyprawy",
+     "rule": "mięta"
+    }
+   ],
+   "kroki": [
+    {
+     "t": "Truskawki pokrój, polej jogurtem i udekoruj miętą."
+    }
+   ]
+  },
+  {
+   "id": "ogorki-kiszone-twarozek",
+   "name": "Ogórki kiszone z twarożkiem",
+   "posilki": [
+    "przekaska"
+   ],
+   "porcje": 2,
+   "czas": 5,
+   "urz": [],
+   "kcal": 80,
+   "kat": "przekaska",
+   "opis": "Kiszonki są w zaleceniach. Dobre dla jelit.",
+   "skladniki": [
+    {
+     "n": "ogórki kiszone",
+     "q": 2,
+     "u": "szt",
+     "s": "Warzywa",
+     "rule": "kiszonki"
+    },
+    {
+     "n": "twaróg półtłusty",
+     "q": 80,
+     "u": "g",
+     "s": "Nabiał i jaja",
+     "rule": "twaróg półtłusty"
+    },
+    {
+     "n": "koperek",
+     "q": 1,
+     "u": "garść",
+     "s": "Warzywa",
+     "rule": "koper"
+    }
+   ],
+   "kroki": [
+    {
+     "t": "Ogórki przekrój wzdłuż i wydrąż łyżeczką środek."
+    },
+    {
+     "t": "Nałóż twarożek z koperkiem."
+    }
+   ]
   }
  ]
 }

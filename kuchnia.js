@@ -215,11 +215,13 @@ function drinksCard() {
   let h = `<div class="card"><div class="row sb"><h2>Inne napoje</h2><span class="muted">${total ? total + ' ml' : 'jeszcze nic'}</span></div>` +
     '<p class="muted">Woda liczy się osobno do celu 2 l. Tu dopisz herbatę, napar, sok albo kefir.</p>' +
     '<div class="chips">' + opts.map((o) => `<button type="button" class="chip" data-action="k-drink" data-id="${esc(o.id)}">+ ${esc(o.name)}</button>`).join('') + '</div>';
+  h += '<form data-drink="1" class="kidform"><label class="sr" for="dn">Co piłeś?</label><input type="text" id="dn" placeholder="Wpisz, co piłeś" required autocomplete="off">' +
+    '<label class="sr" for="dml">ml</label><input type="number" id="dml" value="250" min="10" max="3000" step="10" inputmode="numeric"><button type="submit" class="small">Dodaj</button></form>';
   if (list.length) {
     h += '<ul class="drinklist">' + list.map((x, i) => {
       const o = ku.drinks.find((y) => y.id === x.id);
-      const m = o && o.rule ? ZdsRecipes.matchRule(ku.idx, o.rule) : null;
-      return `<li><span>${esc(x.name)} <span class="muted">${esc(x.ml)} ml</span> ${m ? pillSt(m.st) : ''}</span>` +
+      const pill = o && o.rule ? pillSt(ZdsRecipes.matchRule(ku.idx, o.rule) ? ZdsRecipes.matchRule(ku.idx, o.rule).st : 'ok') : itemPill(x.name);
+      return `<li class="${x.kid ? 'kiditem' : ''}"><span>${esc(x.name)} <span class="muted">${esc(x.ml)} ml</span> ${pill}</span>` +
         `<button type="button" class="small ghost" data-action="k-drink-del" data-i="${i}" aria-label="Usuń ${esc(x.name)}">✕</button></li>`;
     }).join('') + '</ul>';
   }
@@ -415,7 +417,9 @@ function kAction(a, t) {
       const dr = ku.drinks.find((x) => x.id === t.dataset.id);
       if (!dr) return;
       const d = day();
-      (d.drinks = d.drinks || []).push({ id: dr.id, name: dr.name, ml: dr.ml });
+      const x = { id: dr.id, name: dr.name, ml: dr.ml };
+      if (isKid()) x.kid = true;
+      (d.drinks = d.drinks || []).push(x);
       d.u = Date.now(); save(); break;
     }
     case 'k-drink-del': {

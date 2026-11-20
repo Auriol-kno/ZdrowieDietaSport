@@ -180,3 +180,30 @@ body { padding-bottom: 116px; }
 .col .pill { padding: 6px 6px; font-size: 11px; line-height: 14px; }
 main:has(.cols3) { padding-left: 8px; padding-right: 8px; }
 .chip.we { background: #f1e6e6; color: #8a5656; }
+/* Mocniejsze kolory wskaźników */
+.gauge.water > i { background: linear-gradient(180deg, #4fc3ff, #1e88e5); }
+.gauge.meal > i { background: linear-gradient(180deg, #5ee07a, #22a447); }
+/* Wpisy syna: inny kolor */
+li.kiditem { background: #efe6fb; border-radius: 14px; padding-left: 10px; padding-right: 6px; }
+li.kiditem > span:first-child { color: #6a3fb5; font-weight: 700; }
+.kidform input[type=text] { background: #f4eefc; color: #6a3fb5; font-weight: 700; }
+.plus { width: 100%; min-height: 46px; margin-top: 6px; background: #efe6fb; color: #6a3fb5; font-weight: 800; }
+.pill.unk { background: #e6e2dc; color: var(--muted); }
+/* Statystyki */
+.stats h3 { font-size: 14px; margin: 14px 0 6px; }
+.small { font-size: 12px; }
+.kpis { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 8px; margin-top: 10px; }
+.kpi { display: flex; flex-direction: column; gap: 2px; padding: 10px; border-radius: 16px; box-shadow: var(--in); font-size: 12px; }
+.kpi strong { font-size: 20px; line-height: 24px; color: var(--ink); }
+.bars { position: relative; display: flex; align-items: flex-end; gap: 3px; height: 130px; padding-bottom: 16px; }
+.bars .goal { position: absolute; left: 0; right: 0; border-top: 2px dashed var(--blue-d); margin-bottom: 16px; z-index: 1; }
+.bar { flex: 1; height: 100%; display: flex; flex-direction: column; justify-content: flex-end; align-items: center; position: relative; }
+.bar i { width: 100%; border-radius: 6px 6px 2px 2px; background: #22a447; }
+.bar.under i { background: #e0a526; } .bar.over i { background: #d0463b; } .bar.empty i { background: transparent; }
+.bar b { position: absolute; bottom: -16px; font-size: 9px; color: var(--muted); }
+.bar.we b { color: #a06a6a; }
+.streak { display: flex; flex-wrap: wrap; gap: 4px; }
+.streak span { width: 26px; height: 26px; border-radius: 8px; display: grid; place-items: center; font-size: 10px; font-weight: 700; background: var(--track); color: var(--muted); }
+.streak span.g { background: #22a447; color: #fff; } .streak span.p { background: #f2dca3; color: #7a5a10; }
+.qbar { display: flex; height: 14px; border-radius: 8px; overflow: hidden; background: var(--track); margin-bottom: 6px; }
+.qbar i.ok { background: #22a447; } .qbar i.lim { background: #e0a526; } .qbar i.no { background: #d0463b; } .qbar i.unk { background: #b9b2a8; }
