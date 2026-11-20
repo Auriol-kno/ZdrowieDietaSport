@@ -218,3 +218,19 @@ li.kiditem > span:first-child { color: #6a3fb5; font-weight: 700; }
 .card.sport input, .card.drinks input { background: #fffaf4; }
 main { padding-top: 14px; }
 .tabs button[hidden] { display: none; }
+/* Przyciski w Aktywności i Napojach: płaskie, bez cienia (cień neumorficzny źle wygląda na kolorowym tle), o 30% mniejsze, w bledszym odcieniu działu */
+.card.sport .chips.scroll, .card.drinks .chips.scroll { gap: 6px; padding: 2px 0 4px; }
+.card.sport .chip, .card.drinks .chip { min-height: 32px; padding: 0 10px; font-size: 12px; border-radius: 16px; box-shadow: none; border: 1px solid transparent; }
+.card.sport .chip { background: #fbf1e6; color: #a5561c; border-color: #efd7bd; }
+.card.drinks .chip { background: #eff5fb; color: #2c6aa0; border-color: #cfe0ef; }
+.card.sport .chip:active, .card.drinks .chip:active { filter: brightness(.95); }
+/* Mniejszy plusik syna w bledszym fiolecie */
+.meal .plus { width: 30px; height: 30px; min-width: 30px; min-height: 30px; font-size: 18px; background: #f6f1fd; color: #8a68c7; box-shadow: none; border: 1px solid #e3d8f5; }
+.meal .plus[aria-expanded="true"] { background: #e9def9; box-shadow: none; }
+.card.sport input, .card.drinks input { box-shadow: none; min-height: 44px; }
+.card.sport input { border: 1px solid #efd7bd; }
+.card.drinks input { border: 1px solid #cfe0ef; }
+.card.sport button[type=submit], .card.drinks button[type=submit] { box-shadow: none; min-height: 44px; }
+.card.sport form, .card.drinks form { display: grid; grid-template-columns: 1fr 76px auto; gap: 6px; align-items: center; }
+.card.sport form input, .card.drinks form input { min-width: 0; width: 100%; }
+.card.sport form button, .card.drinks form button { padding: 0 14px; }
