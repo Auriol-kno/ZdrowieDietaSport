@@ -7,6 +7,21 @@ function ruleSt(name) {
   return m ? m.st : null;
 }
 
+// Kalorie dnia: wpisy z kcal w zjedzonych posiłkach; gdy posiłek zjedzony bez kcal, bierzemy kcal z planu (1 porcja).
+function dayKcal(d, iso) {
+  let t = 0;
+  const map = typeof byIdMap === 'function' ? byIdMap() : {};
+  for (const [mk] of MEALS) {
+    const m = d.meals[mk];
+    if (!m) continue;
+    const own = (m.items || []).reduce((a, i) => a + (Number(i.kcal) || 0), 0);
+    if (!m.done) continue;
+    if (own) { t += own; continue; }
+    for (const e of (state.plan[iso + '|' + mk] || [])) t += e.rid ? ((map[e.rid] || {}).kcal || 0) : (Number(e.kcal) || 0);
+  }
+  return t;
+}
+
 function statsData(pid, n) {
   const out = [];
   const t = dayKey();
@@ -15,7 +30,7 @@ function statsData(pid, n) {
     const d = state.days[iso + '|' + pid] || null;
     const r = { iso, has: false, kcal: 0, done: 0, water: 0, act: 0, items: 0, kid: 0, ok: 0, lim: 0, no: 0, unk: 0, bad: [] };
     if (d) {
-      r.kcal = eatenKcal(d);
+      r.kcal = dayKcal(d, iso);
       r.water = (d.water || 0) * GLASS_ML;
       r.act = (d.activities || []).reduce((a, x) => a + (Number(x.min) || 0), 0);
       for (const [mk] of MEALS) {
@@ -71,7 +86,7 @@ function statsCard() {
 
   let h = `<div class="card stats"><div class="row sb"><h2>Statystyki: ${esc(p.name)}</h2></div><div class="chips">` +
     [7, 14, 30].map((v) => `<button type="button" class="chip" data-action="st-range" data-v="${v}" aria-pressed="${st.range === v}">${v} dni</button>`).join('') + '</div>';
-  if (!used.length) return h + '<p class="muted">Brak wpisów w tym okresie. Statystyki pojawią się, gdy zaczniecie zapisywać posiłki.</p></div>';
+  if (!used.length) return h + `<p class="muted">Brak wpisów dla profilu ${esc(p.name)} w tym okresie. Zaznacz posiłki jako „Zjedzone”, dopisz wodę, napoje albo aktywność w zakładce Dziś, a statystyki pojawią się od razu. Profil zmienisz wyżej w „Kto korzysta”.</p></div>`;
 
   h += '<div class="kpis">' +
     kpi('Seria dni zgodnych z dietą', s.curr + ' dni', 'najdłuższa: ' + s.best) +
@@ -86,7 +101,7 @@ function statsCard() {
     rows.map((r) => {
       const cls = !r.kcal ? 'empty' : goal && r.kcal > goal * 1.1 ? 'over' : goal && r.kcal < goal * 0.8 ? 'under' : 'okk';
       return `<span class="bar ${cls}${isWeekend(r.iso) ? ' we' : ''}" title="${r.iso}: ${r.kcal} kcal"><i style="height:${Math.max(r.kcal / max * 100, r.kcal ? 4 : 0).toFixed(1)}%"></i><b>${Number(r.iso.slice(8))}</b></span>`;
-    }).join('') + '</div><p class="muted small">Zielone: w normie · bursztynowe: poniżej 80% celu · czerwone: powyżej 110% celu. Liczą się posiłki oznaczone jako zjedzone.</p>';
+    }).join('') + '</div><p class="muted small">Zielone: w normie · bursztynowe: poniżej 80% celu · czerwone: powyżej 110% celu. Liczą się posiłki oznaczone jako zjedzone; gdy brak kcal we wpisie, bierzemy kcal z planu.</p>';
 
   h += '<h3>Ciągłość (5 posiłków i nic zakazanego)</h3><div class="streak">' +
     rows.map((r) => `<span class="${r.good ? 'g' : r.has ? 'p' : ''}" title="${r.iso}: ${r.done}/${MEALS.length} posiłków${r.no ? ', zakazane: ' + r.no : ''}">${Number(r.iso.slice(8))}</span>`).join('') + '</div>';
@@ -132,7 +147,8 @@ async function statsShare() {
   const to = mailAddr(); if (!to) return;
   const blob = new Blob([statsCsv()], { type: 'text/csv' });
   const file = new File([blob], statsName(), { type: 'text/csv' });
-  try { await navigator.clipboard.writeText(to); } catch (e) { /* schowek niedostępny */ }
+  // share() musi być wywołane od razu po dotknięciu (iPhone), więc schowek kopiujemy bez czekania
+  if (navigator.clipboard) navigator.clipboard.writeText(to).catch(() => {});
   if (navigator.canShare && navigator.canShare({ files: [file] })) {
     try { await navigator.share({ files: [file], title: 'Statystyki diety', text: 'Statystyki diety (' + cur().name + ') dla ' + to }); return; } catch (e) { if (e && e.name === 'AbortError') return; }
   }

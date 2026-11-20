@@ -497,7 +497,12 @@ async function init() {
   ku.idx = ZdsRecipes.indexRules(rules);
   render();
   initSync();
-  if ('serviceWorker' in navigator) navigator.serviceWorker.register('sw.js').catch(() => {});
+  if ('serviceWorker' in navigator) {
+    const had = Boolean(navigator.serviceWorker.controller);
+    let reloaded = false;
+    navigator.serviceWorker.addEventListener('controllerchange', () => { if (had && !reloaded) { reloaded = true; location.reload(); } });
+    navigator.serviceWorker.register('sw.js').then((r) => r.update()).catch(() => {});
+  }
 }
 
 if (typeof document !== 'undefined' && document.getElementById('view')) init();

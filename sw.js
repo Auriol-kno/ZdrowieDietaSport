@@ -1,4 +1,4 @@
-const CACHE = 'zds-v13';
+const CACHE = 'zds-v14';
 const ASSETS = ['./', 'index.html', 'styles.css', 'app.js', 'config.js', 'sync.js', 'recipes.js', 'kuchnia.js', 'stats.js', 'data/rules.json', 'data/recipes.json', 'data/napoje.json', 'manifest.webmanifest', 'icons/icon.svg', 'icons/icon-192.png', 'icons/icon-512.png', 'icons/apple-touch-icon.png'];
 
 self.addEventListener('install', (e) => {
@@ -13,9 +13,16 @@ self.addEventListener('activate', (e) => {
   );
 });
 
+// Najpierw sieć (żeby nowa wersja była od razu), a bez internetu kopia z pamięci.
 self.addEventListener('fetch', (e) => {
-  if (e.request.method !== 'GET') return;
+  const req = e.request;
+  if (req.method !== 'GET' || new URL(req.url).origin !== self.location.origin) return;
   e.respondWith(
-    caches.match(e.request).then((hit) => hit || fetch(e.request).catch(() => caches.match('index.html')))
+    fetch(req, { cache: 'no-cache' })
+      .then((res) => {
+        if (res && res.ok) { const copy = res.clone(); caches.open(CACHE).then((c) => c.put(req, copy)); }
+        return res;
+      })
+      .catch(() => caches.match(req).then((hit) => hit || caches.match('index.html')))
   );
 });
