@@ -28,13 +28,21 @@ function defaults() {
     days: {},
     synced: {},
     fam: null,
+    plan: {},
+    pantry: [],
+    shop: { checked: {} },
+    recipes: [],
   };
 }
 
 function load() {
   try {
     const s = JSON.parse(localStorage.getItem(KEY));
-    if (s && Array.isArray(s.profiles) && s.profiles.length) { s.synced = s.synced || {}; s.fam = s.fam || null; return s; }
+    if (s && Array.isArray(s.profiles) && s.profiles.length) {
+      s.synced = s.synced || {}; s.fam = s.fam || null;
+      s.plan = s.plan || {}; s.pantry = s.pantry || []; s.shop = s.shop || { checked: {} }; s.shop.checked = s.shop.checked || {}; s.recipes = s.recipes || [];
+      return s;
+    }
   } catch (e) { /* brak danych lub pamięć niedostępna */ }
   return defaults();
 }
@@ -182,7 +190,8 @@ function render() {
   document.querySelectorAll('.tabs button').forEach((b) => {
     if (b.dataset.tab === tab) b.setAttribute('aria-current', 'page'); else b.removeAttribute('aria-current');
   });
-  $('#view').innerHTML = tab === 'dzis' ? viewToday() : tab === 'sprawdz' ? viewCheck() : viewProfiles();
+  const views = { dzis: viewToday, sprawdz: viewCheck, przepisy: typeof viewRecipes === 'function' ? viewRecipes : viewToday, plan: typeof viewPlan === 'function' ? viewPlan : viewToday, profile: viewProfiles };
+  $('#view').innerHTML = (views[tab] || viewToday)();
 }
 
 // ---------- zdarzenia ----------
@@ -205,9 +214,17 @@ document.addEventListener('click', (e) => {
   const t = e.target.closest('button');
   if (!t) return;
   if (t.id === 'parent-toggle') return toggleParent();
-  if (t.dataset.tab) { tab = t.dataset.tab; return render(); }
+  if (t.dataset.tab) {
+    if (t.dataset.tab === 'przepisy') {
+      if (tab === 'przepisy') { ku.cook = null; ku.timer = null; wakeOff(); }
+      if (!ku.cook) ku.rid = null;
+    }
+    tab = t.dataset.tab;
+    return render();
+  }
   const a = t.dataset.action;
   if (!a) return;
+  if (a.startsWith('k-')) return kAction(a, t);
   if (a.startsWith('sync-')) return syncAction(a);
   const d = day();
   if (['water', 'done', 'del'].includes(a)) d.u = Date.now();
@@ -227,6 +244,8 @@ document.addEventListener('click', (e) => {
 });
 
 document.addEventListener('submit', (e) => {
+  const rf = e.target.closest('form[data-recipe]');
+  if (rf) { e.preventDefault(); return kSubmitRecipe(rf); }
   const f = e.target.closest('form[data-meal]');
   if (!f) return;
   e.preventDefault();
@@ -241,10 +260,14 @@ document.addEventListener('submit', (e) => {
 
 document.addEventListener('input', (e) => {
   if (e.target.id === 'q') $('#results').innerHTML = resultsHtml(e.target.value);
+  if (e.target.id === 'rq') { ku.q = e.target.value; $('#rlist').innerHTML = listHtml(); }
 });
 
 document.addEventListener('change', (e) => {
   if (e.target.id === 'profile') { state.current = e.target.value; save(); return render(); }
+  if (e.target.id === 'rdev') { ku.dev = e.target.value; return render(); }
+  if (e.target.id === 'rmeal') { ku.meal = e.target.value; return render(); }
+  if (e.target.id === 'sdays') { ku.days = Number(e.target.value); return render(); }
   const box = e.target.closest('[data-pid]');
   if (box && e.target.dataset.field) {
     const p = state.profiles.find((x) => x.id === box.dataset.pid);
@@ -378,6 +401,10 @@ async function init() {
     const r = await fetch('data/rules.json');
     rules = await r.json();
   } catch (e) { /* offline bez cache: wyszukiwarka pusta */ }
+  try {
+    ku.recipes = (await (await fetch('data/recipes.json')).json()).recipes;
+  } catch (e) { /* offline bez cache: brak wbudowanych przepisów */ }
+  ku.idx = ZdsRecipes.indexRules(rules);
   render();
   initSync();
   if ('serviceWorker' in navigator) navigator.serviceWorker.register('sw.js').catch(() => {});

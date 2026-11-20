@@ -2,10 +2,13 @@
 
 Rodzinna aplikacja PWA do prowadzenia diety (3 osoby, nacisk na dziecko 10 lat). Działa offline, bez instalowania pakietów i bez frameworka.
 
-## Co jest w wersji 0.1
+## Co jest w aplikacji
 
 - **Dziś**: 5 posiłków (7:00, 10:30, 14:00, 17:30, 20:30), licznik wody (cel 2 l = 8 szklanek), kalorie względem celu.
 - **Sprawdź**: wyszukiwarka „czy mogę to zjeść?" z regułami z zaleceń dietetyka (dozwolone, w ograniczonych ilościach, zakazane).
+- **Przepisy**: 13 przepisów domowych (Thermomix TM6, air fryer, bez urządzeń) z oceną każdego składnika względem zaleceń dietetyka. Skalowanie porcji, własne przepisy (składniki rozpoznawane automatycznie), zapis do dziennika.
+- **Tryb gotowania**: krok po kroku, duże litery, ustawienia TM6 i air fryera, timery z wibracją i dźwiękiem, ekran zostaje włączony.
+- **Plan i zakupy** (tylko tryb rodzica/dorosły): plan na 7 dni, ostrzeżenie o owocach po 16:00, lista zakupów z sumowaniem składników, grupowaniem po działach, „Mam w domu" i kopiowaniem listy.
 - **Profile**: Franciszek (dziecko, cel 1750 kcal) i dwie osoby dorosłe, można dodawać i edytować.
 - **Widok dziecka**: bez kalorii i wagi, pozytywne komunikaty. Pełny widok po włączeniu trybu rodzica (PIN to zasłona widoku, nie zabezpieczenie danych).
 - **Offline**: Service Worker, dane w `localStorage` na urządzeniu.
@@ -21,6 +24,9 @@ Potem otwórz `http://localhost:8080`.
 ## Struktura
 
 - `index.html`, `styles.css`, `app.js`: aplikacja
+- `recipes.js`: logika przepisów (ocena składników, porcje, lista zakupów)
+- `kuchnia.js`: widoki przepisów, trybu gotowania, planu i zakupów
+- `data/recipes.json`: wbudowane przepisy
 - `data/rules.json`: zasady z dokumentu LUX MED z 19.11.2026
 - `sync.js`, `config.js`: synchronizacja z Supabase
 - `supabase/`: schemat bazy i testy reguł dostępu
@@ -42,6 +48,7 @@ Role: **rodzic** widzi całą rodzinę i pomiary, **dorosły** widzi tylko siebi
 
 ```
 node tests/sync.test.js     # scalanie profili i dni
+node tests/recipes.test.js  # przepisy zgodne z zaleceniami, porcje, lista zakupów
 ```
 
 Reguły dostępu (`supabase/tests/rls_test.sql`) uruchamia się na zwykłym Postgresie po `stub_supabase.sql` i `schema.sql`.
@@ -49,7 +56,8 @@ Reguły dostępu (`supabase/tests/rls_test.sql`) uruchamia się na zwykłym Post
 ## Plan
 
 1. Pomiary (Tanita) i raport PDF na wizytę kontrolną.
-2. Kuchnia: przepisy dla Thermomixa TM6 i air fryera sprawdzane z regułami.
-3. Skaner kodów kreskowych (Open Food Facts).
+2. Synchronizacja planu, listy zakupów i własnych przepisów między telefonami (dziś zostają na urządzeniu; dziennik i profile już się synchronizują).
+3. Import przepisów z linku, spiżarnia z terminami ważności, resztki na kolejne dni.
+4. Skaner kodów kreskowych (Open Food Facts).
 
-Uwagi o Thermomixie i air fryerze to propozycje do potwierdzenia z dietetykiem. Aplikacja nie zastępuje porady dietetyka.
+Air fryer jest dozwolony (potwierdzone przez użytkownika 20.11.2026). Ustawienia Thermomixa i air fryera w przepisach są orientacyjne, dopasuj je do instrukcji swoich urządzeń. Sól i pieprz są w zaleceniach „w ograniczonych ilościach", dlatego oznaczone jako drobne i nie obniżają oceny całego przepisu. Aplikacja nie zastępuje porady dietetyka.

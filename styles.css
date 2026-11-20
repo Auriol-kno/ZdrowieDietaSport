@@ -47,3 +47,29 @@ h2 { font: 700 18px/24px 'Space Grotesk', Inter, sans-serif; margin: 0; }
 .field { display: flex; flex-direction: column; gap: 4px; }
 .grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
 .kid { background: #eef5ec; }
+.tabs button { font-size: 13px; padding: 0 4px; }
+.row.wrap { flex-wrap: wrap; gap: 6px 10px; }
+.stack { display: flex; flex-direction: column; gap: 10px; }
+.pill.dev { background: var(--teal-t); color: var(--teal); }
+.pill.tiny { padding: 0 6px; font-size: 12px; margin-right: 6px; }
+.rcard { display: flex; flex-direction: column; gap: 8px; width: 100%; height: auto; text-align: left; background: var(--card); color: var(--ink); border: 1px solid var(--line); padding: 14px 16px; font-weight: 400; }
+.rcard strong { font-size: 17px; }
+textarea { font: inherit; padding: 10px 12px; border: 1px solid #c9c3b4; border-radius: 12px; background: #fff; width: 100%; }
+.ing { list-style: none; margin: 8px 0 0; padding: 0; }
+.ing li { padding: 6px 0; border-top: 1px solid var(--line); }
+.ing li:first-child { border-top: 0; }
+.steps { margin: 8px 0 12px; padding-left: 22px; display: flex; flex-direction: column; gap: 10px; }
+.cooktext { font-size: 22px; line-height: 30px; margin: 4px 0 12px; }
+.cookparam { font-size: 20px; }
+.cookstep { display: flex; flex-direction: column; gap: 12px; }
+.seg button { flex: 1; }
+button.ghost[aria-pressed=true] { background: var(--green-t); color: var(--green); border-color: var(--green); }
+.linkish { background: none; color: var(--green); min-height: 0; padding: 0; text-align: left; text-decoration: underline; font-weight: 600; }
+.inline-warn { color: var(--amber); font-size: 13px; font-weight: 600; }
+.sec { margin: 14px 0 4px; font-size: 15px; color: var(--muted); }
+.sec:first-child { margin-top: 0; }
+.shop { display: flex; align-items: center; gap: 10px; padding: 6px 0; border-top: 1px solid var(--line); }
+.shopname { flex: 1; }
+.shop.is-done .shopname { text-decoration: line-through; color: var(--muted); }
+.chk { width: 36px; min-height: 36px; padding: 0; font-size: 18px; }
+button:disabled { opacity: .45; cursor: default; }

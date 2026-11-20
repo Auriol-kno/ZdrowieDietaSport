@@ -1,0 +1,1080 @@
+{
+ "wersja": 1,
+ "zrodlo": "Przepisy własne projektu, sprawdzone z zaleceniami z 19.11.2026",
+ "recipes": [
+  {
+   "id": "owsianka-jablko",
+   "name": "Owsianka z jabłkiem i cynamonem",
+   "posilki": [
+    "sniadanie"
+   ],
+   "porcje": 3,
+   "czas": 15,
+   "urz": [
+    "tm6"
+   ],
+   "kcal": 210,
+   "opis": "Owsianka na wodzie z jogurtem naturalnym, bez cukru.",
+   "skladniki": [
+    {
+     "n": "płatki owsiane górskie",
+     "q": 90,
+     "u": "g",
+     "s": "Zboża i pieczywo",
+     "rule": "płatki owsiane górskie"
+    },
+    {
+     "n": "woda",
+     "q": 400,
+     "u": "ml",
+     "s": "Inne",
+     "neutral": true
+    },
+    {
+     "n": "jabłka",
+     "q": 2,
+     "u": "szt",
+     "s": "Owoce",
+     "rule": "jabłka"
+    },
+    {
+     "n": "cynamon",
+     "q": 1,
+     "u": "łyżeczka",
+     "s": "Tłuszcze i przyprawy",
+     "rule": "cynamon"
+    },
+    {
+     "n": "jogurt naturalny",
+     "q": 150,
+     "u": "g",
+     "s": "Nabiał i jaja",
+     "rule": "jogurt naturalny"
+    },
+    {
+     "n": "miód",
+     "q": 1,
+     "u": "łyżka",
+     "s": "Inne",
+     "rule": "miód"
+    }
+   ],
+   "kroki": [
+    {
+     "t": "Jabłka obierz i pokrój w drobną kostkę."
+    },
+    {
+     "t": "Do naczynia TM6 wsyp płatki, wlej wodę, dodaj jabłka i cynamon."
+    },
+    {
+     "t": "Gotuj, mieszając wstecz.",
+     "dev": "tm6",
+     "p": "90°C · obr. 1 · 6 min",
+     "timer": 360
+    },
+    {
+     "t": "Przełóż do miseczek, dodaj jogurt, a na końcu miód (jeśli chcesz)."
+    }
+   ],
+   "uwagi": "Ustawienia TM6 są orientacyjne. Dopasuj do instrukcji urządzenia."
+  },
+  {
+   "id": "jajka-kanapki",
+   "name": "Jajka z Varoma i kanapki z warzywami",
+   "posilki": [
+    "sniadanie",
+    "kolacja"
+   ],
+   "porcje": 3,
+   "czas": 20,
+   "urz": [
+    "tm6"
+   ],
+   "kcal": 330,
+   "opis": "Jajka gotowane na parze, razowe pieczywo, świeże warzywa.",
+   "skladniki": [
+    {
+     "n": "jajka",
+     "q": 6,
+     "u": "szt",
+     "s": "Nabiał i jaja",
+     "rule": "jajka"
+    },
+    {
+     "n": "woda",
+     "q": 500,
+     "u": "ml",
+     "s": "Inne",
+     "neutral": true
+    },
+    {
+     "n": "pieczywo razowe",
+     "q": 6,
+     "u": "kromka",
+     "s": "Zboża i pieczywo",
+     "rule": "pieczywo razowe"
+    },
+    {
+     "n": "pomidor",
+     "q": 2,
+     "u": "szt",
+     "s": "Warzywa",
+     "rule": "pomidor"
+    },
+    {
+     "n": "ogórek zielony",
+     "q": 1,
+     "u": "szt",
+     "s": "Warzywa",
+     "rule": "ogórek zielony"
+    },
+    {
+     "n": "rukola",
+     "q": 1,
+     "u": "garść",
+     "s": "Warzywa",
+     "rule": "rukola"
+    }
+   ],
+   "kroki": [
+    {
+     "t": "Wlej wodę do naczynia TM6, jajka ułóż w Varoma."
+    },
+    {
+     "t": "Gotuj na parze (około 12 min na półmiękko, 15 min na twardo).",
+     "dev": "tm6",
+     "p": "Varoma · obr. 1 · 12–15 min",
+     "timer": 720
+    },
+    {
+     "t": "Jajka zalej zimną wodą, obierz."
+    },
+    {
+     "t": "Kanapki: pieczywo, rukola, plasterki pomidora i ogórka, jajko obok."
+    }
+   ]
+  },
+  {
+   "id": "zupa-brokulowa",
+   "name": "Zupa krem z brokułów",
+   "posilki": [
+    "obiad"
+   ],
+   "porcje": 3,
+   "czas": 30,
+   "urz": [
+    "tm6"
+   ],
+   "kcal": 190,
+   "opis": "Krem na wodzie, bez podsmażania. Jogurt naturalny zamiast śmietany (śmietana jest zakazana).",
+   "skladniki": [
+    {
+     "n": "brokuły",
+     "q": 450,
+     "u": "g",
+     "s": "Warzywa",
+     "rule": "brokuły"
+    },
+    {
+     "n": "ziemniaki",
+     "q": 150,
+     "u": "g",
+     "s": "Warzywa",
+     "rule": "ziemniaki"
+    },
+    {
+     "n": "cebula",
+     "q": 1,
+     "u": "szt",
+     "s": "Warzywa",
+     "rule": "cebula"
+    },
+    {
+     "n": "czosnek",
+     "q": 2,
+     "u": "ząbek",
+     "s": "Warzywa",
+     "rule": "czosnek"
+    },
+    {
+     "n": "woda",
+     "q": 600,
+     "u": "ml",
+     "s": "Inne",
+     "neutral": true
+    },
+    {
+     "n": "oliwa z oliwek",
+     "q": 1,
+     "u": "łyżka",
+     "s": "Tłuszcze i przyprawy",
+     "rule": "oliwa z oliwek"
+    },
+    {
+     "n": "jogurt naturalny",
+     "q": 100,
+     "u": "g",
+     "s": "Nabiał i jaja",
+     "rule": "jogurt naturalny"
+    },
+    {
+     "n": "koperek",
+     "q": 1,
+     "u": "pęczek",
+     "s": "Warzywa",
+     "rule": "koper"
+    },
+    {
+     "n": "sól",
+     "q": 0.5,
+     "u": "łyżeczka",
+     "s": "Tłuszcze i przyprawy",
+     "rule": "sól",
+     "drobny": true
+    }
+   ],
+   "kroki": [
+    {
+     "t": "Brokuły podziel na różyczki, ziemniaki obierz i pokrój w kostkę, cebulę przekrój."
+    },
+    {
+     "t": "Do naczynia TM6 włóż cebulę, czosnek, ziemniaki i brokuły, wlej wodę."
+    },
+    {
+     "t": "Gotuj.",
+     "dev": "tm6",
+     "p": "100°C · obr. 1 · 20 min",
+     "timer": 1200
+    },
+    {
+     "t": "Miksuj, stopniowo zwiększając obroty.",
+     "dev": "tm6",
+     "p": "obr. 5→10 · 1 min",
+     "timer": 60
+    },
+    {
+     "t": "Dodaj jogurt, oliwę, posiekany koperek, wymieszaj i dopraw solą.",
+     "dev": "tm6",
+     "p": "obr. 4 · 10 s"
+    }
+   ],
+   "uwagi": "Ziemniaki są na liście „w ograniczonych ilościach”. Tu to niewielka porcja."
+  },
+  {
+   "id": "indyk-para-kasza",
+   "name": "Indyk na parze z kaszą gryczaną i fasolką",
+   "posilki": [
+    "obiad"
+   ],
+   "porcje": 3,
+   "czas": 35,
+   "urz": [
+    "tm6"
+   ],
+   "kcal": 390,
+   "opis": "Cały obiad w jednym gotowaniu: kasza w koszyku, mięso i fasolka w Varoma.",
+   "skladniki": [
+    {
+     "n": "filet z piersi indyka",
+     "q": 400,
+     "u": "g",
+     "s": "Mięso i ryby",
+     "rule": "indyk"
+    },
+    {
+     "n": "kasza gryczana",
+     "q": 150,
+     "u": "g",
+     "s": "Zboża i pieczywo",
+     "rule": "kasza gryczana"
+    },
+    {
+     "n": "woda",
+     "q": 700,
+     "u": "ml",
+     "s": "Inne",
+     "neutral": true
+    },
+    {
+     "n": "fasolka szparagowa",
+     "q": 300,
+     "u": "g",
+     "s": "Warzywa",
+     "rule": "fasolka szparagowa"
+    },
+    {
+     "n": "zioła prowansalskie",
+     "q": 1,
+     "u": "łyżeczka",
+     "s": "Tłuszcze i przyprawy",
+     "rule": "zioła prowansalskie"
+    },
+    {
+     "n": "oliwa z oliwek",
+     "q": 1,
+     "u": "łyżka",
+     "s": "Tłuszcze i przyprawy",
+     "rule": "oliwa z oliwek"
+    },
+    {
+     "n": "sól",
+     "q": 0.5,
+     "u": "łyżeczka",
+     "s": "Tłuszcze i przyprawy",
+     "rule": "sól",
+     "drobny": true
+    }
+   ],
+   "kroki": [
+    {
+     "t": "Indyka pokrój w plastry, natrzyj ziołami i niewielką ilością soli."
+    },
+    {
+     "t": "Wlej wodę do naczynia TM6. Kaszę przepłucz i wsyp do koszyka."
+    },
+    {
+     "t": "Na Varoma ułóż fasolkę (dolny poziom) i indyka (górny poziom), zamknij."
+    },
+    {
+     "t": "Gotuj na parze.",
+     "dev": "tm6",
+     "p": "Varoma · obr. 1 · 25 min",
+     "timer": 1500
+    },
+    {
+     "t": "Kaszę wyjmij z koszyka, na talerzu skrop oliwą."
+    }
+   ],
+   "uwagi": "Czas dopasuj do grubości plastrów. Mięso musi być całkiem ugotowane."
+  },
+  {
+   "id": "kurczak-af-ryz",
+   "name": "Kurczak z air fryera, ryż brązowy i sałatka",
+   "posilki": [
+    "obiad"
+   ],
+   "porcje": 3,
+   "czas": 40,
+   "urz": [
+    "af",
+    "tm6"
+   ],
+   "kcal": 395,
+   "opis": "Filety bez panierki, natarte oliwą i ziołami. Ryż w koszyku TM6.",
+   "skladniki": [
+    {
+     "n": "filet z kurczaka",
+     "q": 450,
+     "u": "g",
+     "s": "Mięso i ryby",
+     "rule": "kurczak"
+    },
+    {
+     "n": "ryż brązowy",
+     "q": 150,
+     "u": "g",
+     "s": "Zboża i pieczywo",
+     "rule": "ryż brązowy"
+    },
+    {
+     "n": "woda",
+     "q": 900,
+     "u": "ml",
+     "s": "Inne",
+     "neutral": true
+    },
+    {
+     "n": "oliwa z oliwek",
+     "q": 1,
+     "u": "łyżeczka",
+     "s": "Tłuszcze i przyprawy",
+     "rule": "oliwa z oliwek"
+    },
+    {
+     "n": "zioła prowansalskie",
+     "q": 1,
+     "u": "łyżeczka",
+     "s": "Tłuszcze i przyprawy",
+     "rule": "zioła prowansalskie"
+    },
+    {
+     "n": "papryka łagodna",
+     "q": 1,
+     "u": "łyżeczka",
+     "s": "Tłuszcze i przyprawy",
+     "rule": "papryka łagodna"
+    },
+    {
+     "n": "sałata rzymska",
+     "q": 1,
+     "u": "szt",
+     "s": "Warzywa",
+     "rule": "sałata rzymska"
+    },
+    {
+     "n": "pomidor",
+     "q": 2,
+     "u": "szt",
+     "s": "Warzywa",
+     "rule": "pomidor"
+    },
+    {
+     "n": "ogórek zielony",
+     "q": 1,
+     "u": "szt",
+     "s": "Warzywa",
+     "rule": "ogórek zielony"
+    },
+    {
+     "n": "sól",
+     "q": 0.5,
+     "u": "łyżeczka",
+     "s": "Tłuszcze i przyprawy",
+     "rule": "sól",
+     "drobny": true
+    }
+   ],
+   "kroki": [
+    {
+     "t": "Ryż przepłucz, wsyp do koszyka TM6, w naczyniu wlej wodę."
+    },
+    {
+     "t": "Gotuj ryż.",
+     "dev": "tm6",
+     "p": "100°C · obr. 1 · 30 min",
+     "timer": 1800
+    },
+    {
+     "t": "Filety natrzyj oliwą, ziołami, papryką i solą. Bez panierki."
+    },
+    {
+     "t": "Piecz w air fryerze, w połowie czasu obróć filety.",
+     "dev": "af",
+     "p": "180°C · 14 min",
+     "timer": 840
+    },
+    {
+     "t": "Sprawdź, że mięso w środku jest całkiem ugotowane (bez różowego soku)."
+    },
+    {
+     "t": "Sałatę porwij, pomidory i ogórka pokrój, podaj z kurczakiem i ryżem."
+    }
+   ]
+  },
+  {
+   "id": "warzywa-af",
+   "name": "Pieczone warzywa z air fryera",
+   "posilki": [
+    "obiad",
+    "kolacja"
+   ],
+   "porcje": 3,
+   "czas": 20,
+   "urz": [
+    "af"
+   ],
+   "kcal": 110,
+   "opis": "Dodatek do mięsa lub ryby albo lekka kolacja.",
+   "skladniki": [
+    {
+     "n": "brokuły",
+     "q": 300,
+     "u": "g",
+     "s": "Warzywa",
+     "rule": "brokuły"
+    },
+    {
+     "n": "papryka czerwona",
+     "q": 2,
+     "u": "szt",
+     "s": "Warzywa",
+     "rule": "papryka czerwona"
+    },
+    {
+     "n": "cebula",
+     "q": 1,
+     "u": "szt",
+     "s": "Warzywa",
+     "rule": "cebula"
+    },
+    {
+     "n": "czosnek",
+     "q": 2,
+     "u": "ząbek",
+     "s": "Warzywa",
+     "rule": "czosnek"
+    },
+    {
+     "n": "oliwa z oliwek",
+     "q": 1,
+     "u": "łyżka",
+     "s": "Tłuszcze i przyprawy",
+     "rule": "oliwa z oliwek"
+    },
+    {
+     "n": "zioła prowansalskie",
+     "q": 1,
+     "u": "łyżeczka",
+     "s": "Tłuszcze i przyprawy",
+     "rule": "zioła prowansalskie"
+    },
+    {
+     "n": "sól",
+     "q": 0.5,
+     "u": "łyżeczka",
+     "s": "Tłuszcze i przyprawy",
+     "rule": "sól",
+     "drobny": true
+    }
+   ],
+   "kroki": [
+    {
+     "t": "Warzywa pokrój na podobne kawałki, wymieszaj z oliwą, ziołami i solą."
+    },
+    {
+     "t": "Piecz, w połowie czasu wstrząśnij koszem.",
+     "dev": "af",
+     "p": "180°C · 15 min",
+     "timer": 900
+    }
+   ]
+  },
+  {
+   "id": "dorsz-af-jaglana",
+   "name": "Dorsz z air fryera z kaszą jaglaną",
+   "posilki": [
+    "obiad"
+   ],
+   "porcje": 3,
+   "czas": 30,
+   "urz": [
+    "af",
+    "tm6"
+   ],
+   "kcal": 360,
+   "opis": "Ryba bez panierki (bułka tarta jest zakazana), z koperkiem i sałatką z ogórka.",
+   "skladniki": [
+    {
+     "n": "filet z ryby morskiej (dorsz)",
+     "q": 450,
+     "u": "g",
+     "s": "Mięso i ryby",
+     "rule": "ryby morskie"
+    },
+    {
+     "n": "kasza jaglana",
+     "q": 150,
+     "u": "g",
+     "s": "Zboża i pieczywo",
+     "rule": "kasza jaglana"
+    },
+    {
+     "n": "woda",
+     "q": 400,
+     "u": "ml",
+     "s": "Inne",
+     "neutral": true
+    },
+    {
+     "n": "koperek",
+     "q": 1,
+     "u": "pęczek",
+     "s": "Warzywa",
+     "rule": "koper"
+    },
+    {
+     "n": "czosnek",
+     "q": 1,
+     "u": "ząbek",
+     "s": "Warzywa",
+     "rule": "czosnek"
+    },
+    {
+     "n": "oliwa z oliwek",
+     "q": 1,
+     "u": "łyżeczka",
+     "s": "Tłuszcze i przyprawy",
+     "rule": "oliwa z oliwek"
+    },
+    {
+     "n": "ogórek zielony",
+     "q": 2,
+     "u": "szt",
+     "s": "Warzywa",
+     "rule": "ogórek zielony"
+    },
+    {
+     "n": "jogurt naturalny",
+     "q": 100,
+     "u": "g",
+     "s": "Nabiał i jaja",
+     "rule": "jogurt naturalny"
+    },
+    {
+     "n": "sól",
+     "q": 0.5,
+     "u": "łyżeczka",
+     "s": "Tłuszcze i przyprawy",
+     "rule": "sól",
+     "drobny": true
+    }
+   ],
+   "kroki": [
+    {
+     "t": "Kaszę przepłucz na sicie gorącą wodą. Wsyp do naczynia TM6, wlej wodę."
+    },
+    {
+     "t": "Gotuj kaszę, potem odstaw pod przykryciem na 5 min.",
+     "dev": "tm6",
+     "p": "100°C · obr. 1 · 15 min",
+     "timer": 900
+    },
+    {
+     "t": "Rybę natrzyj oliwą, czosnkiem, połową koperku i solą."
+    },
+    {
+     "t": "Piecz w air fryerze.",
+     "dev": "af",
+     "p": "180°C · 10 min",
+     "timer": 600
+    },
+    {
+     "t": "Ogórki pokrój, wymieszaj z jogurtem i resztą koperku."
+    }
+   ]
+  },
+  {
+   "id": "pulpeciki-indyk",
+   "name": "Pulpeciki z indyka w sosie pomidorowym",
+   "posilki": [
+    "obiad"
+   ],
+   "porcje": 3,
+   "czas": 45,
+   "urz": [
+    "tm6"
+   ],
+   "kcal": 465,
+   "opis": "Pulpeciki na parze nad sosem. Płatki owsiane zamiast bułki tartej.",
+   "skladniki": [
+    {
+     "n": "mielone mięso z indyka",
+     "q": 450,
+     "u": "g",
+     "s": "Mięso i ryby",
+     "rule": "indyk"
+    },
+    {
+     "n": "jajka",
+     "q": 1,
+     "u": "szt",
+     "s": "Nabiał i jaja",
+     "rule": "jajka"
+    },
+    {
+     "n": "płatki owsiane górskie",
+     "q": 40,
+     "u": "g",
+     "s": "Zboża i pieczywo",
+     "rule": "płatki owsiane górskie"
+    },
+    {
+     "n": "cebula",
+     "q": 1,
+     "u": "szt",
+     "s": "Warzywa",
+     "rule": "cebula"
+    },
+    {
+     "n": "czosnek",
+     "q": 2,
+     "u": "ząbek",
+     "s": "Warzywa",
+     "rule": "czosnek"
+    },
+    {
+     "n": "oregano",
+     "q": 1,
+     "u": "łyżeczka",
+     "s": "Tłuszcze i przyprawy",
+     "rule": "oregano"
+    },
+    {
+     "n": "pomidory",
+     "q": 600,
+     "u": "g",
+     "s": "Warzywa",
+     "rule": "pomidor"
+    },
+    {
+     "n": "bazylia",
+     "q": 1,
+     "u": "łyżeczka",
+     "s": "Tłuszcze i przyprawy",
+     "rule": "bazylia"
+    },
+    {
+     "n": "kasza jęczmienna mazurska",
+     "q": 150,
+     "u": "g",
+     "s": "Zboża i pieczywo",
+     "rule": "kasza jęczmienna mazurska"
+    },
+    {
+     "n": "sól",
+     "q": 0.5,
+     "u": "łyżeczka",
+     "s": "Tłuszcze i przyprawy",
+     "rule": "sól",
+     "drobny": true
+    }
+   ],
+   "kroki": [
+    {
+     "t": "Mięso wymieszaj z jajkiem, płatkami, oregano, solą i przeciśniętym czosnkiem. Formuj małe kulki."
+    },
+    {
+     "t": "W naczyniu TM6 umieść pokrojone pomidory, cebulę i bazylię. Pulpeciki ułóż w Varoma."
+    },
+    {
+     "t": "Gotuj sos i pulpeciki jednocześnie.",
+     "dev": "tm6",
+     "p": "Varoma · obr. 1 · 25 min",
+     "timer": 1500
+    },
+    {
+     "t": "Sos zmiksuj.",
+     "dev": "tm6",
+     "p": "obr. 7 · 20 s"
+    },
+    {
+     "t": "Kaszę ugotuj osobno według opisu na opakowaniu i podaj z pulpecikami."
+    }
+   ]
+  },
+  {
+   "id": "jaglanka-maliny",
+   "name": "Kasza jaglana na słodko z malinami",
+   "posilki": [
+    "ii",
+    "sniadanie"
+   ],
+   "porcje": 3,
+   "czas": 20,
+   "urz": [
+    "tm6"
+   ],
+   "kcal": 180,
+   "opis": "Lekkie II śniadanie z jogurtem, bez cukru.",
+   "skladniki": [
+    {
+     "n": "kasza jaglana",
+     "q": 90,
+     "u": "g",
+     "s": "Zboża i pieczywo",
+     "rule": "kasza jaglana"
+    },
+    {
+     "n": "woda",
+     "q": 300,
+     "u": "ml",
+     "s": "Inne",
+     "neutral": true
+    },
+    {
+     "n": "jogurt naturalny",
+     "q": 150,
+     "u": "g",
+     "s": "Nabiał i jaja",
+     "rule": "jogurt naturalny"
+    },
+    {
+     "n": "maliny",
+     "q": 150,
+     "u": "g",
+     "s": "Owoce",
+     "rule": "maliny"
+    },
+    {
+     "n": "cynamon",
+     "q": 0.5,
+     "u": "łyżeczka",
+     "s": "Tłuszcze i przyprawy",
+     "rule": "cynamon"
+    },
+    {
+     "n": "miód",
+     "q": 1,
+     "u": "łyżka",
+     "s": "Inne",
+     "rule": "miód"
+    }
+   ],
+   "kroki": [
+    {
+     "t": "Kaszę przepłucz gorącą wodą. Do naczynia TM6 wsyp kaszę, wlej wodę, dodaj cynamon."
+    },
+    {
+     "t": "Gotuj, potem odstaw na 5 min.",
+     "dev": "tm6",
+     "p": "100°C · obr. 1 · 15 min",
+     "timer": 900
+    },
+    {
+     "t": "Przełóż do miseczek, dodaj jogurt, maliny i miód."
+    }
+   ]
+  },
+  {
+   "id": "jogurt-jagody",
+   "name": "Jogurt naturalny z jagodami i otrębami",
+   "posilki": [
+    "ii",
+    "sniadanie"
+   ],
+   "porcje": 3,
+   "czas": 5,
+   "urz": [],
+   "kcal": 155,
+   "opis": "Szybkie II śniadanie bez gotowania.",
+   "skladniki": [
+    {
+     "n": "jogurt naturalny",
+     "q": 450,
+     "u": "g",
+     "s": "Nabiał i jaja",
+     "rule": "jogurt naturalny"
+    },
+    {
+     "n": "jagody",
+     "q": 150,
+     "u": "g",
+     "s": "Owoce",
+     "rule": "jagody"
+    },
+    {
+     "n": "otręby owsiane",
+     "q": 3,
+     "u": "łyżka",
+     "s": "Zboża i pieczywo",
+     "rule": "otręby owsiane"
+    },
+    {
+     "n": "miód",
+     "q": 1,
+     "u": "łyżka",
+     "s": "Inne",
+     "rule": "miód"
+    }
+   ],
+   "kroki": [
+    {
+     "t": "Jogurt rozłóż do miseczek, dodaj jagody, otręby i odrobinę miodu."
+    }
+   ]
+  },
+  {
+   "id": "kanapki-twarog",
+   "name": "Kanapki z pastą twarogową",
+   "posilki": [
+    "kolacja"
+   ],
+   "porcje": 3,
+   "czas": 10,
+   "urz": [],
+   "kcal": 300,
+   "opis": "Twaróg półtłusty z jogurtem, koperkiem i czosnkiem na razowym pieczywie.",
+   "skladniki": [
+    {
+     "n": "twaróg półtłusty",
+     "q": 250,
+     "u": "g",
+     "s": "Nabiał i jaja",
+     "rule": "twaróg półtłusty"
+    },
+    {
+     "n": "jogurt naturalny",
+     "q": 60,
+     "u": "g",
+     "s": "Nabiał i jaja",
+     "rule": "jogurt naturalny"
+    },
+    {
+     "n": "koperek",
+     "q": 1,
+     "u": "pęczek",
+     "s": "Warzywa",
+     "rule": "koper"
+    },
+    {
+     "n": "czosnek",
+     "q": 1,
+     "u": "ząbek",
+     "s": "Warzywa",
+     "rule": "czosnek"
+    },
+    {
+     "n": "pieczywo razowe",
+     "q": 6,
+     "u": "kromka",
+     "s": "Zboża i pieczywo",
+     "rule": "pieczywo razowe"
+    },
+    {
+     "n": "ogórek zielony",
+     "q": 1,
+     "u": "szt",
+     "s": "Warzywa",
+     "rule": "ogórek zielony"
+    },
+    {
+     "n": "pomidor",
+     "q": 1,
+     "u": "szt",
+     "s": "Warzywa",
+     "rule": "pomidor"
+    },
+    {
+     "n": "sól",
+     "q": 0.5,
+     "u": "łyżeczka",
+     "s": "Tłuszcze i przyprawy",
+     "rule": "sól",
+     "drobny": true
+    }
+   ],
+   "kroki": [
+    {
+     "t": "Twaróg rozgnieć z jogurtem, posiekanym koperkiem, czosnkiem i szczyptą soli."
+    },
+    {
+     "t": "Pastę rozsmaruj na pieczywie, dodaj plasterki ogórka i pomidora."
+    }
+   ]
+  },
+  {
+   "id": "slupki-papryki",
+   "name": "Słupki papryki z dipem jogurtowym",
+   "posilki": [
+    "przekaska"
+   ],
+   "porcje": 3,
+   "czas": 10,
+   "urz": [],
+   "kcal": 80,
+   "opis": "Domowy dip zamiast gotowych dipów (zakazane).",
+   "skladniki": [
+    {
+     "n": "papryka czerwona",
+     "q": 2,
+     "u": "szt",
+     "s": "Warzywa",
+     "rule": "papryka czerwona"
+    },
+    {
+     "n": "ogórek zielony",
+     "q": 1,
+     "u": "szt",
+     "s": "Warzywa",
+     "rule": "ogórek zielony"
+    },
+    {
+     "n": "jogurt naturalny",
+     "q": 150,
+     "u": "g",
+     "s": "Nabiał i jaja",
+     "rule": "jogurt naturalny"
+    },
+    {
+     "n": "czosnek",
+     "q": 1,
+     "u": "ząbek",
+     "s": "Warzywa",
+     "rule": "czosnek"
+    },
+    {
+     "n": "koperek",
+     "q": 1,
+     "u": "pęczek",
+     "s": "Warzywa",
+     "rule": "koper"
+    },
+    {
+     "n": "sól",
+     "q": 0.5,
+     "u": "łyżeczka",
+     "s": "Tłuszcze i przyprawy",
+     "rule": "sól",
+     "drobny": true
+    }
+   ],
+   "kroki": [
+    {
+     "t": "Paprykę i ogórka pokrój w słupki."
+    },
+    {
+     "t": "Jogurt wymieszaj z czosnkiem, koperkiem i szczyptą soli."
+    }
+   ]
+  },
+  {
+   "id": "jablko-af",
+   "name": "Pieczone jabłko z cynamonem z air fryera",
+   "posilki": [
+    "ii",
+    "obiad"
+   ],
+   "porcje": 3,
+   "czas": 25,
+   "urz": [
+    "af"
+   ],
+   "kcal": 130,
+   "opis": "Owoce tylko do godziny 16, dlatego na II śniadanie albo po obiedzie.",
+   "skladniki": [
+    {
+     "n": "jabłka",
+     "q": 3,
+     "u": "szt",
+     "s": "Owoce",
+     "rule": "jabłka"
+    },
+    {
+     "n": "cynamon",
+     "q": 1,
+     "u": "łyżeczka",
+     "s": "Tłuszcze i przyprawy",
+     "rule": "cynamon"
+    },
+    {
+     "n": "miód",
+     "q": 1,
+     "u": "łyżeczka",
+     "s": "Inne",
+     "rule": "miód"
+    },
+    {
+     "n": "jogurt naturalny",
+     "q": 150,
+     "u": "g",
+     "s": "Nabiał i jaja",
+     "rule": "jogurt naturalny"
+    }
+   ],
+   "kroki": [
+    {
+     "t": "Jabłka umyj, wydrąż gniazda nasienne i nacięte nadziej odrobiną cynamonu i miodu."
+    },
+    {
+     "t": "Piecz w air fryerze.",
+     "dev": "af",
+     "p": "180°C · 15 min",
+     "timer": 900
+    },
+    {
+     "t": "Podawaj z jogurtem naturalnym."
+    }
+   ]
+  }
+ ]
+}
