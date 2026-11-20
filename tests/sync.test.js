@@ -32,6 +32,12 @@ ok('napoje dnia synchronizują się w obie strony, a puste nie zmieniają format
   assert.strictEqual(d2['2026-11-21|a'].drinks[0].id, 'kefir');
 });
 
+ok('aktywności dnia synchronizują się', () => {
+  const days = { '2026-11-20|a': { meals: {}, water: 0, activities: [{ name: 'Rower', min: 45 }], u: 5 } };
+  const rows = S.dayRowsToPush(days, {}, [{ id: 'a', remoteId: 'R1' }]);
+  assert.deepStrictEqual(rows[0].row.data.activities, [{ name: 'Rower', min: 45 }]);
+});
+
 ok('serwer wygrywa w danych profilu, usunięty na serwerze znika lokalnie', () => {
   const local = [{ id: 'a', remoteId: 'R1', name: 'Stare', role: 'dorosły', kcal: 1 }, { id: 'x', remoteId: 'R9', name: 'Usunięty', role: 'dorosły', kcal: 0 }];
   const remote = [{ id: 'R1', user_id: 'u', name: 'Nowe', role: 'rodzic', kcal_goal: 2200 }];

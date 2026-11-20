@@ -128,6 +128,17 @@ function ring(done, total) {
     `<text x="34" y="39" text-anchor="middle" font-size="16" font-weight="700" fill="currentColor">${done}/${total}</text></svg>`;
 }
 
+const QUICK_ACT = [['Spacer', 30], ['Rower', 45], ['Pływanie', 45], ['Piłka nożna', 60], ['Bieganie', 30], ['Siłownia', 45], ['Taniec', 30], ['Hulajnoga', 30], ['W-F w szkole', 45]];
+function activityCard(d) {
+  const list = d.activities || [], tot = list.reduce((a, x) => a + x.min, 0);
+  return `<div class="card"><div class="row sb"><h2>Aktywność</h2><span class="muted">${tot ? tot + ' min' : 'jeszcze nic'}</span></div>` +
+    '<div class="chips scroll">' + QUICK_ACT.map(([n, m]) => `<button type="button" class="chip" data-action="act-pick" data-name="${esc(n)}" data-min="${m}">${esc(n)}</button>`).join('') + '</div>' +
+    '<form data-act="1"><label class="sr" for="an">Aktywność</label><input type="text" id="an" placeholder="Aktywność" required autocomplete="off">' +
+    '<label class="sr" for="am">Minuty</label><input type="number" id="am" value="30" min="1" max="1440" inputmode="numeric" required><button type="submit" class="small">Dodaj</button></form>' +
+    (list.length ? '<ul class="drinklist">' + list.map((x, i) => `<li><span>${esc(x.name)} <span class="muted">${x.min} min</span></span>` +
+      `<button type="button" class="small ghost" data-action="act-del" data-i="${i}" aria-label="Usuń ${esc(x.name)}">✕</button></li>`).join('') + '</ul>' : '') + '</div>';
+}
+
 function viewToday() {
   const p = cur(), d = day(), kid = isKid();
   const done = MEALS.filter(([k]) => d.meals[k] && d.meals[k].done).length;
@@ -148,8 +159,6 @@ function viewToday() {
     side = `<div class="card widget"><h2>Posiłki</h2>${gauge(Math.round((done / MEALS.length) * 100), 'rose', 'Posiłki', `${done} z ${MEALS.length}`)}<span class="muted">${kid ? 'Dobra robota!' : 'Zjedzone dziś'}</span></div>`;
   }
   html += `<div class="widgets">${waterW}${side}</div>`;
-
-  if (typeof drinksCard === 'function') html += drinksCard();
 
   if (new Date().getHours() >= FRUIT_DEADLINE_HOUR) {
     html += '<div class="note warn">Owoce jemy tylko do 16:00 i nie na ostatni posiłek.</div>';
@@ -173,21 +182,36 @@ function viewToday() {
     }
     html += '</div>';
   }
-  html += '</div>';
+  html += '</div>' + activityCard(d);
+  if (typeof drinksCard === 'function') html += drinksCard();
   return html;
 }
 
-function viewCheck() {
-  return '<h1>Czy mogę to zjeść?</h1>' +
-    '<div class="field"><label for="q" class="muted">Szukaj produktu</label><input type="text" id="q" placeholder="np. kefir, płatki, banan" autocomplete="off"></div>' +
-    `<div id="results">${resultsHtml('')}</div>`;
-}
-
-function viewProfiles() {
-  if (isKid()) {
-    return '<h1>Profile</h1><div class="note warn">Tę część widzą tylko rodzice. Włącz tryb rodzica na górze.</div>';
+const chk = { q: '', cat: '' };
+function colsHtml() {
+  const kid = isKid(), nq = norm(chk.q.trim());
+  const cols = { ok: [], lim: [], no: [] };
+  for (const c of rules.kategorie) {
+    if (chk.cat && c.nazwa !== chk.cat) continue;
+    for (const [st, key] of KEYS) for (const it of c[key]) if (!nq || norm(it).includes(nq)) cols[st].push(it);
   }
-  let html = '<h1>Profile</h1>';
+  const L = kid ? { ok: 'Można', lim: 'Czasem i mało', no: 'Nie teraz' } : { ok: 'Można', lim: 'Z ograniczeniami', no: 'Nie można' };
+  return '<div class="cols3">' + ['ok', 'lim', 'no'].map((st) =>
+    `<section class="col ${st}" aria-label="${L[st]}"><h2><span aria-hidden="true">${MARK[st]}</span> ${L[st]} <span class="muted">${cols[st].length}</span></h2>` +
+    `<div class="pills">${cols[st].map((it) => `<span class="pill ${st} tiny">${esc(cap(it))}</span>`).join('') || '<span class="muted">–</span>'}</div></section>`).join('') + '</div>';
+}
+function viewCheck() {
+  return '<h1>Czy mogę to zjeść?</h1><div class="grid">' +
+    `<div class="field"><label for="q" class="muted">Szukaj produktu</label><input type="text" id="q" value="${esc(chk.q)}" placeholder="np. kefir, płatki" autocomplete="off"></div>` +
+    '<div class="field"><label for="ccat" class="muted">Kategoria</label><select id="ccat"><option value="">Wszystkie</option>' +
+    rules.kategorie.map((c) => `<option${c.nazwa === chk.cat ? ' selected' : ''}>${esc(c.nazwa)}</option>`).join('') + '</select></div></div>' +
+    `<div id="cols">${colsHtml()}</div>`;
+}
+function viewProfiles() {
+  let html = '<h1>Profile</h1><div class="card"><div class="row sb"><div><h2>Tryb rodzica</h2>' +
+    `<span class="muted">${parent ? 'Włączony: widać kalorie, plan i zakupy.' : 'Wyłączony: widok dziecka.'}</span></div>` +
+    `<button type="button" class="small ${parent ? '' : 'ghost'}" data-action="parent-toggle" aria-pressed="${parent}">${parent ? 'Wyłącz' : 'Włącz'}</button></div></div>`;
+  if (isKid()) return html + '<div class="note warn">Reszta profili jest widoczna tylko w trybie rodzica.</div>';
   for (const p of state.profiles) {
     html += `<div class="card" data-pid="${p.id}"><div class="grid">` +
       `<div class="field"><label for="pn-${p.id}">Imię</label><input type="text" id="pn-${p.id}" data-field="name" value="${esc(p.name)}"></div>` +
@@ -203,7 +227,6 @@ function viewProfiles() {
 function render() {
   const sel = $('#profile');
   sel.innerHTML = state.profiles.map((p) => `<option value="${p.id}"${p.id === state.current ? ' selected' : ''}>${esc(p.name)}</option>`).join('');
-  $('#parent-toggle').textContent = parent ? 'Tryb rodzica: wł.' : 'Tryb rodzica';
   document.body.classList.toggle('kid', isKid());
   document.querySelectorAll('.tabs button').forEach((b) => {
     if (b.dataset.tab === tab) b.setAttribute('aria-current', 'page'); else b.removeAttribute('aria-current');
@@ -231,7 +254,6 @@ function toggleParent() {
 document.addEventListener('click', (e) => {
   const t = e.target.closest('button');
   if (!t) return;
-  if (t.id === 'parent-toggle') return toggleParent();
   if (t.dataset.tab) {
     if (t.dataset.tab === 'przepisy') {
       if (tab === 'przepisy') { ku.cook = null; ku.timer = null; wakeOff(); }
@@ -242,6 +264,7 @@ document.addEventListener('click', (e) => {
   }
   const a = t.dataset.action;
   if (!a) return;
+  if (a === 'parent-toggle') return toggleParent();
   if (a.startsWith('k-')) return kAction(a, t);
   if (a.startsWith('sync-')) return syncAction(a);
   const d = day();
@@ -249,6 +272,8 @@ document.addEventListener('click', (e) => {
   if (a === 'water') d.water = Math.max(0, d.water + Number(t.dataset.d));
   else if (a === 'done') { const m = meal(d, t.dataset.meal); m.done = !m.done; }
   else if (a === 'del') meal(d, t.dataset.meal).items.splice(Number(t.dataset.i), 1);
+  else if (a === 'act-del') { (d.activities = d.activities || []).splice(Number(t.dataset.i), 1); d.u = Date.now(); }
+  else if (a === 'act-pick') { $('#an').value = t.dataset.name; $('#am').value = t.dataset.min; $('#am').focus(); return; }
   else if (a === 'add-profile') { const p = { id: uid(), name: 'Nowy profil', role: 'dorosły', kcal: 0 }; state.profiles.push(p); }
   else if (a === 'rm-profile') {
     if (state.profiles.length < 2) return alert('Musi zostać co najmniej jeden profil.');
@@ -264,6 +289,16 @@ document.addEventListener('click', (e) => {
 document.addEventListener('submit', (e) => {
   const rf = e.target.closest('form[data-recipe]');
   if (rf) { e.preventDefault(); return kSubmitRecipe(rf); }
+  const cf = e.target.closest('form[data-cplan]');
+  if (cf) { e.preventDefault(); return kSubmitCustom(cf); }
+  const af = e.target.closest('form[data-act]');
+  if (af) {
+    e.preventDefault();
+    const nm = af.querySelector('input[type=text]').value.trim(), mi = Number(af.querySelector('input[type=number]').value);
+    if (!nm || !(mi > 0)) return;
+    const dd = day(); (dd.activities = dd.activities || []).push({ name: nm, min: Math.min(1440, Math.round(mi)) }); dd.u = Date.now();
+    save(); return render();
+  }
   const f = e.target.closest('form[data-meal]');
   if (!f) return;
   e.preventDefault();
@@ -277,12 +312,13 @@ document.addEventListener('submit', (e) => {
 });
 
 document.addEventListener('input', (e) => {
-  if (e.target.id === 'q') $('#results').innerHTML = resultsHtml(e.target.value);
+  if (e.target.id === 'q') { chk.q = e.target.value; $('#cols').innerHTML = colsHtml(); }
   if (e.target.id === 'rq') { ku.q = e.target.value; $('#rlist').innerHTML = listHtml(); }
 });
 
 document.addEventListener('change', (e) => {
   if (e.target.id === 'profile') { state.current = e.target.value; save(); return render(); }
+  if (e.target.id === 'ccat') { chk.cat = e.target.value; return render(); }
   if (e.target.id === 'rdev') { ku.dev = e.target.value; return render(); }
   if (e.target.id === 'rmeal') { ku.meal = e.target.value; return render(); }
   if (e.target.id === 'sdays') { ku.days = Number(e.target.value); return render(); }

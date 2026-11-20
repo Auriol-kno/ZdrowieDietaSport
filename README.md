@@ -64,3 +64,10 @@ Reguły dostępu (`supabase/tests/rls_test.sql`) uruchamia się na zwykłym Post
 4. Skaner kodów kreskowych (Open Food Facts).
 
 Air fryer jest dozwolony (potwierdzone przez użytkownika 20.11.2026). Ustawienia Thermomixa i air fryera w przepisach są orientacyjne, dopasuj je do instrukcji swoich urządzeń. Sól i pieprz są w zaleceniach „w ograniczonych ilościach", dlatego oznaczone jako drobne i nie obniżają oceny całego przepisu. Aplikacja nie zastępuje porady dietetyka.
+
+## Plan, aktywności i panel Sprawdź
+
+- Plan: widok tygodnia i miesiąca (weekendy w innym odcieniu, etykieta dnia z datą), własne dania z kcal, „Dodaj do planu” na górze przepisu.
+- Dziś: aktywność z czasem (synchronizowana razem z dniem).
+- Sprawdź: trzy przewijane kolumny (można / z ograniczeniami / nie można).
+- Tryb rodzica jest teraz w zakładce Profile.

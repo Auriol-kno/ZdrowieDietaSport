@@ -14,6 +14,7 @@ const ZdsSync = (() => {
   const core = (d) => {
     const o = { meals: (d && d.meals) || {}, water: (d && d.water) || 0 };
     if (d && Array.isArray(d.drinks) && d.drinks.length) o.drinks = d.drinks;
+    if (d && Array.isArray(d.activities) && d.activities.length) o.activities = d.activities;
     return o;
   };
   const sameDay = (a, b) => JSON.stringify(core(a)) === JSON.stringify(core(b));

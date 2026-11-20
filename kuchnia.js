@@ -4,7 +4,7 @@
 
 const ku = {
   recipes: [], drinks: [], idx: [], q: '', kat: '', dev: '', meal: '', rid: null, port: 3, cook: null,
-  sub: 'plan', days: 7, form: false, target: null, timer: null, wake: null, flash: '',
+  sub: 'plan', weekOff: 0, month: new Date().toLocaleDateString('sv-SE').slice(0, 7), sel: '', custom: null, days: 7, form: false, target: null, timer: null, wake: null, flash: '',
 };
 const DAYN = ['nd', 'pn', 'wt', 'śr', 'cz', 'pt', 'sb'];
 const DEV = { tm6: 'Thermomix TM6', af: 'Air fryer' };
@@ -111,26 +111,25 @@ function viewRecipe() {
   const c = ZdsRecipes.checkRecipe(ku.idx, r);
   const kid = isKid();
   const flash = ku.flash; ku.flash = '';
+  const defMeal = (ku.target && ku.target.meal) || r.posilki[0] || 'ii';
+  const mealOpts = (sel) => MEALS.map((m) => `<option value="${m[0]}"${m[0] === sel ? ' selected' : ''}>${m[1]}</option>`).join('');
   let h = '<button type="button" class="ghost small" data-action="k-back">← Wszystkie przepisy</button>' +
-    `<h1>${esc(r.name)}</h1>` + (flash ? `<div class="note">${esc(flash)}</div>` : '') +
-    `<p class="muted">${esc(r.opis || '')}</p>` +
+    `<h1>${esc(r.name)}</h1>` + (flash ? `<div class="note">${esc(flash)}</div>` : '');
+  if (!kid) {
+    h += '<div class="card planadd"><h2>Dodaj do planu</h2><div class="grid">' +
+      `<div class="field"><label for="pday" class="muted">Dzień</label><input type="date" id="pday" value="${esc(ku.target ? ku.target.day : dayKey())}"></div>` +
+      `<div class="field"><label for="pmeal" class="muted">Posiłek</label><select id="pmeal">${mealOpts(defMeal)}</select></div></div>` +
+      `<button type="button" data-action="k-plan-add">Dodaj ${ku.port} ${ku.port === 1 ? 'porcję' : ku.port < 5 ? 'porcje' : 'porcji'} do planu</button></div>`;
+  }
+  h += `<p class="muted">${esc(r.opis || '')}</p>` +
     `<div class="row wrap">${pillSt(c.st)}${devPills(r)}<span class="muted">${r.czas} min${!kid && r.kcal ? ' · ok. ' + r.kcal + ' kcal na porcję (szac.)' : ''}</span></div>` +
     banner(c) +
     `<div class="card"><div class="row sb"><h2>Składniki</h2><div class="row"><button type="button" class="small ghost" data-action="k-port" data-d="-1" aria-label="Mniej porcji">−</button>` +
     `<strong>${ku.port} ${ku.port === 1 ? 'porcja' : ku.port < 5 ? 'porcje' : 'porcji'}</strong><button type="button" class="small ghost" data-action="k-port" data-d="1" aria-label="Więcej porcji">+</button></div></div>` +
     ingList(r, c) + '</div>' +
     `<div class="card"><h2>Przygotowanie</h2>${stepsHtml(r)}<button type="button" data-action="k-cook">Gotuj krok po kroku</button></div>` +
-    (r.uwagi ? `<p class="muted">${esc(r.uwagi)}</p>` : '');
-  const defMeal = (ku.target && ku.target.meal) || r.posilki[0] || 'ii';
-  const mealOpts = (sel) => MEALS.map((m) => `<option value="${m[0]}"${m[0] === sel ? ' selected' : ''}>${m[1]}</option>`).join('');
-  if (!kid) {
-    const days = Array.from({ length: 7 }, (_, n) => ZdsRecipes.dayAfter(dayKey(), n));
-    h += '<div class="card"><h2>Dodaj do planu</h2><div class="grid">' +
-      `<div class="field"><label for="pday">Dzień</label><select id="pday">${days.map((d) => `<option value="${d}"${ku.target && ku.target.day === d ? ' selected' : ''}>${esc(dayLabel(d))}</option>`).join('')}</select></div>` +
-      `<div class="field"><label for="pmeal">Posiłek</label><select id="pmeal">${mealOpts(defMeal)}</select></div></div>` +
-      `<button type="button" data-action="k-plan-add">Dodaj ${ku.port} ${ku.port === 1 ? 'porcję' : 'porcji'} do planu</button></div>`;
-  }
-  h += '<div class="card"><h2>Zjedzone dziś</h2><div class="field">' +
+    (r.uwagi ? `<p class="muted">${esc(r.uwagi)}</p>` : '') +
+    '<div class="card"><h2>Zjedzone dziś</h2><div class="field">' +
     `<label for="lmeal" class="muted">Do którego posiłku (1 porcja)</label><select id="lmeal">${mealOpts(r.posilki[0] || 'ii')}</select></div>` +
     '<button type="button" class="ghost" data-action="k-log">Zapisz w dzienniku</button></div>';
   if (String(r.id).startsWith('c-')) h += '<button type="button" class="ghost" data-action="k-del">Usuń ten przepis</button>';
@@ -226,41 +225,87 @@ function planEntries(from, n) {
   return out;
 }
 
+const isWeekend = (iso) => { const g = new Date(iso + 'T12:00:00').getDay(); return g === 0 || g === 6; };
+const pad2 = (n) => String(n).padStart(2, '0');
+const capw = (t) => t.charAt(0).toUpperCase() + t.slice(1);
+
+function dayChip(iso) {
+  const wd = DAYN[new Date(iso + 'T12:00:00').getDay()];
+  return `<span class="daylabel${isWeekend(iso) ? ' we' : ''}">${wd} · ${iso.slice(8)}.${iso.slice(5, 7)}</span>`;
+}
+function dayTitle(iso) {
+  const t = dayKey();
+  if (iso === t) return 'Dziś';
+  if (iso === ZdsRecipes.dayAfter(t, 1)) return 'Jutro';
+  return capw(new Date(iso + 'T12:00:00').toLocaleDateString('pl-PL', { weekday: 'long' }));
+}
+
+function customPlanForm(iso, mk) {
+  return `<form class="cform" data-cplan="1" data-day="${iso}" data-meal="${mk}"><label class="sr" for="cdn">Nazwa dania</label>` +
+    '<input type="text" id="cdn" placeholder="Nazwa dania" required autocomplete="off"><label class="sr" for="cdk">kcal</label>' +
+    '<input type="number" id="cdk" placeholder="kcal" min="0" inputmode="numeric"><button type="submit" class="small">Dodaj</button></form>';
+}
+
+function dayCard(iso) {
+  const kid = isKid(), map = byIdMap();
+  let kcal = 0, body = '';
+  for (const [mk, mn, hr] of MEALS) {
+    const es = state.plan[iso + '|' + mk] || [];
+    body += `<div class="meal"><div class="row sb"><strong>${esc(mn)} <span class="muted">${hr}</span></strong>` +
+      (kid ? '' : `<span class="row"><button type="button" class="small ghost" data-action="k-pick" data-day="${iso}" data-meal="${mk}">+ Przepis</button>` +
+        `<button type="button" class="small ghost" data-action="k-custom" data-day="${iso}" data-meal="${mk}">+ Własne</button></span>`) + '</div>';
+    if (!kid && ku.custom && ku.custom.day === iso && ku.custom.meal === mk) body += customPlanForm(iso, mk);
+    const items = es.map((e, i) => {
+      const r = e.rid ? map[e.rid] : null;
+      if (e.rid && !r) return '';
+      const name = r ? r.name : e.name;
+      kcal += r ? (r.kcal || 0) : (Number(e.kcal) || 0);
+      const late = r && ZdsRecipes.checkRecipe(ku.idx, r).fruit && (mk === 'przekaska' || mk === 'kolacja');
+      const label = r ? `<button type="button" class="linkish" data-action="k-open" data-id="${esc(r.id)}">${esc(name)}</button> <span class="muted">× ${e.portions}</span>`
+        : `<span>${esc(name)}</span>${!kid && e.kcal ? ` <span class="muted">· ${esc(e.kcal)} kcal</span>` : ''}`;
+      return `<li><span>${label}${late ? '<br><span class="inline-warn">Owoce po 16:00 nie są zalecane</span>' : ''}</span>` +
+        (kid ? '' : `<button type="button" class="small ghost" data-action="k-plan-rm" data-day="${iso}" data-meal="${mk}" data-i="${i}" aria-label="Usuń z planu">×</button>`) + '</li>';
+    }).join('');
+    if (items) body += `<ul>${items}</ul>`;
+    body += '</div>';
+  }
+  return `<div class="card daycard${isWeekend(iso) ? ' we' : ''}"><div class="row sb"><div class="row"><h2>${esc(dayTitle(iso))}</h2>${dayChip(iso)}</div>` +
+    (!kid && kcal ? `<span class="muted">ok. ${kcal} kcal${cur().kcal ? ' z ' + cur().kcal : ''}</span>` : '') + `</div>${body}</div>`;
+}
+
+function viewMonth() {
+  const [y, m] = ku.month.split('-').map(Number);
+  const first = new Date(y, m - 1, 1), lead = (first.getDay() + 6) % 7, total = new Date(y, m, 0).getDate();
+  const today = dayKey();
+  if (!ku.sel || ku.sel.slice(0, 7) !== ku.month) ku.sel = today.slice(0, 7) === ku.month ? today : ku.month + '-01';
+  let h = '<div class="row sb"><button type="button" class="small ghost" data-action="k-mon" data-d="-1" aria-label="Poprzedni miesiąc">‹</button>' +
+    `<strong>${esc(capw(first.toLocaleDateString('pl-PL', { month: 'long', year: 'numeric' })))}</strong>` +
+    '<button type="button" class="small ghost" data-action="k-mon" data-d="1" aria-label="Następny miesiąc">›</button></div>';
+  h += '<div class="month" role="group" aria-label="Kalendarz planu">' + ['pn', 'wt', 'śr', 'cz', 'pt', 'sb', 'nd'].map((n, i) => `<span class="mh${i > 4 ? ' we' : ''}">${n}</span>`).join('');
+  for (let i = 0; i < lead; i++) h += '<span></span>';
+  for (let d = 1; d <= total; d++) {
+    const iso = `${y}-${pad2(m)}-${pad2(d)}`;
+    const marks = MEALS.map(([mk]) => ((state.plan[iso + '|' + mk] || []).length ? '<i class="on"></i>' : '<i></i>')).join('');
+    const n = MEALS.reduce((a, [mk]) => a + (state.plan[iso + '|' + mk] || []).length, 0);
+    h += `<button type="button" class="daycell${isWeekend(iso) ? ' we' : ''}${iso === today ? ' today' : ''}" data-action="k-day" data-day="${iso}" aria-pressed="${iso === ku.sel}" ` +
+      `aria-label="${d}. ${esc(first.toLocaleDateString('pl-PL', { month: 'long' }))}, w planie: ${n}"><b>${d}</b><span class="dots">${marks}</span></button>`;
+  }
+  return h + '</div>' + dayCard(ku.sel);
+}
+
 function viewPlan() {
   const kid = isKid();
-  let h = '<h1>Plan</h1>';
-  if (!kid) {
-    h += '<div class="row seg">' +
-      `<button type="button" class="ghost" data-action="k-sub" data-v="plan" aria-pressed="${ku.sub === 'plan'}">Tydzień</button>` +
-      `<button type="button" class="ghost" data-action="k-sub" data-v="zakupy" aria-pressed="${ku.sub === 'zakupy'}">Lista zakupów</button></div>`;
-    if (ku.sub === 'zakupy') return h + viewShop();
-  }
-  const map = byIdMap();
-  const today = dayKey();
-  for (let n = 0; n < 7; n++) {
-    const iso = ZdsRecipes.dayAfter(today, n);
-    let kcal = 0;
-    let body = '';
-    for (const [mk, mn, hr] of MEALS) {
-      const es = state.plan[iso + '|' + mk] || [];
-      body += `<div class="meal"><div class="row sb"><strong>${esc(mn)} <span class="muted">${hr}</span></strong>` +
-        (kid ? '' : `<button type="button" class="small ghost" data-action="k-pick" data-day="${iso}" data-meal="${mk}">+ Dodaj</button>`) + '</div>';
-      if (es.length) {
-        body += '<ul>' + es.map((e, i) => {
-          const r = map[e.rid];
-          if (!r) return '';
-          kcal += r.kcal || 0;
-          const late = ZdsRecipes.checkRecipe(ku.idx, r).fruit && (mk === 'przekaska' || mk === 'kolacja');
-          return `<li><span><button type="button" class="linkish" data-action="k-open" data-id="${esc(r.id)}">${esc(r.name)}</button> <span class="muted">× ${e.portions}</span>` +
-            (late ? '<br><span class="inline-warn">Owoce po 16:00 nie są zalecane</span>' : '') + '</span>' +
-            (kid ? '' : `<button type="button" class="small ghost" data-action="k-plan-rm" data-day="${iso}" data-meal="${mk}" data-i="${i}" aria-label="Usuń z planu">×</button>`) + '</li>';
-        }).join('') + '</ul>';
-      }
-      body += '</div>';
-    }
-    h += `<div class="card"><div class="row sb"><h2>${esc(dayLabel(iso))}</h2>` +
-      (!kid && kcal ? `<span class="muted">ok. ${kcal} kcal na osobę (szac.)${cur().kcal ? ' z ' + cur().kcal : ''}</span>` : '') + `</div>${body}</div>`;
-  }
+  if (kid && ku.sub === 'zakupy') ku.sub = 'plan';
+  let h = '<h1>Plan</h1><div class="row seg">' +
+    [['plan', 'Tydzień'], ['month', 'Miesiąc']].concat(kid ? [] : [['zakupy', 'Zakupy']]).map((o) => `<button type="button" class="ghost" data-action="k-sub" data-v="${o[0]}" aria-pressed="${ku.sub === o[0]}">${o[1]}</button>`).join('') + '</div>';
+  if (ku.sub === 'zakupy') return h + viewShop();
+  if (ku.sub === 'month') return h + viewMonth();
+  const start = ZdsRecipes.dayAfter(dayKey(), ku.weekOff * 7);
+  h += '<div class="row sb"><button type="button" class="small ghost" data-action="k-wk" data-d="-1" aria-label="Poprzedni tydzień">‹</button>' +
+    `<span class="row"><strong>${start.slice(8)}.${start.slice(5, 7)} – ${ZdsRecipes.dayAfter(start, 6).slice(8)}.${ZdsRecipes.dayAfter(start, 6).slice(5, 7)}</strong>` +
+    (ku.weekOff ? '<button type="button" class="small ghost" data-action="k-wk" data-d="0">Dziś</button>' : '') + '</span>' +
+    '<button type="button" class="small ghost" data-action="k-wk" data-d="1" aria-label="Następny tydzień">›</button></div>';
+  for (let n = 0; n < 7; n++) h += dayCard(ZdsRecipes.dayAfter(start, n));
   return h;
 }
 
@@ -328,9 +373,11 @@ function kAction(a, t) {
     case 'k-timer': ku.timer = { rid: ku.cook.rid, i: ku.cook.i, end: Date.now() + Number(t.dataset.s) * 1000, done: false }; break;
     case 'k-timer-stop': ku.timer = null; break;
     case 'k-plan-add': {
-      const key = $('#pday').value + '|' + $('#pmeal').value;
+      const dayv = $('#pday').value || dayKey();
+      const key = dayv + '|' + $('#pmeal').value;
       (state.plan[key] = state.plan[key] || []).push({ rid: ku.rid, portions: ku.port });
-      if (ku.target) { ku.target = null; ku.rid = null; tab = 'plan'; ku.sub = 'plan'; top(); } else ku.flash = 'Dodano do planu.';
+      ku.sel = dayv; ku.month = dayv.slice(0, 7);
+      if (ku.target) { ku.target = null; ku.rid = null; tab = 'plan'; top(); } else ku.flash = 'Dodano do planu.';
       save(); break;
     }
     case 'k-plan-rm': {
@@ -339,7 +386,7 @@ function kAction(a, t) {
       if (!state.plan[key].length) delete state.plan[key];
       save(); break;
     }
-    case 'k-pick': ku.target = { day: t.dataset.day, meal: t.dataset.meal }; ku.meal = t.dataset.meal; ku.rid = null; ku.cook = null; tab = 'przepisy'; top(); break;
+    case 'k-pick': ku.target = { day: t.dataset.day, meal: t.dataset.meal }; ku.custom = null; ku.meal = t.dataset.meal; ku.rid = null; ku.cook = null; tab = 'przepisy'; top(); break;
     case 'k-log': {
       const r = rget(ku.rid);
       const d = day();
@@ -361,6 +408,17 @@ function kAction(a, t) {
       d.u = Date.now(); save(); break;
     }
     case 'k-sub': ku.sub = t.dataset.v; break;
+    case 'k-wk': ku.weekOff = t.dataset.d === '0' ? 0 : ku.weekOff + Number(t.dataset.d); break;
+    case 'k-mon': {
+      const [y, m] = ku.month.split('-').map(Number);
+      const dt = new Date(y, m - 1 + Number(t.dataset.d), 1);
+      ku.month = dt.getFullYear() + '-' + pad2(dt.getMonth() + 1); ku.sel = ''; break;
+    }
+    case 'k-day': ku.sel = t.dataset.day; break;
+    case 'k-custom': {
+      const same = ku.custom && ku.custom.day === t.dataset.day && ku.custom.meal === t.dataset.meal;
+      ku.custom = same ? null : { day: t.dataset.day, meal: t.dataset.meal }; break;
+    }
     case 'k-check': state.shop.checked[t.dataset.k] = !state.shop.checked[t.dataset.k]; save(); break;
     case 'k-pantry': {
       const n = t.dataset.n, nn = ZdsRecipes.norm(n);
@@ -387,6 +445,16 @@ function kAction(a, t) {
     default: return;
   }
   render();
+}
+
+function kSubmitCustom(f) {
+  const name = f.querySelector('input[type=text]').value.trim();
+  const kc = f.querySelector('input[type=number]').value;
+  if (!name) return;
+  const key = f.dataset.day + '|' + f.dataset.meal;
+  (state.plan[key] = state.plan[key] || []).push({ name, kcal: kc === '' ? 0 : Math.max(0, Number(kc)), portions: 1 });
+  ku.custom = null; ku.sel = f.dataset.day;
+  save(); render();
 }
 
 function kSubmitRecipe(f) {
