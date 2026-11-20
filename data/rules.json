@@ -1,0 +1,312 @@
+{
+  "zrodlo": "Zalecenia dietetyka dzieci, LUX MED, 19.11.2026",
+  "dieta": {
+    "kcal": 1750,
+    "posilki": 5,
+    "odstep_h": "3,5-4",
+    "woda_l": 2,
+    "owoce_do_godziny": 16
+  },
+  "kategorie": [
+    {
+      "nazwa": "Produkty zbożowe",
+      "dozwolone": [
+        "płatki owsiane górskie",
+        "otręby żytnie",
+        "otręby owsiane",
+        "pieczywo razowe",
+        "pieczywo pełnoziarniste",
+        "pumpernikiel",
+        "makaron razowy",
+        "ryż dziki",
+        "ryż brązowy",
+        "ryż pełnoziarnisty",
+        "kasza jaglana",
+        "kasza gryczana",
+        "kasza jęczmienna mazurska",
+        "amarantus",
+        "quinoa",
+        "mąka żytnia"
+      ],
+      "ograniczone": [
+        "płatki owsiane zwykłe",
+        "musli z owocami suszonymi",
+        "pieczywo graham",
+        "pieczywo chrupkie",
+        "płatki ryżowe",
+        "kasza jęczmienna (pęczak, perłowa)"
+      ],
+      "zakazane": [
+        "płatki owsiane błyskawiczne",
+        "płatki kukurydziane",
+        "płatki śniadaniowe czekoladowe",
+        "płatki śniadaniowe z cukrem (np. cynamonowe)",
+        "pieczywo pszenne (bułki pszenne, chleb pszenny, chałka, pączki, drożdżówki, rogaliki)",
+        "wyroby cukiernicze (herbatniki, ciastka, wafle, biszkopty, pierniczki, sucharki, paluszki, krakersy itp.)",
+        "makaron pszenny",
+        "ryż biały",
+        "skrobia kukurydziana",
+        "skrobia ryżowa i z tapioki",
+        "mąka pszenna",
+        "kasze zbożowe błyskawiczne",
+        "popcorn",
+        "bułka tarta"
+      ]
+    },
+    {
+      "nazwa": "Mięso, ryby, jaja",
+      "dozwolone": [
+        "świeże nieprzetworzone mięso: drób (indyk, kurczak z wolnego wybiegu, bez chowu przemysłowego)",
+        "ryby morskie",
+        "słodkowodne",
+        "owoce morza",
+        "cielęcina",
+        "jagnięcina",
+        "chude wędliny",
+        "jajka"
+      ],
+      "ograniczone": [
+        "chudy pasztet"
+      ],
+      "zakazane": [
+        "mięso wieprzowe",
+        "podroby: kaszanka",
+        "wątróbka",
+        "wątrobianka",
+        "pasztetowa",
+        "tłusty pasztet",
+        "wyroby garmażeryjne mięsne",
+        "parówki",
+        "ryby: panga",
+        "tłuste wędliny np. baleron",
+        "mielonki",
+        "tłusty boczek",
+        "słonina"
+      ]
+    },
+    {
+      "nazwa": "Mleko i produkty mleczne",
+      "dozwolone": [
+        "jogurt naturalny",
+        "kefir",
+        "maślanka (mleko, żywe kultury bakterii)",
+        "twaróg półtłusty",
+        "ser kozi",
+        "ser owczy"
+      ],
+      "ograniczone": [
+        "produkty mleczne o obniżonej zawartości tłuszczu",
+        "jogurt owocowy i naturalny oraz kefir, który ma w składzie: mleko z proszku, serwatkę",
+        "serki homogenizowane niesmakowe"
+      ],
+      "zakazane": [
+        "mleko zagęszczone",
+        "mleko w proszku",
+        "maślanki smakowe",
+        "napoje czekoladowe",
+        "desery mleczne",
+        "serki topione",
+        "śmietana",
+        "śmietanka kulinarna",
+        "ser pleśniowy",
+        "ser dojrzewający"
+      ]
+    },
+    {
+      "nazwa": "Tłuszcze",
+      "dozwolone": [
+        "oliwa z oliwek",
+        "olej lniany",
+        "olej rokitnika",
+        "olej rzepakowy"
+      ],
+      "ograniczone": [
+        "masło"
+      ],
+      "zakazane": [
+        "smalec",
+        "majonez",
+        "gotowe dressingi"
+      ]
+    },
+    {
+      "nazwa": "Warzywa, przetwory z warzyw",
+      "dozwolone": [
+        "warzywa świeże: pomidor",
+        "ogórek zielony",
+        "papryka czerwona",
+        "zielona",
+        "żółta",
+        "pomarańczowa",
+        "sałata zielona",
+        "sałata rzymska",
+        "sałata lodowa",
+        "sałata pekińska",
+        "roszponka",
+        "rukola",
+        "cykoria",
+        "świeża marchewka",
+        "zielony groszek",
+        "fasolka szparagowa",
+        "brokuły",
+        "kiszonki"
+      ],
+      "ograniczone": [
+        "gotowane buraki czerwone",
+        "ziemniaki",
+        "kalafior",
+        "marchew",
+        "ogórki konserwowe",
+        "papryka konserwowa"
+      ],
+      "zakazane": [
+        "skrobia ziemniaczana",
+        "kukurydza"
+      ]
+    },
+    {
+      "nazwa": "Owoce",
+      "dozwolone": [
+        "jabłka",
+        "maliny",
+        "jagody",
+        "borówki amerykańskie",
+        "truskawki",
+        "kiwi",
+        "awokado"
+      ],
+      "ograniczone": [
+        "śliwki węgierki",
+        "pomarańcze",
+        "melon",
+        "kantalupa",
+        "wiśnie",
+        "mandarynki",
+        "grejpfruty",
+        "brzoskwinie",
+        "nektarynki",
+        "gruszki",
+        "czereśnie"
+      ],
+      "zakazane": [
+        "banan",
+        "arbuz",
+        "winogrona",
+        "owoce w puszkach",
+        "suszone ananasy",
+        "rodzynki",
+        "suszone owoce: śliwki",
+        "morele",
+        "owoce konserwowane"
+      ]
+    },
+    {
+      "nazwa": "Cukier, słodycze, desery",
+      "dozwolone": [
+        "ksylitol",
+        "stewia",
+        "syrop klonowy",
+        "miód"
+      ],
+      "ograniczone": [
+        "dżem własnej produkcji",
+        "gorzka czekolada",
+        "batony musli",
+        "proteinowe"
+      ],
+      "zakazane": [
+        "cukier biały",
+        "słodkie bakalie",
+        "ciasta tortowe",
+        "ciastka kruche",
+        "czekolada nadziewana",
+        "czekolada z bakaliami",
+        "batony czekoladowe",
+        "ciastka czekoladowe",
+        "sezamki",
+        "bakalie w czekoladzie itp."
+      ]
+    },
+    {
+      "nazwa": "Przyprawy",
+      "dozwolone": [
+        "chrzan",
+        "bazylia",
+        "tymianek",
+        "zioła prowansalskie",
+        "cebula",
+        "czosnek",
+        "cynamon",
+        "czarnuszka",
+        "cząber",
+        "czubrica",
+        "estragon",
+        "gałka muszkatołowa",
+        "gorczyca",
+        "goździki",
+        "hibiskus",
+        "imbir",
+        "jałowiec",
+        "kapary",
+        "kmin rzymski",
+        "kolendra",
+        "koper",
+        "lawenda",
+        "lubczyk",
+        "majeranek",
+        "mięta",
+        "oregano",
+        "papryka łagodna",
+        "rozmaryn",
+        "szałwia",
+        "szafran",
+        "wanilia",
+        "ziele angielskie"
+      ],
+      "ograniczone": [
+        "sól",
+        "pieprz biały",
+        "pieprz",
+        "musztarda stołowa",
+        "ocet winny",
+        "sos sojowy",
+        "curry",
+        "kurkuma",
+        "lukrecja",
+        "melisa",
+        "papryczka pepperoni",
+        "sezam"
+      ],
+      "zakazane": [
+        "jarzynki typu vegeta",
+        "mieszanki przypraw",
+        "sosy w proszku",
+        "gotowe dipy",
+        "dressingi",
+        "mak"
+      ]
+    },
+    {
+      "nazwa": "Napoje",
+      "dozwolone": [
+        "woda mineralna niegazowana/gazowana",
+        "woda źródlana",
+        "herbata czarna (słaby napar)",
+        "herbata owocowa",
+        "soki świeżo wyciskane rozcieńczone wodą",
+        "napary z ziół"
+      ],
+      "ograniczone": [
+        "soki warzywne",
+        "soki owocowo-warzywne"
+      ],
+      "zakazane": [
+        "napoje gazowane słodzone typu coca cola",
+        "fanta",
+        "sprite",
+        "herbata mrożona",
+        "soki z kartonu"
+      ]
+    }
+  ]
+}
