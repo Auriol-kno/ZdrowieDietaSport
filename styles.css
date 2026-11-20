@@ -251,3 +251,9 @@ li.kiditem button { min-height: 26px; min-width: 26px; height: 26px; padding: 0 
 .daycard.alt { background: #e3dcd3; }
 .daycard.we { background: #f3e8e8; }
 .daycard.we.alt { background: #eadada; }
+/* Wpisy syna: ciemnoszare tło */
+li.kiditem { background: #5c5852; box-shadow: inset 3px 3px 6px rgba(0, 0, 0, .45), inset -2px -2px 5px rgba(255, 255, 255, .12); }
+li.kiditem > span:first-child { color: #fff; }
+li.kiditem .muted { color: #e6e1da; }
+li.kiditem .pill { background: rgba(255, 255, 255, .9); }
+li.kiditem button { background: rgba(255, 255, 255, .18); color: #fff; }
