@@ -3,7 +3,7 @@
 // Korzysta z globalnych elementów app.js (state, render, save, day, meal, MEALS, LABEL, ...), wywoływanych dopiero w czasie działania.
 
 const ku = {
-  recipes: [], idx: [], q: '', dev: '', meal: '', rid: null, port: 3, cook: null,
+  recipes: [], drinks: [], idx: [], q: '', kat: '', dev: '', meal: '', rid: null, port: 3, cook: null,
   sub: 'plan', days: 7, form: false, target: null, timer: null, wake: null, flash: '',
 };
 const DAYN = ['nd', 'pn', 'wt', 'śr', 'cz', 'pt', 'sb'];
@@ -30,6 +30,7 @@ function recipeMatches(r) {
   if (nq && !ZdsRecipes.norm(r.name).includes(nq) && !r.skladniki.some((i) => ZdsRecipes.norm(i.n).includes(nq))) return false;
   if (ku.dev === 'none' ? r.urz.length : ku.dev && !r.urz.includes(ku.dev)) return false;
   if (ku.meal && !r.posilki.includes(ku.meal)) return false;
+  if (ku.kat && (r.kat || 'danie') !== ku.kat) return false;
   return true;
 }
 
@@ -64,6 +65,8 @@ function viewRecipes() {
       '<button type="button" class="small ghost" data-action="k-untarget">Anuluj</button></div>';
   }
   h += '<div class="field"><label for="rq" class="muted">Szukaj przepisu lub składnika</label><input type="text" id="rq" autocomplete="off" value="' + esc(ku.q) + '"></div>' +
+    '<div class="chips" role="group" aria-label="Rodzaj">' +
+    [['', 'Wszystko'], ['danie', 'Dania'], ['przekaska', 'Przekąski'], ['napoj', 'Napoje']].map((o) => `<button type="button" class="chip" data-action="k-kat" data-v="${o[0]}" aria-pressed="${ku.kat === o[0]}">${o[1]}</button>`).join('') + '</div>' +
     '<div class="grid"><div class="field"><label for="rdev" class="muted">Urządzenie</label><select id="rdev">' +
     [['', 'Wszystkie'], ['tm6', 'Thermomix TM6'], ['af', 'Air fryer'], ['none', 'Bez urządzeń']].map((o) => `<option value="${o[0]}"${ku.dev === o[0] ? ' selected' : ''}>${o[1]}</option>`).join('') + '</select></div>' +
     '<div class="field"><label for="rmeal" class="muted">Posiłek</label><select id="rmeal"><option value="">Wszystkie</option>' +
@@ -118,7 +121,7 @@ function viewRecipe() {
     ingList(r, c) + '</div>' +
     `<div class="card"><h2>Przygotowanie</h2>${stepsHtml(r)}<button type="button" data-action="k-cook">Gotuj krok po kroku</button></div>` +
     (r.uwagi ? `<p class="muted">${esc(r.uwagi)}</p>` : '');
-  const defMeal = (ku.target && ku.target.meal) || r.posilki[0];
+  const defMeal = (ku.target && ku.target.meal) || r.posilki[0] || 'ii';
   const mealOpts = (sel) => MEALS.map((m) => `<option value="${m[0]}"${m[0] === sel ? ' selected' : ''}>${m[1]}</option>`).join('');
   if (!kid) {
     const days = Array.from({ length: 7 }, (_, n) => ZdsRecipes.dayAfter(dayKey(), n));
@@ -128,7 +131,7 @@ function viewRecipe() {
       `<button type="button" data-action="k-plan-add">Dodaj ${ku.port} ${ku.port === 1 ? 'porcję' : 'porcji'} do planu</button></div>`;
   }
   h += '<div class="card"><h2>Zjedzone dziś</h2><div class="field">' +
-    `<label for="lmeal" class="muted">Do którego posiłku (1 porcja)</label><select id="lmeal">${mealOpts(r.posilki[0])}</select></div>` +
+    `<label for="lmeal" class="muted">Do którego posiłku (1 porcja)</label><select id="lmeal">${mealOpts(r.posilki[0] || 'ii')}</select></div>` +
     '<button type="button" class="ghost" data-action="k-log">Zapisz w dzienniku</button></div>';
   if (String(r.id).startsWith('c-')) h += '<button type="button" class="ghost" data-action="k-del">Usuń ten przepis</button>';
   return h;
@@ -188,6 +191,30 @@ function tick() {
   if (left <= 0 && !ku.timer.done) { ku.timer.done = true; alarm(); }
 }
 if (typeof document !== 'undefined') setInterval(tick, 500);
+
+// ---------- napoje (karta na ekranie Dziś) ----------
+function drinksCard() {
+  const d = day(), kid = cur().role === 'dziecko';
+  const opts = ku.drinks.filter((x) => x.dla === 'wszyscy' || !kid);
+  const list = d.drinks || [];
+  const total = list.reduce((a, x) => a + (Number(x.ml) || 0), 0);
+  const cups = list.filter((x) => (ku.drinks.find((o) => o.id === x.id) || {}).kawa).length;
+  let h = `<div class="card"><div class="row sb"><h2>Inne napoje</h2><span class="muted">${total ? total + ' ml' : 'jeszcze nic'}</span></div>` +
+    '<p class="muted">Woda liczy się osobno do celu 2 l. Tu dopisz herbatę, napar, sok albo kefir.</p>' +
+    '<div class="chips">' + opts.map((o) => `<button type="button" class="chip" data-action="k-drink" data-id="${esc(o.id)}">+ ${esc(o.name)}</button>`).join('') + '</div>';
+  if (list.length) {
+    h += '<ul class="drinklist">' + list.map((x, i) => {
+      const o = ku.drinks.find((y) => y.id === x.id);
+      const m = o && o.rule ? ZdsRecipes.matchRule(ku.idx, o.rule) : null;
+      return `<li><span>${esc(x.name)} <span class="muted">${esc(x.ml)} ml</span> ${m ? pillSt(m.st) : ''}</span>` +
+        `<button type="button" class="small ghost" data-action="k-drink-del" data-i="${i}" aria-label="Usuń ${esc(x.name)}">✕</button></li>`;
+    }).join('') + '</ul>';
+  }
+  if (!kid && cups) {
+    h += `<div class="note">Kawa dziś: ${cups}. Ogólna wskazówka dla zdrowych dorosłych to do ok. 400 mg kofeiny dziennie, czyli około 3–4 filiżanek. W ciąży albo przy chorobach zapytaj lekarza.</div>`;
+  }
+  return h + '</div>';
+}
 
 // ---------- plan tygodnia ----------
 function planEntries(from, n) {
@@ -319,6 +346,19 @@ function kAction(a, t) {
       meal(d, $('#lmeal').value).items.push({ name: r.name, kcal: r.kcal || 0 });
       d.u = Date.now();
       ku.flash = 'Zapisano w dzienniku.'; save(); break;
+    }
+    case 'k-kat': ku.kat = t.dataset.v; break;
+    case 'k-drink': {
+      const dr = ku.drinks.find((x) => x.id === t.dataset.id);
+      if (!dr) return;
+      const d = day();
+      (d.drinks = d.drinks || []).push({ id: dr.id, name: dr.name, ml: dr.ml });
+      d.u = Date.now(); save(); break;
+    }
+    case 'k-drink-del': {
+      const d = day();
+      (d.drinks || []).splice(Number(t.dataset.i), 1);
+      d.u = Date.now(); save(); break;
     }
     case 'k-sub': ku.sub = t.dataset.v; break;
     case 'k-check': state.shop.checked[t.dataset.k] = !state.shop.checked[t.dataset.k]; save(); break;

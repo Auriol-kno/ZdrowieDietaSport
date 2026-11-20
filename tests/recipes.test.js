@@ -4,6 +4,7 @@ const assert = require('assert');
 const R = require('../recipes.js');
 const rules = require('../data/rules.json');
 const { recipes } = require('../data/recipes.json');
+const { napoje } = require('../data/napoje.json');
 
 const idx = R.indexRules(rules);
 const tests = [];
@@ -26,6 +27,7 @@ ok('przepisy mają poprawną budowę: posiłki, porcje, kroki, timery', () => {
   for (const r of recipes) {
     assert.ok(!ids.has(r.id)); ids.add(r.id);
     assert.ok(r.posilki.length && r.posilki.every((m) => meals.includes(m)), r.id);
+    assert.ok(['danie', 'przekaska', 'napoj'].includes(r.kat), r.id + ': kategoria');
     assert.ok(r.porcje > 0 && r.kroki.length > 0 && r.skladniki.length > 0, r.id);
     for (const k of r.kroki) {
       assert.ok(!k.dev || ['tm6', 'af'].includes(k.dev), r.id);
@@ -35,6 +37,29 @@ ok('przepisy mają poprawną budowę: posiłki, porcje, kroki, timery', () => {
     for (const k of r.kroki) if (k.dev) assert.ok(r.urz.includes(k.dev), r.id);
     for (const i of r.skladniki) assert.ok(R.SECTIONS.includes(i.s), `${r.id}: sekcja ${i.s}`);
   }
+});
+
+ok('jest dość przepisów w każdej kategorii (dania, przekąski, napoje)', () => {
+  const n = (k) => recipes.filter((r) => r.kat === k).length;
+  assert.ok(n('danie') >= 20 && n('przekaska') >= 8 && n('napoj') >= 5, JSON.stringify([n('danie'), n('przekaska'), n('napoj')]));
+});
+
+ok('napoje: wszystkie dla dziecka są zgodne z zaleceniami, kawa tylko dla dorosłych', () => {
+  const ids = new Set();
+  for (const d of napoje) {
+    assert.ok(!ids.has(d.id)); ids.add(d.id);
+    assert.ok(['wszyscy', 'dorosli'].includes(d.dla) && d.ml > 0, d.id);
+    if (d.dla === 'wszyscy') {
+      const m = R.matchRule(idx, d.rule);
+      assert.ok(m && m.st !== 'no', `${d.id}: ${d.rule} nie jest dozwolone dla dziecka`);
+    }
+    if (d.kawa) assert.strictEqual(d.dla, 'dorosli', d.id + ': kawa musi być tylko dla dorosłych');
+  }
+  assert.ok(napoje.some((d) => d.kawa));
+});
+
+ok('przepisy dla dzieci: bez kawy, cukru białego i zakazanych napojów w składnikach', () => {
+  for (const r of recipes) for (const i of r.skladniki) assert.ok(!/kawa|cukier|cola|fanta|sprite/i.test(i.n), r.id + ': ' + i.n);
 });
 
 ok('air fryer: żadnej bułki tartej ani panierki w przepisach', () => {

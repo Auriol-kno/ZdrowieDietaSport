@@ -22,6 +22,16 @@ ok('łączy po imieniu, dodaje brakujące, wysyła lokalne bez odpowiednika', ()
   assert.deepStrictEqual(toInsert.map((p) => p.id), ['b']);
 });
 
+ok('napoje dnia synchronizują się w obie strony, a puste nie zmieniają formatu', () => {
+  const days = { '2026-11-20|a': { meals: {}, water: 1, drinks: [{ id: 'herbata-owocowa', name: 'Herbata owocowa', ml: 250 }], u: 200 } };
+  const rows = S.dayRowsToPush(days, {}, [{ id: 'a', remoteId: 'R1' }]);
+  assert.deepStrictEqual(rows[0].row.data.drinks, [{ id: 'herbata-owocowa', name: 'Herbata owocowa', ml: 250 }]);
+  const remote = [{ member_id: 'R1', day: '2026-11-21', data: { water: 2, drinks: [{ id: 'kefir', name: 'Kefir', ml: 200 }] }, updated_at: new Date(9000).toISOString() }];
+  const d2 = {};
+  assert.strictEqual(S.applyRemoteDays(d2, {}, remote, [{ id: 'a', remoteId: 'R1' }]), 1);
+  assert.strictEqual(d2['2026-11-21|a'].drinks[0].id, 'kefir');
+});
+
 ok('serwer wygrywa w danych profilu, usunięty na serwerze znika lokalnie', () => {
   const local = [{ id: 'a', remoteId: 'R1', name: 'Stare', role: 'dorosły', kcal: 1 }, { id: 'x', remoteId: 'R9', name: 'Usunięty', role: 'dorosły', kcal: 0 }];
   const remote = [{ id: 'R1', user_id: 'u', name: 'Nowe', role: 'rodzic', kcal_goal: 2200 }];

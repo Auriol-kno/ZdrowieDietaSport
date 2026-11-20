@@ -115,29 +115,47 @@ function resultsHtml(q) {
 }
 
 // ---------- widoki ----------
+function gauge(pct, tone, label, sub) {
+  return `<div class="gauge-wrap"><div class="gauge ${tone}" role="progressbar" aria-label="${esc(label)}" aria-valuemin="0" aria-valuemax="100" aria-valuenow="${pct}"><i style="height:${Math.max(pct, 8)}%"></i></div>` +
+    `<div class="gauge-text"><strong>${pct}%</strong><span class="muted">${esc(sub)}</span></div></div>`;
+}
+
+function ring(done, total) {
+  const r = 26, c = 2 * Math.PI * r, off = c * (1 - done / total);
+  return `<svg class="ring" width="68" height="68" viewBox="0 0 68 68" role="img" aria-label="Zjedzone posiłki: ${done} z ${total}">` +
+    `<circle cx="34" cy="34" r="${r}" fill="none" stroke="var(--track)" stroke-width="8"/>` +
+    `<circle cx="34" cy="34" r="${r}" fill="none" stroke="var(--blue)" stroke-width="8" stroke-linecap="round" stroke-dasharray="${c.toFixed(1)}" stroke-dashoffset="${off.toFixed(1)}" transform="rotate(-90 34 34)"/>` +
+    `<text x="34" y="39" text-anchor="middle" font-size="16" font-weight="700" fill="currentColor">${done}/${total}</text></svg>`;
+}
+
 function viewToday() {
   const p = cur(), d = day(), kid = isKid();
   const done = MEALS.filter(([k]) => d.meals[k] && d.meals[k].done).length;
   const pct = Math.min(100, Math.round((d.water / WATER_GOAL) * 100));
-  let html = `<div><h1>${kid ? `Cześć, ${esc(p.name)}!` : esc(p.name)}</h1><div class="muted">${new Date().toLocaleDateString('pl-PL', { weekday: 'long', day: 'numeric', month: 'long' })}</div></div>`;
+  const now = new Date();
+  let html = `<div class="hero"><div class="hero-plate"><span class="hero-day">${now.getDate()}</span>` +
+    `<span class="hero-month">${now.toLocaleDateString('pl-PL', { month: 'long' })}</span></div>` +
+    `<div><h1>${kid ? `Cześć, ${esc(p.name)}!` : esc(p.name)}</h1><div class="hero-sub">${now.toLocaleDateString('pl-PL', { weekday: 'long' })}</div></div></div>`;
 
+  const waterW = `<div class="card widget"><h2>Woda</h2>${gauge(pct, 'teal', 'Woda', `${d.water * GLASS_ML / 1000} z 2 l`)}` +
+    `<div class="row"><button type="button" class="small" data-action="water" data-d="1" aria-label="Dodaj szklankę">+ 250 ml</button>` +
+    `<button type="button" class="small ghost" data-action="water" data-d="-1" aria-label="Odejmij szklankę">−</button></div></div>`;
+  let side;
   if (!kid && p.kcal > 0) {
     const e = eatenKcal(d), kp = Math.min(100, Math.round((e / p.kcal) * 100));
-    html += `<div class="card"><div class="row sb"><div><span class="big">${e}</span> <span class="muted">kcal zjedzone</span></div><div class="muted">Cel: ${p.kcal} kcal</div></div>` +
-      `<div class="bar" role="progressbar" aria-label="Kalorie" aria-valuemin="0" aria-valuemax="100" aria-valuenow="${kp}"><i style="width:${kp}%"></i></div>` +
-      `<div class="muted">Zostało ${Math.max(0, p.kcal - e)} kcal</div></div>`;
+    side = `<div class="card widget"><h2>Kalorie</h2>${gauge(kp, 'rose', 'Kalorie', `${e} z ${p.kcal} kcal`)}<span class="muted">Zostało ${Math.max(0, p.kcal - e)} kcal</span></div>`;
+  } else {
+    side = `<div class="card widget"><h2>Posiłki</h2>${gauge(Math.round((done / MEALS.length) * 100), 'rose', 'Posiłki', `${done} z ${MEALS.length}`)}<span class="muted">${kid ? 'Dobra robota!' : 'Zjedzone dziś'}</span></div>`;
   }
+  html += `<div class="widgets">${waterW}${side}</div>`;
 
-  html += `<div class="card"><div class="row sb"><h2>Woda</h2><span class="muted">${d.water} z ${WATER_GOAL} szklanek (${d.water * GLASS_ML / 1000} l z 2 l)</span></div>` +
-    `<div class="bar water" role="progressbar" aria-label="Woda" aria-valuemin="0" aria-valuemax="100" aria-valuenow="${pct}"><i style="width:${pct}%"></i></div>` +
-    `<div class="row"><button type="button" class="small" data-action="water" data-d="1">+ szklanka</button>` +
-    `<button type="button" class="small ghost" data-action="water" data-d="-1">− szklanka</button></div></div>`;
+  if (typeof drinksCard === 'function') html += drinksCard();
 
   if (new Date().getHours() >= FRUIT_DEADLINE_HOUR) {
     html += '<div class="note warn">Owoce jemy tylko do 16:00 i nie na ostatni posiłek.</div>';
   }
 
-  html += `<div class="card"><div class="row sb"><h2>Posiłki</h2><span class="muted">${done} z ${MEALS.length}</span></div>`;
+  html += `<div class="card"><div class="row sb"><h2>Posiłki</h2>${ring(done, MEALS.length)}</div>`;
   for (const [key, name, time] of MEALS) {
     const m = meal(d, key);
     html += `<div class="meal"><div class="row sb"><div><strong>${name}</strong> <span class="muted">${time}</span></div>` +
@@ -404,6 +422,9 @@ async function init() {
   try {
     ku.recipes = (await (await fetch('data/recipes.json')).json()).recipes;
   } catch (e) { /* offline bez cache: brak wbudowanych przepisów */ }
+  try {
+    ku.drinks = (await (await fetch('data/napoje.json')).json()).napoje;
+  } catch (e) { /* offline bez cache: bez szybkich napojów */ }
   ku.idx = ZdsRecipes.indexRules(rules);
   render();
   initSync();

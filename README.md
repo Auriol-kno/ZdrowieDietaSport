@@ -6,7 +6,9 @@ Rodzinna aplikacja PWA do prowadzenia diety (3 osoby, nacisk na dziecko 10 lat).
 
 - **Dziś**: 5 posiłków (7:00, 10:30, 14:00, 17:30, 20:30), licznik wody (cel 2 l = 8 szklanek), kalorie względem celu.
 - **Sprawdź**: wyszukiwarka „czy mogę to zjeść?" z regułami z zaleceń dietetyka (dozwolone, w ograniczonych ilościach, zakazane).
-- **Przepisy**: 13 przepisów domowych (Thermomix TM6, air fryer, bez urządzeń) z oceną każdego składnika względem zaleceń dietetyka. Skalowanie porcji, własne przepisy (składniki rozpoznawane automatycznie), zapis do dziennika.
+- **Przepisy**: 36 przepisów domowych: 20 dań, 10 przekąsek i 6 napojów (Thermomix TM6, air fryer, bez urządzeń) z oceną każdego składnika względem zaleceń dietetyka. Skalowanie porcji, własne przepisy (składniki rozpoznawane automatycznie), zapis do dziennika.
+- **Inne napoje** (ekran Dziś): herbata owocowa, napary, słaby napar herbaty, świeży sok z wodą, kefir, maślanka. Kawa tylko dla profili dorosłych, nigdy w widoku dziecka. Napoje synchronizują się razem z dniem.
+- **Wygląd**: pastelowy, miękki styl z „wypukłymi” kartami, wskaźniki w kształcie pigułek, pływający pasek zakładek.
 - **Tryb gotowania**: krok po kroku, duże litery, ustawienia TM6 i air fryera, timery z wibracją i dźwiękiem, ekran zostaje włączony.
 - **Plan i zakupy** (tylko tryb rodzica/dorosły): plan na 7 dni, ostrzeżenie o owocach po 16:00, lista zakupów z sumowaniem składników, grupowaniem po działach, „Mam w domu" i kopiowaniem listy.
 - **Profile**: Franciszek (dziecko, cel 1750 kcal) i dwie osoby dorosłe, można dodawać i edytować.
@@ -27,6 +29,7 @@ Potem otwórz `http://localhost:8080`.
 - `recipes.js`: logika przepisów (ocena składników, porcje, lista zakupów)
 - `kuchnia.js`: widoki przepisów, trybu gotowania, planu i zakupów
 - `data/recipes.json`: wbudowane przepisy
+- `data/napoje.json`: szybkie napoje do dziennika
 - `data/rules.json`: zasady z dokumentu LUX MED z 19.11.2026
 - `sync.js`, `config.js`: synchronizacja z Supabase
 - `supabase/`: schemat bazy i testy reguł dostępu

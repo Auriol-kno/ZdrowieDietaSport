@@ -1,5 +1,5 @@
-const CACHE = 'zds-v3';
-const ASSETS = ['./', 'index.html', 'styles.css', 'app.js', 'config.js', 'sync.js', 'recipes.js', 'kuchnia.js', 'data/rules.json', 'data/recipes.json', 'manifest.webmanifest', 'icons/icon.svg'];
+const CACHE = 'zds-v4';
+const ASSETS = ['./', 'index.html', 'styles.css', 'app.js', 'config.js', 'sync.js', 'recipes.js', 'kuchnia.js', 'data/rules.json', 'data/recipes.json', 'data/napoje.json', 'manifest.webmanifest', 'icons/icon.svg'];
 
 self.addEventListener('install', (e) => {
   e.waitUntil(caches.open(CACHE).then((c) => c.addAll(ASSETS)).then(() => self.skipWaiting()));

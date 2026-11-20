@@ -10,7 +10,13 @@ const ZdsSync = (() => {
   const normName = (s) => String(s).trim().toLowerCase();
   const enabled = () => Boolean(cfg.SUPABASE_URL && cfg.SUPABASE_ANON_KEY);
   const unwrap = ({ data, error }) => { if (error) throw new Error(error.message); return data; };
-  const sameDay = (a, b) => JSON.stringify({ meals: a.meals || {}, water: a.water || 0 }) === JSON.stringify({ meals: b.meals || {}, water: b.water || 0 });
+  // Dane dnia, które się synchronizują. Napoje dołączamy tylko gdy są, żeby stare wpisy wyglądały jak dawniej.
+  const core = (d) => {
+    const o = { meals: (d && d.meals) || {}, water: (d && d.water) || 0 };
+    if (d && Array.isArray(d.drinks) && d.drinks.length) o.drinks = d.drinks;
+    return o;
+  };
+  const sameDay = (a, b) => JSON.stringify(core(a)) === JSON.stringify(core(b));
 
   // ---------- czysta logika scalania (testowalna bez sieci) ----------
 
@@ -47,7 +53,7 @@ const ZdsSync = (() => {
       const p = profiles.find((x) => x.id === pid);
       const d = days[key];
       if (!p || !p.remoteId || !d.u || d.u <= (synced[key] || 0)) continue;
-      out.push({ key, u: d.u, row: { member_id: p.remoteId, day, data: { meals: d.meals || {}, water: d.water || 0 } } });
+      out.push({ key, u: d.u, row: { member_id: p.remoteId, day, data: core(d) } });
     }
     return out;
   }
@@ -60,7 +66,7 @@ const ZdsSync = (() => {
       if (!p) continue;
       const key = r.day + '|' + p.id;
       const ts = Date.parse(r.updated_at) || 0;
-      const remote = { meals: (r.data && r.data.meals) || {}, water: (r.data && r.data.water) || 0 };
+      const remote = core(r.data);
       const local = days[key];
       if (local && sameDay(local, remote)) { synced[key] = Math.max(synced[key] || 0, local.u || 0); continue; }
       if (!local || ts > (local.u || 0)) {

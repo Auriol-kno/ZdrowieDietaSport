@@ -76,7 +76,8 @@
      "t": "Przełóż do miseczek, dodaj jogurt, a na końcu miód (jeśli chcesz)."
     }
    ],
-   "uwagi": "Ustawienia TM6 są orientacyjne. Dopasuj do instrukcji urządzenia."
+   "uwagi": "Ustawienia TM6 są orientacyjne. Dopasuj do instrukcji urządzenia.",
+   "kat": "danie"
   },
   {
    "id": "jajka-kanapki",
@@ -152,7 +153,8 @@
     {
      "t": "Kanapki: pieczywo, rukola, plasterki pomidora i ogórka, jajko obok."
     }
-   ]
+   ],
+   "kat": "danie"
   },
   {
    "id": "zupa-brokulowa",
@@ -258,7 +260,8 @@
      "p": "obr. 4 · 10 s"
     }
    ],
-   "uwagi": "Ziemniaki są na liście „w ograniczonych ilościach”. Tu to niewielka porcja."
+   "uwagi": "Ziemniaki są na liście „w ograniczonych ilościach”. Tu to niewielka porcja.",
+   "kat": "danie"
   },
   {
    "id": "indyk-para-kasza",
@@ -345,7 +348,8 @@
      "t": "Kaszę wyjmij z koszyka, na talerzu skrop oliwą."
     }
    ],
-   "uwagi": "Czas dopasuj do grubości plastrów. Mięso musi być całkiem ugotowane."
+   "uwagi": "Czas dopasuj do grubości plastrów. Mięso musi być całkiem ugotowane.",
+   "kat": "danie"
   },
   {
    "id": "kurczak-af-ryz",
@@ -459,7 +463,8 @@
     {
      "t": "Sałatę porwij, pomidory i ogórka pokrój, podaj z kurczakiem i ryżem."
     }
-   ]
+   ],
+   "kat": "danie"
   },
   {
    "id": "warzywa-af",
@@ -537,7 +542,8 @@
      "p": "180°C · 15 min",
      "timer": 900
     }
-   ]
+   ],
+   "kat": "danie"
   },
   {
    "id": "dorsz-af-jaglana",
@@ -641,7 +647,8 @@
     {
      "t": "Ogórki pokrój, wymieszaj z jogurtem i resztą koperku."
     }
-   ]
+   ],
+   "kat": "danie"
   },
   {
    "id": "pulpeciki-indyk",
@@ -750,7 +757,8 @@
     {
      "t": "Kaszę ugotuj osobno według opisu na opakowaniu i podaj z pulpecikami."
     }
-   ]
+   ],
+   "kat": "danie"
   },
   {
    "id": "jaglanka-maliny",
@@ -823,7 +831,8 @@
     {
      "t": "Przełóż do miseczek, dodaj jogurt, maliny i miód."
     }
-   ]
+   ],
+   "kat": "danie"
   },
   {
    "id": "jogurt-jagody",
@@ -871,7 +880,8 @@
     {
      "t": "Jogurt rozłóż do miseczek, dodaj jagody, otręby i odrobinę miodu."
     }
-   ]
+   ],
+   "kat": "przekaska"
   },
   {
    "id": "kanapki-twarog",
@@ -950,7 +960,8 @@
     {
      "t": "Pastę rozsmaruj na pieczywie, dodaj plasterki ogórka i pomidora."
     }
-   ]
+   ],
+   "kat": "danie"
   },
   {
    "id": "slupki-papryki",
@@ -1015,7 +1026,8 @@
     {
      "t": "Jogurt wymieszaj z czosnkiem, koperkiem i szczyptą soli."
     }
-   ]
+   ],
+   "kat": "przekaska"
   },
   {
    "id": "jablko-af",
@@ -1073,6 +1085,1519 @@
     },
     {
      "t": "Podawaj z jogurtem naturalnym."
+    }
+   ],
+   "kat": "przekaska"
+  },
+  {
+   "id": "omlet-af",
+   "name": "Omlet z papryką z air fryera",
+   "posilki": [
+    "sniadanie",
+    "kolacja"
+   ],
+   "porcje": 3,
+   "czas": 15,
+   "urz": [
+    "af"
+   ],
+   "kcal": 230,
+   "opis": "Pięć minut pracy, bez smażenia na patelni.",
+   "skladniki": [
+    {
+     "n": "jajka",
+     "q": 6,
+     "u": "szt",
+     "s": "Nabiał i jaja",
+     "rule": "jajka"
+    },
+    {
+     "n": "papryka czerwona",
+     "q": 1,
+     "u": "szt",
+     "s": "Warzywa",
+     "rule": "papryka czerwona"
+    },
+    {
+     "n": "jogurt naturalny",
+     "q": 60,
+     "u": "g",
+     "s": "Nabiał i jaja",
+     "rule": "jogurt naturalny"
+    },
+    {
+     "n": "koperek",
+     "q": 1,
+     "u": "pęczek",
+     "s": "Warzywa",
+     "rule": "koper"
+    },
+    {
+     "n": "oliwa z oliwek",
+     "q": 0.5,
+     "u": "łyżeczka",
+     "s": "Tłuszcze i przyprawy",
+     "rule": "oliwa z oliwek"
+    },
+    {
+     "n": "sól",
+     "q": 0.5,
+     "u": "łyżeczka",
+     "s": "Tłuszcze i przyprawy",
+     "rule": "sól",
+     "drobny": true
+    }
+   ],
+   "kroki": [
+    {
+     "t": "Jajka roztrzep z jogurtem, solą i posiekanym koperkiem. Paprykę pokrój w drobną kostkę."
+    },
+    {
+     "t": "Formę lub silikonowe foremki posmaruj cieniutko oliwą, wlej masę, dodaj paprykę."
+    },
+    {
+     "t": "Piecz w air fryerze, aż omlet się zetnie.",
+     "dev": "af",
+     "p": "160°C · 8–10 min",
+     "timer": 540
+    }
+   ],
+   "kat": "danie"
+  },
+  {
+   "id": "zupa-pomidorowa-jaglana",
+   "name": "Zupa pomidorowa z kaszą jaglaną",
+   "posilki": [
+    "obiad"
+   ],
+   "porcje": 3,
+   "czas": 35,
+   "urz": [
+    "tm6"
+   ],
+   "kcal": 210,
+   "opis": "Gęsta zupa na wodzie, bez śmietany i bez kostek rosołowych.",
+   "skladniki": [
+    {
+     "n": "pomidory",
+     "q": 600,
+     "u": "g",
+     "s": "Warzywa",
+     "rule": "pomidor"
+    },
+    {
+     "n": "marchewka świeża",
+     "q": 1,
+     "u": "szt",
+     "s": "Warzywa",
+     "rule": "świeża marchewka"
+    },
+    {
+     "n": "cebula",
+     "q": 1,
+     "u": "szt",
+     "s": "Warzywa",
+     "rule": "cebula"
+    },
+    {
+     "n": "czosnek",
+     "q": 1,
+     "u": "ząbek",
+     "s": "Warzywa",
+     "rule": "czosnek"
+    },
+    {
+     "n": "kasza jaglana",
+     "q": 60,
+     "u": "g",
+     "s": "Zboża i pieczywo",
+     "rule": "kasza jaglana"
+    },
+    {
+     "n": "woda",
+     "q": 800,
+     "u": "ml",
+     "s": "Inne",
+     "neutral": true
+    },
+    {
+     "n": "bazylia",
+     "q": 1,
+     "u": "łyżeczka",
+     "s": "Tłuszcze i przyprawy",
+     "rule": "bazylia"
+    },
+    {
+     "n": "oregano",
+     "q": 1,
+     "u": "łyżeczka",
+     "s": "Tłuszcze i przyprawy",
+     "rule": "oregano"
+    },
+    {
+     "n": "oliwa z oliwek",
+     "q": 1,
+     "u": "łyżka",
+     "s": "Tłuszcze i przyprawy",
+     "rule": "oliwa z oliwek"
+    },
+    {
+     "n": "sól",
+     "q": 0.5,
+     "u": "łyżeczka",
+     "s": "Tłuszcze i przyprawy",
+     "rule": "sól",
+     "drobny": true
+    }
+   ],
+   "kroki": [
+    {
+     "t": "Pomidory pokrój, marchewkę zetrzyj, kaszę przepłucz gorącą wodą."
+    },
+    {
+     "t": "Wszystko oprócz oliwy włóż do naczynia TM6, wlej wodę."
+    },
+    {
+     "t": "Gotuj.",
+     "dev": "tm6",
+     "p": "100°C · obr. 1 · 25 min",
+     "timer": 1500
+    },
+    {
+     "t": "Zmiksuj do gładkości, dodaj oliwę.",
+     "dev": "tm6",
+     "p": "obr. 6 · 30 s"
+    }
+   ],
+   "kat": "danie"
+  },
+  {
+   "id": "zupa-jarzynowa",
+   "name": "Zupa jarzynowa z zielonym groszkiem",
+   "posilki": [
+    "obiad"
+   ],
+   "porcje": 3,
+   "czas": 30,
+   "urz": [
+    "tm6"
+   ],
+   "kcal": 140,
+   "opis": "Lekka zupa z warzywami, które dzieci zwykle lubią.",
+   "skladniki": [
+    {
+     "n": "marchewka świeża",
+     "q": 2,
+     "u": "szt",
+     "s": "Warzywa",
+     "rule": "świeża marchewka"
+    },
+    {
+     "n": "ziemniaki",
+     "q": 150,
+     "u": "g",
+     "s": "Warzywa",
+     "rule": "ziemniaki"
+    },
+    {
+     "n": "zielony groszek",
+     "q": 150,
+     "u": "g",
+     "s": "Warzywa",
+     "rule": "zielony groszek"
+    },
+    {
+     "n": "fasolka szparagowa",
+     "q": 150,
+     "u": "g",
+     "s": "Warzywa",
+     "rule": "fasolka szparagowa"
+    },
+    {
+     "n": "cebula",
+     "q": 1,
+     "u": "szt",
+     "s": "Warzywa",
+     "rule": "cebula"
+    },
+    {
+     "n": "woda",
+     "q": 900,
+     "u": "ml",
+     "s": "Inne",
+     "neutral": true
+    },
+    {
+     "n": "koperek",
+     "q": 1,
+     "u": "pęczek",
+     "s": "Warzywa",
+     "rule": "koper"
+    },
+    {
+     "n": "oliwa z oliwek",
+     "q": 1,
+     "u": "łyżka",
+     "s": "Tłuszcze i przyprawy",
+     "rule": "oliwa z oliwek"
+    },
+    {
+     "n": "sól",
+     "q": 0.5,
+     "u": "łyżeczka",
+     "s": "Tłuszcze i przyprawy",
+     "rule": "sól",
+     "drobny": true
+    }
+   ],
+   "kroki": [
+    {
+     "t": "Warzywa pokrój w drobną kostkę."
+    },
+    {
+     "t": "Włóż do naczynia TM6 (bez groszku), wlej wodę."
+    },
+    {
+     "t": "Gotuj, groszek dodaj na ostatnie 5 minut.",
+     "dev": "tm6",
+     "p": "100°C · obr. 1 · 20 min",
+     "timer": 1200
+    },
+    {
+     "t": "Dodaj oliwę i posiekany koperek, dopraw solą."
+    }
+   ],
+   "uwagi": "Ziemniaki są na liście „w ograniczonych ilościach”, tu to niewielka porcja.",
+   "kat": "danie"
+  },
+  {
+   "id": "makaron-indyk-brokuly",
+   "name": "Makaron razowy z indykiem i brokułami",
+   "posilki": [
+    "obiad"
+   ],
+   "porcje": 3,
+   "czas": 30,
+   "urz": [
+    "tm6"
+   ],
+   "kcal": 430,
+   "opis": "Indyk i brokuły z Varoma, makaron osobno w garnku.",
+   "skladniki": [
+    {
+     "n": "makaron razowy",
+     "q": 200,
+     "u": "g",
+     "s": "Zboża i pieczywo",
+     "rule": "makaron razowy"
+    },
+    {
+     "n": "filet z piersi indyka",
+     "q": 300,
+     "u": "g",
+     "s": "Mięso i ryby",
+     "rule": "indyk"
+    },
+    {
+     "n": "brokuły",
+     "q": 300,
+     "u": "g",
+     "s": "Warzywa",
+     "rule": "brokuły"
+    },
+    {
+     "n": "woda",
+     "q": 500,
+     "u": "ml",
+     "s": "Inne",
+     "neutral": true
+    },
+    {
+     "n": "czosnek",
+     "q": 2,
+     "u": "ząbek",
+     "s": "Warzywa",
+     "rule": "czosnek"
+    },
+    {
+     "n": "oliwa z oliwek",
+     "q": 1,
+     "u": "łyżka",
+     "s": "Tłuszcze i przyprawy",
+     "rule": "oliwa z oliwek"
+    },
+    {
+     "n": "bazylia",
+     "q": 1,
+     "u": "łyżeczka",
+     "s": "Tłuszcze i przyprawy",
+     "rule": "bazylia"
+    },
+    {
+     "n": "sól",
+     "q": 0.5,
+     "u": "łyżeczka",
+     "s": "Tłuszcze i przyprawy",
+     "rule": "sól",
+     "drobny": true
+    }
+   ],
+   "kroki": [
+    {
+     "t": "Indyka pokrój w paski, brokuły w różyczki. Mięso natrzyj bazylią i solą."
+    },
+    {
+     "t": "Wlej wodę do TM6, indyka i brokuły ułóż w Varoma."
+    },
+    {
+     "t": "Gotuj na parze. W tym czasie ugotuj makaron w garnku według opisu na opakowaniu.",
+     "dev": "tm6",
+     "p": "Varoma · obr. 1 · 20 min",
+     "timer": 1200
+    },
+    {
+     "t": "Wymieszaj makaron z indykiem, brokułami, przeciśniętym czosnkiem i oliwą."
+    }
+   ],
+   "kat": "danie"
+  },
+  {
+   "id": "kasza-twarog",
+   "name": "Kasza gryczana z twarogiem i koperkiem",
+   "posilki": [
+    "sniadanie",
+    "kolacja"
+   ],
+   "porcje": 3,
+   "czas": 25,
+   "urz": [
+    "tm6"
+   ],
+   "kcal": 290,
+   "opis": "Prosta i sycąca, dobra też na kolację.",
+   "skladniki": [
+    {
+     "n": "kasza gryczana",
+     "q": 120,
+     "u": "g",
+     "s": "Zboża i pieczywo",
+     "rule": "kasza gryczana"
+    },
+    {
+     "n": "woda",
+     "q": 360,
+     "u": "ml",
+     "s": "Inne",
+     "neutral": true
+    },
+    {
+     "n": "twaróg półtłusty",
+     "q": 250,
+     "u": "g",
+     "s": "Nabiał i jaja",
+     "rule": "twaróg półtłusty"
+    },
+    {
+     "n": "jogurt naturalny",
+     "q": 100,
+     "u": "g",
+     "s": "Nabiał i jaja",
+     "rule": "jogurt naturalny"
+    },
+    {
+     "n": "koperek",
+     "q": 1,
+     "u": "pęczek",
+     "s": "Warzywa",
+     "rule": "koper"
+    },
+    {
+     "n": "ogórek zielony",
+     "q": 1,
+     "u": "szt",
+     "s": "Warzywa",
+     "rule": "ogórek zielony"
+    },
+    {
+     "n": "sól",
+     "q": 0.5,
+     "u": "łyżeczka",
+     "s": "Tłuszcze i przyprawy",
+     "rule": "sól",
+     "drobny": true
+    }
+   ],
+   "kroki": [
+    {
+     "t": "Kaszę przepłucz, wsyp do naczynia TM6, wlej wodę."
+    },
+    {
+     "t": "Gotuj, potem odstaw na 5 min.",
+     "dev": "tm6",
+     "p": "100°C · obr. 1 · 15 min",
+     "timer": 900
+    },
+    {
+     "t": "Twaróg rozgnieć z jogurtem i koperkiem, podaj z kaszą i plasterkami ogórka."
+    }
+   ],
+   "kat": "danie"
+  },
+  {
+   "id": "losos-af",
+   "name": "Ryba z air fryera z brokułami",
+   "posilki": [
+    "obiad"
+   ],
+   "porcje": 3,
+   "czas": 25,
+   "urz": [
+    "af"
+   ],
+   "kcal": 370,
+   "opis": "Filet z ryby morskiej i brokuły w jednym koszu. Bez panierki.",
+   "skladniki": [
+    {
+     "n": "filet z ryby morskiej (łosoś lub dorsz)",
+     "q": 450,
+     "u": "g",
+     "s": "Mięso i ryby",
+     "rule": "ryby morskie"
+    },
+    {
+     "n": "brokuły",
+     "q": 300,
+     "u": "g",
+     "s": "Warzywa",
+     "rule": "brokuły"
+    },
+    {
+     "n": "oliwa z oliwek",
+     "q": 1,
+     "u": "łyżeczka",
+     "s": "Tłuszcze i przyprawy",
+     "rule": "oliwa z oliwek"
+    },
+    {
+     "n": "koperek",
+     "q": 1,
+     "u": "pęczek",
+     "s": "Warzywa",
+     "rule": "koper"
+    },
+    {
+     "n": "czosnek",
+     "q": 1,
+     "u": "ząbek",
+     "s": "Warzywa",
+     "rule": "czosnek"
+    },
+    {
+     "n": "ryż brązowy",
+     "q": 150,
+     "u": "g",
+     "s": "Zboża i pieczywo",
+     "rule": "ryż brązowy"
+    },
+    {
+     "n": "sól",
+     "q": 0.5,
+     "u": "łyżeczka",
+     "s": "Tłuszcze i przyprawy",
+     "rule": "sól",
+     "drobny": true
+    }
+   ],
+   "kroki": [
+    {
+     "t": "Rybę natrzyj oliwą, czosnkiem, koperkiem i solą. Brokuły podziel na różyczki."
+    },
+    {
+     "t": "Brokuły piecz najpierw samodzielnie.",
+     "dev": "af",
+     "p": "180°C · 6 min",
+     "timer": 360
+    },
+    {
+     "t": "Dołóż rybę i piecz dalej.",
+     "dev": "af",
+     "p": "180°C · 9–10 min",
+     "timer": 570
+    },
+    {
+     "t": "Podaj z ugotowanym ryżem brązowym."
+    }
+   ],
+   "kat": "danie"
+  },
+  {
+   "id": "ryba-para-quinoa",
+   "name": "Ryba na parze z quinoa i warzywami",
+   "posilki": [
+    "obiad"
+   ],
+   "porcje": 3,
+   "czas": 30,
+   "urz": [
+    "tm6"
+   ],
+   "kcal": 350,
+   "opis": "Delikatny obiad z jednego gotowania.",
+   "skladniki": [
+    {
+     "n": "filet z ryby morskiej (np. morszczuk)",
+     "q": 450,
+     "u": "g",
+     "s": "Mięso i ryby",
+     "rule": "ryby morskie"
+    },
+    {
+     "n": "quinoa",
+     "q": 130,
+     "u": "g",
+     "s": "Zboża i pieczywo",
+     "rule": "quinoa"
+    },
+    {
+     "n": "woda",
+     "q": 500,
+     "u": "ml",
+     "s": "Inne",
+     "neutral": true
+    },
+    {
+     "n": "marchewka świeża",
+     "q": 2,
+     "u": "szt",
+     "s": "Warzywa",
+     "rule": "świeża marchewka"
+    },
+    {
+     "n": "zielony groszek",
+     "q": 150,
+     "u": "g",
+     "s": "Warzywa",
+     "rule": "zielony groszek"
+    },
+    {
+     "n": "koperek",
+     "q": 1,
+     "u": "pęczek",
+     "s": "Warzywa",
+     "rule": "koper"
+    },
+    {
+     "n": "oliwa z oliwek",
+     "q": 1,
+     "u": "łyżka",
+     "s": "Tłuszcze i przyprawy",
+     "rule": "oliwa z oliwek"
+    },
+    {
+     "n": "sól",
+     "q": 0.5,
+     "u": "łyżeczka",
+     "s": "Tłuszcze i przyprawy",
+     "rule": "sól",
+     "drobny": true
+    }
+   ],
+   "kroki": [
+    {
+     "t": "Quinoa przepłucz na sicie. Do naczynia TM6 wlej wodę, quinoa wsyp do koszyka."
+    },
+    {
+     "t": "W Varoma ułóż marchewkę w słupkach i groszek, na górze rybę oprószoną solą i koperkiem."
+    },
+    {
+     "t": "Gotuj na parze.",
+     "dev": "tm6",
+     "p": "Varoma · obr. 1 · 20 min",
+     "timer": 1200
+    },
+    {
+     "t": "Skrop oliwą i podaj."
+    }
+   ],
+   "kat": "danie"
+  },
+  {
+   "id": "szaszlyki-indyk-af",
+   "name": "Szaszłyki z indyka i papryki z air fryera",
+   "posilki": [
+    "obiad",
+    "kolacja"
+   ],
+   "porcje": 3,
+   "czas": 25,
+   "urz": [
+    "af"
+   ],
+   "kcal": 300,
+   "opis": "Dzieci lubią jeść je rękami.",
+   "skladniki": [
+    {
+     "n": "filet z piersi indyka",
+     "q": 400,
+     "u": "g",
+     "s": "Mięso i ryby",
+     "rule": "indyk"
+    },
+    {
+     "n": "papryka czerwona",
+     "q": 1,
+     "u": "szt",
+     "s": "Warzywa",
+     "rule": "papryka czerwona"
+    },
+    {
+     "n": "papryka żółta",
+     "q": 1,
+     "u": "szt",
+     "s": "Warzywa",
+     "rule": "papryka żółta"
+    },
+    {
+     "n": "cebula",
+     "q": 1,
+     "u": "szt",
+     "s": "Warzywa",
+     "rule": "cebula"
+    },
+    {
+     "n": "oliwa z oliwek",
+     "q": 1,
+     "u": "łyżeczka",
+     "s": "Tłuszcze i przyprawy",
+     "rule": "oliwa z oliwek"
+    },
+    {
+     "n": "zioła prowansalskie",
+     "q": 1,
+     "u": "łyżeczka",
+     "s": "Tłuszcze i przyprawy",
+     "rule": "zioła prowansalskie"
+    },
+    {
+     "n": "sól",
+     "q": 0.5,
+     "u": "łyżeczka",
+     "s": "Tłuszcze i przyprawy",
+     "rule": "sól",
+     "drobny": true
+    }
+   ],
+   "kroki": [
+    {
+     "t": "Indyka i warzywa pokrój w kostki, wymieszaj z oliwą, ziołami i solą. Nadziej na patyczki (krótkie, żeby weszły do kosza)."
+    },
+    {
+     "t": "Piecz, w połowie czasu obróć szaszłyki.",
+     "dev": "af",
+     "p": "180°C · 12 min",
+     "timer": 720
+    },
+    {
+     "t": "Sprawdź, że mięso w środku jest całkiem ugotowane."
+    }
+   ],
+   "kat": "danie"
+  },
+  {
+   "id": "pizzki-razowe-af",
+   "name": "Mini pizzki na razowym pieczywie",
+   "posilki": [
+    "kolacja"
+   ],
+   "porcje": 3,
+   "czas": 15,
+   "urz": [
+    "af"
+   ],
+   "kcal": 260,
+   "opis": "Sos z pomidorów i ser kozi na razowym chlebie.",
+   "skladniki": [
+    {
+     "n": "pieczywo razowe",
+     "q": 6,
+     "u": "kromka",
+     "s": "Zboża i pieczywo",
+     "rule": "pieczywo razowe"
+    },
+    {
+     "n": "pomidory",
+     "q": 300,
+     "u": "g",
+     "s": "Warzywa",
+     "rule": "pomidor"
+    },
+    {
+     "n": "ser kozi",
+     "q": 100,
+     "u": "g",
+     "s": "Nabiał i jaja",
+     "rule": "ser kozi"
+    },
+    {
+     "n": "oregano",
+     "q": 1,
+     "u": "łyżeczka",
+     "s": "Tłuszcze i przyprawy",
+     "rule": "oregano"
+    },
+    {
+     "n": "bazylia",
+     "q": 1,
+     "u": "łyżeczka",
+     "s": "Tłuszcze i przyprawy",
+     "rule": "bazylia"
+    },
+    {
+     "n": "sól",
+     "q": 0.5,
+     "u": "łyżeczka",
+     "s": "Tłuszcze i przyprawy",
+     "rule": "sól",
+     "drobny": true
+    }
+   ],
+   "kroki": [
+    {
+     "t": "Pomidory pokrój w drobną kostkę, wymieszaj z oregano, bazylią i solą."
+    },
+    {
+     "t": "Na kromkach rozłóż sos i pokruszony ser kozi."
+    },
+    {
+     "t": "Piecz w air fryerze, partiami.",
+     "dev": "af",
+     "p": "180°C · 5 min",
+     "timer": 300
+    }
+   ],
+   "kat": "danie"
+  },
+  {
+   "id": "pasta-awokado",
+   "name": "Kanapki z pastą z awokado",
+   "posilki": [
+    "sniadanie",
+    "kolacja"
+   ],
+   "porcje": 3,
+   "czas": 10,
+   "urz": [],
+   "kcal": 280,
+   "opis": "Awokado z jogurtem i pomidorem na razowym pieczywie.",
+   "skladniki": [
+    {
+     "n": "awokado",
+     "q": 1,
+     "u": "szt",
+     "s": "Owoce",
+     "rule": "awokado"
+    },
+    {
+     "n": "jogurt naturalny",
+     "q": 50,
+     "u": "g",
+     "s": "Nabiał i jaja",
+     "rule": "jogurt naturalny"
+    },
+    {
+     "n": "czosnek",
+     "q": 1,
+     "u": "ząbek",
+     "s": "Warzywa",
+     "rule": "czosnek"
+    },
+    {
+     "n": "pieczywo razowe",
+     "q": 6,
+     "u": "kromka",
+     "s": "Zboża i pieczywo",
+     "rule": "pieczywo razowe"
+    },
+    {
+     "n": "pomidor",
+     "q": 1,
+     "u": "szt",
+     "s": "Warzywa",
+     "rule": "pomidor"
+    },
+    {
+     "n": "rukola",
+     "q": 1,
+     "u": "garść",
+     "s": "Warzywa",
+     "rule": "rukola"
+    },
+    {
+     "n": "sól",
+     "q": 0.5,
+     "u": "łyżeczka",
+     "s": "Tłuszcze i przyprawy",
+     "rule": "sól",
+     "drobny": true
+    }
+   ],
+   "kroki": [
+    {
+     "t": "Awokado rozgnieć widelcem z jogurtem, czosnkiem i solą."
+    },
+    {
+     "t": "Rozsmaruj na pieczywie, dodaj rukolę i plasterki pomidora."
+    }
+   ],
+   "uwagi": "Awokado to owoc na liście zaleceń, więc najlepiej na śniadanie, nie na późną kolację.",
+   "kat": "danie"
+  },
+  {
+   "id": "batoniki-owsiane-af",
+   "name": "Owsiane batoniki z jabłkiem",
+   "posilki": [
+    "ii",
+    "przekaska"
+   ],
+   "porcje": 6,
+   "czas": 25,
+   "urz": [
+    "af"
+   ],
+   "kcal": 120,
+   "kat": "przekaska",
+   "opis": "Słodka przekąska bez cukru. To nadal deser, więc czasem i mało.",
+   "skladniki": [
+    {
+     "n": "płatki owsiane górskie",
+     "q": 120,
+     "u": "g",
+     "s": "Zboża i pieczywo",
+     "rule": "płatki owsiane górskie"
+    },
+    {
+     "n": "jabłka",
+     "q": 2,
+     "u": "szt",
+     "s": "Owoce",
+     "rule": "jabłka"
+    },
+    {
+     "n": "jajka",
+     "q": 1,
+     "u": "szt",
+     "s": "Nabiał i jaja",
+     "rule": "jajka"
+    },
+    {
+     "n": "cynamon",
+     "q": 1,
+     "u": "łyżeczka",
+     "s": "Tłuszcze i przyprawy",
+     "rule": "cynamon"
+    },
+    {
+     "n": "miód",
+     "q": 1,
+     "u": "łyżka",
+     "s": "Inne",
+     "rule": "miód"
+    }
+   ],
+   "kroki": [
+    {
+     "t": "Jabłka zetrzyj na tarce, wymieszaj z płatkami, jajkiem, cynamonem i miodem."
+    },
+    {
+     "t": "Masę rozprowadź na papierze do pieczenia w koszu, grubość około 1 cm."
+    },
+    {
+     "t": "Piecz, potem ostudź i pokrój na batoniki.",
+     "dev": "af",
+     "p": "170°C · 12 min",
+     "timer": 720
+    }
+   ]
+  },
+  {
+   "id": "frytki-marchew-af",
+   "name": "Frytki z marchewki z air fryera",
+   "posilki": [
+    "przekaska",
+    "obiad"
+   ],
+   "porcje": 3,
+   "czas": 25,
+   "urz": [
+    "af"
+   ],
+   "kcal": 70,
+   "kat": "przekaska",
+   "opis": "Chrupiące słupki zamiast chipsów.",
+   "skladniki": [
+    {
+     "n": "marchewka świeża",
+     "q": 500,
+     "u": "g",
+     "s": "Warzywa",
+     "rule": "świeża marchewka"
+    },
+    {
+     "n": "oliwa z oliwek",
+     "q": 1,
+     "u": "łyżeczka",
+     "s": "Tłuszcze i przyprawy",
+     "rule": "oliwa z oliwek"
+    },
+    {
+     "n": "papryka łagodna",
+     "q": 1,
+     "u": "łyżeczka",
+     "s": "Tłuszcze i przyprawy",
+     "rule": "papryka łagodna"
+    },
+    {
+     "n": "sól",
+     "q": 0.5,
+     "u": "łyżeczka",
+     "s": "Tłuszcze i przyprawy",
+     "rule": "sól",
+     "drobny": true
+    }
+   ],
+   "kroki": [
+    {
+     "t": "Marchewkę obierz i pokrój w słupki. Wymieszaj z oliwą, papryką i solą."
+    },
+    {
+     "t": "Piecz, w połowie czasu wstrząśnij koszem.",
+     "dev": "af",
+     "p": "190°C · 15 min",
+     "timer": 900
+    }
+   ]
+  },
+  {
+   "id": "chipsy-jablkowe-af",
+   "name": "Chipsy jabłkowe z air fryera",
+   "posilki": [
+    "ii"
+   ],
+   "porcje": 3,
+   "czas": 40,
+   "urz": [
+    "af"
+   ],
+   "kcal": 60,
+   "kat": "przekaska",
+   "opis": "Owoce tylko do 16:00, więc na II śniadanie.",
+   "skladniki": [
+    {
+     "n": "jabłka",
+     "q": 3,
+     "u": "szt",
+     "s": "Owoce",
+     "rule": "jabłka"
+    },
+    {
+     "n": "cynamon",
+     "q": 1,
+     "u": "łyżeczka",
+     "s": "Tłuszcze i przyprawy",
+     "rule": "cynamon"
+    }
+   ],
+   "kroki": [
+    {
+     "t": "Jabłka umyj, pokrój w cienkie plasterki (około 2 mm), oprósz cynamonem."
+    },
+    {
+     "t": "Układaj cienką warstwą i susz, w połowie czasu obróć.",
+     "dev": "af",
+     "p": "110°C · 25–30 min",
+     "timer": 1650
+    }
+   ]
+  },
+  {
+   "id": "jajka-faszerowane",
+   "name": "Jajka faszerowane jogurtem i koperkiem",
+   "posilki": [
+    "przekaska",
+    "kolacja"
+   ],
+   "porcje": 3,
+   "czas": 20,
+   "urz": [],
+   "kcal": 110,
+   "kat": "przekaska",
+   "opis": "Białko i dużo sytości, bez majonezu.",
+   "skladniki": [
+    {
+     "n": "jajka",
+     "q": 6,
+     "u": "szt",
+     "s": "Nabiał i jaja",
+     "rule": "jajka"
+    },
+    {
+     "n": "jogurt naturalny",
+     "q": 60,
+     "u": "g",
+     "s": "Nabiał i jaja",
+     "rule": "jogurt naturalny"
+    },
+    {
+     "n": "koperek",
+     "q": 1,
+     "u": "pęczek",
+     "s": "Warzywa",
+     "rule": "koper"
+    },
+    {
+     "n": "sól",
+     "q": 0.5,
+     "u": "łyżeczka",
+     "s": "Tłuszcze i przyprawy",
+     "rule": "sól",
+     "drobny": true
+    }
+   ],
+   "kroki": [
+    {
+     "t": "Jajka ugotuj na twardo (około 10 min), obierz i przekrój na pół."
+    },
+    {
+     "t": "Żółtka rozgnieć z jogurtem, koperkiem i solą. Nałóż do połówek białek."
+    }
+   ]
+  },
+  {
+   "id": "kanapeczki-wedlina",
+   "name": "Mini kanapki z chudą wędliną i ogórkiem",
+   "posilki": [
+    "przekaska",
+    "ii"
+   ],
+   "porcje": 3,
+   "czas": 5,
+   "urz": [],
+   "kcal": 150,
+   "kat": "przekaska",
+   "opis": "Do szkoły lub na wyjście.",
+   "skladniki": [
+    {
+     "n": "pieczywo razowe",
+     "q": 3,
+     "u": "kromka",
+     "s": "Zboża i pieczywo",
+     "rule": "pieczywo razowe"
+    },
+    {
+     "n": "chuda wędlina z indyka",
+     "q": 90,
+     "u": "g",
+     "s": "Mięso i ryby",
+     "rule": "chude wędliny"
+    },
+    {
+     "n": "ogórek zielony",
+     "q": 1,
+     "u": "szt",
+     "s": "Warzywa",
+     "rule": "ogórek zielony"
+    },
+    {
+     "n": "sałata rzymska",
+     "q": 3,
+     "u": "szt",
+     "s": "Warzywa",
+     "rule": "sałata rzymska"
+    }
+   ],
+   "kroki": [
+    {
+     "t": "Na kromkach ułóż sałatę, wędlinę i plasterki ogórka. Przekrój na mniejsze kanapki."
+    }
+   ],
+   "uwagi": "Wybieraj wędlinę o krótkim składzie, bez wieprzowiny."
+  },
+  {
+   "id": "salatka-owocowa",
+   "name": "Sałatka owocowa z jogurtem",
+   "posilki": [
+    "ii"
+   ],
+   "porcje": 3,
+   "czas": 10,
+   "urz": [],
+   "kcal": 120,
+   "kat": "przekaska",
+   "opis": "Tylko owoce z listy dozwolonych, do godziny 16:00.",
+   "skladniki": [
+    {
+     "n": "jabłka",
+     "q": 2,
+     "u": "szt",
+     "s": "Owoce",
+     "rule": "jabłka"
+    },
+    {
+     "n": "kiwi",
+     "q": 2,
+     "u": "szt",
+     "s": "Owoce",
+     "rule": "kiwi"
+    },
+    {
+     "n": "maliny",
+     "q": 100,
+     "u": "g",
+     "s": "Owoce",
+     "rule": "maliny"
+    },
+    {
+     "n": "jogurt naturalny",
+     "q": 150,
+     "u": "g",
+     "s": "Nabiał i jaja",
+     "rule": "jogurt naturalny"
+    },
+    {
+     "n": "miód",
+     "q": 1,
+     "u": "łyżeczka",
+     "s": "Inne",
+     "rule": "miód"
+    }
+   ],
+   "kroki": [
+    {
+     "t": "Owoce pokrój w kostkę, wymieszaj z jogurtem i miodem."
+    }
+   ]
+  },
+  {
+   "id": "twarog-jagody",
+   "name": "Twaróg z jagodami",
+   "posilki": [
+    "ii",
+    "przekaska"
+   ],
+   "porcje": 3,
+   "czas": 5,
+   "urz": [],
+   "kcal": 130,
+   "kat": "przekaska",
+   "opis": "Szybkie białko z owocami.",
+   "skladniki": [
+    {
+     "n": "twaróg półtłusty",
+     "q": 250,
+     "u": "g",
+     "s": "Nabiał i jaja",
+     "rule": "twaróg półtłusty"
+    },
+    {
+     "n": "jogurt naturalny",
+     "q": 100,
+     "u": "g",
+     "s": "Nabiał i jaja",
+     "rule": "jogurt naturalny"
+    },
+    {
+     "n": "jagody",
+     "q": 150,
+     "u": "g",
+     "s": "Owoce",
+     "rule": "jagody"
+    },
+    {
+     "n": "miód",
+     "q": 1,
+     "u": "łyżeczka",
+     "s": "Inne",
+     "rule": "miód"
+    }
+   ],
+   "kroki": [
+    {
+     "t": "Twaróg rozgnieć z jogurtem, dodaj jagody, polej miodem."
+    }
+   ]
+  },
+  {
+   "id": "woda-mieta-truskawki",
+   "name": "Woda z miętą i truskawkami",
+   "posilki": [
+    "ii",
+    "przekaska"
+   ],
+   "porcje": 4,
+   "czas": 5,
+   "urz": [],
+   "kcal": 10,
+   "kat": "napoj",
+   "opis": "Smak bez cukru. Odstaw do lodówki na godzinę.",
+   "skladniki": [
+    {
+     "n": "woda mineralna",
+     "q": 1000,
+     "u": "ml",
+     "s": "Inne",
+     "rule": "woda mineralna niegazowana/gazowana"
+    },
+    {
+     "n": "mięta",
+     "q": 1,
+     "u": "pęczek",
+     "s": "Warzywa",
+     "rule": "mięta"
+    },
+    {
+     "n": "truskawki",
+     "q": 100,
+     "u": "g",
+     "s": "Owoce",
+     "rule": "truskawki"
+    }
+   ],
+   "kroki": [
+    {
+     "t": "Truskawki pokrój w plasterki, miętę lekko rozetrzyj w dłoniach."
+    },
+    {
+     "t": "Wrzuć do dzbanka, zalej wodą i schłodź."
+    }
+   ]
+  },
+  {
+   "id": "napar-imbir-miod",
+   "name": "Napar z imbiru i miodu",
+   "posilki": [
+    "ii",
+    "przekaska"
+   ],
+   "porcje": 3,
+   "czas": 10,
+   "urz": [],
+   "kcal": 25,
+   "kat": "napoj",
+   "opis": "Rozgrzewający napój na zimne dni.",
+   "skladniki": [
+    {
+     "n": "imbir świeży",
+     "q": 15,
+     "u": "g",
+     "s": "Warzywa",
+     "rule": "imbir"
+    },
+    {
+     "n": "woda",
+     "q": 600,
+     "u": "ml",
+     "s": "Inne",
+     "neutral": true
+    },
+    {
+     "n": "miód",
+     "q": 1,
+     "u": "łyżeczka",
+     "s": "Inne",
+     "rule": "miód"
+    }
+   ],
+   "kroki": [
+    {
+     "t": "Imbir pokrój w plasterki, zalej gorącą (nie wrzącą) wodą i zaparzaj 8 minut."
+    },
+    {
+     "t": "Przecedź, ostudź do ciepłego i dodaj miód."
+    }
+   ],
+   "uwagi": "Miód dodawaj do letniego napoju. Dzieciom poniżej 1. roku życia nie podaje się miodu."
+  },
+  {
+   "id": "herbata-owocowa-maliny",
+   "name": "Schłodzona herbata owocowa z malinami",
+   "posilki": [
+    "ii",
+    "przekaska"
+   ],
+   "porcje": 4,
+   "czas": 10,
+   "urz": [],
+   "kcal": 15,
+   "kat": "napoj",
+   "opis": "Domowa wersja „mrożonej herbaty”, bez cukru (sklepowa jest zakazana).",
+   "skladniki": [
+    {
+     "n": "herbata owocowa (torebki)",
+     "q": 3,
+     "u": "szt",
+     "s": "Inne",
+     "rule": "herbata owocowa"
+    },
+    {
+     "n": "woda",
+     "q": 1000,
+     "u": "ml",
+     "s": "Inne",
+     "neutral": true
+    },
+    {
+     "n": "maliny",
+     "q": 100,
+     "u": "g",
+     "s": "Owoce",
+     "rule": "maliny"
+    }
+   ],
+   "kroki": [
+    {
+     "t": "Zaparz herbatę w gorącej wodzie na 7 minut, wyjmij torebki i ostudź."
+    },
+    {
+     "t": "Dodaj maliny i schłodź w lodówce."
+    }
+   ]
+  },
+  {
+   "id": "koktajl-kefir-jagody",
+   "name": "Koktajl kefirowy z jagodami",
+   "posilki": [
+    "ii"
+   ],
+   "porcje": 3,
+   "czas": 5,
+   "urz": [
+    "tm6"
+   ],
+   "kcal": 110,
+   "kat": "napoj",
+   "opis": "Gotowy w minutę.",
+   "skladniki": [
+    {
+     "n": "kefir",
+     "q": 450,
+     "u": "ml",
+     "s": "Nabiał i jaja",
+     "rule": "kefir"
+    },
+    {
+     "n": "jagody",
+     "q": 150,
+     "u": "g",
+     "s": "Owoce",
+     "rule": "jagody"
+    },
+    {
+     "n": "miód",
+     "q": 1,
+     "u": "łyżeczka",
+     "s": "Inne",
+     "rule": "miód"
+    }
+   ],
+   "kroki": [
+    {
+     "t": "Wszystko włóż do naczynia TM6 i zmiksuj.",
+     "dev": "tm6",
+     "p": "obr. 8 · 30 s"
+    }
+   ]
+  },
+  {
+   "id": "koktajl-truskawki-jogurt",
+   "name": "Koktajl truskawkowy z jogurtem",
+   "posilki": [
+    "ii"
+   ],
+   "porcje": 3,
+   "czas": 5,
+   "urz": [
+    "tm6"
+   ],
+   "kcal": 100,
+   "kat": "napoj",
+   "opis": "Bez cukru, tylko owoce i jogurt.",
+   "skladniki": [
+    {
+     "n": "jogurt naturalny",
+     "q": 300,
+     "u": "g",
+     "s": "Nabiał i jaja",
+     "rule": "jogurt naturalny"
+    },
+    {
+     "n": "truskawki",
+     "q": 200,
+     "u": "g",
+     "s": "Owoce",
+     "rule": "truskawki"
+    },
+    {
+     "n": "woda",
+     "q": 150,
+     "u": "ml",
+     "s": "Inne",
+     "neutral": true
+    },
+    {
+     "n": "miód",
+     "q": 1,
+     "u": "łyżeczka",
+     "s": "Inne",
+     "rule": "miód"
+    }
+   ],
+   "kroki": [
+    {
+     "t": "Wszystkie składniki zmiksuj w naczyniu TM6.",
+     "dev": "tm6",
+     "p": "obr. 8 · 30 s"
+    }
+   ]
+  },
+  {
+   "id": "sok-jablko-marchew",
+   "name": "Sok jabłkowo-marchewkowy z wodą",
+   "posilki": [
+    "ii",
+    "przekaska"
+   ],
+   "porcje": 3,
+   "czas": 10,
+   "urz": [],
+   "kcal": 45,
+   "kat": "napoj",
+   "opis": "Świeżo wyciskany sok rozcieńczony wodą, tak jak w zaleceniach. Owoce do 16:00.",
+   "skladniki": [
+    {
+     "n": "jabłka",
+     "q": 2,
+     "u": "szt",
+     "s": "Owoce",
+     "rule": "jabłka"
+    },
+    {
+     "n": "marchewka świeża",
+     "q": 2,
+     "u": "szt",
+     "s": "Warzywa",
+     "rule": "świeża marchewka"
+    },
+    {
+     "n": "woda mineralna",
+     "q": 300,
+     "u": "ml",
+     "s": "Inne",
+     "rule": "woda mineralna niegazowana/gazowana"
+    }
+   ],
+   "kroki": [
+    {
+     "t": "Jabłka i marchewkę wyciśnij w wyciskarce, rozcieńcz wodą (mniej więcej pół na pół)."
     }
    ]
   }
