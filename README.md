@@ -76,7 +76,7 @@ Air fryer jest dozwolony (potwierdzone przez użytkownika 20.11.2026). Ustawieni
 
 - Syn dopisuje dania (okrągły plusik przy posiłku) i napoje; jego wpisy są fioletowe i od razu ocenione według zaleceń.
 - Profile: wybór profilu, tryb rodzica, statystyki (kalorie, ciągłość, woda, aktywność, jakość) i eksport do arkusza CSV (udostępnianie albo e-mail z podsumowaniem).
-- Zakładka Przepisy widoczna tylko w trybie rodzica. W bazie 82 przepisy, w tym 31 dań z kurczakiem.
+- Zakładka Przepisy widoczna tylko w trybie rodzica. W bazie 122 przepisy, w tym 31 dań z kurczakiem i 33 z rybą.
 
 ## Logowanie (e-mail i hasło)
 

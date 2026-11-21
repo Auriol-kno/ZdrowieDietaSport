@@ -644,3 +644,23 @@ button.gearbtn { box-shadow: none; }
 html[data-theme="dark"] button.gearbtn.corner { background: #2f2c29; color: #a9bde3; }
 .hero h1 { white-space: nowrap; font-size: clamp(18px, 5.4vw, 22px); }
 .hero > div:nth-child(2) { overflow: hidden; }
+/* ---------- Wersje kolorystyczne: zielona i błękitna ---------- */
+html[data-theme="green"] {
+  --bg: #e3ece3; --card: #e6eee5; --track: #d5e1d4; --line: #cbd9ca; --ink: #2f3d35; --muted: #5b6b61;
+  --blue: #5e9c7c; --blue-d: #2f6b52; --blue-t: #d2e7da; --sage: #6fae8c; --sage-d: #2f7a55; --sage-t: #d2e9dc;
+  --up: 7px 7px 15px rgba(120, 150, 125, .38), -7px -7px 15px rgba(255, 255, 255, .85);
+  --up-s: 4px 4px 9px rgba(120, 150, 125, .34), -4px -4px 9px rgba(255, 255, 255, .82);
+  --in: inset 4px 4px 8px rgba(120, 150, 125, .36), inset -4px -4px 8px rgba(255, 255, 255, .82);
+}
+html[data-theme="blue"] {
+  --bg: #e2eaf3; --card: #e5edf5; --track: #d3dfeb; --line: #c9d7e6; --ink: #2c3a4b; --muted: #5a6879;
+  --blue: #5a92cf; --blue-d: #2c5f99; --blue-t: #d0e2f4; --sage: #5aa0c8; --sage-d: #2f78a8; --sage-t: #d2e6f2;
+  --up: 7px 7px 15px rgba(115, 140, 170, .38), -7px -7px 15px rgba(255, 255, 255, .85);
+  --up-s: 4px 4px 9px rgba(115, 140, 170, .34), -4px -4px 9px rgba(255, 255, 255, .82);
+  --in: inset 4px 4px 8px rgba(115, 140, 170, .36), inset -4px -4px 8px rgba(255, 255, 255, .82);
+}
+html[data-theme="green"] body, html[data-theme="green"] body.kid, html[data-theme="blue"] body, html[data-theme="blue"] body.kid { background: var(--bg); }
+html[data-theme="green"] .hero-plate, html[data-theme="green"] .syncbtn { background: #f4f8f3; }
+html[data-theme="blue"] .hero-plate, html[data-theme="blue"] .syncbtn { background: #f3f7fb; }
+html[data-theme="green"] .daycard.alt { background: #dbe6da; } html[data-theme="blue"] .daycard.alt { background: #d9e3ee; }
+html[data-theme="blue"] .card.drinks { background: #d4e4f3; }

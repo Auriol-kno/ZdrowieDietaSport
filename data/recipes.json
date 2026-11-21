@@ -6193,6 +6193,3007 @@
     }
    ],
    "uwagi": "Kalorie dotyczą samego mięsa, bez dodatków."
+  },
+  {
+   "id": "losos-pieczony-koper",
+   "name": "Łosoś pieczony z koperkiem i kaszą jaglaną",
+   "posilki": [
+    "obiad"
+   ],
+   "porcje": 3,
+   "czas": 25,
+   "urz": [],
+   "kcal": 520,
+   "kat": "danie",
+   "opis": "Najprostsza ryba na obiad: 18 minut w piekarniku.",
+   "skladniki": [
+    {
+     "n": "filet z łososia",
+     "q": 450,
+     "u": "g",
+     "s": "Mięso i ryby",
+     "rule": "ryby morskie"
+    },
+    {
+     "n": "koperek",
+     "q": 1,
+     "u": "pęczek",
+     "s": "Warzywa",
+     "rule": "koper"
+    },
+    {
+     "n": "czosnek",
+     "q": 1,
+     "u": "ząbek",
+     "s": "Warzywa",
+     "rule": "czosnek"
+    },
+    {
+     "n": "oliwa z oliwek",
+     "q": 1,
+     "u": "łyżeczka",
+     "s": "Tłuszcze i przyprawy",
+     "rule": "oliwa z oliwek"
+    },
+    {
+     "n": "kasza jaglana",
+     "q": 150,
+     "u": "g",
+     "s": "Zboża i pieczywo",
+     "rule": "kasza jaglana"
+    },
+    {
+     "n": "brokuły",
+     "q": 1,
+     "u": "szt",
+     "s": "Warzywa",
+     "rule": "brokuły"
+    },
+    {
+     "n": "sól",
+     "q": 0.5,
+     "u": "łyżeczka",
+     "s": "Tłuszcze i przyprawy",
+     "rule": "sól",
+     "drobny": true
+    }
+   ],
+   "kroki": [
+    {
+     "t": "Łososia ułóż na papierze, posyp koperkiem, czosnkiem i solą, skrop oliwą."
+    },
+    {
+     "t": "Pieczenie w piekarniku (bez tłuszczu na blasze, na papierze do pieczenia).",
+     "p": "200°C · 18 min",
+     "timer": 1080
+    },
+    {
+     "t": "Ugotuj kaszę według przepisu na opakowaniu."
+    },
+    {
+     "t": "Brokuł ugotuj na parze, około 6 minut.",
+     "timer": 360
+    }
+   ]
+  },
+  {
+   "id": "losos-af-ziola",
+   "name": "Łosoś z air fryera w ziołach z sałatką",
+   "posilki": [
+    "obiad"
+   ],
+   "porcje": 3,
+   "czas": 15,
+   "urz": [
+    "af"
+   ],
+   "kcal": 480,
+   "kat": "danie",
+   "opis": "Gotowe w kwadrans, chrupiący wierzch bez smażenia.",
+   "skladniki": [
+    {
+     "n": "filet z łososia",
+     "q": 450,
+     "u": "g",
+     "s": "Mięso i ryby",
+     "rule": "ryby morskie"
+    },
+    {
+     "n": "zioła prowansalskie",
+     "q": 1,
+     "u": "łyżeczka",
+     "s": "Tłuszcze i przyprawy",
+     "rule": "zioła prowansalskie"
+    },
+    {
+     "n": "oliwa z oliwek",
+     "q": 1,
+     "u": "łyżeczka",
+     "s": "Tłuszcze i przyprawy",
+     "rule": "oliwa z oliwek"
+    },
+    {
+     "n": "sałata rzymska",
+     "q": 1,
+     "u": "szt",
+     "s": "Warzywa",
+     "rule": "sałata rzymska"
+    },
+    {
+     "n": "pomidor",
+     "q": 2,
+     "u": "szt",
+     "s": "Warzywa",
+     "rule": "pomidor"
+    },
+    {
+     "n": "ogórek zielony",
+     "q": 1,
+     "u": "szt",
+     "s": "Warzywa",
+     "rule": "ogórek zielony"
+    },
+    {
+     "n": "sól",
+     "q": 0.5,
+     "u": "łyżeczka",
+     "s": "Tłuszcze i przyprawy",
+     "rule": "sól",
+     "drobny": true
+    }
+   ],
+   "kroki": [
+    {
+     "t": "Kawałki łososia natrzyj ziołami, oliwą i solą."
+    },
+    {
+     "t": "Piecz skórą do dołu.",
+     "dev": "af",
+     "p": "190°C · 10 min",
+     "timer": 600
+    },
+    {
+     "t": "Sałatę porwij, pomidory i ogórka pokrój, podaj z rybą."
+    }
+   ]
+  },
+  {
+   "id": "salatka-tunczyk-jajko",
+   "name": "Sałatka z tuńczykiem, jajkiem i rukolą",
+   "posilki": [
+    "kolacja",
+    "obiad"
+   ],
+   "porcje": 3,
+   "czas": 10,
+   "urz": [],
+   "kcal": 330,
+   "kat": "danie",
+   "opis": "Szybka kolacja bez gotowania obiadu.",
+   "skladniki": [
+    {
+     "n": "tuńczyk w sosie własnym (puszka)",
+     "q": 2,
+     "u": "szt",
+     "s": "Mięso i ryby",
+     "rule": "ryby morskie"
+    },
+    {
+     "n": "jajka",
+     "q": 3,
+     "u": "szt",
+     "s": "Nabiał i jaja",
+     "rule": "jajka"
+    },
+    {
+     "n": "rukola",
+     "q": 3,
+     "u": "garść",
+     "s": "Warzywa",
+     "rule": "rukola"
+    },
+    {
+     "n": "pomidor",
+     "q": 2,
+     "u": "szt",
+     "s": "Warzywa",
+     "rule": "pomidor"
+    },
+    {
+     "n": "ogórek zielony",
+     "q": 1,
+     "u": "szt",
+     "s": "Warzywa",
+     "rule": "ogórek zielony"
+    },
+    {
+     "n": "oliwa z oliwek",
+     "q": 1,
+     "u": "łyżka",
+     "s": "Tłuszcze i przyprawy",
+     "rule": "oliwa z oliwek"
+    },
+    {
+     "n": "kapary",
+     "q": 1,
+     "u": "łyżka",
+     "s": "Tłuszcze i przyprawy",
+     "rule": "kapary"
+    },
+    {
+     "n": "sól",
+     "q": 0.5,
+     "u": "łyżeczka",
+     "s": "Tłuszcze i przyprawy",
+     "rule": "sól",
+     "drobny": true
+    }
+   ],
+   "kroki": [
+    {
+     "t": "Jajka ugotuj na twardo, ostudź i pokrój.",
+     "p": "9 min",
+     "timer": 540
+    },
+    {
+     "t": "Rukolę, pomidory i ogórka wyłóż na talerz, dodaj odsączonego tuńczyka, jajka i kapary."
+    },
+    {
+     "t": "Skrop oliwą i lekko posól."
+    }
+   ],
+   "uwagi": "Tuńczyk z puszki tylko w sosie własnym, nie w oleju."
+  },
+  {
+   "id": "salatka-tunczyk-makaron",
+   "name": "Sałatka z tuńczykiem i makaronem razowym",
+   "posilki": [
+    "obiad",
+    "kolacja",
+    "ii"
+   ],
+   "porcje": 3,
+   "czas": 15,
+   "urz": [],
+   "kcal": 420,
+   "kat": "danie",
+   "opis": "Dobra też na drugi dzień do szkoły.",
+   "skladniki": [
+    {
+     "n": "tuńczyk w sosie własnym (puszka)",
+     "q": 2,
+     "u": "szt",
+     "s": "Mięso i ryby",
+     "rule": "ryby morskie"
+    },
+    {
+     "n": "makaron razowy",
+     "q": 150,
+     "u": "g",
+     "s": "Zboża i pieczywo",
+     "rule": "makaron razowy"
+    },
+    {
+     "n": "zielony groszek",
+     "q": 150,
+     "u": "g",
+     "s": "Warzywa",
+     "rule": "zielony groszek"
+    },
+    {
+     "n": "papryka czerwona",
+     "q": 1,
+     "u": "szt",
+     "s": "Warzywa",
+     "rule": "papryka czerwona"
+    },
+    {
+     "n": "jogurt naturalny",
+     "q": 100,
+     "u": "g",
+     "s": "Nabiał i jaja",
+     "rule": "jogurt naturalny"
+    },
+    {
+     "n": "koperek",
+     "q": 1,
+     "u": "pęczek",
+     "s": "Warzywa",
+     "rule": "koper"
+    },
+    {
+     "n": "sól",
+     "q": 0.5,
+     "u": "łyżeczka",
+     "s": "Tłuszcze i przyprawy",
+     "rule": "sól",
+     "drobny": true
+    }
+   ],
+   "kroki": [
+    {
+     "t": "Ugotuj makaron według przepisu na opakowaniu."
+    },
+    {
+     "t": "Groszek ugotuj 3 minuty, paprykę pokrój w kostkę."
+    },
+    {
+     "t": "Wymieszaj makaron, tuńczyka, groszek i paprykę z jogurtem, koperkiem i solą."
+    }
+   ]
+  },
+  {
+   "id": "pasta-tunczyk",
+   "name": "Pasta z tuńczyka z jogurtem na kanapki",
+   "posilki": [
+    "kolacja",
+    "ii"
+   ],
+   "porcje": 3,
+   "czas": 5,
+   "urz": [],
+   "kcal": 280,
+   "kat": "danie",
+   "opis": "Na kolację albo do szkoły.",
+   "skladniki": [
+    {
+     "n": "tuńczyk w sosie własnym (puszka)",
+     "q": 1,
+     "u": "szt",
+     "s": "Mięso i ryby",
+     "rule": "ryby morskie"
+    },
+    {
+     "n": "jogurt naturalny",
+     "q": 60,
+     "u": "g",
+     "s": "Nabiał i jaja",
+     "rule": "jogurt naturalny"
+    },
+    {
+     "n": "ogórek zielony",
+     "q": 1,
+     "u": "szt",
+     "s": "Warzywa",
+     "rule": "ogórek zielony"
+    },
+    {
+     "n": "pieczywo razowe",
+     "q": 6,
+     "u": "kromka",
+     "s": "Zboża i pieczywo",
+     "rule": "pieczywo razowe"
+    },
+    {
+     "n": "sałata rzymska",
+     "q": 1,
+     "u": "szt",
+     "s": "Warzywa",
+     "rule": "sałata rzymska"
+    },
+    {
+     "n": "sól",
+     "q": 0.5,
+     "u": "łyżeczka",
+     "s": "Tłuszcze i przyprawy",
+     "rule": "sól",
+     "drobny": true
+    }
+   ],
+   "kroki": [
+    {
+     "t": "Tuńczyka odsącz i rozgnieć widelcem z jogurtem i drobno pokrojonym ogórkiem."
+    },
+    {
+     "t": "Posmaruj pieczywo, dodaj listek sałaty."
+    }
+   ]
+  },
+  {
+   "id": "dorsz-pomidory",
+   "name": "Dorsz pieczony w pomidorach z bazylią",
+   "posilki": [
+    "obiad"
+   ],
+   "porcje": 3,
+   "czas": 25,
+   "urz": [],
+   "kcal": 380,
+   "kat": "danie",
+   "opis": "Delikatna ryba w sosie ze świeżych pomidorów.",
+   "skladniki": [
+    {
+     "n": "filet z dorsza",
+     "q": 500,
+     "u": "g",
+     "s": "Mięso i ryby",
+     "rule": "ryby morskie"
+    },
+    {
+     "n": "pomidor",
+     "q": 4,
+     "u": "szt",
+     "s": "Warzywa",
+     "rule": "pomidor"
+    },
+    {
+     "n": "cebula",
+     "q": 1,
+     "u": "szt",
+     "s": "Warzywa",
+     "rule": "cebula"
+    },
+    {
+     "n": "czosnek",
+     "q": 2,
+     "u": "ząbek",
+     "s": "Warzywa",
+     "rule": "czosnek"
+    },
+    {
+     "n": "bazylia",
+     "q": 1,
+     "u": "garść",
+     "s": "Tłuszcze i przyprawy",
+     "rule": "bazylia"
+    },
+    {
+     "n": "oliwa z oliwek",
+     "q": 1,
+     "u": "łyżeczka",
+     "s": "Tłuszcze i przyprawy",
+     "rule": "oliwa z oliwek"
+    },
+    {
+     "n": "ryż brązowy",
+     "q": 150,
+     "u": "g",
+     "s": "Zboża i pieczywo",
+     "rule": "ryż brązowy"
+    },
+    {
+     "n": "sól",
+     "q": 0.5,
+     "u": "łyżeczka",
+     "s": "Tłuszcze i przyprawy",
+     "rule": "sól",
+     "drobny": true
+    }
+   ],
+   "kroki": [
+    {
+     "t": "Pomidory i cebulę pokrój, wyłóż do naczynia z czosnkiem i oliwą."
+    },
+    {
+     "t": "Na wierzch połóż dorsza, posól, posyp bazylią."
+    },
+    {
+     "t": "Piecz pod przykryciem.",
+     "p": "190°C · 20 min",
+     "timer": 1200
+    },
+    {
+     "t": "Ugotuj ryż według przepisu na opakowaniu."
+    }
+   ]
+  },
+  {
+   "id": "dorsz-varoma",
+   "name": "Dorsz z Varomy z warzywami i quinoa",
+   "posilki": [
+    "obiad"
+   ],
+   "porcje": 3,
+   "czas": 30,
+   "urz": [
+    "tm6"
+   ],
+   "kcal": 390,
+   "kat": "danie",
+   "opis": "Cały obiad na parze w Thermomiksie.",
+   "skladniki": [
+    {
+     "n": "filet z dorsza",
+     "q": 500,
+     "u": "g",
+     "s": "Mięso i ryby",
+     "rule": "ryby morskie"
+    },
+    {
+     "n": "tymianek",
+     "q": 1,
+     "u": "łyżeczka",
+     "s": "Tłuszcze i przyprawy",
+     "rule": "tymianek"
+    },
+    {
+     "n": "quinoa",
+     "q": 150,
+     "u": "g",
+     "s": "Zboża i pieczywo",
+     "rule": "quinoa"
+    },
+    {
+     "n": "woda",
+     "q": 900,
+     "u": "ml",
+     "s": "Inne",
+     "neutral": true
+    },
+    {
+     "n": "marchewka świeża",
+     "q": 2,
+     "u": "szt",
+     "s": "Warzywa",
+     "rule": "świeża marchewka"
+    },
+    {
+     "n": "brokuły",
+     "q": 1,
+     "u": "szt",
+     "s": "Warzywa",
+     "rule": "brokuły"
+    },
+    {
+     "n": "fasolka szparagowa",
+     "q": 150,
+     "u": "g",
+     "s": "Warzywa",
+     "rule": "fasolka szparagowa"
+    },
+    {
+     "n": "sól",
+     "q": 0.5,
+     "u": "łyżeczka",
+     "s": "Tłuszcze i przyprawy",
+     "rule": "sól",
+     "drobny": true
+    }
+   ],
+   "kroki": [
+    {
+     "t": "Dorsza oprósz tymiankiem i solą, ułóż na tacy Varoma, warzywa w pojemniku Varoma."
+    },
+    {
+     "t": "Quinoa przepłucz i włóż do koszyka, wlej wodę."
+    },
+    {
+     "t": "Gotuj na parze.",
+     "dev": "tm6",
+     "p": "Varoma · obr. 1 · 20 min",
+     "timer": 1200
+    }
+   ],
+   "uwagi": "Ustawienia TM6 są orientacyjne."
+  },
+  {
+   "id": "paluszki-rybne-af",
+   "name": "Domowe paluszki rybne w płatkach owsianych",
+   "posilki": [
+    "obiad"
+   ],
+   "porcje": 3,
+   "czas": 20,
+   "urz": [
+    "af"
+   ],
+   "kcal": 400,
+   "kat": "danie",
+   "opis": "Zamiast mrożonych paluszków: prawdziwa ryba, bez smażenia.",
+   "skladniki": [
+    {
+     "n": "filet z mintaja",
+     "q": 500,
+     "u": "g",
+     "s": "Mięso i ryby",
+     "rule": "ryby morskie"
+    },
+    {
+     "n": "jajka",
+     "q": 1,
+     "u": "szt",
+     "s": "Nabiał i jaja",
+     "rule": "jajka"
+    },
+    {
+     "n": "płatki owsiane górskie",
+     "q": 70,
+     "u": "g",
+     "s": "Zboża i pieczywo",
+     "rule": "płatki owsiane górskie"
+    },
+    {
+     "n": "papryka łagodna",
+     "q": 1,
+     "u": "łyżeczka",
+     "s": "Tłuszcze i przyprawy",
+     "rule": "papryka łagodna"
+    },
+    {
+     "n": "jogurt naturalny",
+     "q": 120,
+     "u": "g",
+     "s": "Nabiał i jaja",
+     "rule": "jogurt naturalny"
+    },
+    {
+     "n": "koperek",
+     "q": 1,
+     "u": "pęczek",
+     "s": "Warzywa",
+     "rule": "koper"
+    },
+    {
+     "n": "sól",
+     "q": 0.5,
+     "u": "łyżeczka",
+     "s": "Tłuszcze i przyprawy",
+     "rule": "sól",
+     "drobny": true
+    }
+   ],
+   "kroki": [
+    {
+     "t": "Rybę pokrój w paski, płatki rozkrusz z papryką i solą."
+    },
+    {
+     "t": "Paski zanurz w jajku, obtocz w płatkach."
+    },
+    {
+     "t": "Piecz w jednej warstwie, w połowie obróć.",
+     "dev": "af",
+     "p": "190°C · 10 min",
+     "timer": 600
+    },
+    {
+     "t": "Jogurt wymieszaj z koperkiem na dip."
+    }
+   ]
+  },
+  {
+   "id": "pstrag-czosnek",
+   "name": "Pstrąg pieczony z czosnkiem i ziołami",
+   "posilki": [
+    "obiad"
+   ],
+   "porcje": 3,
+   "czas": 25,
+   "urz": [],
+   "kcal": 420,
+   "kat": "danie",
+   "opis": "Ryba słodkowodna, upieczona w całości.",
+   "skladniki": [
+    {
+     "n": "pstrąg patroszony",
+     "q": 2,
+     "u": "szt",
+     "s": "Mięso i ryby",
+     "rule": "słodkowodne"
+    },
+    {
+     "n": "czosnek",
+     "q": 3,
+     "u": "ząbek",
+     "s": "Warzywa",
+     "rule": "czosnek"
+    },
+    {
+     "n": "tymianek",
+     "q": 1,
+     "u": "łyżeczka",
+     "s": "Tłuszcze i przyprawy",
+     "rule": "tymianek"
+    },
+    {
+     "n": "rozmaryn",
+     "q": 1,
+     "u": "łyżeczka",
+     "s": "Tłuszcze i przyprawy",
+     "rule": "rozmaryn"
+    },
+    {
+     "n": "oliwa z oliwek",
+     "q": 1,
+     "u": "łyżeczka",
+     "s": "Tłuszcze i przyprawy",
+     "rule": "oliwa z oliwek"
+    },
+    {
+     "n": "kasza gryczana",
+     "q": 150,
+     "u": "g",
+     "s": "Zboża i pieczywo",
+     "rule": "kasza gryczana"
+    },
+    {
+     "n": "sałata rzymska",
+     "q": 1,
+     "u": "szt",
+     "s": "Warzywa",
+     "rule": "sałata rzymska"
+    },
+    {
+     "n": "sól",
+     "q": 0.5,
+     "u": "łyżeczka",
+     "s": "Tłuszcze i przyprawy",
+     "rule": "sól",
+     "drobny": true
+    }
+   ],
+   "kroki": [
+    {
+     "t": "Pstrągi opłucz, w środek włóż czosnek i zioła, posól z zewnątrz."
+    },
+    {
+     "t": "Pieczenie w piekarniku (bez tłuszczu na blasze, na papierze do pieczenia).",
+     "p": "200°C · 20 min",
+     "timer": 1200
+    },
+    {
+     "t": "Ugotuj kaszę według przepisu na opakowaniu."
+    }
+   ]
+  },
+  {
+   "id": "makrela-ryz-ogorek",
+   "name": "Pieczona makrela z ryżem i mizerią",
+   "posilki": [
+    "obiad"
+   ],
+   "porcje": 3,
+   "czas": 25,
+   "urz": [],
+   "kcal": 520,
+   "kat": "danie",
+   "opis": "Makrela to ryba bogata w omega-3.",
+   "skladniki": [
+    {
+     "n": "makrela świeża",
+     "q": 2,
+     "u": "szt",
+     "s": "Mięso i ryby",
+     "rule": "ryby morskie"
+    },
+    {
+     "n": "majeranek",
+     "q": 1,
+     "u": "łyżeczka",
+     "s": "Tłuszcze i przyprawy",
+     "rule": "majeranek"
+    },
+    {
+     "n": "czosnek",
+     "q": 1,
+     "u": "ząbek",
+     "s": "Warzywa",
+     "rule": "czosnek"
+    },
+    {
+     "n": "ryż brązowy",
+     "q": 150,
+     "u": "g",
+     "s": "Zboża i pieczywo",
+     "rule": "ryż brązowy"
+    },
+    {
+     "n": "ogórek zielony",
+     "q": 2,
+     "u": "szt",
+     "s": "Warzywa",
+     "rule": "ogórek zielony"
+    },
+    {
+     "n": "jogurt naturalny",
+     "q": 150,
+     "u": "g",
+     "s": "Nabiał i jaja",
+     "rule": "jogurt naturalny"
+    },
+    {
+     "n": "koperek",
+     "q": 1,
+     "u": "pęczek",
+     "s": "Warzywa",
+     "rule": "koper"
+    },
+    {
+     "n": "sól",
+     "q": 0.5,
+     "u": "łyżeczka",
+     "s": "Tłuszcze i przyprawy",
+     "rule": "sól",
+     "drobny": true
+    }
+   ],
+   "kroki": [
+    {
+     "t": "Makrelę oprósz majerankiem, czosnkiem i solą."
+    },
+    {
+     "t": "Pieczenie w piekarniku (bez tłuszczu na blasze, na papierze do pieczenia).",
+     "p": "200°C · 20 min",
+     "timer": 1200
+    },
+    {
+     "t": "Ugotuj ryż według przepisu na opakowaniu."
+    },
+    {
+     "t": "Ogórki pokrój w plasterki i wymieszaj z jogurtem i koperkiem."
+    }
+   ]
+  },
+  {
+   "id": "losos-miod-imbir",
+   "name": "Łosoś z miodem i imbirem z ryżem brązowym",
+   "posilki": [
+    "obiad"
+   ],
+   "porcje": 3,
+   "czas": 20,
+   "urz": [
+    "af"
+   ],
+   "kcal": 540,
+   "kat": "danie",
+   "opis": "Słodko-imbirowa glazura, którą lubią dzieci.",
+   "skladniki": [
+    {
+     "n": "filet z łososia",
+     "q": 450,
+     "u": "g",
+     "s": "Mięso i ryby",
+     "rule": "ryby morskie"
+    },
+    {
+     "n": "miód",
+     "q": 1,
+     "u": "łyżka",
+     "s": "Inne",
+     "rule": "miód"
+    },
+    {
+     "n": "imbir świeży",
+     "q": 1,
+     "u": "łyżeczka",
+     "s": "Tłuszcze i przyprawy",
+     "rule": "imbir"
+    },
+    {
+     "n": "czosnek",
+     "q": 1,
+     "u": "ząbek",
+     "s": "Warzywa",
+     "rule": "czosnek"
+    },
+    {
+     "n": "ryż brązowy",
+     "q": 150,
+     "u": "g",
+     "s": "Zboża i pieczywo",
+     "rule": "ryż brązowy"
+    },
+    {
+     "n": "fasolka szparagowa",
+     "q": 300,
+     "u": "g",
+     "s": "Warzywa",
+     "rule": "fasolka szparagowa"
+    },
+    {
+     "n": "sól",
+     "q": 0.5,
+     "u": "łyżeczka",
+     "s": "Tłuszcze i przyprawy",
+     "rule": "sól",
+     "drobny": true
+    }
+   ],
+   "kroki": [
+    {
+     "t": "Miód wymieszaj z imbirem i czosnkiem, posmaruj łososia, posól."
+    },
+    {
+     "t": "Piecz.",
+     "dev": "af",
+     "p": "185°C · 10 min",
+     "timer": 600
+    },
+    {
+     "t": "Ugotuj ryż według przepisu na opakowaniu."
+    },
+    {
+     "t": "Fasolkę ugotuj na parze.",
+     "timer": 480
+    }
+   ]
+  },
+  {
+   "id": "kotleciki-rybne-af",
+   "name": "Kotleciki rybne z dorsza",
+   "posilki": [
+    "obiad"
+   ],
+   "porcje": 3,
+   "czas": 25,
+   "urz": [
+    "af"
+   ],
+   "kcal": 380,
+   "kat": "danie",
+   "opis": "Mielona ryba z warzywami, pieczona w air fryerze.",
+   "skladniki": [
+    {
+     "n": "filet z dorsza",
+     "q": 500,
+     "u": "g",
+     "s": "Mięso i ryby",
+     "rule": "ryby morskie"
+    },
+    {
+     "n": "jajka",
+     "q": 1,
+     "u": "szt",
+     "s": "Nabiał i jaja",
+     "rule": "jajka"
+    },
+    {
+     "n": "płatki owsiane górskie",
+     "q": 40,
+     "u": "g",
+     "s": "Zboża i pieczywo",
+     "rule": "płatki owsiane górskie"
+    },
+    {
+     "n": "cebula",
+     "q": 1,
+     "u": "szt",
+     "s": "Warzywa",
+     "rule": "cebula"
+    },
+    {
+     "n": "koperek",
+     "q": 1,
+     "u": "pęczek",
+     "s": "Warzywa",
+     "rule": "koper"
+    },
+    {
+     "n": "marchewka świeża",
+     "q": 1,
+     "u": "szt",
+     "s": "Warzywa",
+     "rule": "świeża marchewka"
+    },
+    {
+     "n": "kasza jaglana",
+     "q": 150,
+     "u": "g",
+     "s": "Zboża i pieczywo",
+     "rule": "kasza jaglana"
+    },
+    {
+     "n": "sól",
+     "q": 0.5,
+     "u": "łyżeczka",
+     "s": "Tłuszcze i przyprawy",
+     "rule": "sól",
+     "drobny": true
+    }
+   ],
+   "kroki": [
+    {
+     "t": "Rybę zmiel albo bardzo drobno posiekaj, dodaj jajko, płatki, startą cebulę i marchewkę, koperek i sól."
+    },
+    {
+     "t": "Uformuj małe kotleciki."
+    },
+    {
+     "t": "Piecz, w połowie obróć.",
+     "dev": "af",
+     "p": "185°C · 12 min",
+     "timer": 720
+    },
+    {
+     "t": "Ugotuj kaszę według przepisu na opakowaniu."
+    }
+   ]
+  },
+  {
+   "id": "zupa-rybna",
+   "name": "Zupa rybna z dorszem i warzywami",
+   "posilki": [
+    "obiad",
+    "kolacja"
+   ],
+   "porcje": 3,
+   "czas": 30,
+   "urz": [],
+   "kcal": 260,
+   "kat": "danie",
+   "opis": "Lekka, rozgrzewająca zupa.",
+   "skladniki": [
+    {
+     "n": "filet z dorsza",
+     "q": 350,
+     "u": "g",
+     "s": "Mięso i ryby",
+     "rule": "ryby morskie"
+    },
+    {
+     "n": "marchewka świeża",
+     "q": 3,
+     "u": "szt",
+     "s": "Warzywa",
+     "rule": "świeża marchewka"
+    },
+    {
+     "n": "cebula",
+     "q": 1,
+     "u": "szt",
+     "s": "Warzywa",
+     "rule": "cebula"
+    },
+    {
+     "n": "zielony groszek",
+     "q": 100,
+     "u": "g",
+     "s": "Warzywa",
+     "rule": "zielony groszek"
+    },
+    {
+     "n": "pomidor",
+     "q": 2,
+     "u": "szt",
+     "s": "Warzywa",
+     "rule": "pomidor"
+    },
+    {
+     "n": "ziele angielskie",
+     "q": 3,
+     "u": "szt",
+     "s": "Tłuszcze i przyprawy",
+     "rule": "ziele angielskie"
+    },
+    {
+     "n": "woda",
+     "q": 1500,
+     "u": "ml",
+     "s": "Inne",
+     "neutral": true
+    },
+    {
+     "n": "koperek",
+     "q": 1,
+     "u": "pęczek",
+     "s": "Warzywa",
+     "rule": "koper"
+    },
+    {
+     "n": "sól",
+     "q": 0.5,
+     "u": "łyżeczka",
+     "s": "Tłuszcze i przyprawy",
+     "rule": "sól",
+     "drobny": true
+    }
+   ],
+   "kroki": [
+    {
+     "t": "Marchewkę, cebulę i pomidory pokrój, zalej wodą z zielem angielskim i gotuj.",
+     "p": "15 min",
+     "timer": 900
+    },
+    {
+     "t": "Dodaj pokrojonego dorsza i groszek, gotuj jeszcze krótko.",
+     "p": "7 min",
+     "timer": 420
+    },
+    {
+     "t": "Posól i posyp koperkiem."
+    }
+   ]
+  },
+  {
+   "id": "krewetki-makaron",
+   "name": "Krewetki z czosnkiem i makaronem razowym",
+   "posilki": [
+    "obiad"
+   ],
+   "porcje": 3,
+   "czas": 15,
+   "urz": [],
+   "kcal": 460,
+   "kat": "danie",
+   "opis": "Danie w 15 minut.",
+   "skladniki": [
+    {
+     "n": "krewetki surowe obrane",
+     "q": 300,
+     "u": "g",
+     "s": "Mięso i ryby",
+     "rule": "owoce morza"
+    },
+    {
+     "n": "czosnek",
+     "q": 3,
+     "u": "ząbek",
+     "s": "Warzywa",
+     "rule": "czosnek"
+    },
+    {
+     "n": "pomidor",
+     "q": 3,
+     "u": "szt",
+     "s": "Warzywa",
+     "rule": "pomidor"
+    },
+    {
+     "n": "bazylia",
+     "q": 1,
+     "u": "garść",
+     "s": "Tłuszcze i przyprawy",
+     "rule": "bazylia"
+    },
+    {
+     "n": "oliwa z oliwek",
+     "q": 1,
+     "u": "łyżka",
+     "s": "Tłuszcze i przyprawy",
+     "rule": "oliwa z oliwek"
+    },
+    {
+     "n": "makaron razowy",
+     "q": 200,
+     "u": "g",
+     "s": "Zboża i pieczywo",
+     "rule": "makaron razowy"
+    },
+    {
+     "n": "sól",
+     "q": 0.5,
+     "u": "łyżeczka",
+     "s": "Tłuszcze i przyprawy",
+     "rule": "sól",
+     "drobny": true
+    }
+   ],
+   "kroki": [
+    {
+     "t": "Ugotuj makaron według przepisu na opakowaniu."
+    },
+    {
+     "t": "Na oliwie krótko podgrzej czosnek, dodaj pokrojone pomidory, duś 5 minut.",
+     "p": "5 min",
+     "timer": 300
+    },
+    {
+     "t": "Dodaj krewetki i gotuj, aż zróżowieją.",
+     "p": "3 min",
+     "timer": 180
+    },
+    {
+     "t": "Wymieszaj z makaronem i bazylią."
+    }
+   ]
+  },
+  {
+   "id": "losos-para-brokul",
+   "name": "Łosoś na parze z brokułem i ryżem dzikim",
+   "posilki": [
+    "obiad"
+   ],
+   "porcje": 3,
+   "czas": 25,
+   "urz": [],
+   "kcal": 500,
+   "kat": "danie",
+   "opis": "Bardzo lekki obiad gotowany na parze.",
+   "skladniki": [
+    {
+     "n": "filet z łososia",
+     "q": 450,
+     "u": "g",
+     "s": "Mięso i ryby",
+     "rule": "ryby morskie"
+    },
+    {
+     "n": "koperek",
+     "q": 1,
+     "u": "pęczek",
+     "s": "Warzywa",
+     "rule": "koper"
+    },
+    {
+     "n": "brokuły",
+     "q": 1,
+     "u": "szt",
+     "s": "Warzywa",
+     "rule": "brokuły"
+    },
+    {
+     "n": "ryż dziki",
+     "q": 150,
+     "u": "g",
+     "s": "Zboża i pieczywo",
+     "rule": "ryż dziki"
+    },
+    {
+     "n": "sól",
+     "q": 0.5,
+     "u": "łyżeczka",
+     "s": "Tłuszcze i przyprawy",
+     "rule": "sól",
+     "drobny": true
+    }
+   ],
+   "kroki": [
+    {
+     "t": "Ugotuj ryż dziki (około 40 minut, można dzień wcześniej) według przepisu na opakowaniu."
+    },
+    {
+     "t": "Łososia posól i posyp koperkiem, gotuj na parze razem z brokułem.",
+     "p": "12 min",
+     "timer": 720
+    }
+   ]
+  },
+  {
+   "id": "miska-losos-awokado",
+   "name": "Miska z łososiem, awokado i ryżem",
+   "posilki": [
+    "obiad"
+   ],
+   "porcje": 3,
+   "czas": 20,
+   "urz": [
+    "af"
+   ],
+   "kcal": 560,
+   "kat": "danie",
+   "opis": "Kolorowa miska w stylu poke, z pieczonym łososiem.",
+   "skladniki": [
+    {
+     "n": "filet z łososia",
+     "q": 400,
+     "u": "g",
+     "s": "Mięso i ryby",
+     "rule": "ryby morskie"
+    },
+    {
+     "n": "ryż brązowy",
+     "q": 150,
+     "u": "g",
+     "s": "Zboża i pieczywo",
+     "rule": "ryż brązowy"
+    },
+    {
+     "n": "awokado",
+     "q": 1,
+     "u": "szt",
+     "s": "Owoce",
+     "rule": "awokado"
+    },
+    {
+     "n": "ogórek zielony",
+     "q": 1,
+     "u": "szt",
+     "s": "Warzywa",
+     "rule": "ogórek zielony"
+    },
+    {
+     "n": "marchewka świeża",
+     "q": 1,
+     "u": "szt",
+     "s": "Warzywa",
+     "rule": "świeża marchewka"
+    },
+    {
+     "n": "olej lniany",
+     "q": 1,
+     "u": "łyżka",
+     "s": "Tłuszcze i przyprawy",
+     "rule": "olej lniany"
+    },
+    {
+     "n": "kolendra",
+     "q": 1,
+     "u": "garść",
+     "s": "Tłuszcze i przyprawy",
+     "rule": "kolendra"
+    },
+    {
+     "n": "sól",
+     "q": 0.5,
+     "u": "łyżeczka",
+     "s": "Tłuszcze i przyprawy",
+     "rule": "sól",
+     "drobny": true
+    }
+   ],
+   "kroki": [
+    {
+     "t": "Ugotuj ryż według przepisu na opakowaniu."
+    },
+    {
+     "t": "Łososia posól i upiecz.",
+     "dev": "af",
+     "p": "190°C · 10 min",
+     "timer": 600
+    },
+    {
+     "t": "Awokado, ogórka i marchewkę pokrój, ułóż z ryżem i rybą w miskach, skrop olejem lnianym."
+    }
+   ]
+  },
+  {
+   "id": "salatka-nicejska",
+   "name": "Sałatka z tuńczykiem, fasolką i jajkiem",
+   "posilki": [
+    "obiad",
+    "kolacja"
+   ],
+   "porcje": 3,
+   "czas": 15,
+   "urz": [],
+   "kcal": 360,
+   "kat": "danie",
+   "opis": "Sycąca sałatka po nicejsku, bez ziemniaków.",
+   "skladniki": [
+    {
+     "n": "tuńczyk w sosie własnym (puszka)",
+     "q": 2,
+     "u": "szt",
+     "s": "Mięso i ryby",
+     "rule": "ryby morskie"
+    },
+    {
+     "n": "fasolka szparagowa",
+     "q": 300,
+     "u": "g",
+     "s": "Warzywa",
+     "rule": "fasolka szparagowa"
+    },
+    {
+     "n": "jajka",
+     "q": 3,
+     "u": "szt",
+     "s": "Nabiał i jaja",
+     "rule": "jajka"
+    },
+    {
+     "n": "sałata rzymska",
+     "q": 1,
+     "u": "szt",
+     "s": "Warzywa",
+     "rule": "sałata rzymska"
+    },
+    {
+     "n": "pomidor",
+     "q": 2,
+     "u": "szt",
+     "s": "Warzywa",
+     "rule": "pomidor"
+    },
+    {
+     "n": "oliwa z oliwek",
+     "q": 1,
+     "u": "łyżka",
+     "s": "Tłuszcze i przyprawy",
+     "rule": "oliwa z oliwek"
+    },
+    {
+     "n": "kapary",
+     "q": 1,
+     "u": "łyżka",
+     "s": "Tłuszcze i przyprawy",
+     "rule": "kapary"
+    },
+    {
+     "n": "sól",
+     "q": 0.5,
+     "u": "łyżeczka",
+     "s": "Tłuszcze i przyprawy",
+     "rule": "sól",
+     "drobny": true
+    }
+   ],
+   "kroki": [
+    {
+     "t": "Fasolkę ugotuj na parze, jajka na twardo.",
+     "p": "9 min",
+     "timer": 540
+    },
+    {
+     "t": "Ułóż sałatę, fasolkę, pomidory, tuńczyka i ćwiartki jajek, posyp kaparami, skrop oliwą."
+    }
+   ]
+  },
+  {
+   "id": "halibut-pomidorki",
+   "name": "Halibut z ziołami i pieczonymi pomidorkami",
+   "posilki": [
+    "obiad"
+   ],
+   "porcje": 3,
+   "czas": 25,
+   "urz": [],
+   "kcal": 440,
+   "kat": "danie",
+   "opis": "Delikatna, biała ryba morska.",
+   "skladniki": [
+    {
+     "n": "filet z halibuta",
+     "q": 500,
+     "u": "g",
+     "s": "Mięso i ryby",
+     "rule": "ryby morskie"
+    },
+    {
+     "n": "pomidor",
+     "q": 4,
+     "u": "szt",
+     "s": "Warzywa",
+     "rule": "pomidor"
+    },
+    {
+     "n": "oregano",
+     "q": 1,
+     "u": "łyżeczka",
+     "s": "Tłuszcze i przyprawy",
+     "rule": "oregano"
+    },
+    {
+     "n": "czosnek",
+     "q": 2,
+     "u": "ząbek",
+     "s": "Warzywa",
+     "rule": "czosnek"
+    },
+    {
+     "n": "oliwa z oliwek",
+     "q": 1,
+     "u": "łyżka",
+     "s": "Tłuszcze i przyprawy",
+     "rule": "oliwa z oliwek"
+    },
+    {
+     "n": "quinoa",
+     "q": 150,
+     "u": "g",
+     "s": "Zboża i pieczywo",
+     "rule": "quinoa"
+    },
+    {
+     "n": "sól",
+     "q": 0.5,
+     "u": "łyżeczka",
+     "s": "Tłuszcze i przyprawy",
+     "rule": "sól",
+     "drobny": true
+    }
+   ],
+   "kroki": [
+    {
+     "t": "Rybę i pokrojone pomidory ułóż w naczyniu, posyp oregano, czosnkiem, solą, skrop oliwą."
+    },
+    {
+     "t": "Pieczenie w piekarniku (bez tłuszczu na blasze, na papierze do pieczenia).",
+     "p": "200°C · 18 min",
+     "timer": 1080
+    },
+    {
+     "t": "Ugotuj quinoa według przepisu na opakowaniu."
+    }
+   ]
+  },
+  {
+   "id": "sola-af-koper",
+   "name": "Sola z air fryera z koperkiem i kaszą gryczaną",
+   "posilki": [
+    "obiad"
+   ],
+   "porcje": 3,
+   "czas": 15,
+   "urz": [
+    "af"
+   ],
+   "kcal": 380,
+   "kat": "danie",
+   "opis": "Cienki filet, gotowy w 8 minut.",
+   "skladniki": [
+    {
+     "n": "filet z soli",
+     "q": 450,
+     "u": "g",
+     "s": "Mięso i ryby",
+     "rule": "ryby morskie"
+    },
+    {
+     "n": "koperek",
+     "q": 1,
+     "u": "pęczek",
+     "s": "Warzywa",
+     "rule": "koper"
+    },
+    {
+     "n": "oliwa z oliwek",
+     "q": 1,
+     "u": "łyżeczka",
+     "s": "Tłuszcze i przyprawy",
+     "rule": "oliwa z oliwek"
+    },
+    {
+     "n": "kasza gryczana",
+     "q": 150,
+     "u": "g",
+     "s": "Zboża i pieczywo",
+     "rule": "kasza gryczana"
+    },
+    {
+     "n": "kapusta kiszona",
+     "q": 200,
+     "u": "g",
+     "s": "Warzywa",
+     "rule": "kiszonki"
+    },
+    {
+     "n": "sól",
+     "q": 0.5,
+     "u": "łyżeczka",
+     "s": "Tłuszcze i przyprawy",
+     "rule": "sól",
+     "drobny": true
+    }
+   ],
+   "kroki": [
+    {
+     "t": "Filety posól, posyp koperkiem, skrop oliwą."
+    },
+    {
+     "t": "Piecz.",
+     "dev": "af",
+     "p": "190°C · 8 min",
+     "timer": 480
+    },
+    {
+     "t": "Ugotuj kaszę według przepisu na opakowaniu."
+    },
+    {
+     "t": "Podaj z surówką z kapusty kiszonej."
+    }
+   ]
+  },
+  {
+   "id": "morszczuk-warzywa",
+   "name": "Morszczuk duszony z warzywami",
+   "posilki": [
+    "obiad"
+   ],
+   "porcje": 3,
+   "czas": 25,
+   "urz": [],
+   "kcal": 360,
+   "kat": "danie",
+   "opis": "Ryba duszona razem z marchewką i papryką.",
+   "skladniki": [
+    {
+     "n": "filet z morszczuka",
+     "q": 500,
+     "u": "g",
+     "s": "Mięso i ryby",
+     "rule": "ryby morskie"
+    },
+    {
+     "n": "marchewka świeża",
+     "q": 2,
+     "u": "szt",
+     "s": "Warzywa",
+     "rule": "świeża marchewka"
+    },
+    {
+     "n": "papryka czerwona",
+     "q": 1,
+     "u": "szt",
+     "s": "Warzywa",
+     "rule": "papryka czerwona"
+    },
+    {
+     "n": "cebula",
+     "q": 1,
+     "u": "szt",
+     "s": "Warzywa",
+     "rule": "cebula"
+    },
+    {
+     "n": "woda",
+     "q": 150,
+     "u": "ml",
+     "s": "Inne",
+     "neutral": true
+    },
+    {
+     "n": "majeranek",
+     "q": 1,
+     "u": "łyżeczka",
+     "s": "Tłuszcze i przyprawy",
+     "rule": "majeranek"
+    },
+    {
+     "n": "kasza jaglana",
+     "q": 150,
+     "u": "g",
+     "s": "Zboża i pieczywo",
+     "rule": "kasza jaglana"
+    },
+    {
+     "n": "sól",
+     "q": 0.5,
+     "u": "łyżeczka",
+     "s": "Tłuszcze i przyprawy",
+     "rule": "sól",
+     "drobny": true
+    }
+   ],
+   "kroki": [
+    {
+     "t": "Warzywa pokrój w paski i duś z odrobiną wody 10 minut.",
+     "p": "10 min",
+     "timer": 600
+    },
+    {
+     "t": "Połóż na nich rybę, posól, posyp majerankiem i duś pod przykryciem.",
+     "p": "10 min",
+     "timer": 600
+    },
+    {
+     "t": "Ugotuj kaszę według przepisu na opakowaniu."
+    }
+   ]
+  },
+  {
+   "id": "zapiekanka-losos-jaglana",
+   "name": "Zapiekanka z łososiem, kaszą jaglaną i brokułem",
+   "posilki": [
+    "obiad"
+   ],
+   "porcje": 3,
+   "czas": 35,
+   "urz": [],
+   "kcal": 520,
+   "kat": "danie",
+   "opis": "Jedno naczynie na cały obiad.",
+   "skladniki": [
+    {
+     "n": "filet z łososia",
+     "q": 350,
+     "u": "g",
+     "s": "Mięso i ryby",
+     "rule": "ryby morskie"
+    },
+    {
+     "n": "kasza jaglana",
+     "q": 150,
+     "u": "g",
+     "s": "Zboża i pieczywo",
+     "rule": "kasza jaglana"
+    },
+    {
+     "n": "brokuły",
+     "q": 1,
+     "u": "szt",
+     "s": "Warzywa",
+     "rule": "brokuły"
+    },
+    {
+     "n": "jajka",
+     "q": 2,
+     "u": "szt",
+     "s": "Nabiał i jaja",
+     "rule": "jajka"
+    },
+    {
+     "n": "jogurt naturalny",
+     "q": 150,
+     "u": "g",
+     "s": "Nabiał i jaja",
+     "rule": "jogurt naturalny"
+    },
+    {
+     "n": "ser kozi",
+     "q": 50,
+     "u": "g",
+     "s": "Nabiał i jaja",
+     "rule": "ser kozi"
+    },
+    {
+     "n": "koperek",
+     "q": 1,
+     "u": "pęczek",
+     "s": "Warzywa",
+     "rule": "koper"
+    },
+    {
+     "n": "sól",
+     "q": 0.5,
+     "u": "łyżeczka",
+     "s": "Tłuszcze i przyprawy",
+     "rule": "sól",
+     "drobny": true
+    }
+   ],
+   "kroki": [
+    {
+     "t": "Ugotuj kaszę według przepisu na opakowaniu."
+    },
+    {
+     "t": "Brokuł podziel na różyczki, łososia na kawałki."
+    },
+    {
+     "t": "Wymieszaj kaszę z brokułem i rybą w naczyniu. Jajka roztrzep z jogurtem, koperkiem i solą, zalej, posyp serem."
+    },
+    {
+     "t": "Piecz.",
+     "p": "180°C · 20 min",
+     "timer": 1200
+    }
+   ]
+  },
+  {
+   "id": "pasta-losos-twarozek",
+   "name": "Pasta z pieczonego łososia i twarożku",
+   "posilki": [
+    "kolacja",
+    "ii"
+   ],
+   "porcje": 3,
+   "czas": 10,
+   "urz": [],
+   "kcal": 260,
+   "kat": "danie",
+   "opis": "Wykorzystaj łososia z obiadu.",
+   "skladniki": [
+    {
+     "n": "filet z łososia",
+     "q": 150,
+     "u": "g",
+     "s": "Mięso i ryby",
+     "rule": "ryby morskie"
+    },
+    {
+     "n": "twaróg półtłusty",
+     "q": 150,
+     "u": "g",
+     "s": "Nabiał i jaja",
+     "rule": "twaróg półtłusty"
+    },
+    {
+     "n": "koperek",
+     "q": 1,
+     "u": "pęczek",
+     "s": "Warzywa",
+     "rule": "koper"
+    },
+    {
+     "n": "chrzan tarty",
+     "q": 1,
+     "u": "łyżeczka",
+     "s": "Tłuszcze i przyprawy",
+     "rule": "chrzan"
+    },
+    {
+     "n": "pieczywo razowe",
+     "q": 6,
+     "u": "kromka",
+     "s": "Zboża i pieczywo",
+     "rule": "pieczywo razowe"
+    },
+    {
+     "n": "sól",
+     "q": 0.5,
+     "u": "łyżeczka",
+     "s": "Tłuszcze i przyprawy",
+     "rule": "sól",
+     "drobny": true
+    }
+   ],
+   "kroki": [
+    {
+     "t": "Upieczonego łososia rozdrobnij widelcem."
+    },
+    {
+     "t": "Wymieszaj z twarogiem, koperkiem, odrobiną chrzanu i solą. Podawaj na pieczywie."
+    }
+   ]
+  },
+  {
+   "id": "szaszlyki-losos-af",
+   "name": "Szaszłyki z łososia i papryki",
+   "posilki": [
+    "obiad"
+   ],
+   "porcje": 3,
+   "czas": 20,
+   "urz": [
+    "af"
+   ],
+   "kcal": 470,
+   "kat": "danie",
+   "opis": "Kolorowe szaszłyki na szybki obiad.",
+   "skladniki": [
+    {
+     "n": "filet z łososia",
+     "q": 450,
+     "u": "g",
+     "s": "Mięso i ryby",
+     "rule": "ryby morskie"
+    },
+    {
+     "n": "papryka czerwona",
+     "q": 1,
+     "u": "szt",
+     "s": "Warzywa",
+     "rule": "papryka czerwona"
+    },
+    {
+     "n": "papryka żółta",
+     "q": 1,
+     "u": "szt",
+     "s": "Warzywa",
+     "rule": "żółta"
+    },
+    {
+     "n": "cebula",
+     "q": 1,
+     "u": "szt",
+     "s": "Warzywa",
+     "rule": "cebula"
+    },
+    {
+     "n": "zioła prowansalskie",
+     "q": 1,
+     "u": "łyżeczka",
+     "s": "Tłuszcze i przyprawy",
+     "rule": "zioła prowansalskie"
+    },
+    {
+     "n": "oliwa z oliwek",
+     "q": 1,
+     "u": "łyżeczka",
+     "s": "Tłuszcze i przyprawy",
+     "rule": "oliwa z oliwek"
+    },
+    {
+     "n": "kasza gryczana",
+     "q": 150,
+     "u": "g",
+     "s": "Zboża i pieczywo",
+     "rule": "kasza gryczana"
+    },
+    {
+     "n": "sól",
+     "q": 0.5,
+     "u": "łyżeczka",
+     "s": "Tłuszcze i przyprawy",
+     "rule": "sól",
+     "drobny": true
+    }
+   ],
+   "kroki": [
+    {
+     "t": "Łososia, paprykę i cebulę pokrój w kostkę, wymieszaj z ziołami, oliwą i solą."
+    },
+    {
+     "t": "Nadziewaj na krótkie patyczki."
+    },
+    {
+     "t": "Piecz.",
+     "dev": "af",
+     "p": "190°C · 10 min",
+     "timer": 600
+    },
+    {
+     "t": "Ugotuj kaszę według przepisu na opakowaniu."
+    }
+   ]
+  },
+  {
+   "id": "dorsz-koperkowy",
+   "name": "Dorsz w sosie koperkowym z ryżem",
+   "posilki": [
+    "obiad"
+   ],
+   "porcje": 3,
+   "czas": 25,
+   "urz": [],
+   "kcal": 390,
+   "kat": "danie",
+   "opis": "Sos na jogurcie zamiast śmietany.",
+   "skladniki": [
+    {
+     "n": "filet z dorsza",
+     "q": 500,
+     "u": "g",
+     "s": "Mięso i ryby",
+     "rule": "ryby morskie"
+    },
+    {
+     "n": "woda",
+     "q": 300,
+     "u": "ml",
+     "s": "Inne",
+     "neutral": true
+    },
+    {
+     "n": "cebula",
+     "q": 1,
+     "u": "szt",
+     "s": "Warzywa",
+     "rule": "cebula"
+    },
+    {
+     "n": "jogurt naturalny",
+     "q": 200,
+     "u": "g",
+     "s": "Nabiał i jaja",
+     "rule": "jogurt naturalny"
+    },
+    {
+     "n": "koperek",
+     "q": 1,
+     "u": "pęczek",
+     "s": "Warzywa",
+     "rule": "koper"
+    },
+    {
+     "n": "ryż brązowy",
+     "q": 150,
+     "u": "g",
+     "s": "Zboża i pieczywo",
+     "rule": "ryż brązowy"
+    },
+    {
+     "n": "sól",
+     "q": 0.5,
+     "u": "łyżeczka",
+     "s": "Tłuszcze i przyprawy",
+     "rule": "sól",
+     "drobny": true
+    }
+   ],
+   "kroki": [
+    {
+     "t": "Dorsza gotuj w osolonej wodzie z cebulą na małym ogniu.",
+     "p": "8 min",
+     "timer": 480
+    },
+    {
+     "t": "Ugotuj ryż według przepisu na opakowaniu."
+    },
+    {
+     "t": "Szklankę wywaru przestudź, wymieszaj z jogurtem i koperkiem, polej rybę."
+    }
+   ]
+  },
+  {
+   "id": "ryba-po-grecku",
+   "name": "Ryba po grecku z pieczonego dorsza",
+   "posilki": [
+    "obiad",
+    "kolacja"
+   ],
+   "porcje": 3,
+   "czas": 35,
+   "urz": [],
+   "kcal": 360,
+   "kat": "danie",
+   "opis": "Klasyk w wersji pieczonej, bez smażenia.",
+   "skladniki": [
+    {
+     "n": "filet z dorsza",
+     "q": 500,
+     "u": "g",
+     "s": "Mięso i ryby",
+     "rule": "ryby morskie"
+    },
+    {
+     "n": "marchewka świeża",
+     "q": 3,
+     "u": "szt",
+     "s": "Warzywa",
+     "rule": "świeża marchewka"
+    },
+    {
+     "n": "cebula",
+     "q": 1,
+     "u": "szt",
+     "s": "Warzywa",
+     "rule": "cebula"
+    },
+    {
+     "n": "pomidor",
+     "q": 4,
+     "u": "szt",
+     "s": "Warzywa",
+     "rule": "pomidor"
+    },
+    {
+     "n": "papryka łagodna",
+     "q": 1,
+     "u": "łyżeczka",
+     "s": "Tłuszcze i przyprawy",
+     "rule": "papryka łagodna"
+    },
+    {
+     "n": "ziele angielskie",
+     "q": 3,
+     "u": "szt",
+     "s": "Tłuszcze i przyprawy",
+     "rule": "ziele angielskie"
+    },
+    {
+     "n": "oliwa z oliwek",
+     "q": 1,
+     "u": "łyżeczka",
+     "s": "Tłuszcze i przyprawy",
+     "rule": "oliwa z oliwek"
+    },
+    {
+     "n": "sól",
+     "q": 0.5,
+     "u": "łyżeczka",
+     "s": "Tłuszcze i przyprawy",
+     "rule": "sól",
+     "drobny": true
+    }
+   ],
+   "kroki": [
+    {
+     "t": "Dorsza posól i upiecz.",
+     "p": "190°C · 15 min",
+     "timer": 900
+    },
+    {
+     "t": "Startą marchewkę i cebulę duś z oliwą, pokrojonymi pomidorami i przyprawami.",
+     "p": "15 min",
+     "timer": 900
+    },
+    {
+     "t": "Polej rybę warzywami. Dobre na ciepło i na zimno."
+    }
+   ]
+  },
+  {
+   "id": "salatka-losos-quinoa",
+   "name": "Sałatka z łososiem, quinoa i rukolą",
+   "posilki": [
+    "kolacja",
+    "obiad"
+   ],
+   "porcje": 3,
+   "czas": 20,
+   "urz": [],
+   "kcal": 460,
+   "kat": "danie",
+   "opis": "Na kolację albo do pudełka.",
+   "skladniki": [
+    {
+     "n": "filet z łososia",
+     "q": 300,
+     "u": "g",
+     "s": "Mięso i ryby",
+     "rule": "ryby morskie"
+    },
+    {
+     "n": "quinoa",
+     "q": 120,
+     "u": "g",
+     "s": "Zboża i pieczywo",
+     "rule": "quinoa"
+    },
+    {
+     "n": "rukola",
+     "q": 3,
+     "u": "garść",
+     "s": "Warzywa",
+     "rule": "rukola"
+    },
+    {
+     "n": "ogórek zielony",
+     "q": 1,
+     "u": "szt",
+     "s": "Warzywa",
+     "rule": "ogórek zielony"
+    },
+    {
+     "n": "awokado",
+     "q": 1,
+     "u": "szt",
+     "s": "Owoce",
+     "rule": "awokado"
+    },
+    {
+     "n": "oliwa z oliwek",
+     "q": 1,
+     "u": "łyżka",
+     "s": "Tłuszcze i przyprawy",
+     "rule": "oliwa z oliwek"
+    },
+    {
+     "n": "sól",
+     "q": 0.5,
+     "u": "łyżeczka",
+     "s": "Tłuszcze i przyprawy",
+     "rule": "sól",
+     "drobny": true
+    }
+   ],
+   "kroki": [
+    {
+     "t": "Ugotuj quinoa według przepisu na opakowaniu."
+    },
+    {
+     "t": "Łososia upiecz albo ugotuj na parze i rozdrobnij.",
+     "p": "12 min",
+     "timer": 720
+    },
+    {
+     "t": "Wymieszaj quinoa, rukolę, ogórka, awokado i łososia, skrop oliwą, posól."
+    }
+   ]
+  },
+  {
+   "id": "omlet-tunczyk",
+   "name": "Omlet z tuńczykiem i papryką",
+   "posilki": [
+    "sniadanie",
+    "kolacja"
+   ],
+   "porcje": 3,
+   "czas": 10,
+   "urz": [],
+   "kcal": 320,
+   "kat": "danie",
+   "opis": "Białkowe śniadanie albo kolacja.",
+   "skladniki": [
+    {
+     "n": "jajka",
+     "q": 5,
+     "u": "szt",
+     "s": "Nabiał i jaja",
+     "rule": "jajka"
+    },
+    {
+     "n": "tuńczyk w sosie własnym (puszka)",
+     "q": 1,
+     "u": "szt",
+     "s": "Mięso i ryby",
+     "rule": "ryby morskie"
+    },
+    {
+     "n": "papryka czerwona",
+     "q": 1,
+     "u": "szt",
+     "s": "Warzywa",
+     "rule": "papryka czerwona"
+    },
+    {
+     "n": "koperek",
+     "q": 1,
+     "u": "pęczek",
+     "s": "Warzywa",
+     "rule": "koper"
+    },
+    {
+     "n": "oliwa z oliwek",
+     "q": 1,
+     "u": "łyżeczka",
+     "s": "Tłuszcze i przyprawy",
+     "rule": "oliwa z oliwek"
+    },
+    {
+     "n": "sól",
+     "q": 0.5,
+     "u": "łyżeczka",
+     "s": "Tłuszcze i przyprawy",
+     "rule": "sól",
+     "drobny": true
+    }
+   ],
+   "kroki": [
+    {
+     "t": "Jajka roztrzep z koperkiem i solą, dodaj tuńczyka i pokrojoną paprykę."
+    },
+    {
+     "t": "Wylej na rozgrzaną patelnię z odrobiną oliwy, smaż pod przykryciem na małym ogniu.",
+     "p": "6 min",
+     "timer": 360
+    }
+   ]
+  },
+  {
+   "id": "kanapki-makrela",
+   "name": "Kanapki z pastą z pieczonej makreli",
+   "posilki": [
+    "kolacja",
+    "ii"
+   ],
+   "porcje": 3,
+   "czas": 10,
+   "urz": [],
+   "kcal": 330,
+   "kat": "danie",
+   "opis": "Na kolację, z ogórkiem.",
+   "skladniki": [
+    {
+     "n": "makrela pieczona",
+     "q": 1,
+     "u": "szt",
+     "s": "Mięso i ryby",
+     "rule": "ryby morskie"
+    },
+    {
+     "n": "jogurt naturalny",
+     "q": 60,
+     "u": "g",
+     "s": "Nabiał i jaja",
+     "rule": "jogurt naturalny"
+    },
+    {
+     "n": "ogórek zielony",
+     "q": 1,
+     "u": "szt",
+     "s": "Warzywa",
+     "rule": "ogórek zielony"
+    },
+    {
+     "n": "koperek",
+     "q": 1,
+     "u": "pęczek",
+     "s": "Warzywa",
+     "rule": "koper"
+    },
+    {
+     "n": "pumpernikiel",
+     "q": 4,
+     "u": "kromka",
+     "s": "Zboża i pieczywo",
+     "rule": "pumpernikiel"
+    },
+    {
+     "n": "sól",
+     "q": 0.5,
+     "u": "łyżeczka",
+     "s": "Tłuszcze i przyprawy",
+     "rule": "sól",
+     "drobny": true
+    }
+   ],
+   "kroki": [
+    {
+     "t": "Makrelę obierz ze skóry i ości, rozgnieć z jogurtem i koperkiem."
+    },
+    {
+     "t": "Posmaruj pumpernikiel, ułóż plasterki ogórka."
+    }
+   ],
+   "uwagi": "Wybierz świeżą makrelę i upiecz ją sam. Wędzonej nie ma w zaleceniach."
+  },
+  {
+   "id": "pstrag-af-peczak",
+   "name": "Pstrąg z air fryera z kaszą jęczmienną i kiszonym ogórkiem",
+   "posilki": [
+    "obiad"
+   ],
+   "porcje": 3,
+   "czas": 25,
+   "urz": [
+    "af"
+   ],
+   "kcal": 440,
+   "kat": "danie",
+   "opis": "Szybki obiad z rybą słodkowodną.",
+   "skladniki": [
+    {
+     "n": "filet z pstrąga",
+     "q": 450,
+     "u": "g",
+     "s": "Mięso i ryby",
+     "rule": "słodkowodne"
+    },
+    {
+     "n": "tymianek",
+     "q": 1,
+     "u": "łyżeczka",
+     "s": "Tłuszcze i przyprawy",
+     "rule": "tymianek"
+    },
+    {
+     "n": "oliwa z oliwek",
+     "q": 1,
+     "u": "łyżeczka",
+     "s": "Tłuszcze i przyprawy",
+     "rule": "oliwa z oliwek"
+    },
+    {
+     "n": "kasza jęczmienna mazurska",
+     "q": 150,
+     "u": "g",
+     "s": "Zboża i pieczywo",
+     "rule": "kasza jęczmienna mazurska"
+    },
+    {
+     "n": "ogórki kiszone",
+     "q": 3,
+     "u": "szt",
+     "s": "Warzywa",
+     "rule": "kiszonki"
+    },
+    {
+     "n": "sól",
+     "q": 0.5,
+     "u": "łyżeczka",
+     "s": "Tłuszcze i przyprawy",
+     "rule": "sól",
+     "drobny": true
+    }
+   ],
+   "kroki": [
+    {
+     "t": "Filety posól, oprósz tymiankiem, skrop oliwą."
+    },
+    {
+     "t": "Piecz.",
+     "dev": "af",
+     "p": "190°C · 9 min",
+     "timer": 540
+    },
+    {
+     "t": "Ugotuj kaszę według przepisu na opakowaniu."
+    }
+   ]
+  },
+  {
+   "id": "krewetki-ryz-dziki",
+   "name": "Krewetki z warzywami i ryżem dzikim",
+   "posilki": [
+    "obiad"
+   ],
+   "porcje": 3,
+   "czas": 25,
+   "urz": [],
+   "kcal": 410,
+   "kat": "danie",
+   "opis": "Kolorowe danie z patelni.",
+   "skladniki": [
+    {
+     "n": "krewetki surowe obrane",
+     "q": 300,
+     "u": "g",
+     "s": "Mięso i ryby",
+     "rule": "owoce morza"
+    },
+    {
+     "n": "papryka czerwona",
+     "q": 1,
+     "u": "szt",
+     "s": "Warzywa",
+     "rule": "papryka czerwona"
+    },
+    {
+     "n": "fasolka szparagowa",
+     "q": 150,
+     "u": "g",
+     "s": "Warzywa",
+     "rule": "fasolka szparagowa"
+    },
+    {
+     "n": "marchewka świeża",
+     "q": 1,
+     "u": "szt",
+     "s": "Warzywa",
+     "rule": "świeża marchewka"
+    },
+    {
+     "n": "imbir świeży",
+     "q": 1,
+     "u": "łyżeczka",
+     "s": "Tłuszcze i przyprawy",
+     "rule": "imbir"
+    },
+    {
+     "n": "czosnek",
+     "q": 1,
+     "u": "ząbek",
+     "s": "Warzywa",
+     "rule": "czosnek"
+    },
+    {
+     "n": "oliwa z oliwek",
+     "q": 1,
+     "u": "łyżeczka",
+     "s": "Tłuszcze i przyprawy",
+     "rule": "oliwa z oliwek"
+    },
+    {
+     "n": "ryż dziki",
+     "q": 150,
+     "u": "g",
+     "s": "Zboża i pieczywo",
+     "rule": "ryż dziki"
+    },
+    {
+     "n": "sól",
+     "q": 0.5,
+     "u": "łyżeczka",
+     "s": "Tłuszcze i przyprawy",
+     "rule": "sól",
+     "drobny": true
+    }
+   ],
+   "kroki": [
+    {
+     "t": "Ugotuj ryż dziki według przepisu na opakowaniu."
+    },
+    {
+     "t": "Warzywa pokrój w paski i duś z imbirem, czosnkiem i odrobiną wody.",
+     "p": "8 min",
+     "timer": 480
+    },
+    {
+     "t": "Dodaj krewetki i duś, aż zróżowieją.",
+     "p": "3 min",
+     "timer": 180
+    }
+   ]
+  },
+  {
+   "id": "pumpernikiel-awokado-jajko",
+   "name": "Pumpernikiel z awokado i jajkiem",
+   "posilki": [
+    "ii",
+    "przekaska"
+   ],
+   "porcje": 2,
+   "czas": 10,
+   "urz": [],
+   "kcal": 230,
+   "kat": "przekaska",
+   "opis": "Sycące drugie śniadanie do szkoły.",
+   "skladniki": [
+    {
+     "n": "pumpernikiel",
+     "q": 2,
+     "u": "kromka",
+     "s": "Zboża i pieczywo",
+     "rule": "pumpernikiel"
+    },
+    {
+     "n": "awokado",
+     "q": 1,
+     "u": "szt",
+     "s": "Owoce",
+     "rule": "awokado"
+    },
+    {
+     "n": "jajka",
+     "q": 2,
+     "u": "szt",
+     "s": "Nabiał i jaja",
+     "rule": "jajka"
+    },
+    {
+     "n": "sól",
+     "q": 0.5,
+     "u": "łyżeczka",
+     "s": "Tłuszcze i przyprawy",
+     "rule": "sól",
+     "drobny": true
+    }
+   ],
+   "kroki": [
+    {
+     "t": "Jajka ugotuj na twardo.",
+     "p": "9 min",
+     "timer": 540
+    },
+    {
+     "t": "Awokado rozgnieć z solą, posmaruj pumpernikiel, ułóż plasterki jajka."
+    }
+   ]
+  },
+  {
+   "id": "roladki-salata-indyk",
+   "name": "Roladki z sałaty z indykiem i twarożkiem",
+   "posilki": [
+    "ii",
+    "przekaska"
+   ],
+   "porcje": 2,
+   "czas": 8,
+   "urz": [],
+   "kcal": 140,
+   "kat": "przekaska",
+   "opis": "Bez pieczywa, chrupiące.",
+   "skladniki": [
+    {
+     "n": "sałata rzymska",
+     "q": 1,
+     "u": "szt",
+     "s": "Warzywa",
+     "rule": "sałata rzymska"
+    },
+    {
+     "n": "chuda wędlina z indyka",
+     "q": 80,
+     "u": "g",
+     "s": "Mięso i ryby",
+     "rule": "chude wędliny"
+    },
+    {
+     "n": "twaróg półtłusty",
+     "q": 80,
+     "u": "g",
+     "s": "Nabiał i jaja",
+     "rule": "twaróg półtłusty"
+    },
+    {
+     "n": "ogórek zielony",
+     "q": 1,
+     "u": "szt",
+     "s": "Warzywa",
+     "rule": "ogórek zielony"
+    }
+   ],
+   "kroki": [
+    {
+     "t": "Na liść sałaty połóż plaster indyka, łyżkę twarożku i słupek ogórka, zwiń."
+    }
+   ]
+  },
+  {
+   "id": "jogurt-owsiane-maliny",
+   "name": "Jogurt z płatkami owsianymi i malinami",
+   "posilki": [
+    "ii"
+   ],
+   "porcje": 1,
+   "czas": 3,
+   "urz": [],
+   "kcal": 220,
+   "kat": "przekaska",
+   "opis": "Owoce do 16:00.",
+   "skladniki": [
+    {
+     "n": "jogurt naturalny",
+     "q": 200,
+     "u": "g",
+     "s": "Nabiał i jaja",
+     "rule": "jogurt naturalny"
+    },
+    {
+     "n": "płatki owsiane górskie",
+     "q": 30,
+     "u": "g",
+     "s": "Zboża i pieczywo",
+     "rule": "płatki owsiane górskie"
+    },
+    {
+     "n": "maliny",
+     "q": 60,
+     "u": "g",
+     "s": "Owoce",
+     "rule": "maliny"
+    }
+   ],
+   "kroki": [
+    {
+     "t": "Wymieszaj jogurt z płatkami, na wierzch maliny."
+    }
+   ]
+  },
+  {
+   "id": "placuszki-owsiane-af",
+   "name": "Placuszki owsiane z jabłkiem",
+   "posilki": [
+    "ii"
+   ],
+   "porcje": 2,
+   "czas": 15,
+   "urz": [
+    "af"
+   ],
+   "kcal": 180,
+   "kat": "przekaska",
+   "opis": "Można upiec wieczorem i zabrać do szkoły.",
+   "skladniki": [
+    {
+     "n": "płatki owsiane górskie",
+     "q": 80,
+     "u": "g",
+     "s": "Zboża i pieczywo",
+     "rule": "płatki owsiane górskie"
+    },
+    {
+     "n": "jajka",
+     "q": 1,
+     "u": "szt",
+     "s": "Nabiał i jaja",
+     "rule": "jajka"
+    },
+    {
+     "n": "jabłka",
+     "q": 1,
+     "u": "szt",
+     "s": "Owoce",
+     "rule": "jabłka"
+    },
+    {
+     "n": "jogurt naturalny",
+     "q": 80,
+     "u": "g",
+     "s": "Nabiał i jaja",
+     "rule": "jogurt naturalny"
+    },
+    {
+     "n": "cynamon",
+     "q": 1,
+     "u": "łyżeczka",
+     "s": "Tłuszcze i przyprawy",
+     "rule": "cynamon"
+    }
+   ],
+   "kroki": [
+    {
+     "t": "Jabłko zetrzyj, wymieszaj z płatkami, jajkiem, jogurtem i cynamonem. Odstaw na 5 minut."
+    },
+    {
+     "t": "Nakładaj łyżką małe placuszki na papier w koszu."
+    },
+    {
+     "t": "Piecz, w połowie obróć.",
+     "dev": "af",
+     "p": "180°C · 8 min",
+     "timer": 480
+    }
+   ]
+  },
+  {
+   "id": "muffinki-owsiane-borowki",
+   "name": "Muffinki owsiane z borówkami",
+   "posilki": [
+    "ii"
+   ],
+   "porcje": 8,
+   "czas": 25,
+   "urz": [],
+   "kcal": 140,
+   "kat": "przekaska",
+   "opis": "Bez cukru, słodzone ksylitolem. Na 8 sztuk.",
+   "skladniki": [
+    {
+     "n": "płatki owsiane górskie",
+     "q": 150,
+     "u": "g",
+     "s": "Zboża i pieczywo",
+     "rule": "płatki owsiane górskie"
+    },
+    {
+     "n": "jajka",
+     "q": 2,
+     "u": "szt",
+     "s": "Nabiał i jaja",
+     "rule": "jajka"
+    },
+    {
+     "n": "jogurt naturalny",
+     "q": 150,
+     "u": "g",
+     "s": "Nabiał i jaja",
+     "rule": "jogurt naturalny"
+    },
+    {
+     "n": "borówki amerykańskie",
+     "q": 100,
+     "u": "g",
+     "s": "Owoce",
+     "rule": "borówki amerykańskie"
+    },
+    {
+     "n": "ksylitol",
+     "q": 2,
+     "u": "łyżka",
+     "s": "Inne",
+     "rule": "ksylitol"
+    },
+    {
+     "n": "cynamon",
+     "q": 1,
+     "u": "łyżeczka",
+     "s": "Tłuszcze i przyprawy",
+     "rule": "cynamon"
+    }
+   ],
+   "kroki": [
+    {
+     "t": "Płatki zmiel na mąkę."
+    },
+    {
+     "t": "Wymieszaj z jajkami, jogurtem, ksylitolem i cynamonem, dodaj borówki."
+    },
+    {
+     "t": "Przełóż do silikonowych foremek i piecz.",
+     "p": "180°C · 20 min",
+     "timer": 1200
+    }
+   ]
+  },
+  {
+   "id": "koktajl-kefir-truskawki",
+   "name": "Koktajl kefirowy z truskawkami",
+   "posilki": [
+    "ii"
+   ],
+   "porcje": 1,
+   "czas": 5,
+   "urz": [],
+   "kcal": 160,
+   "kat": "przekaska",
+   "opis": "Owoce do 16:00.",
+   "skladniki": [
+    {
+     "n": "kefir",
+     "q": 250,
+     "u": "ml",
+     "s": "Nabiał i jaja",
+     "rule": "kefir"
+    },
+    {
+     "n": "truskawki",
+     "q": 100,
+     "u": "g",
+     "s": "Owoce",
+     "rule": "truskawki"
+    }
+   ],
+   "kroki": [
+    {
+     "t": "Zmiksuj kefir z truskawkami."
+    }
+   ]
+  },
+  {
+   "id": "pasta-awokado-twarozek",
+   "name": "Pasta z awokado i twarożku na pieczywie razowym",
+   "posilki": [
+    "ii",
+    "przekaska"
+   ],
+   "porcje": 2,
+   "czas": 8,
+   "urz": [],
+   "kcal": 240,
+   "kat": "przekaska",
+   "opis": "Zielona pasta, którą łatwo posmarować.",
+   "skladniki": [
+    {
+     "n": "awokado",
+     "q": 1,
+     "u": "szt",
+     "s": "Owoce",
+     "rule": "awokado"
+    },
+    {
+     "n": "twaróg półtłusty",
+     "q": 100,
+     "u": "g",
+     "s": "Nabiał i jaja",
+     "rule": "twaróg półtłusty"
+    },
+    {
+     "n": "czosnek",
+     "q": 1,
+     "u": "ząbek",
+     "s": "Warzywa",
+     "rule": "czosnek"
+    },
+    {
+     "n": "pieczywo razowe",
+     "q": 4,
+     "u": "kromka",
+     "s": "Zboża i pieczywo",
+     "rule": "pieczywo razowe"
+    },
+    {
+     "n": "sól",
+     "q": 0.5,
+     "u": "łyżeczka",
+     "s": "Tłuszcze i przyprawy",
+     "rule": "sól",
+     "drobny": true
+    }
+   ],
+   "kroki": [
+    {
+     "t": "Awokado rozgnieć z twarogiem, czosnkiem i solą."
+    },
+    {
+     "t": "Posmaruj pieczywo."
+    }
+   ]
+  },
+  {
+   "id": "pasta-jajeczna",
+   "name": "Kanapka z pastą jajeczną z jogurtem",
+   "posilki": [
+    "ii",
+    "przekaska"
+   ],
+   "porcje": 2,
+   "czas": 12,
+   "urz": [],
+   "kcal": 220,
+   "kat": "przekaska",
+   "opis": "Klasyczna pasta bez majonezu.",
+   "skladniki": [
+    {
+     "n": "jajka",
+     "q": 3,
+     "u": "szt",
+     "s": "Nabiał i jaja",
+     "rule": "jajka"
+    },
+    {
+     "n": "jogurt naturalny",
+     "q": 50,
+     "u": "g",
+     "s": "Nabiał i jaja",
+     "rule": "jogurt naturalny"
+    },
+    {
+     "n": "koperek",
+     "q": 1,
+     "u": "pęczek",
+     "s": "Warzywa",
+     "rule": "koper"
+    },
+    {
+     "n": "pieczywo pełnoziarniste",
+     "q": 4,
+     "u": "kromka",
+     "s": "Zboża i pieczywo",
+     "rule": "pieczywo pełnoziarniste"
+    },
+    {
+     "n": "sól",
+     "q": 0.5,
+     "u": "łyżeczka",
+     "s": "Tłuszcze i przyprawy",
+     "rule": "sól",
+     "drobny": true
+    }
+   ],
+   "kroki": [
+    {
+     "t": "Jajka ugotuj na twardo, ostudź.",
+     "p": "9 min",
+     "timer": 540
+    },
+    {
+     "t": "Posiekaj drobno, wymieszaj z jogurtem, koperkiem i solą, posmaruj pieczywo."
+    }
+   ]
+  },
+  {
+   "id": "ciasteczka-owsiane-jablko",
+   "name": "Ciasteczka owsiane z jabłkiem i cynamonem",
+   "posilki": [
+    "ii"
+   ],
+   "porcje": 12,
+   "czas": 20,
+   "urz": [],
+   "kcal": 90,
+   "kat": "przekaska",
+   "opis": "Bez cukru i mąki pszennej. Na 12 sztuk.",
+   "skladniki": [
+    {
+     "n": "płatki owsiane górskie",
+     "q": 150,
+     "u": "g",
+     "s": "Zboża i pieczywo",
+     "rule": "płatki owsiane górskie"
+    },
+    {
+     "n": "jabłka",
+     "q": 2,
+     "u": "szt",
+     "s": "Owoce",
+     "rule": "jabłka"
+    },
+    {
+     "n": "jajka",
+     "q": 1,
+     "u": "szt",
+     "s": "Nabiał i jaja",
+     "rule": "jajka"
+    },
+    {
+     "n": "cynamon",
+     "q": 1,
+     "u": "łyżeczka",
+     "s": "Tłuszcze i przyprawy",
+     "rule": "cynamon"
+    },
+    {
+     "n": "miód",
+     "q": 1,
+     "u": "łyżka",
+     "s": "Inne",
+     "rule": "miód"
+    }
+   ],
+   "kroki": [
+    {
+     "t": "Jabłka zetrzyj, wymieszaj z płatkami, jajkiem, cynamonem i miodem."
+    },
+    {
+     "t": "Formuj płaskie ciasteczka na papierze."
+    },
+    {
+     "t": "Piecz.",
+     "p": "180°C · 15 min",
+     "timer": 900
+    }
+   ]
+  },
+  {
+   "id": "kanapka-indyk-ogorek",
+   "name": "Kanapka razowa z pieczonym indykiem i ogórkiem",
+   "posilki": [
+    "ii"
+   ],
+   "porcje": 1,
+   "czas": 5,
+   "urz": [],
+   "kcal": 230,
+   "kat": "przekaska",
+   "opis": "Szybka kanapka do szkoły.",
+   "skladniki": [
+    {
+     "n": "pieczywo razowe",
+     "q": 2,
+     "u": "kromka",
+     "s": "Zboża i pieczywo",
+     "rule": "pieczywo razowe"
+    },
+    {
+     "n": "chuda wędlina z indyka",
+     "q": 50,
+     "u": "g",
+     "s": "Mięso i ryby",
+     "rule": "chude wędliny"
+    },
+    {
+     "n": "ogórek zielony",
+     "q": 1,
+     "u": "szt",
+     "s": "Warzywa",
+     "rule": "ogórek zielony"
+    },
+    {
+     "n": "sałata rzymska",
+     "q": 1,
+     "u": "szt",
+     "s": "Warzywa",
+     "rule": "sałata rzymska"
+    }
+   ],
+   "kroki": [
+    {
+     "t": "Na pieczywo połóż sałatę, indyka i plasterki ogórka."
+    }
+   ]
   }
  ]
 }
