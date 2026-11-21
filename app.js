@@ -152,11 +152,11 @@ function resultsHtml(q) {
 function mealGauge(d) {
   const flags = MEALS.map(([k]) => Boolean(d.meals[k] && d.meals[k].done)), n = flags.filter(Boolean).length;
   return `<div class="gauge-wrap"><div class="gauge seg" role="img" aria-label="Posiłki: zjedzone ${n} z ${MEALS.length}">` +
-    MEALS.map(([k, nm], i) => `<i class="${flags[i] ? 'on' : ''}" title="${esc(nm)}"></i>`).reverse().join('') + '</div>' +
+    '<div class="gin">' + MEALS.map(([k, nm], i) => `<i class="${flags[i] ? 'on' : ''}" title="${esc(nm)}"></i>`).reverse().join('') + '</div></div>' +
     `<div class="gauge-text"><strong>${n} z ${MEALS.length}</strong><span class="muted">${MEALS.length - n ? 'zostało ' + (MEALS.length - n) : 'wszystkie!'}</span></div></div>`;
 }
 function gauge(pct, tone, label, sub) {
-  return `<div class="gauge-wrap"><div class="gauge ${tone}" role="progressbar" aria-label="${esc(label)}" aria-valuemin="0" aria-valuemax="100" aria-valuenow="${pct}"><i style="height:${Math.max(pct, 8)}%"></i></div>` +
+  return `<div class="gauge-wrap"><div class="gauge ${tone}" role="progressbar" aria-label="${esc(label)}" aria-valuemin="0" aria-valuemax="100" aria-valuenow="${pct}"><div class="gin"><i style="height:${pct ? Math.max(pct, 6) : 0}%"></i></div></div>` +
     `<div class="gauge-text"><strong>${pct}%</strong><span class="muted">${esc(sub)}</span></div></div>`;
 }
 

@@ -586,3 +586,23 @@ html[data-theme="warm"] .card.sport, html[data-theme="gray"] .card.sport { backg
 .acttile.main { background: rgba(255, 255, 255, .34); border-color: rgba(255, 255, 255, .6); }
 .acttile:active { background: rgba(255, 255, 255, .45); }
 .acttile span { white-space: nowrap; }
+/* ---------- Kapsułki: wnętrze przycina wypełnienie do kształtu kapsułki ---------- */
+.gauge, .gauge.seg { position: relative; width: 78px; height: 150px; padding: 0; border-radius: 40px; display: block; overflow: hidden; }
+.gauge::after { content: none; }
+.gauge .gin { position: absolute; inset: 8px; border-radius: 32px; overflow: hidden; -webkit-mask-image: -webkit-radial-gradient(white, black); }
+.gauge .gin > i { position: absolute; left: 0; right: 0; bottom: 0; border-radius: 0; max-height: none; transition: height .4s; }
+.gauge.water .gin > i { background: linear-gradient(180deg, #4fc3ff, #1e88e5); }
+.gauge.teal .gin > i { background: var(--sage); }
+.gauge.rose .gin > i { background: var(--rose); }
+.gauge.meal .gin > i { background: linear-gradient(180deg, #5ee07a, #22a447); }
+/* delikatne podziałki wody co 250 ml */
+.gauge.water .gin::after { content: ''; position: absolute; inset: 0; pointer-events: none;
+  background: repeating-linear-gradient(to top, transparent 0, transparent calc(12.5% - 1px), rgba(120, 110, 100, .16) calc(12.5% - 1px), rgba(120, 110, 100, .16) 12.5%);
+  -webkit-mask-image: linear-gradient(90deg, transparent 25%, #000 25%, #000 75%, transparent 75%); mask-image: linear-gradient(90deg, transparent 25%, #000 25%, #000 75%, transparent 75%); }
+/* posiłki: 5 równych części */
+.gauge.seg .gin { display: flex; flex-direction: column; }
+.gauge.seg .gin > i { position: relative; flex: 1 1 0; height: auto; left: auto; right: auto; bottom: auto; background: transparent; border: 0; }
+.gauge.seg .gin > i.on { background: linear-gradient(180deg, #5ee07a, #22a447); }
+.gauge.seg .gin > i + i::before { content: ''; position: absolute; left: 25%; right: 25%; top: 0; height: 1px; background: rgba(120, 110, 100, .2); }
+.gauge.seg .gin > i.on + i::before, .gauge.seg .gin > i + i.on::before { background: rgba(255, 255, 255, .5); left: 0; right: 0; }
+html[data-theme="dark"] .gauge.seg .gin > i + i::before { background: rgba(255, 255, 255, .1); }
