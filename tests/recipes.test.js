@@ -76,6 +76,22 @@ ok('matchRule: dokładne dopasowanie wygrywa, zakazane wykrywane', () => {
   assert.strictEqual(R.matchRule(idx, 'kalafior').st, 'lim');
 });
 
+ok('matchRule: inna forma słowa (liczba pojedyncza / mnoga)', () => {
+  assert.strictEqual(R.matchRule(idx, 'jabłko').st, 'ok');
+  assert.strictEqual(R.matchRule(idx, 'jajko').st, 'ok');
+  assert.strictEqual(R.matchRule(idx, 'truskawka').st, 'ok');
+  assert.strictEqual(R.matchRule(idx, 'gruszka').st, 'lim');
+  assert.strictEqual(R.matchRule(idx, 'parówka').st, 'no');
+  assert.strictEqual(R.matchRule(idx, 'pomidory').st, 'ok');
+  assert.strictEqual(R.matchRule(idx, 'maślanka').st, 'ok');
+});
+
+ok('matchRule: ogólne słowo z różnymi rodzajami jest niejednoznaczne', () => {
+  for (const w of ['ryż', 'kasza', 'makaron', 'ogórki']) assert.ok(R.matchRule(idx, w).amb, w);
+  assert.strictEqual(R.matchRule(idx, 'ser żółty'), null); // nie myli się z „papryka żółta”
+  assert.strictEqual(R.matchRule(idx, 'sok jabłkowy'), null);
+});
+
 ok('matchRule: krótkie słowa nie łapią się na środku wyrazu (mak vs makaron)', () => {
   assert.strictEqual(R.matchRule(idx, 'mak').st, 'no');
   assert.strictEqual(R.matchRule(idx, 'makaron razowy').st, 'ok');

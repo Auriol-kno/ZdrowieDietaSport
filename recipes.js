@@ -18,13 +18,29 @@ const ZdsRecipes = (() => {
     'Przyprawy': 'Tłuszcze i przyprawy',
   };
 
+  // Proste ujednolicenie polskich końcówek: jabłko / jabłka / jabłek → jabłk, marchewka / marchewki → marchewk.
+  const stem = (w) => (w.length >= 5 ? w.replace(/(ami|ach|ow|om|em|ek|a|o|e|i|y|u)$/, '') : w);
+  const stems = (s) => s.split(/[^a-z0-9]+/).filter((t) => t.length >= 3).map(stem);
+  const near = (a, b) => a === b || (Math.min(a.length, b.length) >= 4 && (a.startsWith(b) || b.startsWith(a)));
+
+  // Do wyszukiwarki: „jabłko” znajduje „jabłka”, „ogórki” znajduje „ogórek zielony”.
+  function looseMatch(q, text) {
+    const a = norm(q), b = norm(text);
+    if (!a) return true;
+    if (b.includes(a)) return true;
+    const qs = stems(a), ts = stems(b);
+    return qs.length > 0 && qs.every((u) => ts.some((t) => near(u, t)));
+  }
+
   function indexRules(rules) {
     const idx = [];
     for (const c of (rules && rules.kategorie) || []) {
       for (const [st, key] of KEYS) {
         for (const it of c[key]) {
           const n = norm(it);
-          idx.push({ cat: c.nazwa, st, it, n, word: n.length >= 3 && !/[:(),]/.test(n) });
+          const simple = !/[:(),]/.test(n);
+          const core = n.replace(/\([^)]*\)/g, ' ').split(':').pop().trim();
+          idx.push({ cat: c.nazwa, st, it, n, core, word: n.length >= 3 && simple, stems: /,/.test(core) ? null : stems(core) });
         }
       }
     }
@@ -36,10 +52,19 @@ const ZdsRecipes = (() => {
   function matchRule(idx, text) {
     const q = norm(text);
     if (q.length < 2) return null;
-    const exact = idx.filter((x) => x.n === q);
-    let hits = exact;
+    const exact = idx.filter((x) => x.n === q || (x.core === q && !x.n.includes(':')));
+    let hits = exact.slice();
     if (!hits.length) {
-      hits = idx.filter((x) => (q.length >= 4 && x.n.includes(q)) || (x.word && (' ' + q + ' ').includes(' ' + x.n + ' ')));
+      hits = idx.filter((x) => (q.length >= 4 && x.n.includes(q)) || x.n.startsWith(q + ' ') || (x.word && (' ' + q + ' ').includes(' ' + x.n + ' ')));
+    }
+    const qs = stems(q);
+    if (!exact.length && qs.length === 1) {
+      // Jedno słowo, np. „ogórki”: dokładamy wszystkie rodzaje zaczynające się od tego słowa (ogórek zielony, ogórki konserwowe).
+      for (const x of idx) if (x.stems && x.stems.length && near(qs[0], x.stems[0]) && !hits.includes(x)) hits.push(x);
+    }
+    if (!hits.length) {
+      // Inna forma słowa (liczba pojedyncza / mnoga, odmiana): porównujemy rdzenie wyrazów.
+      if (qs.length) hits = idx.filter((x) => x.stems && x.stems.length === qs.length && x.stems.every((t) => qs.some((u) => near(u, t))));
     }
     if (!hits.length) return null;
     let worst = hits[0];
@@ -126,7 +151,7 @@ const ZdsRecipes = (() => {
     return d.toLocaleDateString('sv-SE');
   };
 
-  return { norm, indexRules, matchRule, checkIngredient, checkRecipe, fmtQty, parseLine, guessSection, shoppingList, dayAfter, SECTIONS };
+  return { norm, looseMatch, indexRules, matchRule, checkIngredient, checkRecipe, fmtQty, parseLine, guessSection, shoppingList, dayAfter, SECTIONS };
 })();
 
 if (typeof module !== 'undefined') module.exports = ZdsRecipes;

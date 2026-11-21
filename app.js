@@ -140,6 +140,7 @@ function itemPill(name) {
   if (typeof ku === 'undefined' || !ku.idx) return '';
   const m = ZdsRecipes.matchRule(ku.idx, name);
   if (!m) return '<span class="pill tiny unk">nie ma na liście</span>';
+  if (m.amb) return `<span class="pill lim tiny" title="Na liście są różne rodzaje: ${esc(m.it)}">${isKid() ? 'Zapytaj rodzica' : 'Zależy od rodzaju'}</span>`;
   return `<span class="pill ${m.st} tiny"><span aria-hidden="true">${MARK[m.st]}</span>${(isKid() ? LABEL_KID : LABEL)[m.st]}</span>`;
 }
 const QUICK_ACT = [['Spacer', 30], ['Rower', 45], ['Pływanie', 45], ['Piłka nożna', 60], ['Bieganie', 30], ['Siłownia', 45], ['Taniec', 30], ['Hulajnoga', 30], ['W-F w szkole', 45]];
@@ -245,7 +246,7 @@ function colsHtml() {
   const cols = { ok: [], lim: [], no: [] };
   for (const c of rules.kategorie) {
     if (chk.cat && c.nazwa !== chk.cat) continue;
-    for (const [st, key] of KEYS) for (const it of c[key]) if (!nq || norm(it).includes(nq)) cols[st].push(it);
+    for (const [st, key] of KEYS) for (const it of c[key]) if (!nq || ZdsRecipes.looseMatch(nq, it)) cols[st].push(it);
   }
   const top = state.chkTop || [];
   const rank = (it) => { const i = top.indexOf(it); return i < 0 ? 1e9 : i; };
