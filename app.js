@@ -348,7 +348,7 @@ function viewToday() {
   html += `<div class="card"><div class="row sb"><h2>Posiłki</h2>${ring(done, MEALS.length)}</div>`;
   for (const [key, name, time] of MEALS) {
     const m = meal(d, key);
-    html += `<div class="meal"><div class="row sb"><div><strong>${name}</strong> <span class="muted">${time}</span></div>` +
+    html += `<div class="meal"><div class="row sb"><div class="mealname"><strong>${name}</strong> <span>${time}</span></div>` +
       '<span class="row">' +
       `<span class="eatpill${m.done ? ' on' : ''}"><button type="button" class="eat" data-action="done" data-meal="${key}" aria-pressed="${m.done}">${m.done ? '✓ Zjedzone' : 'Zjedzone'}</button>` +
       `<button type="button" class="cam" data-action="photo" data-meal="${key}" aria-label="Dodaj zdjęcie: ${esc(name)}"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 8h3l2-2.5h6L17 8h3v11H4z"/><circle cx="12" cy="13.5" r="3.5"/></svg>${photosOf(m).length ? `<b>${photosOf(m).length}</b>` : ''}</button></span></span></div>`;
@@ -387,7 +387,7 @@ function viewToday() {
         `<button type="button" class="phadd" data-action="photo" data-meal="${key}" aria-label="Dodaj kolejne zdjęcie">+</button></div>`;
     }
     html += `<div class="addrow"><button type="button" class="addbtn" data-action="kid-add" data-meal="${key}" aria-expanded="${addOpen === key}" aria-label="${kid ? 'Dopisz, co zjadłeś na' : 'Dodaj danie do'} ${esc(name)}"><span class="ic">+</span>Dodaj</button>` +
-      `<button type="button" class="addbtn prop" data-action="prop-add" data-meal="${key}" aria-expanded="${addOpen === 'p:' + key}" aria-label="Zaproponuj danie na ${esc(name)}"><span class="ic"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9 18h6M10 21h4M12 3a6 6 0 0 0-3.6 10.8c.6.5 1 1.2 1 2V16h5.2v-.2c0-.8.4-1.5 1-2A6 6 0 0 0 12 3z"/></svg></span>Zaproponuj</button></div>`;
+      (['sniadanie', 'obiad', 'kolacja'].includes(key) ?       `<button type="button" class="addbtn prop" data-action="prop-add" data-meal="${key}" aria-expanded="${addOpen === 'p:' + key}" aria-label="Zaproponuj danie na ${esc(name)}"><span class="ic"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9 18h6M10 21h4M12 3a6 6 0 0 0-3.6 10.8c.6.5 1 1.2 1 2V16h5.2v-.2c0-.8.4-1.5 1-2A6 6 0 0 0 12 3z"/></svg></span>Zaproponuj</button>` : '') + '</div>';
     if (addOpen === 'p:' + key) {
       html += `<form data-meal="${key}" data-prop="1" class="kidform propform${kid ? '' : ' parform'}"><label class="sr" for="n-${key}">Propozycja dania</label>` +
         `<input type="text" id="n-${key}" placeholder="Zaproponuj danie" required autocomplete="off">` +

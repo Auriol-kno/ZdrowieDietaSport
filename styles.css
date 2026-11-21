@@ -499,3 +499,19 @@ ul.snacks .est { color: #a5561c; font-weight: 700; }
 .widgets { gap: 12px; }
 .widget.card, .widgets > .card { padding: 10px; }
 .widget .row button { min-height: 38px; height: 38px; }
+/* Nazwa posiłku w delikatnym zagłębieniu */
+.mealname { display: inline-flex; align-items: baseline; gap: 8px; padding: 6px 14px; border-radius: 999px; box-shadow: inset 2px 2px 5px rgba(163, 151, 134, .32), inset -2px -2px 5px rgba(255, 255, 255, .75); }
+.mealname strong { font-size: 18px; line-height: 22px; font-weight: 800; }
+.mealname span { font-size: 14px; color: var(--muted); font-weight: 600; }
+html[data-theme="dark"] .mealname { box-shadow: var(--in); }
+/* Wpisy w posiłkach: marginesy wewnątrz */
+.meal li.kiditem, .meal li.paritem { padding: 4px 4px 4px 14px; margin: 4px 0; min-height: 34px; border-radius: 17px; }
+.meal li.propitem { padding: 5px 5px 5px 14px; margin: 4px 0; }
+.meal li .li-end { gap: 6px; padding-right: 2px; }
+/* „Zjedzone” z aparatem o 20% większe */
+.eatpill button { min-height: 41px; font-size: 15.5px; }
+.eatpill .eat { padding: 0 12px 0 15px; }
+.eatpill .cam { padding: 0 12px; }
+.eatpill .cam svg { width: 20px; height: 20px; }
+.itemname .muted, .itemname .by { font-size: 11px; font-weight: 600; line-height: 14px; }
+li.kiditem .itemname .muted { color: #9a5a28; }
