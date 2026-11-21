@@ -275,3 +275,17 @@ li.kiditem { background: #f5d2ad; box-shadow: inset 2px 2px 5px rgba(190, 110, 4
 li.kiditem > span:first-child { color: #7a3e12; }
 li.kiditem .muted { color: #9a5a28; }
 li.kiditem button { background: rgba(255, 255, 255, .6); color: #7a3e12; }
+/* Duży okrągły przycisk odświeżania i synchronizacji w nagłówku */
+.hero > div:nth-child(2) { flex: 1; min-width: 0; }
+.hero-sync { font-size: 12px; font-weight: 600; color: #e4ecf6; margin-top: 2px; }
+.syncbtn { position: relative; flex: 0 0 auto; width: 68px; height: 68px; min-height: 68px; padding: 0; border-radius: 50%; display: grid; place-items: center;
+  background: #f8f5f1; color: var(--blue); box-shadow: 4px 4px 10px rgba(20, 40, 80, .35), -3px -3px 8px rgba(255, 255, 255, .25); }
+.syncbtn:active { box-shadow: var(--in); }
+.syncbtn svg { width: 32px; height: 32px; fill: none; stroke: currentColor; stroke-width: 2.4; stroke-linecap: round; stroke-linejoin: round; }
+.syncbtn.spin svg { animation: zds-spin .9s linear infinite; }
+@keyframes zds-spin { to { transform: rotate(360deg); } }
+.syncbtn i { position: absolute; top: 6px; right: 6px; width: 12px; height: 12px; border-radius: 50%; border: 2px solid #f8f5f1; background: transparent; }
+.syncbtn.ok i { background: #22a447; }
+.syncbtn.bad i { background: #d0463b; }
+.syncbtn.off i { background: #e0a526; }
+@media (prefers-reduced-motion: reduce) { .syncbtn.spin svg { animation-duration: 2.5s; } }

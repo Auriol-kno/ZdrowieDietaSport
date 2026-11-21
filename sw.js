@@ -1,4 +1,4 @@
-const CACHE = 'zds-v25';
+const CACHE = 'zds-v26';
 const ASSETS = ['./', 'index.html', 'styles.css', 'app.js', 'config.js', 'sync.js', 'recipes.js', 'kuchnia.js', 'stats.js', 'data/rules.json', 'data/recipes.json', 'data/napoje.json', 'manifest.webmanifest', 'icons/icon.svg', 'icons/icon-192.png', 'icons/icon-512.png', 'icons/apple-touch-icon.png'];
 
 self.addEventListener('install', (e) => {

@@ -147,6 +147,32 @@ function activityCard(d) {
       `<button type="button" class="small ghost" data-action="act-del" data-i="${i}" aria-label="Usuń ${esc(x.name)}">✕</button></li>`).join('') + '</ul>' : '') + '</div>';
 }
 
+function syncBtn() {
+  const ready = typeof ZdsSync !== 'undefined' && ZdsSync.enabled() && su.session && state.fam;
+  const st = su.busy ? 'spin' : !ready ? 'off' : su.err ? 'bad' : su.last ? 'ok' : '';
+  return `<button type="button" class="syncbtn ${st}" data-action="hero-sync" aria-label="Odśwież i synchronizuj">` +
+    '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20 12a8 8 0 0 1-14.3 4.9M4 12a8 8 0 0 1 14.3-4.9"/><path d="M18.5 3.5v4h-4M5.5 20.5v-4h4"/></svg><i></i></button>';
+}
+async function heroSync(btn) {
+  const ready = typeof ZdsSync !== 'undefined' && ZdsSync.enabled() && su.session && state.fam;
+  if (btn) btn.classList.add('spin');
+  if ('serviceWorker' in navigator) navigator.serviceWorker.getRegistration().then((r) => r && r.update()).catch(() => {});
+  if (!ready) {
+    setTimeout(() => {
+      if (btn) btn.classList.remove('spin');
+      su.msg = 'Żeby synchronizować, zaloguj się i połącz z rodziną tutaj.'; su.err = false;
+      if (!isKid()) { tab = 'profile'; window.scrollTo(0, 0); }
+      render();
+    }, 500);
+    return;
+  }
+  const t0 = Date.now();
+  await runSync(true);
+  if (!su.err) su.last = Date.now();
+  else su.last = Date.now();
+  setTimeout(render, Math.max(0, 600 - (Date.now() - t0)));
+}
+
 function viewToday() {
   const p = cur(), d = day(), kid = isKid();
   const done = MEALS.filter(([k]) => d.meals[k] && d.meals[k].done).length;
@@ -154,7 +180,9 @@ function viewToday() {
   const now = new Date();
   let html = `<div class="hero"><div class="hero-plate"><span class="hero-day">${now.getDate()}</span>` +
     `<span class="hero-month">${now.toLocaleDateString('pl-PL', { month: 'long' })}</span></div>` +
-    `<div><h1>Cześć, ${esc(p.nick || p.name)}!</h1><div class="hero-sub">${now.toLocaleDateString('pl-PL', { weekday: 'long' })}</div></div></div>`;
+    `<div><h1>Cześć, ${esc(p.nick || p.name)}!</h1><div class="hero-sub">${now.toLocaleDateString('pl-PL', { weekday: 'long' })}</div>` +
+    (su.last ? `<div class="hero-sync">${su.err ? 'Nie udało się zsynchronizować' : 'Zsynchronizowano ' + new Date(su.last).toLocaleTimeString('pl-PL', { hour: '2-digit', minute: '2-digit' })}</div>` : '') + '</div>' +
+    syncBtn() + '</div>';
 
   const waterW = `<div class="card widget"><h2>Woda</h2>${gauge(pct, 'water', 'Woda', `${d.water * GLASS_ML / 1000} z 2 l`)}` +
     `<div class="row"><button type="button" class="small" data-action="water" data-d="1" aria-label="Dodaj szklankę">+ 250 ml</button>` +
@@ -294,6 +322,7 @@ document.addEventListener('click', (e) => {
     document.querySelectorAll('#cols .pills').forEach((p) => { p.scrollTop = 0; });
     return;
   }
+  else if (a === 'hero-sync') return heroSync(t);
   else if (a === 'pick-profile') { state.current = t.dataset.id; addOpen = null; }
   else if (a === 'stats-share') return statsShare();
   else if (a === 'stats-mail') return statsMail();
@@ -422,6 +451,7 @@ async function runSync(silent) {
     await ZdsSync.init();
     const r = await ZdsSync.syncAll(state.fam.id, state.fam.role, { state, mkId: uid });
     save(true);
+    su.last = Date.now(); su.err = false;
     if (!silent) { su.msg = `Zsynchronizowano: wysłano ${r.pushed}, pobrano ${r.pulled}.`; su.err = false; }
   } catch (e) {
     su.msg = 'Synchronizacja nie powiodła się: ' + e.message; su.err = true;
