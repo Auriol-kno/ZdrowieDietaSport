@@ -467,7 +467,7 @@ function viewProfiles() {
   let html = '<h1>Ustawienia i profile</h1><div class="card"><h2>Kto korzysta</h2>' + (isKid()
     ? `<p class="muted">Profil: <strong>${esc(cur().name)}</strong>. Zmiana profilu tylko w trybie rodzica.</p>`
     : '<div class="chips">' + state.profiles.map((p) => `<button type="button" class="chip" data-action="pick-profile" data-id="${p.id}" aria-pressed="${p.id === state.current}">${esc(p.name)}</button>`).join('') + '</div>') + '</div>' +
-    '<div class="card"><h2>Wygląd</h2><div class="chips">' + [['light', 'Jasny'], ['green', 'Zielony'], ['blue', 'Błękitny'], ['ocean', 'Morski (Pelagia)'], ['warm', 'Ciepły przygaszony'], ['gray', 'Szary'], ['dark', 'Ciemny'], ['system', 'Jak w systemie']].map(([v, n]) =>
+    '<div class="card"><h2>Wygląd</h2><div class="chips">' + [['light', 'Jasny'], ['green', 'Zielony'], ['blue', 'Błękitny'], ['ocean', 'Morski (Pelagia)'], ['laur', 'Leśny (Laur)'], ['warm', 'Ciepły przygaszony'], ['gray', 'Szary'], ['dark', 'Ciemny'], ['system', 'Jak w systemie']].map(([v, n]) =>
       `<button type="button" class="chip" data-action="theme" data-v="${v}" aria-pressed="${(state.theme || 'system') === v}">${n}</button>`).join('') + '</div></div>' +
     '<div class="card"><div class="row sb"><div><h2>Tryb rodzica</h2>' +
     `<span class="muted">${parent ? 'Włączony: widać kalorie, plan i zakupy.' : 'Wyłączony: widok dziecka.'}</span></div>` +
@@ -503,7 +503,7 @@ function applyTheme() {
   const v = t === 'system' ? (darkMq && darkMq.matches ? 'dark' : 'light') : t;
   document.documentElement.dataset.theme = v;
   document.documentElement.dataset.tone = v === 'dark' || v === 'ocean' ? 'dark' : 'light';
-  const m = document.querySelector('meta[name=theme-color]'); if (m) m.content = { dark: '#23211f', warm: '#CFC5B8', gray: '#D4D4D6', green: '#E3ECE3', blue: '#E2EAF3', ocean: '#0F3A55', light: '#ECE6DF' }[v] || '#ECE6DF';
+  const m = document.querySelector('meta[name=theme-color]'); if (m) m.content = { dark: '#23211f', warm: '#CFC5B8', gray: '#D4D4D6', green: '#E3ECE3', blue: '#E2EAF3', ocean: '#0F3A55', laur: '#E9E5D8', light: '#ECE6DF' }[v] || '#ECE6DF';
 }
 if (darkMq && darkMq.addEventListener) darkMq.addEventListener('change', () => applyTheme());
 

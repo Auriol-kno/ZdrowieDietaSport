@@ -712,3 +712,40 @@ html[data-theme="ocean"] .card.sport input { background: rgba(255, 255, 255, .92
 html[data-tone="dark"] .eatpill.on .eat { color: #9fe3cf; }
 html[data-theme="ocean"] .hero-plate, html[data-theme="ocean"] .hero-plate * { color: #103b57 !important; }
 html[data-theme="ocean"] .hero-plate small, html[data-theme="ocean"] .hero-plate span { color: #4b6b80 !important; }
+/* ---------- Motyw Leśny (Laur): krem, butelkowa zieleń, oliwka, terakota, ochra ---------- */
+html[data-theme="laur"] {
+  --bg: #e9e5d8; --card: #ece8dc; --track: #ddd8c6; --line: #d3cdb8; --ink: #2f3b26; --muted: #6b6a55;
+  --blue: #3d6b33; --blue-d: #2c5226; --blue-t: #dfe6cd; --sage: #8fa35a; --sage-d: #3d6b33; --sage-t: #e2e8cf;
+  --rose: #c8683a; --amber: #8a5a1c; --amber-t: #f1e2c2;
+  --up: 7px 7px 15px rgba(140, 135, 100, .36), -7px -7px 15px rgba(255, 253, 245, .85);
+  --up-s: 4px 4px 9px rgba(140, 135, 100, .32), -4px -4px 9px rgba(255, 253, 245, .82);
+  --in: inset 4px 4px 8px rgba(140, 135, 100, .34), inset -4px -4px 8px rgba(255, 253, 245, .82);
+}
+html[data-theme="laur"] body, html[data-theme="laur"] body.kid { background: radial-gradient(110% 70% at 50% 35%, #dfe1c8 0%, #e9e5d8 55%, #efece4 100%) fixed; }
+html[data-theme="laur"] .hero { background: linear-gradient(135deg, #4a7a3a 0%, #2f5a2a 70%, #24481f 100%); }
+html[data-theme="laur"] .hero-plate, html[data-theme="laur"] .syncbtn { background: #f1e2cc; color: #2f5a2a; }
+html[data-theme="laur"] .syncbtn { color: #c8683a; }
+html[data-theme="laur"] button.gearbtn.corner { background: #f1e2cc; color: #2f5a2a; border-color: var(--bg); }
+html[data-theme="laur"] .card.sport { background: linear-gradient(145deg, #d27a45, #b8562f); }
+html[data-theme="laur"] .card.drinks { background: #dfe5c9; }
+html[data-theme="laur"] .card.drinks h2, html[data-theme="laur"] .card.drinks .chip { color: #3d6b33; }
+html[data-theme="laur"] .card.drinks .chip { background: #eef1e0; border-color: #cbd5ae; }
+html[data-theme="laur"] .meal.m-sniadanie { background: rgba(217, 164, 65, .13); }
+html[data-theme="laur"] .meal.m-ii { background: rgba(143, 163, 90, .15); }
+html[data-theme="laur"] .meal.m-obiad { background: rgba(200, 104, 58, .12); }
+html[data-theme="laur"] .meal.m-przekaska { background: rgba(185, 196, 141, .2); }
+html[data-theme="laur"] .meal.m-kolacja { background: rgba(61, 107, 51, .12); }
+html[data-theme="laur"] .meal li.kiditem { background: #f3e2cf; }
+html[data-theme="laur"] .meal li.kiditem .itemname { color: #8a4a22; }
+html[data-theme="laur"] .meal li.paritem { background: #e4ead2; }
+html[data-theme="laur"] .meal li.paritem .itemname { color: #2f5a2a; }
+html[data-theme="laur"] .addbtn { background: #f3dcc8; color: #a2502a; }
+html[data-theme="laur"] .addbtn .ic { background: #c8683a; }
+html[data-theme="laur"] .addbtn.prop { background: #e6e8cf; color: #4d6b2e; }
+html[data-theme="laur"] .addbtn.prop .ic { background: #8fa35a; }
+html[data-theme="laur"] .eatpill.on { background: #dbe6c7; }
+html[data-theme="laur"] .eatpill.on .eat { color: #2f5a2a; }
+html[data-theme="laur"] .gauge.water .gin > i { background: linear-gradient(180deg, #9cc7b8, #4d9283); }
+html[data-theme="laur"] .gauge.seg .gin > i.on { background: linear-gradient(180deg, #a9bb6a, #4a7a3a); }
+html[data-theme="laur"] .daycard.alt { background: #e2ddcc; }
+html[data-theme="laur"] .note { background: #f1e2c2; color: #6b4a12; }
