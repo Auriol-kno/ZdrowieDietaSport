@@ -154,6 +154,38 @@ function activityCard(d) {
       `<button type="button" class="small ghost" data-action="act-del" data-i="${i}" aria-label="Usuń ${esc(x.name)}">✕</button></li>`).join('') + '</ul>' : '') + '</div>';
 }
 
+// Pasek do następnego posiłku: liczy czas od poprzedniego posiłku do następnego niezjedzonego.
+const mins = (hm) => { const [h, m] = hm.split(':').map(Number); return h * 60 + m; };
+function nextMealInfo(d, now = new Date()) {
+  const t = now.getHours() * 60 + now.getMinutes();
+  const list = MEALS.map(([k, n, hm]) => ({ k, n, at: mins(hm), done: Boolean(d.meals[k] && d.meals[k].done) }));
+  const DUE = 30; // przez pół godziny po porze posiłku: „czas na …”
+  let idx = list.findIndex((m) => !m.done && t < m.at + DUE);
+  if (idx < 0) return { end: true, all: list.every((m) => m.done), next: list[0], left: 24 * 60 - t + list[0].at, pct: 0 };
+  const next = list[idx];
+  const prevAt = idx > 0 ? list[idx - 1].at : list[list.length - 1].at - 24 * 60;
+  const span = Math.max(1, next.at - prevAt);
+  const left = next.at - t;
+  const pct = Math.max(0, Math.min(100, ((t - prevAt) / span) * 100));
+  return { next, left, pct, due: left <= 0 };
+}
+const fmtLeft = (m) => { m = Math.max(0, Math.round(m)); const h = Math.floor(m / 60), r = m % 60; return h ? `${h} h ${r} min` : `${r} min`; };
+function nextMealCard(d) {
+  const x = nextMealInfo(d);
+  const hm = (m) => `${Math.floor(m / 60)}:${String(m % 60).padStart(2, '0')}`;
+  if (x.end) {
+    return `<div class="nextmeal end" role="status"><div class="nm-top"><span class="nm-title">${x.all ? 'Na dziś wszystko zjedzone 🎉' : 'Posiłki na dziś za nami'}</span>` +
+      `<span class="nm-time">jutro ${esc(x.next.n.toLowerCase())} ${hm(x.next.at)}</span></div><div class="nm-bar"><i style="width:100%"></i></div></div>`;
+  }
+  // kolor: zielony daleko, pomarańczowy blisko, fioletowy gdy pora posiłku
+  const hue = x.due ? 270 : Math.round(140 - (x.pct / 100) * 110);
+  const title = x.due ? `Czas na: ${x.next.n.toLowerCase()}!` : `Do posiłku: ${x.next.n.toLowerCase()}`;
+  const time = x.due ? `od ${hm(x.next.at)}` : `${fmtLeft(x.left)} · ${hm(x.next.at)}`;
+  return `<div class="nextmeal${x.due ? ' due' : ''}" role="status" style="--nm:${hue}"><div class="nm-top"><span class="nm-title">${esc(title)}</span>` +
+    `<span class="nm-time">${esc(time)}</span></div><div class="nm-bar" role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="${Math.round(x.pct)}" aria-label="Czas do następnego posiłku">` +
+    `<i style="width:${x.due ? 100 : x.pct.toFixed(1)}%"></i></div></div>`;
+}
+
 function syncBtn() {
   const ready = typeof ZdsSync !== 'undefined' && ZdsSync.enabled() && su.session && state.fam;
   const st = su.busy ? 'spin' : !ready ? 'off' : su.err ? 'bad' : su.last ? 'ok' : '';
@@ -201,7 +233,7 @@ function viewToday() {
   } else {
     side = `<div class="card widget"><h2>Posiłki</h2>${gauge(Math.round((done / MEALS.length) * 100), 'meal', 'Posiłki', `${done} z ${MEALS.length}`)}<span class="muted">${kid ? 'Dobra robota!' : 'Zjedzone dziś'}</span></div>`;
   }
-  html += `<div class="widgets">${waterW}${side}</div>`;
+  html += nextMealCard(d) + `<div class="widgets">${waterW}${side}</div>`;
 
   if (new Date().getHours() >= FRUIT_DEADLINE_HOUR) {
     html += '<div class="note warn">Owoce jemy tylko do 16:00 i nie na ostatni posiłek.</div>';
@@ -628,6 +660,11 @@ async function initSync() {
   document.addEventListener('visibilitychange', auto);
   window.addEventListener('focus', auto);
   setInterval(auto, 60000);
+  // odświeżanie paska posiłku co 30 s bez przerysowania całego ekranu
+  setInterval(() => {
+    const el = document.querySelector('.nextmeal');
+    if (el && tab === 'dzis') { const w = document.createElement('div'); w.innerHTML = nextMealCard(day()); el.replaceWith(w.firstElementChild); }
+  }, 30000);
 }
 
 async function init() {

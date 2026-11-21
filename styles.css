@@ -332,3 +332,15 @@ li.propitem.rej .nobtn { background: rgba(255, 255, 255, .9); color: #6b5a8a; fo
 .badge.no { background: #d0463b; }
 li.propitem button.okbtn:disabled, li.propitem button.okbtn[disabled] { background: #22a447 !important; color: #fff !important; opacity: .4; box-shadow: none; }
 li.propitem button.okbtn:disabled { background: #9fe0b1 !important; color: #1d7a37 !important; opacity: 1 !important; }
+/* Pasek do następnego posiłku */
+.nextmeal { --nm: 140; background: var(--card); border-radius: 22px; padding: 12px 14px; box-shadow: var(--up-s); display: flex; flex-direction: column; gap: 8px; }
+.nm-top { display: flex; justify-content: space-between; align-items: baseline; gap: 8px; flex-wrap: wrap; }
+.nm-title { font-weight: 800; font-size: 15px; color: hsl(var(--nm) 55% 32%); }
+.nm-time { font-weight: 700; font-size: 13px; color: var(--muted); font-variant-numeric: tabular-nums; }
+.nm-bar { height: 14px; border-radius: 999px; background: var(--track); box-shadow: var(--in); overflow: hidden; padding: 2px; }
+.nm-bar i { display: block; height: 100%; border-radius: 999px; min-width: 10px;
+  background: linear-gradient(90deg, hsl(var(--nm) 70% 62%), hsl(var(--nm) 72% 44%)); box-shadow: 0 0 8px hsl(var(--nm) 70% 55% / .45); transition: width .6s ease, background .6s ease; }
+.nextmeal.due .nm-bar i { animation: nm-pulse 1.6s ease-in-out infinite; }
+@keyframes nm-pulse { 50% { filter: brightness(1.15); } }
+.nextmeal.end { --nm: 140; }
+@media (prefers-reduced-motion: reduce) { .nextmeal.due .nm-bar i { animation: none; } }
