@@ -722,6 +722,7 @@ function syncCard() {
   }
   let h = '<div class="card"><h2>Synchronizacja</h2>';
   if (su.msg) h += `<p class="note${su.err ? ' warn' : ''}">${esc(su.msg)}</p>`;
+  if (su.famMissing && su.session) h += '<p class="note warn">Plan, własne przepisy i zakupy nie są jeszcze wspólne. Rodzic musi raz uruchomić w Supabase (SQL Editor) plik <strong>supabase/migracja-2-wspolne-dane.sql</strong>.</p>';
   if (!su.session) {
     h += `<div class="field"><label for="s-email">E-mail</label><input type="email" id="s-email" autocomplete="email" value="${esc(su.email || '')}"></div>` +
       '<div class="field"><label for="s-pw">Hasło (min. 6 znaków)</label><input type="password" id="s-pw" autocomplete="current-password" minlength="6"></div>' +
@@ -762,7 +763,8 @@ async function runSync(silent) {
     const r = await ZdsSync.syncAll(state.fam.id, state.fam.role, { state, mkId: uid });
     save(true);
     su.last = Date.now(); su.err = false;
-    if (!silent) { su.msg = `Zsynchronizowano: wysłano ${r.pushed}, pobrano ${r.pulled}.`; su.err = false; }
+    su.famMissing = r.famMissing;
+    if (!silent) { su.msg = `Zsynchronizowano: wysłano ${r.pushed}, pobrano ${r.pulled}.` + (r.famMissing ? ' Plan, przepisy i zakupy jeszcze się nie synchronizują: uruchom w Supabase plik supabase/migracja-2-wspolne-dane.sql.' : ' Plan, przepisy i zakupy są wspólne.'); su.err = false; }
   } catch (e) {
     su.msg = 'Synchronizacja nie powiodła się: ' + e.message; su.err = true;
   }

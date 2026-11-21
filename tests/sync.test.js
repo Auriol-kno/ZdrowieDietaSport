@@ -38,6 +38,32 @@ ok('aktywności dnia synchronizują się', () => {
   assert.deepStrictEqual(rows[0].row.data.activities, [{ name: 'Rower', min: 45 }]);
 });
 
+ok('wspólne dane: nowy telefon dostaje plan i przepisy z serwera', () => {
+  const st = { plan: {}, recipes: [], pantry: [], shop: { checked: {} }, profiles: [] };
+  const remote = [{ key: 'plan', data: { '2026-11-22|obiad': [{ rid: 'losos', portions: 3 }] } }, { key: 'recipes', data: { 'c-1': { id: 'c-1', name: 'Zupa mamy' } } }];
+  const up = S.mergeFamily(st, remote);
+  assert.deepStrictEqual(st.plan['2026-11-22|obiad'], [{ rid: 'losos', portions: 3 }]);
+  assert.strictEqual(st.recipes[0].name, 'Zupa mamy');
+  assert.ok(!up.some((u) => u.key === 'plan' || u.key === 'recipes'));
+});
+
+ok('wspólne dane: zmiany z dwóch telefonów w tym samym posiłku łączą się, usunięcie działa', () => {
+  const base = { '2026-11-22|obiad': [{ rid: 'a' }], '2026-11-23|obiad': [{ rid: 'x' }] };
+  const local = { '2026-11-22|obiad': [{ rid: 'a' }, { rid: 'b' }] };                // dodano b, usunięto 23.11
+  const remote = { '2026-11-22|obiad': [{ rid: 'a' }, { rid: 'c' }], '2026-11-23|obiad': [{ rid: 'x' }] };
+  const m = S.mergeMap(local, base, remote, true);
+  assert.deepStrictEqual(m['2026-11-22|obiad'].map((e) => e.rid).sort(), ['a', 'b', 'c']);
+  assert.strictEqual(m['2026-11-23|obiad'], undefined);
+});
+
+ok('wspólne dane: pierwszy telefon wysyła swój plan na serwer', () => {
+  const st = { plan: { '2026-11-22|ii': [{ name: 'jabłko', kcal: 80, portions: 1 }] }, recipes: [], pantry: ['sól'], shop: { checked: {} }, profiles: [] };
+  const up = S.mergeFamily(st, []);
+  assert.ok(up.some((u) => u.key === 'plan'));
+  assert.ok(up.some((u) => u.key === 'pantry'));
+  assert.deepStrictEqual(S.mergeFamily(st, up.map((u) => ({ key: u.key, data: u.data }))), []);
+});
+
 ok('serwer wygrywa w danych profilu, usunięty na serwerze znika lokalnie', () => {
   const local = [{ id: 'a', remoteId: 'R1', name: 'Stare', role: 'dorosły', kcal: 1 }, { id: 'x', remoteId: 'R9', name: 'Usunięty', role: 'dorosły', kcal: 0 }];
   const remote = [{ id: 'R1', user_id: 'u', name: 'Nowe', role: 'rodzic', kcal_goal: 2200 }];
@@ -94,6 +120,7 @@ function fakeSb(db) {
       upsert(row) { op = 'upsert'; payload = row; return b; },
       single() { return b; },
       then(res) {
+        if (!db[table]) return Promise.resolve({ data: null, error: { message: `Could not find the table 'public.${table}' in the schema cache` } }).then(res);
         let data = null;
         if (op === 'select') data = db[table].filter(filter);
         else if (op === 'insert') { const r = { id: 'S' + db[table].length, user_id: null, ...payload }; db[table].push(r); data = r; }

@@ -88,3 +88,7 @@ Aplikacja z ekranu początkowego iPhone'a ma osobną pamięć od Safari, więc l
 - Pasek do następnego posiłku ma dźwięk pory posiłku: pik, pyk albo wyciszony (gra tylko, gdy aplikacja jest otwarta).
 - Profile → Wygląd: jasny, ciemny albo jak w systemie.
 - Usuwanie dań, propozycji, napojów, aktywności i zdjęć wymaga potwierdzenia.
+
+## Wspólny plan, przepisy i zakupy
+
+Plan, własne przepisy, lista zakupów, spiżarnia oraz zdrobnienia i waga w profilach synchronizują się w całej rodzinie (tabela `family_data`). Zmiany z kilku telefonów łączą się pozycja po pozycji. W istniejącym projekcie Supabase trzeba raz uruchomić `supabase/migracja-2-wspolne-dane.sql`.

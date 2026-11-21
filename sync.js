@@ -165,13 +165,76 @@ const ZdsSync = (() => {
         pushed++;
       }
     }
-    return { pulled, pushed, members: st.profiles.length };
+    const fam = await syncFamily(fid, st);
+    return { pulled, pushed, members: st.profiles.length, famMissing: fam.missing, famPushed: fam.pushed };
+  }
+
+  // ---------- wspólne dane rodziny: plan, własne przepisy, zakupy, spiżarnia, ustawienia profili ----------
+  // Scalanie trójstronne na poziomie pozycji: lokalnie / ostatnio zsynchronizowane (base) / serwer.
+  const J = (v) => JSON.stringify(v === undefined ? null : v);
+  function mergeMap(local, base, remote, union) {
+    const out = {}, keys = new Set([...Object.keys(local || {}), ...Object.keys(remote || {}), ...Object.keys(base || {})]);
+    for (const k of keys) {
+      const l = (local || {})[k], b = (base || {})[k], r = (remote || {})[k];
+      let v;
+      if (J(l) === J(r)) v = l;
+      else if (J(l) === J(b)) v = r;          // zmiana tylko na serwerze
+      else if (J(r) === J(b)) v = l;          // zmiana tylko lokalnie
+      else if (union && Array.isArray(l) && Array.isArray(r)) {
+        const seen = new Set(); v = [];
+        for (const x of [...r, ...l]) { const s = J(x); if (!seen.has(s)) { seen.add(s); v.push(x); } }
+      } else v = l;                            // konflikt: wygrywa ten telefon
+      if (v !== undefined && v !== null) out[k] = v;
+    }
+    return out;
+  }
+  // Mapowanie stanu aplikacji na klucze w tabeli family_data.
+  function famLocal(st) {
+    const rec = {}; for (const r of st.recipes || []) rec[r.id] = r;
+    const prof = {}; for (const p of st.profiles || []) if (p.remoteId) prof[p.remoteId] = { nick: p.nick || '', kg: Number(p.kg) || 0 };
+    return { plan: st.plan || {}, recipes: rec, pantry: { list: st.pantry || [] }, shop: { checked: (st.shop && st.shop.checked) || {} }, prof };
+  }
+  function famApply(st, key, v) {
+    if (key === 'plan') st.plan = v;
+    else if (key === 'recipes') st.recipes = Object.values(v);
+    else if (key === 'pantry') st.pantry = (v.list) || [];
+    else if (key === 'shop') st.shop = Object.assign(st.shop || {}, { checked: v.checked || {} });
+    else if (key === 'prof') for (const p of st.profiles || []) if (p.remoteId && v[p.remoteId]) { p.nick = v[p.remoteId].nick || p.nick; if (v[p.remoteId].kg) p.kg = v[p.remoteId].kg; }
+  }
+  const FAM_KEYS = ['plan', 'recipes', 'pantry', 'shop', 'prof'];
+  function mergeFamily(st, remoteRows) {
+    st.famBase = st.famBase || {};
+    const local = famLocal(st), remote = {}, toPush = [];
+    for (const r of remoteRows || []) remote[r.key] = r.data || {};
+    for (const key of FAM_KEYS) {
+      const whole = key === 'pantry' || key === 'shop';
+      const L = whole ? { _: local[key] } : local[key], B = whole ? { _: (st.famBase[key] || {})._ } : st.famBase[key] || {};
+      const R0 = remote[key], R = whole ? (R0 ? { _: R0 } : {}) : R0 || {};
+      let m = mergeMap(L, B, R, key === 'plan');
+      if (key === 'plan') for (const k of Object.keys(m)) if (!m[k].length) delete m[k];
+      const val = whole ? m._ || local[key] : m;
+      famApply(st, key, val);
+      if (J(val) !== J(R0)) toPush.push({ key, data: val });
+      st.famBase[key] = whole ? { _: val } : JSON.parse(J(val));
+    }
+    return toPush;
+  }
+  async function syncFamily(fid, st) {
+    let rows;
+    try { rows = unwrap(await sb.from('family_data').select('key, data, updated_at').eq('family_id', fid)); }
+    catch (e) {
+      if (/family_data|schema cache|does not exist/i.test(e.message || '')) return { missing: true, pushed: 0 };
+      throw e;
+    }
+    const up = mergeFamily(st, rows);
+    for (const u of up) unwrap(await sb.from('family_data').upsert({ family_id: fid, key: u.key, data: u.data }, { onConflict: 'family_id,key' }));
+    return { missing: false, pushed: up.length, pulled: (rows || []).length };
   }
 
   return {
     enabled, init, session, signIn, verifyCode, signUpPw, signInPw, signOut, myMembership, createFamily, familyPreview, joinFamily,
     inviteCode, newInviteCode, pushMember, removeMember, syncAll,
-    mergeMembers, dayRowsToPush, applyRemoteDays,
+    mergeMembers, dayRowsToPush, applyRemoteDays, mergeMap, mergeFamily,
     _setClient: (c) => { sb = c; }, // tylko do testów
   };
 })();
