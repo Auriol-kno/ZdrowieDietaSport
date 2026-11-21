@@ -177,7 +177,7 @@ function itemPill(name) {
   if (m.amb) return `<span class="pill lim tiny" title="Na liście są różne rodzaje: ${esc(m.it)}">${isKid() ? 'Zapytaj rodzica' : 'Zależy od rodzaju'}</span>`;
   return `<span class="pill ${m.st} tiny"><span aria-hidden="true">${MARK[m.st]}</span>${(isKid() ? LABEL_KID : LABEL)[m.st]}</span>`;
 }
-const QUICK_ACT = [['Ćwiczenia wieczorne w domu', 20], ['Judo', 60], ['W-F w szkole', 45], ['Spacer', 30], ['Rower', 45], ['Bieganie', 30], ['Pływanie', 45], ['Piłka nożna', 60], ['Siłownia', 45], ['Taniec', 30], ['Hulajnoga', 30]];
+const QUICK_ACT = [['Ćwiczenia w domu', 20], ['Judo', 60], ['W-F w szkole', 45], ['Spacer', 30], ['Rower', 45], ['Bieganie', 30], ['Pływanie', 45], ['Piłka nożna', 60]];
 // Spalone kcal (szacunkowo): MET × waga (kg) × czas (h). Wartości MET z tabel wysiłku, dla dzieci orientacyjne.
 const MET = [[/spacer|chodz/, 3.5], [/rower/, 6], [/pływ|basen/, 6], [/piłk|nożn|kosz|siatk|ręczn/, 7], [/bieg|jogging/, 8], [/siłown|ćwicz|trening/, 5],
   [/taniec|tańcz/, 5], [/hulajn|rolk|wrotk/, 5], [/w-f|wf|wychowanie/, 5], [/narty|snowboard/, 6], [/łyżw/, 6], [/sztuki walki|karate|judo|taekwondo/, 7], [/joga|rozciąg/, 2.5], [/tenis/, 7]];
