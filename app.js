@@ -384,8 +384,13 @@ function syncCard() {
   let h = '<div class="card"><h2>Synchronizacja</h2>';
   if (su.msg) h += `<p class="note${su.err ? ' warn' : ''}">${esc(su.msg)}</p>`;
   if (!su.session) {
-    h += '<div class="field"><label for="s-email">E-mail</label><input type="email" id="s-email" autocomplete="email"></div>' +
-      '<p class="muted">Wyślemy link logowania. Bez hasła.</p><button type="button" data-action="sync-login">Wyślij link logowania</button>';
+    h += `<div class="field"><label for="s-email">E-mail</label><input type="email" id="s-email" autocomplete="email" value="${esc(su.email || '')}"></div>` +
+      '<p class="muted">Wyślemy mail z kodem logowania. Bez hasła.</p><button type="button" data-action="sync-login">Wyślij kod</button>';
+    if (su.email) {
+      h += '<div class="field"><label for="s-otp">Kod z maila</label><input type="text" id="s-otp" inputmode="numeric" autocomplete="one-time-code" maxlength="10"></div>' +
+        '<button type="button" data-action="sync-otp">Zaloguj kodem</button>' +
+        '<p class="muted small">Na iPhonie wpisz kod tutaj, w aplikacji z ekranu początkowego. Link z maila otwiera Safari, a nie tę aplikację.</p>';
+    }
   } else if (!state.fam) {
     h += '<p class="muted">Wpisz swoje imię tak samo jak w profilu powyżej, wtedy profile się połączą.</p>' +
       '<h2>Utwórz rodzinę</h2><div class="grid">' +
@@ -443,7 +448,16 @@ async function syncAction(a) {
       const email = val('s-email');
       if (!email) throw new Error('Wpisz e-mail.');
       await ZdsSync.signIn(email);
-      su.msg = 'Wysłano link logowania na ' + email + '. Otwórz go na tym telefonie.'; su.err = false;
+      su.email = email;
+      su.msg = 'Wysłano mail na ' + email + '. Wpisz kod z maila poniżej.'; su.err = false;
+    } else if (a === 'sync-otp') {
+      const code = val('s-otp').replace(/\s/g, '');
+      if (!su.email || !code) throw new Error('Wpisz kod z maila.');
+      await ZdsSync.verifyCode(su.email, code);
+      su.session = true;
+      if (!state.fam) await setMembership();
+      if (state.fam) await runSync(true);
+      su.msg = 'Zalogowano.'; su.err = false;
     } else if (a === 'sync-create') {
       const fam = val('s-fam'), me = val('s-me');
       if (!fam || !me) throw new Error('Wpisz nazwę rodziny i swoje imię.');

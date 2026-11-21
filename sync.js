@@ -105,6 +105,9 @@ const ZdsSync = (() => {
   async function signIn(email) {
     unwrap(await sb.auth.signInWithOtp({ email, options: { emailRedirectTo: location.origin + location.pathname } }));
   }
+  async function verifyCode(email, token) {
+    unwrap(await sb.auth.verifyOtp({ email, token, type: 'email' }));
+  }
   async function signOut() { await sb.auth.signOut(); }
 
   async function myMembership() {
@@ -159,7 +162,7 @@ const ZdsSync = (() => {
   }
 
   return {
-    enabled, init, session, signIn, signOut, myMembership, createFamily, familyPreview, joinFamily,
+    enabled, init, session, signIn, verifyCode, signOut, myMembership, createFamily, familyPreview, joinFamily,
     inviteCode, newInviteCode, pushMember, removeMember, syncAll,
     mergeMembers, dayRowsToPush, applyRemoteDays,
     _setClient: (c) => { sb = c; }, // tylko do testów

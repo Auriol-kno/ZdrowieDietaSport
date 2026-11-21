@@ -77,3 +77,8 @@ Air fryer jest dozwolony (potwierdzone przez użytkownika 20.11.2026). Ustawieni
 - Syn dopisuje dania (okrągły plusik przy posiłku) i napoje; jego wpisy są fioletowe i od razu ocenione według zaleceń.
 - Profile: wybór profilu, tryb rodzica, statystyki (kalorie, ciągłość, woda, aktywność, jakość) i eksport do arkusza CSV (udostępnianie albo e-mail z podsumowaniem).
 - Zakładka Przepisy widoczna tylko w trybie rodzica. W bazie 82 przepisy, w tym 31 dań z kurczakiem.
+
+## Logowanie na iPhonie (kod z maila)
+
+Aplikacja dodana do ekranu początkowego ma osobną pamięć od Safari, więc link z maila jej nie zaloguje. Dlatego logujemy się kodem:
+Supabase → Authentication → Emails (Email Templates) → „Magic Link”: dopisz do treści `Twój kod: {{ .Token }}` i zapisz.
