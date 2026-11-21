@@ -112,10 +112,15 @@ function statsCard() {
     [['ok', q.ok], ['lim', q.lim], ['no', q.no], ['unk', q.unk]].map(([k, v]) => v ? `<i class="${k}" style="width:${(v / tot * 100).toFixed(1)}%"></i>` : '').join('') + '</div>' +
     `<div class="row wrap small"><span class="pill ok tiny">Dozwolone ${q.ok}</span><span class="pill lim tiny">Ograniczone ${q.lim}</span><span class="pill no tiny">Zakazane ${q.no}</span><span class="pill tiny">Spoza listy ${q.unk}</span></div>` +
     (bad.length ? `<div class="note warn">Zakazane w tym okresie: ${esc(bad.join(', '))}.</div>` : '');
-  h += '<h3>Wyślij arkusz</h3><div class="field"><label for="smail" class="muted">Adres e-mail</label>' +
+  h += '<h3>Raport do wysłania mailem</h3><div class="field"><label for="smail" class="muted">Adres e-mail</label>' +
     `<input type="email" id="smail" value="${esc(state.statsMail || '')}" placeholder="np. mama@example.com" autocomplete="email" inputmode="email"></div>` +
-    '<div class="row wrap"><button type="button" data-action="stats-share">Wyślij arkusz (.csv)</button><button type="button" class="ghost" data-action="stats-mail">Otwórz e-mail z podsumowaniem</button></div>' +
-    '<p class="muted small">„Wyślij arkusz” otwiera menu udostępniania telefonu: wybierz Mail, arkusz jest w załączniku, a adres trzeba wkleić w polu Do (kopiujemy go do schowka). Arkusz otwiera się w Excelu, Numbers i Arkuszach Google.</p>';
+    '<p class="muted small">Skoroszyt Excel z ostatnich ' + st.range + ' dni: podsumowanie z wykresem dni, wszystkie posiłki z oceną wg zaleceń, zdjęcia dań, napoje i aktywność ze spalonymi kcal. Żółta kolumna służy do dopisania kalorii, podsumowanie przelicza się samo.</p>' +
+    (typeof rep !== 'undefined' && rep.msg ? `<div class="note small" role="status">${esc(rep.msg)}</div>` : '') +
+    '<div class="row wrap">' + (typeof rep !== 'undefined' && rep.file && !rep.busy
+      ? '<button type="button" data-action="rep-send">Wyślij raport</button><button type="button" class="ghost" data-action="rep-prep">Przygotuj ponownie</button>'
+      : `<button type="button" data-action="rep-prep"${typeof rep !== 'undefined' && rep.busy ? ' disabled' : ''}>${typeof rep !== 'undefined' && rep.busy ? 'Przygotowuję…' : 'Przygotuj raport (Excel)'}</button>`) +
+    '<button type="button" class="ghost" data-action="stats-mail">E-mail z krótkim podsumowaniem</button></div>' +
+    '<p class="muted small">„Wyślij raport” otwiera menu udostępniania: wybierz Mail, plik jest w załączniku, a adres skopiowaliśmy do schowka, więc wklej go w polu Do.</p>';
   return h + '</div>';
 }
 

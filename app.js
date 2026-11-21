@@ -149,14 +149,27 @@ function itemPill(name) {
   return `<span class="pill ${m.st} tiny"><span aria-hidden="true">${MARK[m.st]}</span>${(isKid() ? LABEL_KID : LABEL)[m.st]}</span>`;
 }
 const QUICK_ACT = [['Spacer', 30], ['Rower', 45], ['Pływanie', 45], ['Piłka nożna', 60], ['Bieganie', 30], ['Siłownia', 45], ['Taniec', 30], ['Hulajnoga', 30], ['W-F w szkole', 45]];
+// Spalone kcal (szacunkowo): MET × waga (kg) × czas (h). Wartości MET z tabel wysiłku, dla dzieci orientacyjne.
+const MET = [[/spacer|chodz/, 3.5], [/rower/, 6], [/pływ|basen/, 6], [/piłk|nożn|kosz|siatk|ręczn/, 7], [/bieg|jogging/, 8], [/siłown|ćwicz|trening/, 5],
+  [/taniec|tańcz/, 5], [/hulajn|rolk|wrotk/, 5], [/w-f|wf|wychowanie/, 5], [/narty|snowboard/, 6], [/łyżw/, 6], [/sztuki walki|karate|judo|taekwondo/, 7], [/joga|rozciąg/, 2.5], [/tenis/, 7]];
+const metOf = (name) => { const n = String(name).toLowerCase(); const f = MET.find(([r]) => r.test(n)); return f ? f[1] : 4; };
+const weightOf = (p) => Number(p.kg) || (p.role === 'dziecko' ? 40 : 75);
+const burned = (x, p) => Math.round(metOf(x.name) * weightOf(p) * (x.min / 60));
 function activityCard(d) {
-  const list = d.activities || [], tot = list.reduce((a, x) => a + x.min, 0);
-  return `<div class="card sport"><div class="row sb"><h2>Aktywność</h2><span class="muted">${tot ? tot + ' min' : 'jeszcze nic'}</span></div>` +
+  const p = cur(), kid = isKid();
+  const list = d.activities || [], tot = list.reduce((a, x) => a + x.min, 0), kc = list.reduce((a, x) => a + burned(x, p), 0);
+  return `<div class="card sport"><div class="row sb"><h2>Aktywność</h2><span class="muted">${tot ? tot + ' min' + (kid ? '' : ` · ok. ${kc} kcal`) : 'jeszcze nic'}</span></div>` +
     '<div class="chips scroll">' + QUICK_ACT.map(([n, m]) => `<button type="button" class="chip" data-action="act-pick" data-name="${esc(n)}" data-min="${m}">${esc(n)}</button>`).join('') + '</div>' +
     '<form data-act="1"><label class="sr" for="an">Aktywność</label><input type="text" id="an" placeholder="Aktywność" required autocomplete="off">' +
     '<label class="sr" for="am">Minuty</label><input type="number" id="am" value="30" min="1" max="1440" inputmode="numeric" required><button type="submit" class="small">Dodaj</button></form>' +
-    (list.length ? '<ul class="drinklist">' + list.map((x, i) => `<li><span>${esc(x.name)} <span class="muted">${x.min} min</span></span>` +
+    (kid ? '' : `<p class="muted small" id="aest">${actEst('', 30)}</p>`) +
+    (list.length ? '<ul class="drinklist">' + list.map((x, i) => `<li><span>${esc(x.name)} <span class="muted">${x.min} min${kid ? '' : ` · ok. ${burned(x, p)} kcal`}</span></span>` +
       `<button type="button" class="small ghost" data-action="act-del" data-i="${i}" aria-label="Usuń ${esc(x.name)}">✕</button></li>`).join('') + '</ul>' : '') + '</div>';
+}
+function actEst(n0, m0) {
+  const n = n0 !== undefined ? n0 : ($('#an') || {}).value || '', m = m0 !== undefined ? m0 : Number(($('#am') || {}).value) || 30, p = cur();
+  const x = { name: n, min: m };
+  return `${n ? esc(n) : 'Aktywność'} przez ${m} min spala ok. <strong>${burned(x, p)} kcal</strong> (waga ${weightOf(p)} kg${p.kg ? '' : ', przyjęta, wpisz w Profilach'}).`;
 }
 
 // Pasek do następnego posiłku: liczy czas od poprzedniego posiłku do następnego niezjedzonego.
@@ -175,20 +188,53 @@ function nextMealInfo(d, now = new Date()) {
   return { next, left, pct, due: left <= 0 };
 }
 const fmtLeft = (m) => { m = Math.max(0, Math.round(m)); const h = Math.floor(m / 60), r = m % 60; return h ? `${h} h ${r} min` : `${r} min`; };
+// Dźwięk pory posiłku: pik, pyk albo cisza. Gra raz, gdy przychodzi pora (aplikacja musi być otwarta).
+let actx = null;
+function audio() {
+  try { actx = actx || new (window.AudioContext || window.webkitAudioContext)(); if (actx.state === 'suspended') actx.resume(); } catch (e) { actx = null; }
+  return actx;
+}
+document.addEventListener('pointerdown', () => audio(), { once: true });
+function playChime(kind) {
+  const c = audio(); if (!c || kind === 'off') return;
+  const tone = (f1, f2, at, dur, vol) => {
+    const o = c.createOscillator(), g = c.createGain(), t0 = c.currentTime + at;
+    o.type = 'sine'; o.frequency.setValueAtTime(f1, t0); o.frequency.exponentialRampToValueAtTime(f2, t0 + dur);
+    g.gain.setValueAtTime(0.0001, t0); g.gain.exponentialRampToValueAtTime(vol, t0 + 0.012); g.gain.exponentialRampToValueAtTime(0.0001, t0 + dur);
+    o.connect(g).connect(c.destination); o.start(t0); o.stop(t0 + dur + 0.02);
+  };
+  if (kind === 'pyk') { tone(520, 180, 0, 0.09, 0.5); tone(520, 180, 0.22, 0.09, 0.45); }
+  else { tone(1046, 1046, 0, 0.12, 0.25); tone(1568, 1568, 0.16, 0.16, 0.25); }
+}
+const SOUNDS = { pik: 'pik', pyk: 'pyk', off: 'wyciszone' };
+function soundBtn() {
+  const s = state.sound || 'pik';
+  return `<button type="button" class="sndbtn ${s}" data-action="sound" aria-label="Dźwięk pory posiłku: ${SOUNDS[s]}. Dotknij, aby zmienić."><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 9h4l5-4v14l-5-4H4z"/>` +
+    (s === 'off' ? '<path d="M16 9l5 6M21 9l-5 6"/>' : '<path d="M16 9.5a4 4 0 0 1 0 5M18.5 7a7.5 7.5 0 0 1 0 10"/>') + `</svg><span>${SOUNDS[s]}</span></button>`;
+}
+function checkChime() {
+  const d = day(), x = nextMealInfo(d);
+  if (x.end || !x.due) return;
+  const k = dayKey() + '|' + x.next.k;
+  if (state.chimed === k) return;
+  state.chimed = k; save(true);
+  playChime(state.sound || 'pik');
+}
+
 function nextMealCard(d) {
   const x = nextMealInfo(d);
   const hm = (m) => `${Math.floor(m / 60)}:${String(m % 60).padStart(2, '0')}`;
   if (x.end) {
     return `<div class="nextmeal end" role="status"><div class="nm-top"><span class="nm-title">${x.all ? 'Na dziś wszystko zjedzone 🎉' : 'Posiłki na dziś za nami'}</span>` +
-      `<span class="nm-time">jutro ${esc(x.next.n.toLowerCase())} ${hm(x.next.at)}</span></div><div class="nm-bar"><i style="width:100%"></i></div></div>`;
+      `<span class="nm-time">jutro ${esc(x.next.n.toLowerCase())} ${hm(x.next.at)}</span></div><div class="nm-row"><div class="nm-bar"><i style="width:100%"></i></div>${soundBtn()}</div></div>`;
   }
   // kolor: zielony daleko, pomarańczowy blisko, fioletowy gdy pora posiłku
   const hue = x.due ? 270 : Math.round(140 - (x.pct / 100) * 110);
   const title = x.due ? `Czas na: ${x.next.n.toLowerCase()}!` : `Do posiłku: ${x.next.n.toLowerCase()}`;
   const time = x.due ? `od ${hm(x.next.at)}` : `${fmtLeft(x.left)} · ${hm(x.next.at)}`;
   return `<div class="nextmeal${x.due ? ' due' : ''}" role="status" style="--nm:${hue}"><div class="nm-top"><span class="nm-title">${esc(title)}</span>` +
-    `<span class="nm-time">${esc(time)}</span></div><div class="nm-bar" role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="${Math.round(x.pct)}" aria-label="Czas do następnego posiłku">` +
-    `<i style="width:${x.due ? 100 : x.pct.toFixed(1)}%"></i></div></div>`;
+    `<span class="nm-time">${esc(time)}</span></div><div class="nm-row"><div class="nm-bar" role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="${Math.round(x.pct)}" aria-label="Czas do następnego posiłku">` +
+    `<i style="width:${x.due ? 100 : x.pct.toFixed(1)}%"></i></div>${soundBtn()}</div></div>`;
 }
 
 // Zdjęcie zjedzonego dania: zmniejszone do 360 px (JPEG), zapisane w dniu, więc synchronizuje się z rodziną.
@@ -280,8 +326,7 @@ function viewToday() {
   for (const [key, name, time] of MEALS) {
     const m = meal(d, key);
     html += `<div class="meal"><div class="row sb"><div><strong>${name}</strong> <span class="muted">${time}</span></div>` +
-      `<span class="row">${`<button type="button" class="plus" data-action="kid-add" data-meal="${key}" aria-label="${kid ? 'Dopisz, co zjadłeś na' : 'Dodaj danie do'} ${esc(name)}" aria-expanded="${addOpen === key}">+</button>`}` +
-      `<button type="button" class="plus propbtn" data-action="prop-add" data-meal="${key}" aria-label="Zaproponuj danie na ${esc(name)}" aria-expanded="${addOpen === 'p:' + key}"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9 18h6M10 21h4M12 3a6 6 0 0 0-3.6 10.8c.6.5 1 1.2 1 2V16h5.2v-.2c0-.8.4-1.5 1-2A6 6 0 0 0 12 3z"/></svg></button>` +
+      '<span class="row">' +
       `<span class="eatpill${m.done ? ' on' : ''}"><button type="button" class="eat" data-action="done" data-meal="${key}" aria-pressed="${m.done}">${m.done ? '✓ Zjedzone' : 'Zjedzone'}</button>` +
       `<button type="button" class="cam" data-action="photo" data-meal="${key}" aria-label="Dodaj zdjęcie: ${esc(name)}"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 8h3l2-2.5h6L17 8h3v11H4z"/><circle cx="12" cy="13.5" r="3.5"/></svg>${photosOf(m).length ? `<b>${photosOf(m).length}</b>` : ''}</button></span></span></div>`;
     if (m.items.length) {
@@ -318,6 +363,8 @@ function viewToday() {
         `<span class="pht">${p.at ? new Date(p.at).toLocaleTimeString('pl-PL', { hour: '2-digit', minute: '2-digit' }) : ''}</span></span>`).join('') +
         `<button type="button" class="phadd" data-action="photo" data-meal="${key}" aria-label="Dodaj kolejne zdjęcie">+</button></div>`;
     }
+    html += `<div class="addrow"><button type="button" class="addbtn" data-action="kid-add" data-meal="${key}" aria-expanded="${addOpen === key}" aria-label="${kid ? 'Dopisz, co zjadłeś na' : 'Dodaj danie do'} ${esc(name)}"><span class="ic">+</span>Dodaj</button>` +
+      `<button type="button" class="addbtn prop" data-action="prop-add" data-meal="${key}" aria-expanded="${addOpen === 'p:' + key}" aria-label="Zaproponuj danie na ${esc(name)}"><span class="ic"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9 18h6M10 21h4M12 3a6 6 0 0 0-3.6 10.8c.6.5 1 1.2 1 2V16h5.2v-.2c0-.8.4-1.5 1-2A6 6 0 0 0 12 3z"/></svg></span>Zaproponuj</button></div>`;
     if (addOpen === 'p:' + key) {
       html += `<form data-meal="${key}" data-prop="1" class="kidform propform${kid ? '' : ' parform'}"><label class="sr" for="n-${key}">Propozycja dania</label>` +
         `<input type="text" id="n-${key}" placeholder="Zaproponuj danie" required autocomplete="off">` +
@@ -372,6 +419,8 @@ function viewProfiles() {
   let html = '<h1>Profile</h1><div class="card"><h2>Kto korzysta</h2>' + (isKid()
     ? `<p class="muted">Profil: <strong>${esc(cur().name)}</strong>. Zmiana profilu tylko w trybie rodzica.</p>`
     : '<div class="chips">' + state.profiles.map((p) => `<button type="button" class="chip" data-action="pick-profile" data-id="${p.id}" aria-pressed="${p.id === state.current}">${esc(p.name)}</button>`).join('') + '</div>') + '</div>' +
+    '<div class="card"><h2>Wygląd</h2><div class="chips">' + [['light', 'Jasny'], ['dark', 'Ciemny'], ['system', 'Jak w systemie']].map(([v, n]) =>
+      `<button type="button" class="chip" data-action="theme" data-v="${v}" aria-pressed="${(state.theme || 'system') === v}">${n}</button>`).join('') + '</div></div>' +
     '<div class="card"><div class="row sb"><div><h2>Tryb rodzica</h2>' +
     `<span class="muted">${parent ? 'Włączony: widać kalorie, plan i zakupy.' : 'Wyłączony: widok dziecka.'}</span></div>` +
     `<button type="button" class="small ${parent ? '' : 'ghost'}" data-action="parent-toggle" aria-pressed="${parent}">${parent ? 'Wyłącz' : 'Włącz'}</button></div></div>`;
@@ -392,13 +441,25 @@ function viewProfiles() {
       `<div class="field"><label for="pr-${p.id}">Rola</label><select id="pr-${p.id}" data-field="role">` +
       ['dziecko', 'dorosły', 'rodzic'].map((r) => `<option${r === p.role ? ' selected' : ''}>${r}</option>`).join('') + '</select></div>' +
       `<div class="field"><label for="pk-${p.id}">Cel kcal (0 = brak)</label><input type="number" id="pk-${p.id}" data-field="kcal" min="0" value="${p.kcal}"></div>` +
+      `<div class="field"><label for="pw-${p.id}">Waga (kg), do spalonych kcal</label><input type="number" id="pw-${p.id}" data-field="kg" min="0" max="300" step="0.5" inputmode="decimal" value="${esc(p.kg || '')}" placeholder="np. ${p.role === 'dziecko' ? 40 : 75}"></div>` +
       `<div class="field"><span>&nbsp;</span><button type="button" class="ghost" data-action="rm-profile" data-id="${p.id}">Usuń profil</button></div></div></div>`;
   }
   html += '<button type="button" data-action="add-profile">Dodaj profil</button>' + syncCard();
   return html;
 }
 
+// Motyw: jasny, ciemny albo jak w systemie.
+const darkMq = window.matchMedia ? window.matchMedia('(prefers-color-scheme: dark)') : null;
+function applyTheme() {
+  const t = state.theme || 'system';
+  const dark = t === 'dark' || (t === 'system' && darkMq && darkMq.matches);
+  document.documentElement.dataset.theme = dark ? 'dark' : 'light';
+  const m = document.querySelector('meta[name=theme-color]'); if (m) m.content = dark ? '#23211f' : '#ECE6DF';
+}
+if (darkMq && darkMq.addEventListener) darkMq.addEventListener('change', () => applyTheme());
+
 function render() {
+  applyTheme();
   if (isKid() && tab === 'przepisy') tab = 'dzis';
   const rt = document.querySelector('.tabs [data-tab=przepisy]'); if (rt) rt.hidden = isKid();
   document.body.classList.toggle('kid', isKid());
@@ -425,6 +486,38 @@ function toggleParent() {
   render();
 }
 
+// Usuwanie tylko po świadomym potwierdzeniu.
+const lbl = (t) => (t.getAttribute('aria-label') || '').replace(/^(Usuń|Wycofaj|Odrzuć)( z listy| z planu)?\s*/, '');
+const mealN = (k) => ((MEALS.find((m) => m[0] === k) || [])[1] || '').toLowerCase();
+const NEED_OK = {
+  del: (t) => {
+    const it = (day().meals[t.dataset.meal] || { items: [] }).items[Number(t.dataset.i)] || {};
+    return { title: `Usunąć „${it.name || lbl(t)}”?`, text: `Danie zniknie z posiłku: ${mealN(t.dataset.meal)}.` + (isKid() && it.by === 'rodzic' ? ' To danie dodał rodzic.' : ''), yes: 'Usuń' };
+  },
+  'prop-rm': (t) => ({ title: `Usunąć propozycję „${lbl(t)}”?`, text: 'Propozycja zniknie z listy.', yes: 'Usuń' }),
+  'prop-no': (t) => ({ title: `Odrzucić propozycję „${lbl(t)}”?`, text: 'Autor zobaczy, że propozycja została odrzucona.', yes: 'Odrzuć' }),
+  'photo-del': () => ({ title: 'Usunąć to zdjęcie?', text: 'Zdjęcia nie da się przywrócić.', yes: 'Usuń' }),
+  'act-del': (t) => ({ title: `Usunąć aktywność „${lbl(t)}”?`, text: '', yes: 'Usuń' }),
+  'k-drink-del': (t) => ({ title: `Usunąć napój „${lbl(t)}”?`, text: '', yes: 'Usuń' }),
+  'k-plan-rm': () => ({ title: 'Usunąć danie z planu?', text: '', yes: 'Usuń' }),
+};
+function askConfirm(o) {
+  return new Promise((res) => {
+    const prev = document.activeElement;
+    const w = document.createElement('div');
+    w.className = 'askbg';
+    w.innerHTML = `<div class="ask" role="alertdialog" aria-modal="true" aria-labelledby="ask-t" aria-describedby="ask-d"><h2 id="ask-t">${esc(o.title)}</h2>` +
+      (o.text ? `<p id="ask-d" class="muted">${esc(o.text)}</p>` : '<p id="ask-d" class="sr">Potwierdź</p>') +
+      `<div class="row"><button type="button" class="ghost" data-ask="0">Anuluj</button><button type="button" class="danger" data-ask="1">${esc(o.yes || 'Tak')}</button></div></div>`;
+    const done = (v) => { w.remove(); document.removeEventListener('keydown', esc_); if (prev && prev.focus) prev.focus(); res(v); };
+    const esc_ = (e) => { if (e.key === 'Escape') done(false); };
+    w.addEventListener('click', (e) => { e.stopPropagation(); const b = e.target.closest('[data-ask]'); if (b) done(b.dataset.ask === '1'); else if (e.target === w) done(false); });
+    document.addEventListener('keydown', esc_);
+    document.body.appendChild(w);
+    w.querySelector('[data-ask="0"]').focus();
+  });
+}
+
 document.addEventListener('click', (e) => {
   const t = e.target.closest('button');
   if (!t) return;
@@ -438,6 +531,10 @@ document.addEventListener('click', (e) => {
   }
   const a = t.dataset.action;
   if (!a) return;
+  if (NEED_OK[a] && !t._ok) {
+    askConfirm(NEED_OK[a](t)).then((yes) => { if (yes && t.isConnected) { t._ok = true; t.click(); t._ok = false; } });
+    return;
+  }
   if (a === 'parent-toggle') return toggleParent();
   if (a.startsWith('k-')) return kAction(a, t);
   if (a.startsWith('sync-')) return syncAction(a);
@@ -457,7 +554,14 @@ document.addEventListener('click', (e) => {
   else if (a === 'kid-device') { if (!parent) return; state.kidDevice = t.dataset.id || null; save(true); return render(); }
   else if (a === 'pick-profile') { if (isKid()) return; state.current = t.dataset.id; addOpen = null; }
   else if (a === 'stats-share') return statsShare();
+  else if (a === 'rep-prep') { const i = $('#smail'); if (i) { state.statsMail = i.value.trim(); save(true); } return reportPrepare(); }
+  else if (a === 'rep-send') return reportSend();
   else if (a === 'stats-mail') return statsMail();
+  else if (a === 'theme') { state.theme = t.dataset.v; save(true); return render(); }
+  else if (a === 'sound') {
+    const order = ['pik', 'pyk', 'off'], s = state.sound || 'pik';
+    state.sound = order[(order.indexOf(s) + 1) % order.length]; save(true); playChime(state.sound); return render();
+  }
   else if (a === 'photo') return takePhoto(t.dataset.meal);
   else if (a === 'photo-view') { const ph = photosOf(meal(d, t.dataset.meal))[Number(t.dataset.i) || 0]; if (ph) viewPhoto(ph.src); return; }
   else if (a === 'photo-del') { const m = meal(d, t.dataset.meal), ph = photosOf(m); ph.splice(Number(t.dataset.i) || 0, 1); m.photos = ph; delete m.photo; d.u = Date.now(); }
@@ -469,9 +573,9 @@ document.addEventListener('click', (e) => {
   else if (a === 'prop-no') { const it = meal(d, t.dataset.meal).items[Number(t.dataset.i)]; if (it && it.prop) it.rej = true; }
   else if (a === 'prop-rm') meal(d, t.dataset.meal).items.splice(Number(t.dataset.i), 1);
   else if (a === 'kid-add') { addOpen = addOpen === t.dataset.meal ? null : t.dataset.meal; render(); const i = $('#n-' + addOpen); if (i) i.focus(); return; }
-  else if (a === 'st-range') { st.range = Number(t.dataset.v); return render(); }
+  else if (a === 'st-range') { st.range = Number(t.dataset.v); if (typeof rep !== 'undefined') { rep.file = null; rep.msg = ''; } return render(); }
   else if (a === 'act-del') { (d.activities = d.activities || []).splice(Number(t.dataset.i), 1); d.u = Date.now(); }
-  else if (a === 'act-pick') { $('#an').value = t.dataset.name; $('#am').value = t.dataset.min; $('#am').focus(); return; }
+  else if (a === 'act-pick') { $('#an').value = t.dataset.name; $('#am').value = t.dataset.min; const es = $('#aest'); if (es) es.innerHTML = actEst(); $('#am').focus(); return; }
   else if (a === 'add-profile') { const p = { id: uid(), name: 'Nowy profil', role: 'dorosły', kcal: 0 }; state.profiles.push(p); }
   else if (a === 'rm-profile') {
     if (state.profiles.length < 2) return alert('Musi zostać co najmniej jeden profil.');
@@ -538,6 +642,7 @@ document.addEventListener('submit', (e) => {
 });
 
 document.addEventListener('input', (e) => {
+  if ((e.target.id === 'an' || e.target.id === 'am') && $('#aest')) $('#aest').innerHTML = actEst();
   if (e.target.id === 'q') { chk.q = e.target.value; $('#cols').innerHTML = colsHtml(); }
   if (e.target.id === 'rq') { ku.q = e.target.value; $('#rlist').innerHTML = listHtml(); }
 });
@@ -553,7 +658,7 @@ document.addEventListener('change', (e) => {
   if (box && e.target.dataset.field) {
     const p = state.profiles.find((x) => x.id === box.dataset.pid);
     const f = e.target.dataset.field;
-    p[f] = f === 'kcal' ? Math.max(0, Number(e.target.value) || 0) : f === 'nick' ? e.target.value.trim() : e.target.value.trim() || p[f];
+    p[f] = f === 'kcal' ? Math.max(0, Number(e.target.value) || 0) : f === 'kg' ? Math.max(0, Number(e.target.value) || 0) : f === 'nick' ? e.target.value.trim() : e.target.value.trim() || p[f];
     save(); render();
     if (p.remoteId && state.fam && state.fam.role === 'rodzic') ZdsSync.pushMember(state.fam.id, p).catch(() => {});
   }
@@ -719,6 +824,7 @@ async function initSync() {
   setInterval(() => {
     const el = document.querySelector('.nextmeal');
     if (el && tab === 'dzis') { const w = document.createElement('div'); w.innerHTML = nextMealCard(day()); el.replaceWith(w.firstElementChild); }
+    checkChime();
   }, 30000);
 }
 

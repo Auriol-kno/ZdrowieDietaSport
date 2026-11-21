@@ -81,3 +81,10 @@ Air fryer jest dozwolony (potwierdzone przez użytkownika 20.11.2026). Ustawieni
 ## Logowanie (e-mail i hasło)
 
 Aplikacja z ekranu początkowego iPhone'a ma osobną pamięć od Safari, więc link z maila jej nie zaloguje. Logujemy się e-mailem i hasłem. Przy pierwszym razie Supabase może wysłać mail z potwierdzeniem: wystarczy kliknąć link raz (w dowolnej przeglądarce), a potem zalogować się hasłem. Potwierdzanie można wyłączyć: Authentication → Sign In / Providers → Email → „Confirm email”.
+
+## Raport, dźwięk, motyw
+
+- Profile → Statystyki → „Przygotuj raport (Excel)”, potem „Wyślij raport”. Skoroszyt ma zakładki: Podsumowanie (formuły przeliczają się po dopisaniu kalorii), Posiłki (żółta kolumna do uzupełnienia kcal), Zdjęcia, Napoje, Aktywność (spalone kcal = MET × waga × czas).
+- Pasek do następnego posiłku ma dźwięk pory posiłku: pik, pyk albo wyciszony (gra tylko, gdy aplikacja jest otwarta).
+- Profile → Wygląd: jasny, ciemny albo jak w systemie.
+- Usuwanie dań, propozycji, napojów, aktywności i zdjęć wymaga potwierdzenia.
