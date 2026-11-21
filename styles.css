@@ -515,3 +515,43 @@ html[data-theme="dark"] .mealname { box-shadow: var(--in); }
 .eatpill .cam svg { width: 20px; height: 20px; }
 .itemname .muted, .itemname .by { font-size: 11px; font-weight: 600; line-height: 14px; }
 li.kiditem .itemname .muted { color: #9a5a28; }
+/* Większe kapsułki wody i posiłków */
+.gauge { width: 78px; height: 150px; border-radius: 40px; }
+.gauge > i { left: 9px; right: 9px; bottom: 9px; max-height: calc(100% - 18px); }
+.gauge.seg { display: flex; flex-direction: column; gap: 0; padding: 9px; }
+.gauge.seg > i { position: static; flex: 1; max-height: none; border-radius: 0; background: transparent; border-top: 1.5px solid rgba(120, 110, 100, .22); }
+.gauge.seg > i:first-child { border-top: 0; border-radius: 26px 26px 0 0; }
+.gauge.seg > i:last-child { border-radius: 0 0 26px 26px; }
+.gauge.seg > i.on { background: linear-gradient(180deg, #5ee07a, #22a447); border-top-color: rgba(255, 255, 255, .55); }
+.gauge.seg > i.on + i.on { border-top-color: rgba(255, 255, 255, .55); }
+.gauge-text strong { font-size: 20px; }
+/* Segmenty posiłków dnia w delikatnych odcieniach */
+.meal { border-top: 0; border-radius: 18px; padding: 10px 10px 8px; margin-top: 8px; }
+.meal.m-sniadanie { background: rgba(240, 200, 110, .14); }
+.meal.m-ii { background: rgba(150, 200, 120, .13); }
+.meal.m-obiad { background: rgba(235, 150, 100, .13); }
+.meal.m-przekaska { background: rgba(120, 170, 220, .13); }
+.meal.m-kolacja { background: rgba(160, 130, 210, .13); }
+/* Wpisy dodane plusikiem i propozycje: tylko delikatny kolor */
+.meal li.kiditem { background: #f6e8d9; box-shadow: inset 1px 1px 3px rgba(190, 120, 60, .18), inset -1px -1px 3px rgba(255, 255, 255, .7); }
+.meal li.paritem { background: #e7eef5; box-shadow: inset 1px 1px 3px rgba(60, 100, 150, .15), inset -1px -1px 3px rgba(255, 255, 255, .7); }
+.meal li.propitem { background: #eee7fa; color: #4b2a8c; box-shadow: inset 1px 1px 3px rgba(110, 70, 190, .18), inset -1px -1px 3px rgba(255, 255, 255, .7); }
+.meal li.propitem .propname .by, .meal li.propitem .propname .pk { color: #7a64a6; }
+.meal li.propitem.rej { background: #ebe8ef; color: #7d7590; }
+.meal li.propitem .okbtn { background: #5fbf7d; }
+.meal li.propitem .nobtn { background: #e2817a; }
+.meal li.propitem button.okbtn:disabled { background: #cfeed8 !important; color: #3d8c55 !important; }
+.meal li.propitem .pill { background: #fff; }
+html[data-theme="dark"] .meal li.kiditem { background: #4a3829; }
+html[data-theme="dark"] .meal li.paritem { background: #2a3746; }
+html[data-theme="dark"] .meal li.propitem { background: #3a3150; color: #e2d6ff; }
+html[data-theme="dark"] .meal li.propitem .propname .by { color: #bba9e6; }
+html[data-theme="dark"] .gauge.seg > i { border-top-color: rgba(255, 255, 255, .1); }
+.gauge.seg > i { border-top-color: rgba(120, 110, 100, .38); }
+.meal { padding: 8px 8px 6px; }
+.meal > .row.sb { flex-wrap: nowrap; gap: 6px; }
+.mealname { white-space: nowrap; padding: 5px 11px; gap: 6px; flex: 0 1 auto; min-width: 0; }
+.mealname strong { font-size: 17px; }
+.mealname span { font-size: 13px; }
+.eatpill .eat { padding: 0 10px 0 12px; }
+.eatpill .cam { padding: 0 11px; }

@@ -148,6 +148,13 @@ function resultsHtml(q) {
 }
 
 // ---------- widoki ----------
+// Kapsułka posiłków: 5 segmentów (od dołu śniadanie), zjedzone wypełnione.
+function mealGauge(d) {
+  const flags = MEALS.map(([k]) => Boolean(d.meals[k] && d.meals[k].done)), n = flags.filter(Boolean).length;
+  return `<div class="gauge-wrap"><div class="gauge seg" role="img" aria-label="Posiłki: zjedzone ${n} z ${MEALS.length}">` +
+    MEALS.map(([k, nm], i) => `<i class="${flags[i] ? 'on' : ''}" title="${esc(nm)}"></i>`).reverse().join('') + '</div>' +
+    `<div class="gauge-text"><strong>${n} z ${MEALS.length}</strong><span class="muted">${MEALS.length - n ? 'zostało ' + (MEALS.length - n) : 'wszystkie!'}</span></div></div>`;
+}
 function gauge(pct, tone, label, sub) {
   return `<div class="gauge-wrap"><div class="gauge ${tone}" role="progressbar" aria-label="${esc(label)}" aria-valuemin="0" aria-valuemax="100" aria-valuenow="${pct}"><i style="height:${Math.max(pct, 8)}%"></i></div>` +
     `<div class="gauge-text"><strong>${pct}%</strong><span class="muted">${esc(sub)}</span></div></div>`;
@@ -337,7 +344,7 @@ function viewToday() {
     const e = eatenKcal(d), kp = Math.min(100, Math.round((e / p.kcal) * 100));
     side = `<div class="card widget"><h2>Kalorie</h2>${gauge(kp, 'rose', 'Kalorie', `${e} z ${p.kcal} kcal`)}<span class="muted">Zostało ${Math.max(0, p.kcal - e)} kcal</span></div>`;
   } else {
-    side = `<div class="card widget"><h2>Posiłki</h2>${gauge(Math.round((done / MEALS.length) * 100), 'meal', 'Posiłki', `${done} z ${MEALS.length}`)}<span class="muted">${kid ? 'Dobra robota!' : 'Zjedzone dziś'}</span></div>`;
+    side = `<div class="card widget"><h2>Posiłki</h2>${mealGauge(d)}<span class="muted">${kid ? 'Dobra robota!' : 'Zjedzone dziś'}</span></div>`;
   }
   html += nextMealCard(d) + `<div class="widgets">${waterW}${side}</div>`;
 
@@ -345,10 +352,10 @@ function viewToday() {
     html += '<div class="note warn">Owoce jemy tylko do 16:00 i nie na ostatni posiłek.</div>';
   }
 
-  html += `<div class="card"><div class="row sb"><h2>Posiłki</h2>${ring(done, MEALS.length)}</div>`;
+  html += '<div class="card"><h2>Posiłki</h2>';
   for (const [key, name, time] of MEALS) {
     const m = meal(d, key);
-    html += `<div class="meal"><div class="row sb"><div class="mealname"><strong>${name}</strong> <span>${time}</span></div>` +
+    html += `<div class="meal m-${key}"><div class="row sb"><div class="mealname"><strong>${name}</strong> <span>${time}</span></div>` +
       '<span class="row">' +
       `<span class="eatpill${m.done ? ' on' : ''}"><button type="button" class="eat" data-action="done" data-meal="${key}" aria-pressed="${m.done}">${m.done ? '✓ Zjedzone' : 'Zjedzone'}</button>` +
       `<button type="button" class="cam" data-action="photo" data-meal="${key}" aria-label="Dodaj zdjęcie: ${esc(name)}"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 8h3l2-2.5h6L17 8h3v11H4z"/><circle cx="12" cy="13.5" r="3.5"/></svg>${photosOf(m).length ? `<b>${photosOf(m).length}</b>` : ''}</button></span></span></div>`;
