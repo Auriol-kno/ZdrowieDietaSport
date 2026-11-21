@@ -630,3 +630,6 @@ html[data-theme="dark"] .meal li.planitem { background: rgba(255, 255, 255, .06)
 html[data-theme="dark"] .planitem .by { color: #8fd0bf; }
 .addrecipe { background: linear-gradient(145deg, #3fae6a, #23894d); color: #fff; box-shadow: var(--up-s); }
 .planitem .pill { white-space: nowrap; }
+/* Trybik zawsze idealnie okrągły */
+button.gearbtn { box-sizing: border-box; width: 40px !important; height: 40px !important; min-width: 40px; max-width: 40px; min-height: 40px; padding: 0 !important; border-radius: 50% !important; aspect-ratio: 1 / 1; flex: 0 0 40px; line-height: 0; }
+button.gearbtn.small { width: 36px !important; height: 36px !important; min-width: 36px; max-width: 36px; min-height: 36px; flex-basis: 36px; }
