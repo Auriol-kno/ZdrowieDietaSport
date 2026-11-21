@@ -633,3 +633,14 @@ html[data-theme="dark"] .planitem .by { color: #8fd0bf; }
 /* Trybik zawsze idealnie okrągły */
 button.gearbtn { box-sizing: border-box; width: 40px !important; height: 40px !important; min-width: 40px; max-width: 40px; min-height: 40px; padding: 0 !important; border-radius: 50% !important; aspect-ratio: 1 / 1; flex: 0 0 40px; line-height: 0; }
 button.gearbtn.small { width: 36px !important; height: 36px !important; min-width: 36px; max-width: 36px; min-height: 36px; flex-basis: 36px; }
+/* Trybik w rogu karty powitania, bez cienia; synchronizacja duża i wycentrowana */
+.hero { position: relative; }
+.hero .syncbtn { width: 68px; height: 68px; min-height: 68px; align-self: center; margin-right: 4px; }
+.hero .syncbtn svg { width: 32px; height: 32px; }
+button.gearbtn.corner { position: absolute; top: -6px; right: -6px; z-index: 3; width: 34px !important; height: 34px !important; min-width: 34px; max-width: 34px; min-height: 34px;
+  box-shadow: none; background: #fff; color: #5b6b8c; border: 2px solid var(--bg); }
+button.gearbtn.corner svg { width: 19px; height: 19px; }
+button.gearbtn { box-shadow: none; }
+html[data-theme="dark"] button.gearbtn.corner { background: #2f2c29; color: #a9bde3; }
+.hero h1 { white-space: nowrap; font-size: clamp(18px, 5.4vw, 22px); }
+.hero > div:nth-child(2) { overflow: hidden; }

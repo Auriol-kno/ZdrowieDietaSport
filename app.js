@@ -342,7 +342,7 @@ function viewToday() {
     `<span class="hero-month">${now.toLocaleDateString('pl-PL', { month: 'long' })}</span></div>` +
     `<div><h1>Cześć, ${esc(p.nick || p.name)}!</h1><div class="hero-sub">${now.toLocaleDateString('pl-PL', { weekday: 'long' })}</div>` +
     (su.last ? `<div class="hero-sync">${su.err ? 'Nie udało się zsynchronizować' : 'Zsynchronizowano ' + new Date(su.last).toLocaleTimeString('pl-PL', { hour: '2-digit', minute: '2-digit' })}</div>` : '') + '</div>' +
-    `<div class="hero-actions">${gearBtn('small')}${syncBtn()}</div>` + '</div>';
+    syncBtn() + gearBtn('corner') + '</div>';
 
   const waterW = `<div class="card widget"><h2>Woda</h2>${gauge(pct, 'water', 'Woda', `${d.water * GLASS_ML / 1000} z 2 l`)}` +
     `<div class="row"><button type="button" class="small" data-action="water" data-d="1" aria-label="Dodaj szklankę">+ 250 ml</button>` +
