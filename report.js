@@ -181,10 +181,10 @@ async function reportWorkbook(n) {
   const H = (arr) => ({ h: 34, c: arr.map((x) => [x, S.head]) });
 
   // --- Posiłki (wiersz na danie) ---
-  const meals = { name: 'Posiłki', cols: [12, 13, 14, 8, 34, 14, 18, 12, 16, 11, 10], rows: [], freeze: 3, merges: ['A1:K1', 'A2:K2'] };
-  meals.rows.push({ h: 30, c: [['Posiłki dzień po dniu', S.title], ...Array(10).fill(['', S.title])] });
-  meals.rows.push({ h: 30, c: [['Żółta kolumna: wpisz kalorie, jeśli nie zostały podane (pomogą zdjęcia w zakładce „Zdjęcia”). Do sumy dnia liczą się tylko zjedzone posiłki. Podsumowanie przeliczy się samo.', S.sub]] });
-  meals.rows.push(H(['Data', 'Dzień', 'Posiłek', 'Pora', 'Danie', 'Kto wpisał', 'Ocena wg zaleceń', 'Kcal podane', 'Kcal do uzupełnienia', 'Zjedzone', 'Zdjęcia']));
+  const meals = { name: 'Posiłki', cols: [12, 13, 14, 8, 32, 13, 17, 11, 14, 10, 12, 10, 9], rows: [], freeze: 3, merges: ['A1:M1', 'A2:M2'] };
+  meals.rows.push({ h: 30, c: [['Posiłki dzień po dniu', S.title], ...Array(12).fill(['', S.title])] });
+  meals.rows.push({ h: 30, c: [['Kcal przyjęte = podane, a jeśli ich brak: wpisane w żółtej kolumnie, a jeśli i tego brak: szacunek typowej porcji. Wpisz dokładne kcal w żółtej kolumnie (pomogą zdjęcia), podsumowanie przeliczy się samo. Liczą się zjedzone posiłki i wszystko, co syn dopisał sam.', S.sub]] });
+  meals.rows.push(H(['Data', 'Dzień', 'Posiłek', 'Pora', 'Danie', 'Kto wpisał', 'Ocena wg zaleceń', 'Kcal podane', 'Kcal do uzupełnienia', 'Kcal szac.', 'Kcal przyjęte', 'Liczone', 'Zdjęcia']));
   // --- Zdjęcia ---
   const photos = { name: 'Zdjęcia', cols: [12, 13, 14, 9, 40, 30], rows: [], freeze: 3, merges: ['A1:F1', 'A2:F2'], images: [] };
   photos.rows.push({ h: 30, c: [['Zdjęcia zjedzonych dań', S.title], ...Array(5).fill(['', S.title])] });
@@ -209,16 +209,18 @@ async function reportWorkbook(n) {
       const items = (m.items || []).filter((it) => !it.prop);
       const phs = Array.isArray(m.photos) ? m.photos : m.photo && m.photo.src ? [m.photo] : [];
       const rowsHere = [];
-      if (items.length) for (const it of items) rowsHere.push([it.name, it.kid ? p.name : it.by === 'rodzic' ? 'rodzic' : '—', Number(it.kcal) || null]);
+      if (items.length) for (const it of items) rowsHere.push([it.name, it.kid ? p.name : it.by === 'rodzic' ? 'rodzic' : '—', Number(it.kcal) || null, m.done || it.kid]);
       else if (m.done) {
         const pl = state.plan[iso + '|' + mk] || [];
-        if (pl.length) for (const e of pl) { const r = e.rid ? map[e.rid] : null; rowsHere.push([(r ? r.name : e.name) + ' (z planu)', 'plan', r ? r.kcal || null : Number(e.kcal) || null]); }
-        else rowsHere.push(['(nie wpisano, sprawdź zdjęcie)', '—', null]);
+        if (pl.length) for (const e of pl) { const r = e.rid ? map[e.rid] : null; rowsHere.push([(r ? r.name : e.name) + ' (z planu)', 'plan', r ? r.kcal || null : Number(e.kcal) || null, true]); }
+        else rowsHere.push(['(nie wpisano, sprawdź zdjęcie)', '—', null, true]);
       }
-      for (const [nm, who, kc] of rowsHere) {
+      for (const [nm, who, kc, cnt] of rowsHere) {
         const zz = z++ % 2 === 1, [rt, rs] = nm.startsWith('(') ? ['—', S.unk] : rateOf(nm.replace(/ \(z planu\)$/, ''));
+        const R = meals.rows.length + 1, est = kc ? null : nm.startsWith('(') ? null : estKcal(nm.replace(/ \(z planu\)$/, ''));
         meals.rows.push({ h: 20, c: [[iso, zz ? S.txtZ : S.txt], [wd(iso), zz ? S.txtZ : S.txt], [mn, zz ? S.txtZ : S.txt], [hr, zz ? S.txtZ : S.txt], [nm, zz ? S.txtZ : S.txt],
-          [who, zz ? S.txtZ : S.txt], [rt, rs], [kc, zz ? S.numZ : S.num], [kc ? null : '', S.fill], [m.done ? 'tak' : 'nie', m.done ? S.ok : S.unk], [phs.length || '', zz ? S.numZ : S.num]] });
+          [who, zz ? S.txtZ : S.txt], [rt, rs], [kc, zz ? S.numZ : S.num], [kc ? null : '', S.fill], [est, S.unk], [{ f: `IF(N(H${R})>0,H${R},IF(N(I${R})>0,I${R},N(J${R})))` }, S.numB],
+          [cnt ? 'tak' : 'nie', cnt ? S.ok : S.unk], [phs.length || '', zz ? S.numZ : S.num]] });
       }
       for (const ph of phs) {
         const [w, h] = await imgSize(ph.src), sc = Math.min(200 / w, 140 / h, 1);
@@ -241,14 +243,14 @@ async function reportWorkbook(n) {
   if (photos.rows.length === 3) photos.rows.push({ c: [['Brak zdjęć w tym okresie.', S.txt]] });
   if (drinks.rows.length === 2) drinks.rows.push({ c: [['Brak napojów w tym okresie.', S.txt]] });
   if (act.rows.length === 3) act.rows.push({ c: [['Brak aktywności w tym okresie.', S.txt]] });
-  meals.filter = `A3:K${meals.rows.length}`;
+  meals.filter = `A3:M${meals.rows.length}`;
 
   // --- Podsumowanie ---
   const rows = statsData(p.id, n), used = rows.filter((r) => r.has), nn = used.length || 1, s = streaks(rows);
   const sum = { name: 'Podsumowanie', cols: [13, 13, 12, 12, 13, 12, 10, 10, 11, 13, 11], rows: [], merges: ['A1:K1', 'A2:K2', 'A3:K3'] };
   sum.rows.push({ h: 38, c: [[`Raport diety: ${p.name}`, S.title], ...Array(10).fill(['', S.title])] });
   sum.rows.push({ h: 20, c: [[`Okres: ${period}  ·  cel: ${goal ? goal + ' kcal dziennie' : 'nie ustawiono'}  ·  wygenerowano ${new Date().toLocaleString('pl-PL')}`, S.sub]] });
-  sum.rows.push({ h: 18, c: [['Zalecenia: dietetyk LUX MED · 5 posiłków co 3,5–4 h · 2 l wody · owoce do 16:00. Kalorie liczą się z posiłków oznaczonych jako zjedzone, uzupełnij brakujące w zakładce „Posiłki”.', S.note]] });
+  sum.rows.push({ h: 18, c: [['Zalecenia: dietetyk LUX MED · 5 posiłków co 3,5–4 h · 2 l wody · owoce do 16:00. Kalorie: zjedzone posiłki i wszystko, co syn dopisał sam. Brakujące kcal są szacowane; dokładne wpisz w żółtej kolumnie w zakładce „Posiłki”.', S.note]] });
   sum.rows.push({ c: [] });
   const k = (l, v, st = S.kpi) => [[l, S.label], [v, st]];
   const dataStart = 13, dataEnd = dataStart + days.length - 1;
@@ -261,11 +263,11 @@ async function reportWorkbook(n) {
   sum.rows.push({ h: 20, c: [[bad.length ? 'Zakazane w tym okresie: ' + bad.join(', ') : 'W tym okresie nie było zakazanych produktów.', bad.length ? S.no : S.ok]] });
   sum.merges.push('A9:K9');
   sum.rows.push({ c: [] }, { c: [] });
-  sum.rows.push(H(['Data', 'Dzień', 'Posiłki (z 5)', 'Kcal podane', 'Kcal uzupełnione', 'Kcal razem', 'Cel', 'Woda (l)', 'Ruch (min)', 'Spalone kcal (szac.)', 'Dzień zgodny']));
+  sum.rows.push(H(['Data', 'Dzień', 'Posiłki (z 5)', 'Kcal podane', 'Kcal szac. i uzupełn.', 'Kcal razem', 'Cel', 'Woda (l)', 'Ruch (min)', 'Spalone kcal (szac.)', 'Dzień zgodny']));
   days.forEach((iso, i) => {
     const r = rows[i], R = dataStart + i, zz = i % 2 === 1;
-    const kc = { f: `SUMIFS('Posiłki'!H:H,'Posiłki'!A:A,A${R},'Posiłki'!J:J,"tak")` }, kf = { f: `SUMIFS('Posiłki'!I:I,'Posiłki'!A:A,A${R},'Posiłki'!J:J,"tak")` };
-    sum.rows.push({ h: 20, c: [[iso, S.dateB], [wd(iso), zz ? S.txtZ : S.txt], [r.done, zz ? S.numZ : S.num], [kc, zz ? S.numZ : S.num], [kf, S.fill], [{ f: `D${R}+E${R}` }, S.numB],
+    const kc = { f: `SUMIFS('Posiłki'!H:H,'Posiłki'!A:A,A${R},'Posiłki'!L:L,"tak")` }, kf = { f: `SUMIFS('Posiłki'!K:K,'Posiłki'!A:A,A${R},'Posiłki'!L:L,"tak")-D${R}` };
+    sum.rows.push({ h: 20, c: [[iso, S.dateB], [wd(iso), zz ? S.txtZ : S.txt], [r.done, zz ? S.numZ : S.num], [kc, zz ? S.numZ : S.num], [kf, S.unk], [{ f: `D${R}+E${R}` }, S.numB],
       [goal || '', zz ? S.numZ : S.num], [Number((r.water / 1000).toFixed(1)), S.dec], [r.act, zz ? S.numZ : S.num], [{ f: `SUMIFS('Aktywność'!F:F,'Aktywność'!A:A,A${R})` }, zz ? S.numZ : S.num],
       [r.good ? 'tak' : r.has ? 'nie' : '—', r.good ? S.ok : r.has ? S.lim : S.unk]] });
   });

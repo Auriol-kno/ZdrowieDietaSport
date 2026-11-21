@@ -9,16 +9,20 @@ function ruleSt(name) {
 
 // Kalorie dnia: wpisy z kcal w zjedzonych posiłkach; gdy posiłek zjedzony bez kcal, bierzemy kcal z planu (1 porcja).
 function dayKcal(d, iso) {
-  let t = 0;
+  let t = 0, est = 0;
   const map = typeof byIdMap === 'function' ? byIdMap() : {};
   for (const [mk] of MEALS) {
     const m = d.meals[mk];
     if (!m) continue;
-    const own = (m.items || []).reduce((a, i) => a + (i.prop ? 0 : Number(i.kcal) || 0), 0);
+    const its = (m.items || []).filter((i) => counts(m, i));
+    if (its.length) {
+      for (const i of its) { if (Number(i.kcal)) t += Number(i.kcal); else { const e = estKcal(i.name); t += e; est += e; } }
+      continue;
+    }
     if (!m.done) continue;
-    if (own) { t += own; continue; }
     for (const e of (state.plan[iso + '|' + mk] || [])) t += e.rid ? ((map[e.rid] || {}).kcal || 0) : (Number(e.kcal) || 0);
   }
+  dayKcal.est = est;
   return t;
 }
 
@@ -28,9 +32,9 @@ function statsData(pid, n) {
   for (let i = n - 1; i >= 0; i--) {
     const iso = ZdsRecipes.dayAfter(t, -i);
     const d = state.days[iso + '|' + pid] || null;
-    const r = { iso, has: false, kcal: 0, done: 0, water: 0, act: 0, items: 0, kid: 0, ok: 0, lim: 0, no: 0, unk: 0, bad: [] };
+    const r = { iso, has: false, snacks: [], est: 0, kcal: 0, done: 0, water: 0, act: 0, items: 0, kid: 0, ok: 0, lim: 0, no: 0, unk: 0, bad: [] };
     if (d) {
-      r.kcal = dayKcal(d, iso);
+      r.kcal = dayKcal(d, iso); r.est = dayKcal.est;
       r.water = (d.water || 0) * GLASS_ML;
       r.act = (d.activities || []).reduce((a, x) => a + (Number(x.min) || 0), 0);
       for (const [mk] of MEALS) {
@@ -39,6 +43,7 @@ function statsData(pid, n) {
         if (m.done) r.done++;
         for (const it of m.items || []) {
           if (it.prop) continue;
+          if (it.kid) r.snacks.push({ iso, mk, name: it.name, kcal: Number(it.kcal) || 0, est: Number(it.kcal) ? 0 : estKcal(it.name) });
           r.items++; if (it.kid) r.kid++;
           const s = ruleSt(it.name);
           if (s) r[s]++; else r.unk++;
@@ -102,12 +107,22 @@ function statsCard() {
     rows.map((r) => {
       const cls = !r.kcal ? 'empty' : goal && r.kcal > goal * 1.1 ? 'over' : goal && r.kcal < goal * 0.8 ? 'under' : 'okk';
       return `<span class="bar ${cls}${isWeekend(r.iso) ? ' we' : ''}" title="${r.iso}: ${r.kcal} kcal"><i style="height:${Math.max(r.kcal / max * 100, r.kcal ? 4 : 0).toFixed(1)}%"></i><b>${Number(r.iso.slice(8))}</b></span>`;
-    }).join('') + '</div><p class="muted small">Zielone: w normie · bursztynowe: poniżej 80% celu · czerwone: powyżej 110% celu. Liczą się posiłki oznaczone jako zjedzone; gdy brak kcal we wpisie, bierzemy kcal z planu.</p>';
+    }).join('') + '</div><p class="muted small">Zielone: w normie · bursztynowe: poniżej 80% celu · czerwone: powyżej 110% celu. Liczą się zjedzone posiłki i wszystko, co syn dopisał sam. Gdy brak kcal, bierzemy szacunek porcji albo kcal z planu.</p>';
 
   h += '<h3>Ciągłość (5 posiłków i nic zakazanego)</h3><div class="streak">' +
     rows.map((r) => `<span class="${r.good ? 'g' : r.has ? 'p' : ''}" title="${r.iso}: ${r.done}/${MEALS.length} posiłków${r.no ? ', zakazane: ' + r.no : ''}">${Number(r.iso.slice(8))}</span>`).join('') + '</div>';
 
   const tot = q.ok + q.lim + q.no + q.unk || 1;
+  const sn = rows.flatMap((r) => r.snacks).reverse();
+  const kidName = (state.profiles.find((x) => x.role === 'dziecko') || { name: 'syna' }).name;
+  if (sn.length) {
+    const tot = sn.reduce((a, x) => a + (x.kcal || x.est), 0);
+    h += `<h3>Dopisane przez: ${esc(kidName)} (${sn.length}, razem ok. ${tot} kcal)</h3><ul class="snacks">` +
+      sn.slice(0, 20).map((x) => `<li><span>${x.iso.slice(8)}.${x.iso.slice(5, 7)} · ${esc((MEALS.find((m) => m[0] === x.mk) || [])[1] || '')}</span><strong>${esc(x.name)}</strong>` +
+        `<span class="${x.kcal ? '' : 'est'}">${x.kcal ? x.kcal + ' kcal' : '≈' + x.est + ' kcal'}</span></li>`).join('') +
+      (sn.length > 20 ? `<li class="muted">…i ${sn.length - 20} więcej w raporcie Excel</li>` : '') + '</ul>' +
+      '<p class="muted small">≈ to szacunek typowej porcji (z przepisów albo tabeli produktów). Wliczamy go do kalorii dnia, dopóki rodzic nie wpisze dokładnej liczby.</p>';
+  }
   h += '<h3>Co było jedzone</h3><div class="qbar">' +
     [['ok', q.ok], ['lim', q.lim], ['no', q.no], ['unk', q.unk]].map(([k, v]) => v ? `<i class="${k}" style="width:${(v / tot * 100).toFixed(1)}%"></i>` : '').join('') + '</div>' +
     `<div class="row wrap small"><span class="pill ok tiny">Dozwolone ${q.ok}</span><span class="pill lim tiny">Ograniczone ${q.lim}</span><span class="pill no tiny">Zakazane ${q.no}</span><span class="pill tiny">Spoza listy ${q.unk}</span></div>` +

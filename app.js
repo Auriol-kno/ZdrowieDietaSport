@@ -86,11 +86,33 @@ function meal(d, key) {
   return d.meals[key];
 }
 
+// Szacunkowe kcal typowej porcji, gdy nikt ich nie wpisał (najpierw przepisy z aplikacji, potem tabela produktów).
+const KCAL_EST = [[/zup|rosół|krem z/, 150], [/pizz/, 600], [/frytk/, 350], [/chips/, 300], [/parówk|kiełbas/, 220], [/pierog/, 350], [/naleśnik/, 250], [/kotlet/, 300],
+  [/kurczak|indyk|pierś/, 200], [/ryb|łosoś|dorsz/, 180], [/owsiank/, 250], [/jajecznic|omlet/, 200], [/kanapk/, 200], [/bułk/, 150], [/chleb|pieczyw|grzank/, 80],
+  [/kasz|ryż|quinoa/, 200], [/makaron|spaghetti/, 250], [/ziemniak/, 150], [/jogurt/, 120], [/kefir/, 130], [/maślank/, 100], [/mleko/, 125], [/twaróg|twarożek|serek/, 110],
+  [/ser\b|ser /, 110], [/jajk/, 75], [/płatk|musli|granol/, 200], [/ciastk|herbatnik/, 150], [/ciast|drożdżówk|pączek/, 300], [/batonik|baton/, 200], [/czekolad/, 250],
+  [/lod/, 200], [/żelk/, 100], [/cukierk/, 60], [/orzech|migdał/, 180], [/hummus/, 100], [/koktajl|smoothie/, 180], [/kompot/, 90], [/sok/, 110],
+  [/banan/, 105], [/jabłk/, 80], [/gruszk/, 90], [/winogron/, 70], [/pomarańcz/, 70], [/brzoskwin|nektaryn/, 50], [/mandaryn|klementyn/, 40], [/kiwi/, 45],
+  [/truskaw|borówk|malin|jagod|porzecz/, 35], [/śliwk/, 40], [/marchew/, 30], [/papryk/, 30], [/pomidor/, 20], [/ogór/, 15], [/rzodkiew/, 10], [/kalarep|brokuł|kalafior/, 30],
+  [/herbat|woda|kawa/, 0]];
+function estKcal(name) {
+  const n = String(name || '').toLowerCase().trim();
+  if (!n) return 0;
+  if (typeof allRecipes === 'function') {
+    const nn = norm(n), r = allRecipes().find((x) => norm(x.name) === nn);
+    if (r && r.kcal) return r.kcal;
+  }
+  const f = KCAL_EST.find(([re]) => re.test(n));
+  return f ? f[1] : 150;
+}
+// Pozycja się liczy, gdy posiłek jest zjedzony albo syn sam ją dopisał (wpisuje to, co zjadł).
+const counts = (m, it) => !it.prop && (m.done || it.kid);
+const itemKcal = (it) => Number(it.kcal) || estKcal(it.name);
 function eatenKcal(d) {
   let t = 0;
   for (const [key] of MEALS) {
     const m = d.meals[key];
-    if (m && m.done) t += m.items.reduce((a, i) => a + (i.prop ? 0 : Number(i.kcal) || 0), 0);
+    if (m) t += (m.items || []).reduce((a, i) => a + (counts(m, i) ? itemKcal(i) : 0), 0);
   }
   return t;
 }
@@ -158,17 +180,18 @@ const burned = (x, p) => Math.round(metOf(x.name) * weightOf(p) * (x.min / 60));
 function activityCard(d) {
   const p = cur(), kid = isKid();
   const list = d.activities || [], tot = list.reduce((a, x) => a + x.min, 0), kc = list.reduce((a, x) => a + burned(x, p), 0);
-  return `<div class="card sport"><div class="row sb"><h2>Aktywność</h2><span class="muted">${tot ? tot + ' min' + (kid ? '' : ` · ok. ${kc} kcal`) : 'jeszcze nic'}</span></div>` +
+  return `<div class="card sport"><div class="row sb"><h2>Aktywność</h2><span class="muted">${tot ? tot + ' min' + ` · ${kid ? 'spalone' : 'ok.'} ${kc} kcal` : 'jeszcze nic'}</span></div>` +
     '<div class="chips scroll">' + QUICK_ACT.map(([n, m]) => `<button type="button" class="chip" data-action="act-pick" data-name="${esc(n)}" data-min="${m}">${esc(n)}</button>`).join('') + '</div>' +
     '<form data-act="1"><label class="sr" for="an">Aktywność</label><input type="text" id="an" placeholder="Aktywność" required autocomplete="off">' +
     '<label class="sr" for="am">Minuty</label><input type="number" id="am" value="30" min="1" max="1440" inputmode="numeric" required><button type="submit" class="small">Dodaj</button></form>' +
-    (kid ? '' : `<p class="muted small" id="aest">${actEst('', 30)}</p>`) +
-    (list.length ? '<ul class="drinklist">' + list.map((x, i) => `<li><span>${esc(x.name)} <span class="muted">${x.min} min${kid ? '' : ` · ok. ${burned(x, p)} kcal`}</span></span>` +
+    `<p class="muted small" id="aest">${actEst('', 30)}</p>` +
+    (list.length ? '<ul class="drinklist">' + list.map((x, i) => `<li><span>${esc(x.name)} <span class="muted">${x.min} min · ${kid ? '🔥 ' : 'ok. '}${burned(x, p)} kcal</span></span>` +
       `<button type="button" class="small ghost" data-action="act-del" data-i="${i}" aria-label="Usuń ${esc(x.name)}">✕</button></li>`).join('') + '</ul>' : '') + '</div>';
 }
 function actEst(n0, m0) {
   const n = n0 !== undefined ? n0 : ($('#an') || {}).value || '', m = m0 !== undefined ? m0 : Number(($('#am') || {}).value) || 30, p = cur();
   const x = { name: n, min: m };
+  if (isKid()) return `${n ? esc(n) : 'Ruch'} przez ${m} min to ok. <strong>${burned(x, p)} kcal</strong> spalonych. Brawo za każdy ruch! 💪`;
   return `${n ? esc(n) : 'Aktywność'} przez ${m} min spala ok. <strong>${burned(x, p)} kcal</strong> (waga ${weightOf(p)} kg${p.kg ? '' : ', przyjęta, wpisz w Profilach'}).`;
 }
 
@@ -352,7 +375,7 @@ function viewToday() {
             '<button type="submit" class="small">Zapisz</button></form></li>';
         }
         return `<li class="${cls}"><button type="button" class="itemname" data-action="edit-item" data-meal="${key}" data-i="${i}" aria-label="Popraw ${esc(it.name)}">${esc(it.name)}` +
-          `${!kid && it.kcal ? ` <span class="muted">· ${esc(it.kcal)} kcal</span>` : ''}${it.by === 'rodzic' ? ' <span class="by">od rodzica</span>' : ''}</button><span class="li-end">${it.acc ? '<span class="badge ok" title="Propozycja zaakceptowana" aria-label="Zaakceptowana">✓</span>' : ''}${itemPill(it.name)}` +
+          `${kid ? '' : it.kcal ? ` <span class="muted">· ${esc(it.kcal)} kcal</span>` : ` <span class="muted">· ≈${estKcal(it.name)} kcal</span>`}${it.by === 'rodzic' ? ' <span class="by">od rodzica</span>' : ''}</button><span class="li-end">${it.acc ? '<span class="badge ok" title="Propozycja zaakceptowana" aria-label="Zaakceptowana">✓</span>' : ''}${itemPill(it.name)}` +
           `<button type="button" class="small ghost" data-action="del" data-meal="${key}" data-i="${i}" aria-label="Usuń ${esc(it.name)}">✕</button></span></li>`;
       }).join('') + '</ul>';
     }
@@ -419,7 +442,7 @@ function viewProfiles() {
   let html = '<h1>Profile</h1><div class="card"><h2>Kto korzysta</h2>' + (isKid()
     ? `<p class="muted">Profil: <strong>${esc(cur().name)}</strong>. Zmiana profilu tylko w trybie rodzica.</p>`
     : '<div class="chips">' + state.profiles.map((p) => `<button type="button" class="chip" data-action="pick-profile" data-id="${p.id}" aria-pressed="${p.id === state.current}">${esc(p.name)}</button>`).join('') + '</div>') + '</div>' +
-    '<div class="card"><h2>Wygląd</h2><div class="chips">' + [['light', 'Jasny'], ['dark', 'Ciemny'], ['system', 'Jak w systemie']].map(([v, n]) =>
+    '<div class="card"><h2>Wygląd</h2><div class="chips">' + [['light', 'Jasny'], ['warm', 'Ciepły przygaszony'], ['gray', 'Szary'], ['dark', 'Ciemny'], ['system', 'Jak w systemie']].map(([v, n]) =>
       `<button type="button" class="chip" data-action="theme" data-v="${v}" aria-pressed="${(state.theme || 'system') === v}">${n}</button>`).join('') + '</div></div>' +
     '<div class="card"><div class="row sb"><div><h2>Tryb rodzica</h2>' +
     `<span class="muted">${parent ? 'Włączony: widać kalorie, plan i zakupy.' : 'Wyłączony: widok dziecka.'}</span></div>` +
@@ -452,9 +475,9 @@ function viewProfiles() {
 const darkMq = window.matchMedia ? window.matchMedia('(prefers-color-scheme: dark)') : null;
 function applyTheme() {
   const t = state.theme || 'system';
-  const dark = t === 'dark' || (t === 'system' && darkMq && darkMq.matches);
-  document.documentElement.dataset.theme = dark ? 'dark' : 'light';
-  const m = document.querySelector('meta[name=theme-color]'); if (m) m.content = dark ? '#23211f' : '#ECE6DF';
+  const v = t === 'system' ? (darkMq && darkMq.matches ? 'dark' : 'light') : t;
+  document.documentElement.dataset.theme = v;
+  const m = document.querySelector('meta[name=theme-color]'); if (m) m.content = { dark: '#23211f', warm: '#CFC5B8', gray: '#D4D4D6', light: '#ECE6DF' }[v] || '#ECE6DF';
 }
 if (darkMq && darkMq.addEventListener) darkMq.addEventListener('change', () => applyTheme());
 

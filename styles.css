@@ -439,3 +439,63 @@ html[data-theme="dark"] .ask { background: #2a2825; }
 html[data-theme="dark"] .hero-plate { background: #2a2825; color: var(--ink); }
 html[data-theme="dark"] .chip.we { background: #3a2a2a; color: #f0b9b9; }
 html[data-theme="dark"] input[type=date] { color-scheme: dark; }
+/* ---------- Motywy pośrednie: ciepły przygaszony i szary ---------- */
+html[data-theme="warm"] {
+  --bg: #cfc5b8; --card: #d4cabd; --track: #c4b9ab; --line: #bdb1a2; --ink: #3a332c; --muted: #62584d;
+  --up: 6px 6px 13px rgba(120, 104, 84, .42), -6px -6px 13px rgba(255, 248, 238, .45);
+  --up-s: 3px 3px 8px rgba(120, 104, 84, .4), -3px -3px 8px rgba(255, 248, 238, .42);
+  --in: inset 3px 3px 7px rgba(120, 104, 84, .42), inset -3px -3px 7px rgba(255, 248, 238, .42);
+}
+html[data-theme="gray"] {
+  --bg: #d4d4d6; --card: #d9d9db; --track: #c8c8cb; --line: #c0c0c4; --ink: #2f3036; --muted: #5d5e66;
+  --blue-t: #c9d2e0; --sage-t: #c8dcd5;
+  --up: 6px 6px 13px rgba(110, 110, 120, .4), -6px -6px 13px rgba(255, 255, 255, .55);
+  --up-s: 3px 3px 8px rgba(110, 110, 120, .38), -3px -3px 8px rgba(255, 255, 255, .5);
+  --in: inset 3px 3px 7px rgba(110, 110, 120, .4), inset -3px -3px 7px rgba(255, 255, 255, .5);
+}
+html[data-theme="warm"] body, html[data-theme="warm"] body.kid, html[data-theme="gray"] body, html[data-theme="gray"] body.kid { background: var(--bg); }
+html[data-theme="warm"] .hero-plate, html[data-theme="warm"] .syncbtn { background: #e2d9cd; }
+html[data-theme="gray"] .hero-plate, html[data-theme="gray"] .syncbtn { background: #e6e6e8; }
+html[data-theme="warm"] .card.sport { background: #dcc3a8; } html[data-theme="warm"] .card.drinks { background: #c6d0d8; }
+html[data-theme="gray"] .card.sport { background: #dfd0c2; } html[data-theme="gray"] .card.drinks { background: #c9d3dd; }
+html[data-theme="warm"] .daycard.alt { background: #c9bfb2; } html[data-theme="gray"] .daycard.alt { background: #cdcdd0; }
+html[data-theme="warm"] .eatpill.on, html[data-theme="gray"] .eatpill.on { background: #bfdccb; }
+/* ---------- Zagęszczenie ---------- */
+main { gap: 10px; }
+.card { padding: 12px; }
+.hero { padding: 12px; gap: 12px; }
+.hero h1 { font-size: 22px; line-height: 26px; }
+.gauge { height: 86px; width: 56px; }
+.widget { gap: 6px; }
+.meal { padding: 8px 0; }
+.meal ul { margin: 4px 0; }
+.meal li, .drinklist li { min-height: 32px; padding: 2px 0; }
+.meal li.kiditem, .meal li.paritem, .meal li.propitem { margin: 2px 0; }
+.eatpill button { min-height: 34px; font-size: 13px; }
+.eatpill .eat { padding: 0 10px 0 12px; }
+.eatpill .cam { padding: 0 10px; }
+.eatpill .cam svg { width: 17px; height: 17px; }
+.addrow { margin-top: 4px; gap: 6px; }
+.addbtn { min-height: 30px; height: 30px; padding: 0 10px 0 4px; font-size: 12px; gap: 6px; }
+.addbtn .ic { width: 22px; height: 22px; font-size: 15px; }
+.addbtn .ic svg { width: 13px; height: 13px; }
+.mphotos { gap: 6px; padding: 4px 2px 2px; }
+.mphotos img { width: 46px; height: 46px; }
+.mphotos .ph { border-radius: 10px; }
+.phadd { width: 46px; height: 46px; min-height: 46px; font-size: 20px; border-radius: 10px; }
+.phdel { width: 18px; height: 18px; min-height: 18px; font-size: 9px; top: -3px; right: -3px; }
+.pht { font-size: 8.5px; left: 4px; bottom: 3px; }
+.nextmeal { padding: 10px 12px; gap: 6px; }
+.nm-bar { height: 12px; }
+.sndbtn { height: 28px; min-height: 28px; }
+.card.sport form, .card.drinks form { margin-top: 4px; }
+.card.sport input, .card.drinks input, .card.sport button[type=submit], .card.drinks button[type=submit] { min-height: 38px; height: 38px; }
+.chips.scroll { padding-bottom: 2px; }
+ul.snacks { list-style: none; margin: 4px 0; padding: 0; display: flex; flex-direction: column; gap: 4px; }
+ul.snacks li { display: grid; grid-template-columns: auto 1fr auto; gap: 8px; align-items: center; font-size: 12px; padding: 4px 8px; border-radius: 10px; background: var(--track); }
+ul.snacks li > span:first-child { color: var(--muted); }
+ul.snacks .est { color: #a5561c; font-weight: 700; }
+.drinklist li button.small, .meal li button.small.ghost { min-height: 28px; height: 28px; min-width: 28px; padding: 0 8px; font-size: 12px; border-radius: 14px; }
+.widgets { gap: 12px; }
+.widget.card, .widgets > .card { padding: 10px; }
+.widget .row button { min-height: 38px; height: 38px; }
