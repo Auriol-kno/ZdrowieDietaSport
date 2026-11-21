@@ -331,3 +331,4 @@ li.propitem.rej .nobtn { background: rgba(255, 255, 255, .9); color: #6b5a8a; fo
 .badge.ok { background: #22a447; }
 .badge.no { background: #d0463b; }
 li.propitem button.okbtn:disabled, li.propitem button.okbtn[disabled] { background: #22a447 !important; color: #fff !important; opacity: .4; box-shadow: none; }
+li.propitem button.okbtn:disabled { background: #9fe0b1 !important; color: #1d7a37 !important; opacity: 1 !important; }
