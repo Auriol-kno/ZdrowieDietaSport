@@ -297,7 +297,8 @@
         "herbata czarna (słaby napar)",
         "herbata owocowa",
         "soki świeżo wyciskane rozcieńczone wodą",
-        "napary z ziół"
+        "napary z ziół",
+        "herbata zielona (słaby napar)"
       ],
       "ograniczone": [
         "soki warzywne",
@@ -324,6 +325,10 @@
     {
       "it": "makaron ryżowy",
       "uw": "Robiony z białego ryżu, a ryż biały i skrobia ryżowa są w zaleceniach zakazane. Do potwierdzenia u dietetyka."
+    },
+    {
+      "it": "herbata zielona (słaby napar)",
+      "uw": "Jak herbata czarna (słaby napar), która jest w zaleceniach dozwolona. Zawiera kofeinę, więc słaba i nie wieczorem. Do potwierdzenia u dietetyka."
     }
   ]
 }

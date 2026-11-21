@@ -32,12 +32,16 @@ const ZdsRecipes = (() => {
     return qs.length > 0 && qs.every((u) => ts.some((t) => near(u, t)));
   }
 
+  // Same przymiotniki z listy (kolory papryki) nie mogą dopasować się do dowolnej nazwy.
+  const ADJ = new Set(['zielona', 'zolta', 'czerwona']);
+
   function indexRules(rules) {
     const idx = [];
     for (const c of (rules && rules.kategorie) || []) {
       for (const [st, key] of KEYS) {
         for (const it of c[key]) {
-          const n = norm(it);
+          let n = norm(it);
+          if (ADJ.has(n)) n = 'papryka ' + n; // w zaleceniach: „papryka czerwona, zielona, żółta”
           const simple = !/[:(),]/.test(n);
           const core = n.replace(/\([^)]*\)/g, ' ').split(':').pop().trim();
           idx.push({ cat: c.nazwa, st, it, n, core, word: n.length >= 3 && simple, stems: /,/.test(core) ? null : stems(core) });
@@ -55,7 +59,7 @@ const ZdsRecipes = (() => {
     const exact = idx.filter((x) => x.n === q || (x.core === q && !x.n.includes(':')));
     let hits = exact.slice();
     if (!hits.length) {
-      hits = idx.filter((x) => (q.length >= 4 && x.n.includes(q)) || x.n.startsWith(q + ' ') || (x.word && (' ' + q + ' ').includes(' ' + x.n + ' ')));
+      hits = idx.filter((x) => (q.length >= 4 && x.n.includes(q)) || x.n.startsWith(q + ' ') || (x.word && !ADJ.has(x.n) && (' ' + q + ' ').includes(' ' + x.n + ' ')));
     }
     const qs = stems(q);
     if (!exact.length && qs.length === 1) {

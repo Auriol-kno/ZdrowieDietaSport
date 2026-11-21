@@ -555,3 +555,25 @@ html[data-theme="dark"] .gauge.seg > i { border-top-color: rgba(255, 255, 255, .
 .mealname span { font-size: 13px; }
 .eatpill .eat { padding: 0 10px 0 12px; }
 .eatpill .cam { padding: 0 11px; }
+/* Podziałki na kapsułkach: tylko delikatny akcent przy przejściach */
+.gauge.seg > i { border-top: 0; position: relative; }
+.gauge.seg > i + i::before { content: ''; position: absolute; left: 22%; right: 22%; top: 0; height: 1px; background: rgba(120, 110, 100, .2); }
+.gauge.seg > i.on + i::before, .gauge.seg > i + i.on::before { background: rgba(255, 255, 255, .45); }
+.gauge.water::after { content: ''; position: absolute; inset: 9px; border-radius: 30px; pointer-events: none;
+  background: repeating-linear-gradient(to top, transparent 0, transparent calc(12.5% - 1px), rgba(120, 110, 100, .13) calc(12.5% - 1px), rgba(120, 110, 100, .13) 12.5%);
+  -webkit-mask: linear-gradient(90deg, transparent 22%, #000 22%, #000 78%, transparent 78%); mask: linear-gradient(90deg, transparent 22%, #000 22%, #000 78%, transparent 78%); }
+html[data-theme="dark"] .gauge.seg > i + i::before { background: rgba(255, 255, 255, .1); }
+/* Aktywność mocnym kolorem */
+.card.sport { background: linear-gradient(145deg, #f59a4a, #e46a2c); color: #fff; }
+.card.sport h2, .card.sport .muted, .card.sport #aest, .card.sport #aest strong { color: #fff; }
+.card.sport .muted { opacity: .92; }
+.card.sport .chip { background: rgba(255, 255, 255, .22); color: #fff; border-color: rgba(255, 255, 255, .35); }
+.card.sport input { background: #fff; color: #3f3d46; border-color: transparent; }
+.card.sport button[type=submit] { background: #fff; color: #d0601f; }
+.card.sport .drinklist li { color: #fff; }
+.card.sport .drinklist li button.small { background: rgba(255, 255, 255, .25); color: #fff; }
+html[data-theme="dark"] .card.sport { background: linear-gradient(145deg, #b5602a, #8f4419); }
+html[data-theme="dark"] .card.sport h2, html[data-theme="dark"] .card.sport .chip { color: #fff; }
+html[data-theme="dark"] .card.sport .chip { background: rgba(255, 255, 255, .16); }
+html[data-theme="dark"] .card.sport input { background: #2a2420; color: #f3e6da; }
+html[data-theme="warm"] .card.sport, html[data-theme="gray"] .card.sport { background: linear-gradient(145deg, #ec8f43, #d9652a); }

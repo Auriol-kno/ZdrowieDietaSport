@@ -1,13 +1,91 @@
 {
   "napoje": [
-    { "id": "herbata-owocowa", "name": "Herbata owocowa", "ml": 250, "rule": "herbata owocowa", "dla": "wszyscy" },
-    { "id": "napar-ziol", "name": "Napar z ziół (mięta, rumianek)", "ml": 250, "rule": "napary z ziół", "dla": "wszyscy" },
-    { "id": "herbata-czarna", "name": "Herbata czarna, słaby napar", "ml": 250, "rule": "herbata czarna", "dla": "wszyscy" },
-    { "id": "sok-swiezy", "name": "Sok świeżo wyciśnięty z wodą", "ml": 200, "rule": "soki świeżo wyciskane rozcieńczone wodą", "dla": "wszyscy" },
-    { "id": "kefir", "name": "Kefir", "ml": 200, "rule": "kefir", "dla": "wszyscy" },
-    { "id": "maslanka", "name": "Maślanka naturalna", "ml": 200, "rule": "maślanka", "dla": "wszyscy" },
-    { "id": "kawa-czarna", "name": "Kawa czarna", "ml": 200, "rule": null, "dla": "dorosli", "kawa": true },
-    { "id": "kawa-mleko", "name": "Kawa z mlekiem", "ml": 250, "rule": null, "dla": "dorosli", "kawa": true },
-    { "id": "espresso", "name": "Espresso", "ml": 40, "rule": null, "dla": "dorosli", "kawa": true }
+    {
+      "id": "herbata-zielona",
+      "name": "Herbata zielona, słaby napar",
+      "ml": 250,
+      "rule": "herbata zielona",
+      "dla": "wszyscy"
+    },
+    {
+      "id": "herbata-czarna",
+      "name": "Herbata czarna, słaby napar",
+      "ml": 250,
+      "rule": "herbata czarna",
+      "dla": "wszyscy"
+    },
+    {
+      "id": "melisa",
+      "name": "Melisa (napar)",
+      "ml": 250,
+      "rule": "melisa",
+      "dla": "wszyscy"
+    },
+    {
+      "id": "sok-swiezy",
+      "name": "Sok świeżo wyciśnięty z wodą",
+      "ml": 200,
+      "rule": "soki świeżo wyciskane rozcieńczone wodą",
+      "dla": "wszyscy"
+    },
+    {
+      "id": "jogurt-pitny",
+      "name": "Jogurt naturalny do picia",
+      "ml": 200,
+      "rule": "jogurt naturalny",
+      "dla": "wszyscy"
+    },
+    {
+      "id": "herbata-owocowa",
+      "name": "Herbata owocowa",
+      "ml": 250,
+      "rule": "herbata owocowa",
+      "dla": "wszyscy"
+    },
+    {
+      "id": "napar-ziol",
+      "name": "Napar z ziół (mięta, rumianek)",
+      "ml": 250,
+      "rule": "napary z ziół",
+      "dla": "wszyscy"
+    },
+    {
+      "id": "kefir",
+      "name": "Kefir",
+      "ml": 200,
+      "rule": "kefir",
+      "dla": "wszyscy"
+    },
+    {
+      "id": "maslanka",
+      "name": "Maślanka naturalna",
+      "ml": 200,
+      "rule": "maślanka",
+      "dla": "wszyscy"
+    },
+    {
+      "id": "kawa-czarna",
+      "name": "Kawa czarna",
+      "ml": 200,
+      "rule": null,
+      "dla": "dorosli",
+      "kawa": true
+    },
+    {
+      "id": "kawa-mleko",
+      "name": "Kawa z mlekiem",
+      "ml": 250,
+      "rule": null,
+      "dla": "dorosli",
+      "kawa": true
+    },
+    {
+      "id": "espresso",
+      "name": "Espresso",
+      "ml": 40,
+      "rule": null,
+      "dla": "dorosli",
+      "kawa": true
+    }
   ]
 }
