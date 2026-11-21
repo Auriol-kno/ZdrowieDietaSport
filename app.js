@@ -385,12 +385,9 @@ function syncCard() {
   if (su.msg) h += `<p class="note${su.err ? ' warn' : ''}">${esc(su.msg)}</p>`;
   if (!su.session) {
     h += `<div class="field"><label for="s-email">E-mail</label><input type="email" id="s-email" autocomplete="email" value="${esc(su.email || '')}"></div>` +
-      '<p class="muted">Wyślemy mail z kodem logowania. Bez hasła.</p><button type="button" data-action="sync-login">Wyślij kod</button>';
-    if (su.email) {
-      h += '<div class="field"><label for="s-otp">Kod z maila</label><input type="text" id="s-otp" inputmode="numeric" autocomplete="one-time-code" maxlength="10"></div>' +
-        '<button type="button" data-action="sync-otp">Zaloguj kodem</button>' +
-        '<p class="muted small">Na iPhonie wpisz kod tutaj, w aplikacji z ekranu początkowego. Link z maila otwiera Safari, a nie tę aplikację.</p>';
-    }
+      '<div class="field"><label for="s-pw">Hasło (min. 6 znaków)</label><input type="password" id="s-pw" autocomplete="current-password" minlength="6"></div>' +
+      '<div class="row wrap"><button type="button" data-action="sync-pw-in">Zaloguj</button><button type="button" class="ghost" data-action="sync-pw-up">Załóż konto</button></div>' +
+      '<p class="muted small">Pierwszy raz: „Załóż konto”. Jeśli przyjdzie mail z potwierdzeniem, kliknij link (wystarczy raz, w dowolnej przeglądarce), a potem wróć tu i „Zaloguj”.</p>';
   } else if (!state.fam) {
     h += '<p class="muted">Wpisz swoje imię tak samo jak w profilu powyżej, wtedy profile się połączą.</p>' +
       '<h2>Utwórz rodzinę</h2><div class="grid">' +
@@ -450,6 +447,20 @@ async function syncAction(a) {
       await ZdsSync.signIn(email);
       su.email = email;
       su.msg = 'Wysłano mail na ' + email + '. Wpisz kod z maila poniżej.'; su.err = false;
+    } else if (a === 'sync-pw-in' || a === 'sync-pw-up') {
+      const email = val('s-email'), pw = ($('#s-pw') || {}).value || '';
+      if (!email || pw.length < 6) throw new Error('Wpisz e-mail i hasło (min. 6 znaków).');
+      su.email = email;
+      if (a === 'sync-pw-up') {
+        const logged = await ZdsSync.signUpPw(email, pw);
+        if (!logged) { su.msg = 'Konto założone. Sprawdź mail ' + email + ', kliknij link potwierdzający, potem wróć i dotknij „Zaloguj”.'; su.err = false; return; }
+      } else {
+        await ZdsSync.signInPw(email, pw);
+      }
+      su.session = true;
+      if (!state.fam) await setMembership();
+      if (state.fam) await runSync(true);
+      su.msg = 'Zalogowano.'; su.err = false;
     } else if (a === 'sync-otp') {
       const code = val('s-otp').replace(/\s/g, '');
       if (!su.email || !code) throw new Error('Wpisz kod z maila.');
@@ -490,7 +501,14 @@ async function syncAction(a) {
       state.fam = null; su.session = false; su.msg = 'Wylogowano. Dane lokalne zostały na telefonie.'; su.err = false; save(true);
     }
   } catch (e) {
-    su.msg = e.message; su.err = true;
+    const m = String(e.message || e);
+    const PL = [[/invalid login credentials/i, 'Zły e-mail albo hasło. Jeśli konto było zakładane bez hasła, usuń je w Supabase (Authentication → Users) i załóż ponownie.'],
+      [/email not confirmed/i, 'Najpierw potwierdź adres: kliknij link z maila od Supabase, potem dotknij „Zaloguj”.'],
+      [/already registered|already been registered/i, 'To konto już istnieje: dotknij „Zaloguj”.'],
+      [/rate limit|too many/i, 'Za dużo prób albo maili. Odczekaj kilka minut.'],
+      [/password should be at least/i, 'Hasło musi mieć co najmniej 6 znaków.'],
+      [/failed to fetch|network/i, 'Brak połączenia z internetem.']];
+    su.msg = (PL.find(([r]) => r.test(m)) || [0, m])[1]; su.err = true;
   }
   render();
 }

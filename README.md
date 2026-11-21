@@ -78,7 +78,6 @@ Air fryer jest dozwolony (potwierdzone przez użytkownika 20.11.2026). Ustawieni
 - Profile: wybór profilu, tryb rodzica, statystyki (kalorie, ciągłość, woda, aktywność, jakość) i eksport do arkusza CSV (udostępnianie albo e-mail z podsumowaniem).
 - Zakładka Przepisy widoczna tylko w trybie rodzica. W bazie 82 przepisy, w tym 31 dań z kurczakiem.
 
-## Logowanie na iPhonie (kod z maila)
+## Logowanie (e-mail i hasło)
 
-Aplikacja dodana do ekranu początkowego ma osobną pamięć od Safari, więc link z maila jej nie zaloguje. Dlatego logujemy się kodem:
-Supabase → Authentication → Emails (Email Templates) → „Magic Link”: dopisz do treści `Twój kod: {{ .Token }}` i zapisz.
+Aplikacja z ekranu początkowego iPhone'a ma osobną pamięć od Safari, więc link z maila jej nie zaloguje. Logujemy się e-mailem i hasłem. Przy pierwszym razie Supabase może wysłać mail z potwierdzeniem: wystarczy kliknąć link raz (w dowolnej przeglądarce), a potem zalogować się hasłem. Potwierdzanie można wyłączyć: Authentication → Sign In / Providers → Email → „Confirm email”.
