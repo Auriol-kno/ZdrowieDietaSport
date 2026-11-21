@@ -63,7 +63,12 @@ function save(noSync) {
 }
 
 const cur = () => state.profiles.find((p) => p.id === state.current) || state.profiles[0];
-const isKid = () => cur().role === 'dziecko' && !parent;
+// Telefon dziecka: bez trybu rodzica zawsze pokazuje profil dziecka i nie pozwala go zmienić.
+function lockKidDevice() {
+  if (parent || !state.kidDevice) return;
+  if (state.profiles.some((p) => p.id === state.kidDevice)) state.current = state.kidDevice;
+}
+const isKid = () => { lockKidDevice(); return (cur().role === 'dziecko' || Boolean(state.kidDevice)) && !parent; };
 
 function day() {
   const k = dayKey() + '|' + cur().id;
@@ -248,12 +253,22 @@ function viewCheck() {
     `<div id="cols">${colsHtml()}</div>`;
 }
 function viewProfiles() {
-  let html = '<h1>Profile</h1><div class="card"><h2>Kto korzysta</h2><div class="chips">' +
-    state.profiles.map((p) => `<button type="button" class="chip" data-action="pick-profile" data-id="${p.id}" aria-pressed="${p.id === state.current}">${esc(p.name)}</button>`).join('') + '</div></div>' +
+  const kd = state.profiles.find((p) => p.id === state.kidDevice);
+  let html = '<h1>Profile</h1><div class="card"><h2>Kto korzysta</h2>' + (isKid()
+    ? `<p class="muted">Profil: <strong>${esc(cur().name)}</strong>. Zmiana profilu tylko w trybie rodzica.</p>`
+    : '<div class="chips">' + state.profiles.map((p) => `<button type="button" class="chip" data-action="pick-profile" data-id="${p.id}" aria-pressed="${p.id === state.current}">${esc(p.name)}</button>`).join('') + '</div>') + '</div>' +
     '<div class="card"><div class="row sb"><div><h2>Tryb rodzica</h2>' +
     `<span class="muted">${parent ? 'Włączony: widać kalorie, plan i zakupy.' : 'Wyłączony: widok dziecka.'}</span></div>` +
     `<button type="button" class="small ${parent ? '' : 'ghost'}" data-action="parent-toggle" aria-pressed="${parent}">${parent ? 'Wyłącz' : 'Włącz'}</button></div></div>`;
   if (isKid()) return html + '<div class="note warn">Reszta profili jest widoczna tylko w trybie rodzica.</div>';
+  const kids = state.profiles.filter((p) => p.role === 'dziecko');
+  if (kids.length) {
+    html += '<div class="card"><h2>Telefon dziecka</h2>' +
+      (kd ? `<p class="muted">Ten telefon jest ustawiony jako telefon: <strong>${esc(kd.name)}</strong>. Po wyłączeniu trybu rodzica widać tylko jego profil, bez statystyk, innych profili i synchronizacji.</p>` +
+        '<button type="button" class="ghost" data-action="kid-device" data-id="">To nie jest telefon dziecka</button>'
+        : '<p class="muted">Na telefonie syna włącz to raz. Wtedy bez PIN-u nie da się przełączyć na profil rodzica.</p><div class="chips">' +
+          kids.map((p) => `<button type="button" class="chip" data-action="kid-device" data-id="${p.id}">To telefon: ${esc(p.name)}</button>`).join('') + '</div>') + '</div>';
+  }
   if (typeof statsCard === 'function') html += statsCard();
   for (const p of state.profiles) {
     html += `<div class="card" data-pid="${p.id}"><div class="grid">` +
@@ -281,7 +296,7 @@ function render() {
 
 // ---------- zdarzenia ----------
 function toggleParent() {
-  if (parent) { parent = false; render(); return; }
+  if (parent) { parent = false; lockKidDevice(); save(true); render(); return; }
   if (!state.pin) {
     const p = prompt('Ustaw PIN rodzica (min. 4 cyfry). To tylko zasłona widoku dziecka, nie zabezpieczenie danych.');
     if (!p) return;
@@ -323,7 +338,8 @@ document.addEventListener('click', (e) => {
     return;
   }
   else if (a === 'hero-sync') return heroSync(t);
-  else if (a === 'pick-profile') { state.current = t.dataset.id; addOpen = null; }
+  else if (a === 'kid-device') { if (!parent) return; state.kidDevice = t.dataset.id || null; save(true); return render(); }
+  else if (a === 'pick-profile') { if (isKid()) return; state.current = t.dataset.id; addOpen = null; }
   else if (a === 'stats-share') return statsShare();
   else if (a === 'stats-mail') return statsMail();
   else if (a === 'kid-add') { addOpen = addOpen === t.dataset.meal ? null : t.dataset.meal; render(); const i = $('#n-' + addOpen); if (i) i.focus(); return; }
