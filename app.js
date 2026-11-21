@@ -177,7 +177,7 @@ function itemPill(name) {
   if (m.amb) return `<span class="pill lim tiny" title="Na liście są różne rodzaje: ${esc(m.it)}">${isKid() ? 'Zapytaj rodzica' : 'Zależy od rodzaju'}</span>`;
   return `<span class="pill ${m.st} tiny"><span aria-hidden="true">${MARK[m.st]}</span>${(isKid() ? LABEL_KID : LABEL)[m.st]}</span>`;
 }
-const QUICK_ACT = [['W-F w szkole', 45], ['Spacer', 30], ['Rower', 45], ['Bieganie', 30], ['Pływanie', 45], ['Piłka nożna', 60], ['Siłownia', 45], ['Taniec', 30], ['Hulajnoga', 30]];
+const QUICK_ACT = [['Ćwiczenia wieczorne w domu', 20], ['Judo', 60], ['W-F w szkole', 45], ['Spacer', 30], ['Rower', 45], ['Bieganie', 30], ['Pływanie', 45], ['Piłka nożna', 60], ['Siłownia', 45], ['Taniec', 30], ['Hulajnoga', 30]];
 // Spalone kcal (szacunkowo): MET × waga (kg) × czas (h). Wartości MET z tabel wysiłku, dla dzieci orientacyjne.
 const MET = [[/spacer|chodz/, 3.5], [/rower/, 6], [/pływ|basen/, 6], [/piłk|nożn|kosz|siatk|ręczn/, 7], [/bieg|jogging/, 8], [/siłown|ćwicz|trening/, 5],
   [/taniec|tańcz/, 5], [/hulajn|rolk|wrotk/, 5], [/w-f|wf|wychowanie/, 5], [/narty|snowboard/, 6], [/łyżw/, 6], [/sztuki walki|karate|judo|taekwondo/, 7], [/joga|rozciąg/, 2.5], [/tenis/, 7]];
@@ -188,7 +188,8 @@ function activityCard(d) {
   const p = cur(), kid = isKid();
   const list = d.activities || [], tot = list.reduce((a, x) => a + x.min, 0), kc = list.reduce((a, x) => a + burned(x, p), 0);
   return `<div class="card sport"><div class="row sb"><h2>Aktywność</h2><span class="muted">${tot ? tot + ' min' + ` · ${kid ? 'spalone' : 'ok.'} ${kc} kcal` : 'jeszcze nic'}</span></div>` +
-    '<div class="chips scroll">' + QUICK_ACT.map(([n, m]) => `<button type="button" class="chip" data-action="act-pick" data-name="${esc(n)}" data-min="${m}">${esc(n)}</button>`).join('') + '</div>' +
+    '<div class="actgrid">' + QUICK_ACT.map(([n, m], i) => `<button type="button" class="acttile${i < 3 ? ' main' : ''}" data-action="act-pick" data-name="${esc(n)}" data-min="${m}">` +
+      `<strong>${esc(n)}</strong><span>${m} min</span><span>${kid ? '🔥 ' : 'ok. '}${burned({ name: n, min: m }, p)} kcal</span></button>`).join('') + '</div>' +
     '<form data-act="1"><label class="sr" for="an">Aktywność</label><input type="text" id="an" placeholder="Aktywność" required autocomplete="off">' +
     '<label class="sr" for="am">Minuty</label><input type="number" id="am" value="30" min="1" max="1440" inputmode="numeric" required><button type="submit" class="small">Dodaj</button></form>' +
     `<p class="muted small" id="aest">${actEst('', 30)}</p>` +

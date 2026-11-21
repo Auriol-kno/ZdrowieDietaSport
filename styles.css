@@ -577,3 +577,12 @@ html[data-theme="dark"] .card.sport h2, html[data-theme="dark"] .card.sport .chi
 html[data-theme="dark"] .card.sport .chip { background: rgba(255, 255, 255, .16); }
 html[data-theme="dark"] .card.sport input { background: #2a2420; color: #f3e6da; }
 html[data-theme="warm"] .card.sport, html[data-theme="gray"] .card.sport { background: linear-gradient(145deg, #ec8f43, #d9652a); }
+/* Aktywności jako kafelki w siatce */
+.actgrid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 6px; margin: 6px 0 2px; }
+.acttile { min-height: 58px; height: auto; padding: 7px 6px; border-radius: 14px; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 2px; text-align: center;
+  background: rgba(255, 255, 255, .2); color: #fff; border: 1px solid rgba(255, 255, 255, .35); box-shadow: none; }
+.acttile strong { font-size: 13px; line-height: 15px; font-weight: 800; overflow-wrap: anywhere; }
+.acttile span { font-size: 11px; line-height: 13px; opacity: .9; font-weight: 600; }
+.acttile.main { background: rgba(255, 255, 255, .34); border-color: rgba(255, 255, 255, .6); }
+.acttile:active { background: rgba(255, 255, 255, .45); }
+.acttile span { white-space: nowrap; }
