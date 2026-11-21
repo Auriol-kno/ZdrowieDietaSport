@@ -85,7 +85,7 @@ function eatenKcal(d) {
   let t = 0;
   for (const [key] of MEALS) {
     const m = d.meals[key];
-    if (m && m.done) t += m.items.reduce((a, i) => a + (Number(i.kcal) || 0), 0);
+    if (m && m.done) t += m.items.reduce((a, i) => a + (i.prop ? 0 : Number(i.kcal) || 0), 0);
   }
   return t;
 }
@@ -212,9 +212,18 @@ function viewToday() {
     const m = meal(d, key);
     html += `<div class="meal"><div class="row sb"><div><strong>${name}</strong> <span class="muted">${time}</span></div>` +
       `<span class="row">${`<button type="button" class="plus" data-action="kid-add" data-meal="${key}" aria-label="${kid ? 'Dopisz, co zjadłeś na' : 'Dodaj danie do'} ${esc(name)}" aria-expanded="${addOpen === key}">+</button>`}` +
+      `<button type="button" class="plus propbtn" data-action="prop-add" data-meal="${key}" aria-label="Zaproponuj danie na ${esc(name)}" aria-expanded="${addOpen === 'p:' + key}"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9 18h6M10 21h4M12 3a6 6 0 0 0-3.6 10.8c.6.5 1 1.2 1 2V16h5.2v-.2c0-.8.4-1.5 1-2A6 6 0 0 0 12 3z"/></svg></button>` +
       `<button type="button" class="small ${m.done ? 'done' : 'ghost'}" data-action="done" data-meal="${key}" aria-pressed="${m.done}">${m.done ? '✓ Zjedzone' : 'Zjedzone'}</button></span></div>`;
     if (m.items.length) {
       html += '<ul>' + m.items.map((it, i) => {
+        if (it.prop) {
+          const mine = (it.from === 'dziecko') === kid;
+          const who = it.from === 'dziecko' ? (state.profiles.find((p) => p.role === 'dziecko') || { name: 'dziecka' }).name : 'rodzic';
+          return `<li class="propitem"><span class="propname">${esc(it.name)}${!kid && it.kcal ? ` <span class="pk">· ${esc(it.kcal)} kcal</span>` : ''}` +
+            `<span class="by">proponuje: ${esc(who)}${mine ? ' · czeka na odpowiedź' : ''}</span></span><span class="li-end">${itemPill(it.name)}` +
+            (mine ? '' : `<button type="button" class="small okbtn" data-action="prop-ok" data-meal="${key}" data-i="${i}" aria-label="Potwierdź ${esc(it.name)}">✓</button>`) +
+            `<button type="button" class="small nobtn" data-action="prop-no" data-meal="${key}" data-i="${i}" aria-label="${mine ? 'Wycofaj' : 'Odrzuć'} ${esc(it.name)}">✕</button></span></li>`;
+        }
         const cls = it.kid ? 'kiditem' : it.by === 'rodzic' ? 'paritem' : '';
         if (editOpen === key + '|' + i) {
           return `<li class="${cls}"><form data-edit="${key}" data-i="${i}" class="editform"><label class="sr" for="e-${key}">Popraw nazwę</label>` +
@@ -226,6 +235,12 @@ function viewToday() {
           `${!kid && it.kcal ? ` <span class="muted">· ${esc(it.kcal)} kcal</span>` : ''}${it.by === 'rodzic' ? ' <span class="by">od rodzica</span>' : ''}</button><span class="li-end">${itemPill(it.name)}` +
           `<button type="button" class="small ghost" data-action="del" data-meal="${key}" data-i="${i}" aria-label="Usuń ${esc(it.name)}">✕</button></span></li>`;
       }).join('') + '</ul>';
+    }
+    if (addOpen === 'p:' + key) {
+      html += `<form data-meal="${key}" data-prop="1" class="kidform propform${kid ? '' : ' parform'}"><label class="sr" for="n-${key}">Propozycja dania</label>` +
+        `<input type="text" id="n-${key}" placeholder="Zaproponuj danie" required autocomplete="off">` +
+        (kid ? '' : `<label class="sr" for="k-${key}">kcal</label><input type="number" id="k-${key}" placeholder="kcal" min="0" inputmode="numeric">`) +
+        '<button type="submit" class="small">Zaproponuj</button></form>';
     }
     if (addOpen === key) {
       html += kid
@@ -338,7 +353,7 @@ document.addEventListener('click', (e) => {
   if (a.startsWith('k-')) return kAction(a, t);
   if (a.startsWith('sync-')) return syncAction(a);
   const d = day();
-  if (['water', 'done', 'del'].includes(a)) d.u = Date.now();
+  if (['water', 'done', 'del', 'prop-ok', 'prop-no'].includes(a)) d.u = Date.now();
   if (a === 'water') d.water = Math.max(0, d.water + Number(t.dataset.d));
   else if (a === 'done') { const m = meal(d, t.dataset.meal); m.done = !m.done; }
   else if (a === 'del') { meal(d, t.dataset.meal).items.splice(Number(t.dataset.i), 1); editOpen = null; }
@@ -354,6 +369,12 @@ document.addEventListener('click', (e) => {
   else if (a === 'pick-profile') { if (isKid()) return; state.current = t.dataset.id; addOpen = null; }
   else if (a === 'stats-share') return statsShare();
   else if (a === 'stats-mail') return statsMail();
+  else if (a === 'prop-add') { const k = 'p:' + t.dataset.meal; addOpen = addOpen === k ? null : k; render(); const i = $('#n-' + t.dataset.meal); if (i) i.focus(); return; }
+  else if (a === 'prop-ok') {
+    const it = meal(d, t.dataset.meal).items[Number(t.dataset.i)];
+    if (it && it.prop) { delete it.prop; if (it.from === 'dziecko') it.kid = true; else it.by = 'rodzic'; delete it.from; }
+  }
+  else if (a === 'prop-no') meal(d, t.dataset.meal).items.splice(Number(t.dataset.i), 1);
   else if (a === 'kid-add') { addOpen = addOpen === t.dataset.meal ? null : t.dataset.meal; render(); const i = $('#n-' + addOpen); if (i) i.focus(); return; }
   else if (a === 'st-range') { st.range = Number(t.dataset.v); return render(); }
   else if (a === 'act-del') { (d.activities = d.activities || []).splice(Number(t.dataset.i), 1); d.u = Date.now(); }
@@ -415,7 +436,8 @@ document.addEventListener('submit', (e) => {
   if (!name) return;
   const d = day();
   const item = { name, kcal: kcal === '' ? 0 : Number(kcal) };
-  if (isKid()) item.kid = true; else item.by = 'rodzic';
+  if (f.dataset.prop) { item.prop = true; item.from = isKid() ? 'dziecko' : 'rodzic'; }
+  else if (isKid()) item.kid = true; else item.by = 'rodzic';
   meal(d, f.dataset.meal).items.push(item);
   addOpen = null;
   d.u = Date.now();

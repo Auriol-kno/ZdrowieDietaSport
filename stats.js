@@ -14,7 +14,7 @@ function dayKcal(d, iso) {
   for (const [mk] of MEALS) {
     const m = d.meals[mk];
     if (!m) continue;
-    const own = (m.items || []).reduce((a, i) => a + (Number(i.kcal) || 0), 0);
+    const own = (m.items || []).reduce((a, i) => a + (i.prop ? 0 : Number(i.kcal) || 0), 0);
     if (!m.done) continue;
     if (own) { t += own; continue; }
     for (const e of (state.plan[iso + '|' + mk] || [])) t += e.rid ? ((map[e.rid] || {}).kcal || 0) : (Number(e.kcal) || 0);
@@ -38,6 +38,7 @@ function statsData(pid, n) {
         if (!m) continue;
         if (m.done) r.done++;
         for (const it of m.items || []) {
+          if (it.prop) continue;
           r.items++; if (it.kid) r.kid++;
           const s = ruleSt(it.name);
           if (s) r[s]++; else r.unk++;

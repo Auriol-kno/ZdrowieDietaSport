@@ -305,3 +305,18 @@ li.paritem button.small { min-height: 26px; min-width: 26px; height: 26px; paddi
 li.kiditem .editform, .kidform:not(.parform) { grid-template-columns: 1fr auto; }
 li:has(.editform) { padding: 4px 6px; }
 li.kiditem .itemname, li.paritem .itemname { background: none; box-shadow: none; padding: 0; height: auto; border-radius: 0; }
+/* Propozycje dań: mocny fiolet, potwierdź ✓ albo odrzuć ✕ */
+.meal .plus.propbtn { background: #7b3fe4; color: #fff; border-color: #6a2fd6; }
+.meal .plus.propbtn svg { width: 17px; height: 17px; fill: none; stroke: currentColor; stroke-width: 2.2; stroke-linecap: round; stroke-linejoin: round; }
+.meal .plus.propbtn[aria-expanded="true"] { background: #5f25c4; }
+li.propitem { background: #7b3fe4; color: #fff; border-radius: 16px; padding: 4px 4px 4px 12px; margin: 3px 0; min-height: 36px; font-size: 12px;
+  box-shadow: inset 2px 2px 5px rgba(40, 0, 100, .45), inset -2px -2px 5px rgba(255, 255, 255, .18); }
+.propname { display: flex; flex-direction: column; gap: 1px; font-weight: 800; font-size: 13px; min-width: 0; overflow-wrap: anywhere; }
+.propname .by { color: #e6dbff; font-weight: 600; font-size: 10.5px; }
+.propname .pk { color: #e6dbff; font-weight: 600; }
+li.propitem .pill { min-height: 0; padding: 2px 7px; font-size: 10.5px; background: rgba(255, 255, 255, .92); }
+li.propitem .okbtn, li.propitem .nobtn { min-height: 30px; height: 30px; min-width: 30px; padding: 0 9px; border-radius: 15px; font-size: 14px; font-weight: 800; box-shadow: none; border: none; }
+li.propitem .okbtn { background: #22a447; color: #fff; }
+li.propitem .nobtn { background: rgba(255, 255, 255, .9); color: #6a2fd6; }
+.propform input[type=text] { background: #efe6ff; color: #5f25c4; }
+.propform button[type=submit] { background: #7b3fe4; color: #fff; }
