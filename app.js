@@ -44,7 +44,7 @@ function load() {
       for (const p of s.profiles) if (p.name === 'Franciszek') { p.name = 'Franek'; p.nick = 'Franek'; }
       // zdjęcia dań trzymamy 14 dni, żeby nie zapchać pamięci telefonu
       const cut = new Date(Date.now() - 14 * 864e5).toLocaleDateString('sv-SE');
-      for (const [k, d] of Object.entries(s.days || {})) if (k.slice(0, 10) < cut) for (const m of Object.values(d.meals || {})) if (m && m.photo) delete m.photo;
+      for (const [k, d] of Object.entries(s.days || {})) if (k.slice(0, 10) < cut) for (const m of Object.values(d.meals || {})) if (m) { delete m.photo; delete m.photos; }
       return s;
     }
   } catch (e) { /* brak danych lub pamięć niedostępna */ }
@@ -192,6 +192,8 @@ function nextMealCard(d) {
 }
 
 // Zdjęcie zjedzonego dania: zmniejszone do 360 px (JPEG), zapisane w dniu, więc synchronizuje się z rodziną.
+// Starsze dane miały jedno zdjęcie w m.photo, teraz lista m.photos.
+const photosOf = (m) => (Array.isArray(m.photos) ? m.photos : m.photo && m.photo.src ? [m.photo] : []).slice();
 function takePhoto(key) {
   const inp = document.createElement('input');
   inp.type = 'file'; inp.accept = 'image/*'; inp.setAttribute('capture', 'environment');
@@ -204,9 +206,10 @@ function takePhoto(key) {
       const max = 360, s = Math.min(1, max / Math.max(img.width, img.height));
       const c = document.createElement('canvas'); c.width = Math.round(img.width * s); c.height = Math.round(img.height * s);
       c.getContext('2d').drawImage(img, 0, 0, c.width, c.height); URL.revokeObjectURL(url);
-      const dd = day(), m = meal(dd, key), prev = m.photo;
-      m.photo = { src: c.toDataURL('image/jpeg', 0.6), at: Date.now() }; dd.u = Date.now();
-      if (!save()) { m.photo = prev; save(true); alert('Brak miejsca w pamięci telefonu na zdjęcie. Usuń starsze zdjęcia.'); }
+      const dd = day(), m = meal(dd, key), wasDone = m.done;
+      const ph = photosOf(m); ph.push({ src: c.toDataURL('image/jpeg', 0.6), at: Date.now() }); m.photos = ph; delete m.photo;
+      m.done = true; dd.u = Date.now();
+      if (!save()) { ph.pop(); m.done = wasDone; save(true); alert('Brak miejsca w pamięci telefonu na zdjęcie. Usuń starsze zdjęcia.'); }
       render();
     };
     img.onerror = () => { URL.revokeObjectURL(url); alert('Nie udało się wczytać zdjęcia.'); };
@@ -279,8 +282,8 @@ function viewToday() {
     html += `<div class="meal"><div class="row sb"><div><strong>${name}</strong> <span class="muted">${time}</span></div>` +
       `<span class="row">${`<button type="button" class="plus" data-action="kid-add" data-meal="${key}" aria-label="${kid ? 'Dopisz, co zjadłeś na' : 'Dodaj danie do'} ${esc(name)}" aria-expanded="${addOpen === key}">+</button>`}` +
       `<button type="button" class="plus propbtn" data-action="prop-add" data-meal="${key}" aria-label="Zaproponuj danie na ${esc(name)}" aria-expanded="${addOpen === 'p:' + key}"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9 18h6M10 21h4M12 3a6 6 0 0 0-3.6 10.8c.6.5 1 1.2 1 2V16h5.2v-.2c0-.8.4-1.5 1-2A6 6 0 0 0 12 3z"/></svg></button>` +
-      (m.done ? `<button type="button" class="plus cambtn" data-action="photo" data-meal="${key}" aria-label="${m.photo ? 'Zmień zdjęcie' : 'Zrób zdjęcie'}: ${esc(name)}"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 8h3l2-2.5h6L17 8h3v11H4z"/><circle cx="12" cy="13.5" r="3.5"/></svg></button>` : '') +
-      `<button type="button" class="small ${m.done ? 'done' : 'ghost'}" data-action="done" data-meal="${key}" aria-pressed="${m.done}">${m.done ? '✓ Zjedzone' : 'Zjedzone'}</button></span></div>`;
+      `<span class="eatpill${m.done ? ' on' : ''}"><button type="button" class="eat" data-action="done" data-meal="${key}" aria-pressed="${m.done}">${m.done ? '✓ Zjedzone' : 'Zjedzone'}</button>` +
+      `<button type="button" class="cam" data-action="photo" data-meal="${key}" aria-label="Dodaj zdjęcie: ${esc(name)}"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 8h3l2-2.5h6L17 8h3v11H4z"/><circle cx="12" cy="13.5" r="3.5"/></svg>${photosOf(m).length ? `<b>${photosOf(m).length}</b>` : ''}</button></span></span></div>`;
     if (m.items.length) {
       html += '<ul>' + m.items.map((it, i) => {
         if (it.prop) {
@@ -308,10 +311,12 @@ function viewToday() {
           `<button type="button" class="small ghost" data-action="del" data-meal="${key}" data-i="${i}" aria-label="Usuń ${esc(it.name)}">✕</button></span></li>`;
       }).join('') + '</ul>';
     }
-    if (m.photo && m.photo.src) {
-      html += `<div class="mphoto"><button type="button" class="ph" data-action="photo-view" data-meal="${key}" aria-label="Powiększ zdjęcie: ${esc(name)}"><img src="${m.photo.src}" alt="Zdjęcie: ${esc(name)}"></button>` +
-        `<span class="muted small">${m.photo.at ? new Date(m.photo.at).toLocaleTimeString('pl-PL', { hour: '2-digit', minute: '2-digit' }) : ''}</span>` +
-        `<button type="button" class="small ghost" data-action="photo-del" data-meal="${key}" aria-label="Usuń zdjęcie">✕</button></div>`;
+    const phs = photosOf(m);
+    if (phs.length) {
+      html += '<div class="mphotos">' + phs.map((p, pi) => `<span class="phw"><button type="button" class="ph" data-action="photo-view" data-meal="${key}" data-i="${pi}" aria-label="Powiększ zdjęcie ${pi + 1}: ${esc(name)}">` +
+        `<img src="${p.src}" alt="Zdjęcie ${pi + 1}: ${esc(name)}"></button><button type="button" class="phdel" data-action="photo-del" data-meal="${key}" data-i="${pi}" aria-label="Usuń zdjęcie ${pi + 1}">✕</button>` +
+        `<span class="pht">${p.at ? new Date(p.at).toLocaleTimeString('pl-PL', { hour: '2-digit', minute: '2-digit' }) : ''}</span></span>`).join('') +
+        `<button type="button" class="phadd" data-action="photo" data-meal="${key}" aria-label="Dodaj kolejne zdjęcie">+</button></div>`;
     }
     if (addOpen === 'p:' + key) {
       html += `<form data-meal="${key}" data-prop="1" class="kidform propform${kid ? '' : ' parform'}"><label class="sr" for="n-${key}">Propozycja dania</label>` +
@@ -454,8 +459,8 @@ document.addEventListener('click', (e) => {
   else if (a === 'stats-share') return statsShare();
   else if (a === 'stats-mail') return statsMail();
   else if (a === 'photo') return takePhoto(t.dataset.meal);
-  else if (a === 'photo-view') { const ph = meal(d, t.dataset.meal).photo; if (ph) viewPhoto(ph.src); return; }
-  else if (a === 'photo-del') { delete meal(d, t.dataset.meal).photo; d.u = Date.now(); }
+  else if (a === 'photo-view') { const ph = photosOf(meal(d, t.dataset.meal))[Number(t.dataset.i) || 0]; if (ph) viewPhoto(ph.src); return; }
+  else if (a === 'photo-del') { const m = meal(d, t.dataset.meal), ph = photosOf(m); ph.splice(Number(t.dataset.i) || 0, 1); m.photos = ph; delete m.photo; d.u = Date.now(); }
   else if (a === 'prop-add') { const k = 'p:' + t.dataset.meal; addOpen = addOpen === k ? null : k; render(); const i = $('#n-' + t.dataset.meal); if (i) i.focus(); return; }
   else if (a === 'prop-ok') {
     const it = meal(d, t.dataset.meal).items[Number(t.dataset.i)];

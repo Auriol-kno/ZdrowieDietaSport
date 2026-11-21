@@ -355,3 +355,22 @@ li.propitem button.okbtn:disabled { background: #9fe0b1 !important; color: #1d7a
 .photoview img { max-width: 100%; max-height: 75vh; border-radius: 18px; }
 ul.uzu { margin: 6px 0 0; padding-left: 18px; }
 ul.uzu li { min-height: 0; display: list-item; margin: 4px 0; }
+/* „Zjedzone” z aparatem w jednej pastylce */
+.eatpill { display: inline-flex; align-items: stretch; border-radius: 999px; background: var(--card); box-shadow: var(--up-s); overflow: hidden; flex: 0 0 auto; }
+.eatpill button { all: unset; box-sizing: border-box; cursor: pointer; min-height: 44px; display: inline-flex; align-items: center; justify-content: center; font: inherit; font-weight: 700; font-size: 14px; color: var(--ink); }
+.eatpill .eat { padding: 0 12px 0 16px; white-space: nowrap; }
+.eatpill .cam { position: relative; padding: 0 12px; border-left: 1px solid var(--line); color: #a5561c; }
+.eatpill .cam svg { width: 20px; height: 20px; fill: none; stroke: currentColor; stroke-width: 2; stroke-linejoin: round; }
+.eatpill .cam b { position: absolute; top: 5px; right: 4px; min-width: 15px; height: 15px; border-radius: 8px; background: #a5561c; color: #fff; font-size: 10px; line-height: 15px; text-align: center; padding: 0 3px; }
+.eatpill.on { background: #d6eee0; box-shadow: var(--in); }
+.eatpill.on .eat { color: #1f7a4a; }
+.eatpill.on .cam { border-left-color: #b9dcc7; }
+.eatpill button:focus-visible { outline: 2px solid var(--blue); outline-offset: -3px; border-radius: 999px; }
+/* Kilka zdjęć posiłku, zawsze widoczne */
+.mphotos { display: flex; gap: 8px; overflow-x: auto; padding: 6px 2px 4px; -webkit-overflow-scrolling: touch; }
+.phw { position: relative; flex: 0 0 auto; }
+.mphotos .ph { all: unset; cursor: pointer; display: block; border-radius: 14px; overflow: hidden; box-shadow: var(--up-s); line-height: 0; }
+.mphotos img { width: 72px; height: 72px; object-fit: cover; display: block; }
+.phdel { position: absolute; top: -4px; right: -4px; width: 24px; height: 24px; min-height: 24px; padding: 0; border-radius: 50%; font-size: 11px; background: #fff; color: #6a645e; box-shadow: 0 1px 4px rgba(0, 0, 0, .25); }
+.pht { position: absolute; left: 6px; bottom: 5px; font-size: 10px; font-weight: 700; color: #fff; text-shadow: 0 1px 3px rgba(0, 0, 0, .7); }
+.phadd { flex: 0 0 auto; width: 72px; height: 72px; min-height: 72px; padding: 0; border-radius: 14px; font-size: 26px; color: #a5561c; background: #f6e5d3; box-shadow: none; border: 2px dashed #e3c39f; }
