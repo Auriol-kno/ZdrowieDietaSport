@@ -112,7 +112,13 @@ function eatenKcal(d) {
   let t = 0;
   for (const [key] of MEALS) {
     const m = d.meals[key];
-    if (m) t += (m.items || []).reduce((a, i) => a + (counts(m, i) ? itemKcal(i) : 0), 0);
+    if (!m) continue;
+    const own = (m.items || []).filter((i) => counts(m, i));
+    if (own.length) t += own.reduce((a, i) => a + itemKcal(i), 0);
+    else if (m.done && typeof byIdMap === 'function') {
+      const pm = byIdMap();
+      for (const e of (state.plan[dayKey() + '|' + key] || [])) t += e.rid ? ((pm[e.rid] || {}).kcal || 0) : (Number(e.kcal) || 0);
+    }
   }
   return t;
 }
@@ -300,6 +306,7 @@ function viewPhoto(src) {
   o.addEventListener('click', () => o.remove()); document.body.appendChild(o); o.querySelector('button').focus();
 }
 
+const gearBtn = (cls = '') => `<button type="button" class="gearbtn ${cls}" data-action="open-settings" aria-label="Ustawienia i profile"${tab === 'profile' ? ' aria-pressed="true"' : ''}><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="3.2"/><path d="M12 2.8v2.4M12 18.8v2.4M2.8 12h2.4M18.8 12h2.4M5.5 5.5l1.7 1.7M16.8 16.8l1.7 1.7M5.5 18.5l1.7-1.7M16.8 7.2l1.7-1.7"/><circle cx="12" cy="12" r="6.3"/></svg></button>`;
 function syncBtn() {
   const ready = typeof ZdsSync !== 'undefined' && ZdsSync.enabled() && su.session && state.fam;
   const st = su.busy ? 'spin' : !ready ? 'off' : su.err ? 'bad' : su.last ? 'ok' : '';
@@ -335,7 +342,7 @@ function viewToday() {
     `<span class="hero-month">${now.toLocaleDateString('pl-PL', { month: 'long' })}</span></div>` +
     `<div><h1>Cześć, ${esc(p.nick || p.name)}!</h1><div class="hero-sub">${now.toLocaleDateString('pl-PL', { weekday: 'long' })}</div>` +
     (su.last ? `<div class="hero-sync">${su.err ? 'Nie udało się zsynchronizować' : 'Zsynchronizowano ' + new Date(su.last).toLocaleTimeString('pl-PL', { hour: '2-digit', minute: '2-digit' })}</div>` : '') + '</div>' +
-    syncBtn() + '</div>';
+    `<div class="hero-actions">${gearBtn('small')}${syncBtn()}</div>` + '</div>';
 
   const waterW = `<div class="card widget"><h2>Woda</h2>${gauge(pct, 'water', 'Woda', `${d.water * GLASS_ML / 1000} z 2 l`)}` +
     `<div class="row"><button type="button" class="small" data-action="water" data-d="1" aria-label="Dodaj szklankę">+ 250 ml</button>` +
@@ -360,6 +367,16 @@ function viewToday() {
       '<span class="row">' +
       `<span class="eatpill${m.done ? ' on' : ''}"><button type="button" class="eat" data-action="done" data-meal="${key}" aria-pressed="${m.done}">${m.done ? '✓ Zjedzone' : 'Zjedzone'}</button>` +
       `<button type="button" class="cam" data-action="photo" data-meal="${key}" aria-label="Dodaj zdjęcie: ${esc(name)}"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 8h3l2-2.5h6L17 8h3v11H4z"/><circle cx="12" cy="13.5" r="3.5"/></svg>${photosOf(m).length ? `<b>${photosOf(m).length}</b>` : ''}</button></span></span></div>`;
+    const planned = state.plan[dayKey() + '|' + key] || [];
+    if (planned.length) {
+      const pm = typeof byIdMap === 'function' ? byIdMap() : {};
+      html += '<ul>' + planned.map((e, i) => {
+        const r = e.rid ? pm[e.rid] : null; if (e.rid && !r) return '';
+        const nm = r ? r.name : e.name, kc = r ? r.kcal : Number(e.kcal) || 0;
+        return `<li class="planitem"><span class="pname">${esc(nm)}<span class="by">z planu${!kid && kc ? ` · ${kc} kcal/porcja` : ''}</span></span><span class="li-end">${r && typeof pillSt === 'function' ? pillSt(ZdsRecipes.checkRecipe(ku.idx, r).st) : itemPill(nm)}` +
+          (kid ? '' : `<button type="button" class="small ghost" data-action="k-plan-rm" data-day="${dayKey()}" data-meal="${key}" data-i="${i}" aria-label="Usuń z planu ${esc(nm)}">✕</button>`) + '</span></li>';
+      }).join('') + '</ul>';
+    }
     if (m.items.length) {
       html += '<ul>' + m.items.map((it, i) => {
         if (it.prop) {
@@ -447,7 +464,7 @@ function viewCheck() {
 }
 function viewProfiles() {
   const kd = state.profiles.find((p) => p.id === state.kidDevice);
-  let html = '<h1>Profile</h1><div class="card"><h2>Kto korzysta</h2>' + (isKid()
+  let html = '<h1>Ustawienia i profile</h1><div class="card"><h2>Kto korzysta</h2>' + (isKid()
     ? `<p class="muted">Profil: <strong>${esc(cur().name)}</strong>. Zmiana profilu tylko w trybie rodzica.</p>`
     : '<div class="chips">' + state.profiles.map((p) => `<button type="button" class="chip" data-action="pick-profile" data-id="${p.id}" aria-pressed="${p.id === state.current}">${esc(p.name)}</button>`).join('') + '</div>') + '</div>' +
     '<div class="card"><h2>Wygląd</h2><div class="chips">' + [['light', 'Jasny'], ['warm', 'Ciepły przygaszony'], ['gray', 'Szary'], ['dark', 'Ciemny'], ['system', 'Jak w systemie']].map(([v, n]) =>
@@ -498,7 +515,7 @@ function render() {
     if (b.dataset.tab === tab) b.setAttribute('aria-current', 'page'); else b.removeAttribute('aria-current');
   });
   const views = { dzis: viewToday, sprawdz: viewCheck, przepisy: typeof viewRecipes === 'function' ? viewRecipes : viewToday, plan: typeof viewPlan === 'function' ? viewPlan : viewToday, profile: viewProfiles };
-  $('#view').innerHTML = (views[tab] || viewToday)();
+  $('#view').innerHTML = (tab === 'dzis' ? '' : `<div class="topgear">${gearBtn()}</div>`) + (views[tab] || viewToday)();
 }
 
 // ---------- zdarzenia ----------
@@ -588,6 +605,7 @@ document.addEventListener('click', (e) => {
   else if (a === 'rep-prep') { const i = $('#smail'); if (i) { state.statsMail = i.value.trim(); save(true); } return reportPrepare(); }
   else if (a === 'rep-send') return reportSend();
   else if (a === 'stats-mail') return statsMail();
+  else if (a === 'open-settings') { tab = tab === 'profile' ? 'dzis' : 'profile'; window.scrollTo(0, 0); return render(); }
   else if (a === 'theme') { state.theme = t.dataset.v; save(true); return render(); }
   else if (a === 'sound') {
     const order = ['pik', 'pyk', 'off'], s = state.sound || 'pik';

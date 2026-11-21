@@ -606,3 +606,27 @@ html[data-theme="warm"] .card.sport, html[data-theme="gray"] .card.sport { backg
 .gauge.seg .gin > i + i::before { content: ''; position: absolute; left: 25%; right: 25%; top: 0; height: 1px; background: rgba(120, 110, 100, .2); }
 .gauge.seg .gin > i.on + i::before, .gauge.seg .gin > i + i.on::before { background: rgba(255, 255, 255, .5); left: 0; right: 0; }
 html[data-theme="dark"] .gauge.seg .gin > i + i::before { background: rgba(255, 255, 255, .1); }
+/* Trybik ustawień: prawy górny róg */
+.hero-actions { display: flex; flex-direction: column; align-items: flex-end; gap: 6px; flex: 0 0 auto; align-self: stretch; justify-content: space-between; }
+.hero-actions .syncbtn { width: 58px; height: 58px; min-height: 58px; }
+.hero-actions .syncbtn svg { width: 28px; height: 28px; }
+.gearbtn { width: 40px; height: 40px; min-height: 40px; padding: 0; border-radius: 50%; display: grid; place-items: center; background: var(--card); color: var(--ink); box-shadow: var(--up-s); }
+.gearbtn svg { width: 22px; height: 22px; fill: none; stroke: currentColor; stroke-width: 1.9; stroke-linecap: round; }
+.gearbtn.small { width: 34px; height: 34px; min-height: 34px; background: rgba(255, 255, 255, .9); color: #4a5a7a; }
+.gearbtn.small svg { width: 19px; height: 19px; }
+.gearbtn[aria-pressed="true"] { box-shadow: var(--in); color: var(--blue-d); }
+#view { position: relative; }
+.topgear { position: absolute; top: 4px; right: 14px; z-index: 2; }
+.topgear + h1, .topgear + * { padding-right: 52px; }
+html[data-theme="dark"] .gearbtn.small { background: #2f2c29; color: #a9bde3; }
+/* Dodaj własny przepis: zielony, na górze */
+.addrecipe { width: 100%; background: var(--sage, #3f7d70); color: #fff; font-weight: 800; }
+/* Pozycje z planu w zakładce Dziś */
+.meal li.planitem { padding: 4px 4px 4px 14px; margin: 4px 0; min-height: 34px; border-radius: 17px; background: rgba(255, 255, 255, .55); border: 1px dashed rgba(63, 125, 112, .45); font-size: 12px; }
+.planitem .pname { display: flex; flex-direction: column; font-weight: 700; font-size: 12.5px; color: var(--ink); }
+.planitem .by { font-size: 10.5px; font-weight: 600; color: #3f7d70; }
+.planitem .pill { min-height: 0; padding: 2px 7px; font-size: 10.5px; }
+html[data-theme="dark"] .meal li.planitem { background: rgba(255, 255, 255, .06); }
+html[data-theme="dark"] .planitem .by { color: #8fd0bf; }
+.addrecipe { background: linear-gradient(145deg, #3fae6a, #23894d); color: #fff; box-shadow: var(--up-s); }
+.planitem .pill { white-space: nowrap; }

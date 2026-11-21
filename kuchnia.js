@@ -60,6 +60,7 @@ function viewRecipes() {
   if (ku.cook) return viewCook();
   if (ku.rid) return viewRecipe();
   let h = '<h1>Przepisy</h1>';
+  if (!isKid()) h += ku.form ? customForm() : '<button type="button" class="addrecipe" data-action="k-form">+ Dodaj własny przepis</button>';
   if (ku.target) {
     h += `<div class="note">Wybierasz przepis na: ${esc(dayLabel(ku.target.day))}, ${esc(mealName(ku.target.meal))}. ` +
       '<button type="button" class="small ghost" data-action="k-untarget">Anuluj</button></div>';
@@ -72,7 +73,6 @@ function viewRecipes() {
     '<div class="field"><label for="rmeal" class="muted">Posiłek</label><select id="rmeal"><option value="">Wszystkie</option>' +
     MEALS.map((m) => `<option value="${m[0]}"${ku.meal === m[0] ? ' selected' : ''}>${m[1]}</option>`).join('') + '</select></div></div>';
   h += `<div id="rlist" class="stack">${listHtml()}</div>`;
-  if (!isKid()) h += ku.form ? customForm() : '<button type="button" class="ghost" data-action="k-form">Dodaj własny przepis</button>';
   return h;
 }
 
@@ -395,7 +395,7 @@ function kAction(a, t) {
       const key = dayv + '|' + (ku.pm || (ku.target && ku.target.meal) || (rget(ku.rid).posilki[0]) || 'ii');
       (state.plan[key] = state.plan[key] || []).push({ rid: ku.rid, portions: ku.port });
       ku.sel = dayv; ku.month = dayv.slice(0, 7); ku.pm = null; ku.pd = null;
-      if (ku.target) { ku.target = null; ku.rid = null; tab = 'plan'; top(); } else { top(); ku.flash = 'Dodano do planu: ' + dayv.slice(8) + '.' + dayv.slice(5, 7) + '.'; }
+      if (ku.target) { ku.target = null; ku.rid = null; tab = 'plan'; top(); } else { top(); ku.flash = dayv === dayKey() ? 'Dodano do planu na dziś. Danie widać już w zakładce Dziś.' : 'Dodano do planu: ' + dayv.slice(8) + '.' + dayv.slice(5, 7) + '.'; }
       save(); break;
     }
     case 'k-plan-rm': {
