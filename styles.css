@@ -18,7 +18,7 @@ body.kid { background: #eae8dc; }
 .top { position: sticky; top: 0; z-index: 2; background: var(--bg); }
 .top-row { display: flex; gap: 12px; max-width: 640px; margin: 0 auto; padding: 12px 16px; }
 select, input, button, textarea { font: inherit; color: inherit; }
-select, input[type=text], input[type=number], input[type=email], textarea {
+select, input[type=text], input[type=number], input[type=email], input[type=password], textarea {
   min-height: 46px; padding: 0 14px; border: 0; border-radius: 16px; background: var(--bg); box-shadow: var(--in); color: var(--ink);
 }
 textarea { padding: 10px 14px; width: 100%; }
@@ -138,7 +138,7 @@ button.small { min-height: 46px; min-width: 46px; padding: 0 16px; }
 .meal li, .drinklist li, .ing li { min-height: 48px; }
 .shop { padding: 10px 0; }
 .row, .chips { gap: 12px; }
-select, input[type=text], input[type=number], input[type=email] { min-height: 52px; }
+select, input[type=text], input[type=number], input[type=email], input[type=password] { min-height: 52px; }
 body { padding-bottom: 116px; }
 
 /* Zagęszczenie, kolumny Sprawdź, plan i kalendarz */

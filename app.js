@@ -505,6 +505,7 @@ async function syncAction(a) {
     const PL = [[/invalid login credentials/i, 'Zły e-mail albo hasło. Jeśli konto było zakładane bez hasła, usuń je w Supabase (Authentication → Users) i załóż ponownie.'],
       [/email not confirmed/i, 'Najpierw potwierdź adres: kliknij link z maila od Supabase, potem dotknij „Zaloguj”.'],
       [/already registered|already been registered/i, 'To konto już istnieje: dotknij „Zaloguj”.'],
+      [/signups? (are|is) disabled|signup.*disabled/i, 'Zakładanie kont jest wyłączone w Supabase: Authentication → Sign In / Providers → włącz „Allow new users to sign up” i dostawcę Email.'],
       [/rate limit|too many/i, 'Za dużo prób albo maili. Odczekaj kilka minut.'],
       [/password should be at least/i, 'Hasło musi mieć co najmniej 6 znaków.'],
       [/failed to fetch|network/i, 'Brak połączenia z internetem.']];
