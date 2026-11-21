@@ -289,3 +289,19 @@ li.kiditem button { background: rgba(255, 255, 255, .6); color: #7a3e12; }
 .syncbtn.bad i { background: #d0463b; }
 .syncbtn.off i { background: #e0a526; }
 @media (prefers-reduced-motion: reduce) { .syncbtn.spin svg { animation-duration: 2.5s; } }
+/* Nazwa potrawy jako przycisk do poprawiania */
+.itemname { all: unset; cursor: pointer; flex: 1; min-width: 0; min-height: 32px; display: flex; align-items: center; flex-wrap: wrap; gap: 4px; font: inherit; color: inherit; }
+.itemname:focus-visible { outline: 2px solid var(--blue); border-radius: 8px; }
+li.kiditem .itemname { color: #7a3e12; font-weight: 700; font-size: 12px; }
+/* Wpisy dodane przez rodzica: błękitne, Franek może je poprawić i usunąć */
+li.paritem { background: #dfeaf5; border-radius: 16px; padding: 2px 4px 2px 10px; margin: 3px 0; min-height: 32px; font-size: 12px;
+  box-shadow: inset 2px 2px 5px rgba(60, 100, 150, .25), inset -2px -2px 5px rgba(255, 255, 255, .7); }
+li.paritem .itemname { color: #2c5a85; font-weight: 700; font-size: 12px; }
+li.paritem .pill { min-height: 0; padding: 2px 7px; font-size: 10.5px; background: rgba(255, 255, 255, .8); }
+li.paritem button.small { min-height: 26px; min-width: 26px; height: 26px; padding: 0 8px; font-size: 12px; border-radius: 13px; background: rgba(255, 255, 255, .6); box-shadow: none; }
+.by { font-size: 10px; font-weight: 600; color: #5d7ea0; }
+.editform, .parform { display: grid; grid-template-columns: 1fr 70px auto; gap: 6px; align-items: center; width: 100%; padding: 4px 0; }
+.editform input, .parform input { min-width: 0; width: 100%; min-height: 40px; }
+li.kiditem .editform, .kidform:not(.parform) { grid-template-columns: 1fr auto; }
+li:has(.editform) { padding: 4px 6px; }
+li.kiditem .itemname, li.paritem .itemname { background: none; box-shadow: none; padding: 0; height: auto; border-radius: 0; }

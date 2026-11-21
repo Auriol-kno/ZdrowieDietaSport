@@ -135,6 +135,7 @@ function ring(done, total) {
 }
 
 let addOpen = null;
+let editOpen = null;
 function itemPill(name) {
   if (typeof ku === 'undefined' || !ku.idx) return '';
   const m = ZdsRecipes.matchRule(ku.idx, name);
@@ -209,18 +210,27 @@ function viewToday() {
   for (const [key, name, time] of MEALS) {
     const m = meal(d, key);
     html += `<div class="meal"><div class="row sb"><div><strong>${name}</strong> <span class="muted">${time}</span></div>` +
-      `<span class="row">${kid ? `<button type="button" class="plus" data-action="kid-add" data-meal="${key}" aria-label="Dopisz, co zjadłeś na ${esc(name)}" aria-expanded="${addOpen === key}">+</button>` : ''}` +
+      `<span class="row">${`<button type="button" class="plus" data-action="kid-add" data-meal="${key}" aria-label="${kid ? 'Dopisz, co zjadłeś na' : 'Dodaj danie do'} ${esc(name)}" aria-expanded="${addOpen === key}">+</button>`}` +
       `<button type="button" class="small ${m.done ? 'done' : 'ghost'}" data-action="done" data-meal="${key}" aria-pressed="${m.done}">${m.done ? '✓ Zjedzone' : 'Zjedzone'}</button></span></div>`;
     if (m.items.length) {
-      html += '<ul>' + m.items.map((it, i) => `<li class="${it.kid ? 'kiditem' : ''}"><span>${esc(it.name)}${!kid && it.kcal ? ` <span class="muted">· ${esc(it.kcal)} kcal</span>` : ''}</span><span class="li-end">${itemPill(it.name)}` +
-        (!kid || it.kid ? `<button type="button" class="small ghost" data-action="del" data-meal="${key}" data-i="${i}" aria-label="Usuń ${esc(it.name)}">✕</button>` : '') + '</span></li>').join('') + '</ul>';
+      html += '<ul>' + m.items.map((it, i) => {
+        const cls = it.kid ? 'kiditem' : it.by === 'rodzic' ? 'paritem' : '';
+        if (editOpen === key + '|' + i) {
+          return `<li class="${cls}"><form data-edit="${key}" data-i="${i}" class="editform"><label class="sr" for="e-${key}">Popraw nazwę</label>` +
+            `<input type="text" id="e-${key}" value="${esc(it.name)}" required autocomplete="off">` +
+            (kid ? '' : `<label class="sr" for="ek-${key}">kcal</label><input type="number" id="ek-${key}" value="${esc(it.kcal || '')}" placeholder="kcal" min="0" inputmode="numeric">`) +
+            '<button type="submit" class="small">Zapisz</button></form></li>';
+        }
+        return `<li class="${cls}"><button type="button" class="itemname" data-action="edit-item" data-meal="${key}" data-i="${i}" aria-label="Popraw ${esc(it.name)}">${esc(it.name)}` +
+          `${!kid && it.kcal ? ` <span class="muted">· ${esc(it.kcal)} kcal</span>` : ''}${it.by === 'rodzic' ? ' <span class="by">od rodzica</span>' : ''}</button><span class="li-end">${itemPill(it.name)}` +
+          `<button type="button" class="small ghost" data-action="del" data-meal="${key}" data-i="${i}" aria-label="Usuń ${esc(it.name)}">✕</button></span></li>`;
+      }).join('') + '</ul>';
     }
-    if (kid) {
-      if (addOpen === key) html += `<form data-meal="${key}" class="kidform"><label class="sr" for="n-${key}">Co zjadłeś?</label><input type="text" id="n-${key}" placeholder="np. marchewka" required autocomplete="off"><button type="submit" class="small">Dodaj</button></form>`;
-    } else {
-      html += `<form data-meal="${key}"><label class="sr" for="n-${key}">Danie</label><input type="text" id="n-${key}" placeholder="Danie" required>` +
-        `<label class="sr" for="k-${key}">kcal</label><input type="number" id="k-${key}" placeholder="kcal" min="0" inputmode="numeric">` +
-        '<button type="submit" class="small">Dodaj</button></form>';
+    if (addOpen === key) {
+      html += kid
+        ? `<form data-meal="${key}" class="kidform"><label class="sr" for="n-${key}">Co zjadłeś?</label><input type="text" id="n-${key}" placeholder="np. marchewka" required autocomplete="off"><button type="submit" class="small">Dodaj</button></form>`
+        : `<form data-meal="${key}" class="kidform parform"><label class="sr" for="n-${key}">Danie</label><input type="text" id="n-${key}" placeholder="Danie" required autocomplete="off">` +
+          `<label class="sr" for="k-${key}">kcal</label><input type="number" id="k-${key}" placeholder="kcal" min="0" inputmode="numeric"><button type="submit" class="small">Dodaj</button></form>`;
     }
     html += '</div>';
   }
@@ -330,7 +340,8 @@ document.addEventListener('click', (e) => {
   if (['water', 'done', 'del'].includes(a)) d.u = Date.now();
   if (a === 'water') d.water = Math.max(0, d.water + Number(t.dataset.d));
   else if (a === 'done') { const m = meal(d, t.dataset.meal); m.done = !m.done; }
-  else if (a === 'del') meal(d, t.dataset.meal).items.splice(Number(t.dataset.i), 1);
+  else if (a === 'del') { meal(d, t.dataset.meal).items.splice(Number(t.dataset.i), 1); editOpen = null; }
+  else if (a === 'edit-item') { const k = t.dataset.meal + '|' + t.dataset.i; editOpen = editOpen === k ? null : k; render(); const i = $('#e-' + t.dataset.meal); if (i) i.focus(); return; }
   else if (a === 'chk-top') {
     const it = t.dataset.it; state.chkTop = [it].concat((state.chkTop || []).filter((x) => x !== it)).slice(0, 30);
     save(true); $('#cols').innerHTML = colsHtml();
@@ -381,6 +392,19 @@ document.addEventListener('submit', (e) => {
     const dd = day(); (dd.activities = dd.activities || []).push({ name: nm, min: Math.min(1440, Math.round(mi)) }); dd.u = Date.now();
     save(); return render();
   }
+  const ef = e.target.closest('form[data-edit]');
+  if (ef) {
+    e.preventDefault();
+    const dd = day(), it = meal(dd, ef.dataset.edit).items[Number(ef.dataset.i)];
+    const nm = ef.querySelector('input[type=text]').value.trim();
+    if (it && nm) {
+      it.name = nm;
+      const kc = ef.querySelector('input[type=number]');
+      if (kc) it.kcal = kc.value === '' ? 0 : Math.max(0, Number(kc.value));
+      dd.u = Date.now();
+    }
+    editOpen = null; save(); return render();
+  }
   const f = e.target.closest('form[data-meal]');
   if (!f) return;
   e.preventDefault();
@@ -390,7 +414,7 @@ document.addEventListener('submit', (e) => {
   if (!name) return;
   const d = day();
   const item = { name, kcal: kcal === '' ? 0 : Number(kcal) };
-  if (isKid()) item.kid = true;
+  if (isKid()) item.kid = true; else item.by = 'rodzic';
   meal(d, f.dataset.meal).items.push(item);
   addOpen = null;
   d.u = Date.now();
