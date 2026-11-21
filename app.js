@@ -218,11 +218,16 @@ function viewToday() {
       html += '<ul>' + m.items.map((it, i) => {
         if (it.prop) {
           const mine = (it.from === 'dziecko') === kid;
-          const who = it.from === 'dziecko' ? (state.profiles.find((p) => p.role === 'dziecko') || { name: 'dziecka' }).name : 'rodzic';
-          return `<li class="propitem"><span class="propname">${esc(it.name)}${!kid && it.kcal ? ` <span class="pk">· ${esc(it.kcal)} kcal</span>` : ''}` +
-            `<span class="by">proponuje: ${esc(who)}${mine ? ' · czeka na odpowiedź' : ''}</span></span><span class="li-end">${itemPill(it.name)}` +
-            (mine ? '' : `<button type="button" class="small okbtn" data-action="prop-ok" data-meal="${key}" data-i="${i}" aria-label="Potwierdź ${esc(it.name)}">✓</button>`) +
-            `<button type="button" class="small nobtn" data-action="prop-no" data-meal="${key}" data-i="${i}" aria-label="${mine ? 'Wycofaj' : 'Odrzuć'} ${esc(it.name)}">✕</button></span></li>`;
+          const who = it.from === 'dziecko' ? (state.profiles.find((p) => p.role === 'dziecko') || { name: 'dziecko' }).name : 'rodzic';
+          const rej = it.rej;
+          const state_ = rej ? 'odrzucona' : mine ? 'czeka na odpowiedź' : 'potwierdź albo odrzuć';
+          return `<li class="propitem${rej ? ' rej' : ''}"><span class="propname"><span class="pn">${esc(it.name)}</span>${!kid && it.kcal ? ` <span class="pk">· ${esc(it.kcal)} kcal</span>` : ''}` +
+            `<span class="by">proponuje: ${esc(who)} · ${state_}</span></span><span class="li-end">${rej ? '' : itemPill(it.name)}` +
+            (rej
+              ? `<span class="badge no" aria-label="Odrzucona">✕</span><button type="button" class="small nobtn" data-action="prop-rm" data-meal="${key}" data-i="${i}" aria-label="Usuń z listy ${esc(it.name)}">Usuń</button>`
+              : `<button type="button" class="small okbtn" data-action="prop-ok" data-meal="${key}" data-i="${i}" aria-label="Potwierdź ${esc(it.name)}"${mine ? ' disabled title="Potwierdza druga osoba"' : ''}>✓</button>` +
+                `<button type="button" class="small nobtn" data-action="${mine ? 'prop-rm' : 'prop-no'}" data-meal="${key}" data-i="${i}" aria-label="${mine ? 'Wycofaj' : 'Odrzuć'} ${esc(it.name)}">✕</button>`) +
+            '</span></li>';
         }
         const cls = it.kid ? 'kiditem' : it.by === 'rodzic' ? 'paritem' : '';
         if (editOpen === key + '|' + i) {
@@ -232,7 +237,7 @@ function viewToday() {
             '<button type="submit" class="small">Zapisz</button></form></li>';
         }
         return `<li class="${cls}"><button type="button" class="itemname" data-action="edit-item" data-meal="${key}" data-i="${i}" aria-label="Popraw ${esc(it.name)}">${esc(it.name)}` +
-          `${!kid && it.kcal ? ` <span class="muted">· ${esc(it.kcal)} kcal</span>` : ''}${it.by === 'rodzic' ? ' <span class="by">od rodzica</span>' : ''}</button><span class="li-end">${itemPill(it.name)}` +
+          `${!kid && it.kcal ? ` <span class="muted">· ${esc(it.kcal)} kcal</span>` : ''}${it.by === 'rodzic' ? ' <span class="by">od rodzica</span>' : ''}</button><span class="li-end">${it.acc ? '<span class="badge ok" title="Propozycja zaakceptowana" aria-label="Zaakceptowana">✓</span>' : ''}${itemPill(it.name)}` +
           `<button type="button" class="small ghost" data-action="del" data-meal="${key}" data-i="${i}" aria-label="Usuń ${esc(it.name)}">✕</button></span></li>`;
       }).join('') + '</ul>';
     }
@@ -353,7 +358,7 @@ document.addEventListener('click', (e) => {
   if (a.startsWith('k-')) return kAction(a, t);
   if (a.startsWith('sync-')) return syncAction(a);
   const d = day();
-  if (['water', 'done', 'del', 'prop-ok', 'prop-no'].includes(a)) d.u = Date.now();
+  if (['water', 'done', 'del', 'prop-ok', 'prop-no', 'prop-rm'].includes(a)) d.u = Date.now();
   if (a === 'water') d.water = Math.max(0, d.water + Number(t.dataset.d));
   else if (a === 'done') { const m = meal(d, t.dataset.meal); m.done = !m.done; }
   else if (a === 'del') { meal(d, t.dataset.meal).items.splice(Number(t.dataset.i), 1); editOpen = null; }
@@ -372,9 +377,10 @@ document.addEventListener('click', (e) => {
   else if (a === 'prop-add') { const k = 'p:' + t.dataset.meal; addOpen = addOpen === k ? null : k; render(); const i = $('#n-' + t.dataset.meal); if (i) i.focus(); return; }
   else if (a === 'prop-ok') {
     const it = meal(d, t.dataset.meal).items[Number(t.dataset.i)];
-    if (it && it.prop) { delete it.prop; if (it.from === 'dziecko') it.kid = true; else it.by = 'rodzic'; delete it.from; }
+    if (it && it.prop && !it.rej) { delete it.prop; it.acc = true; if (it.from === 'dziecko') it.kid = true; else it.by = 'rodzic'; delete it.from; }
   }
-  else if (a === 'prop-no') meal(d, t.dataset.meal).items.splice(Number(t.dataset.i), 1);
+  else if (a === 'prop-no') { const it = meal(d, t.dataset.meal).items[Number(t.dataset.i)]; if (it && it.prop) it.rej = true; }
+  else if (a === 'prop-rm') meal(d, t.dataset.meal).items.splice(Number(t.dataset.i), 1);
   else if (a === 'kid-add') { addOpen = addOpen === t.dataset.meal ? null : t.dataset.meal; render(); const i = $('#n-' + addOpen); if (i) i.focus(); return; }
   else if (a === 'st-range') { st.range = Number(t.dataset.v); return render(); }
   else if (a === 'act-del') { (d.activities = d.activities || []).splice(Number(t.dataset.i), 1); d.u = Date.now(); }

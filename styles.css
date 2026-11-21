@@ -320,3 +320,14 @@ li.propitem .okbtn { background: #22a447; color: #fff; }
 li.propitem .nobtn { background: rgba(255, 255, 255, .9); color: #6a2fd6; }
 .propform input[type=text] { background: #efe6ff; color: #5f25c4; }
 .propform button[type=submit] { background: #7b3fe4; color: #fff; }
+/* Reakcje na propozycje: zielony ✓ i czerwony ✕ zawsze widoczne */
+li.propitem .okbtn { background: #22a447; color: #fff; }
+li.propitem .okbtn:disabled { opacity: .45; cursor: default; }
+li.propitem .nobtn { background: #d0463b; color: #fff; }
+li.propitem.rej { background: #a99bc4; }
+li.propitem.rej .pn { text-decoration: line-through; }
+li.propitem.rej .nobtn { background: rgba(255, 255, 255, .9); color: #6b5a8a; font-size: 12px; padding: 0 10px; }
+.badge { display: inline-grid; place-items: center; width: 24px; height: 24px; border-radius: 50%; font-size: 13px; font-weight: 800; color: #fff; flex: 0 0 auto; }
+.badge.ok { background: #22a447; }
+.badge.no { background: #d0463b; }
+li.propitem button.okbtn:disabled, li.propitem button.okbtn[disabled] { background: #22a447 !important; color: #fff !important; opacity: .4; box-shadow: none; }
