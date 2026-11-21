@@ -490,6 +490,12 @@ async function initSync() {
     if (su.session && state.fam) await runSync(true);
   } catch (e) { /* brak sieci: działamy lokalnie */ }
   render();
+  // Samoodświeżanie: po powrocie do aplikacji i co minutę, gdy jest otwarta
+  const auto = () => { const typing = document.activeElement && /^(INPUT|SELECT|TEXTAREA)$/.test(document.activeElement.tagName);
+    if (su.session && state.fam && !document.hidden && !su.busy && !typing) runSync(true).catch(() => {}); };
+  document.addEventListener('visibilitychange', auto);
+  window.addEventListener('focus', auto);
+  setInterval(auto, 60000);
 }
 
 async function init() {
