@@ -34,7 +34,8 @@
         "pieczywo graham",
         "pieczywo chrupkie",
         "płatki ryżowe",
-        "kasza jęczmienna (pęczak, perłowa)"
+        "kasza jęczmienna (pęczak, perłowa)",
+        "kasza pęczak"
       ],
       "zakazane": [
         "płatki owsiane błyskawiczne",
@@ -50,7 +51,8 @@
         "mąka pszenna",
         "kasze zbożowe błyskawiczne",
         "popcorn",
-        "bułka tarta"
+        "bułka tarta",
+        "makaron ryżowy"
       ]
     },
     {
@@ -97,7 +99,8 @@
       "ograniczone": [
         "produkty mleczne o obniżonej zawartości tłuszczu",
         "jogurt owocowy i naturalny oraz kefir, który ma w składzie: mleko z proszku, serwatkę",
-        "serki homogenizowane niesmakowe"
+        "serki homogenizowane niesmakowe",
+        "oscypek"
       ],
       "zakazane": [
         "mleko zagęszczone",
@@ -307,6 +310,20 @@
         "herbata mrożona",
         "soki z kartonu"
       ]
+    }
+  ],
+  "uzupelnienia": [
+    {
+      "it": "oscypek",
+      "uw": "Ser owczy jest dozwolony, ale oscypek jest wędzony i bardzo słony. Mało i rzadko. Do potwierdzenia u dietetyka."
+    },
+    {
+      "it": "kasza pęczak",
+      "uw": "To samo co „kasza jęczmienna (pęczak, perłowa)” z zaleceń."
+    },
+    {
+      "it": "makaron ryżowy",
+      "uw": "Robiony z białego ryżu, a ryż biały i skrobia ryżowa są w zaleceniach zakazane. Do potwierdzenia u dietetyka."
     }
   ]
 }

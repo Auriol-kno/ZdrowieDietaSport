@@ -344,3 +344,14 @@ li.propitem button.okbtn:disabled { background: #9fe0b1 !important; color: #1d7a
 @keyframes nm-pulse { 50% { filter: brightness(1.15); } }
 .nextmeal.end { --nm: 140; }
 @media (prefers-reduced-motion: reduce) { .nextmeal.due .nm-bar i { animation: none; } }
+/* Zdjęcie zjedzonego dania */
+.meal .plus.cambtn { background: #f6e5d3; color: #a5561c; border-color: #efd7bd; }
+.meal .plus.cambtn svg { width: 17px; height: 17px; fill: none; stroke: currentColor; stroke-width: 2; stroke-linejoin: round; }
+.mphoto { display: flex; align-items: center; gap: 10px; margin: 6px 0 2px; }
+.mphoto .ph { all: unset; cursor: pointer; border-radius: 14px; overflow: hidden; box-shadow: var(--up-s); line-height: 0; }
+.mphoto img { width: 76px; height: 76px; object-fit: cover; display: block; }
+.mphoto .small.ghost { margin-left: auto; min-height: 30px; height: 30px; padding: 0 10px; }
+.photoview { position: fixed; inset: 0; z-index: 50; background: rgba(30, 26, 22, .86); display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 16px; padding: 20px; }
+.photoview img { max-width: 100%; max-height: 75vh; border-radius: 18px; }
+ul.uzu { margin: 6px 0 0; padding-left: 18px; }
+ul.uzu li { min-height: 0; display: list-item; margin: 4px 0; }

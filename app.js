@@ -42,6 +42,9 @@ function load() {
       s.synced = s.synced || {}; s.fam = s.fam || null;
       s.plan = s.plan || {}; s.pantry = s.pantry || []; s.shop = s.shop || { checked: {} }; s.shop.checked = s.shop.checked || {}; s.recipes = s.recipes || [];
       for (const p of s.profiles) if (p.name === 'Franciszek') { p.name = 'Franek'; p.nick = 'Franek'; }
+      // zdjęcia dań trzymamy 14 dni, żeby nie zapchać pamięci telefonu
+      const cut = new Date(Date.now() - 14 * 864e5).toLocaleDateString('sv-SE');
+      for (const [k, d] of Object.entries(s.days || {})) if (k.slice(0, 10) < cut) for (const m of Object.values(d.meals || {})) if (m && m.photo) delete m.photo;
       return s;
     }
   } catch (e) { /* brak danych lub pamięć niedostępna */ }
@@ -55,11 +58,13 @@ let rules = { kategorie: [] };
 
 let syncTimer = null;
 function save(noSync) {
-  try { localStorage.setItem(KEY, JSON.stringify(state)); } catch (e) { /* pamięć niedostępna */ }
+  let ok = true;
+  try { localStorage.setItem(KEY, JSON.stringify(state)); } catch (e) { ok = false; /* pamięć pełna albo niedostępna */ }
   if (!noSync && state.fam && typeof ZdsSync !== 'undefined' && ZdsSync.enabled()) {
     clearTimeout(syncTimer);
     syncTimer = setTimeout(() => runSync(true), 4000);
   }
+  return ok;
 }
 
 const cur = () => state.profiles.find((p) => p.id === state.current) || state.profiles[0];
@@ -186,6 +191,35 @@ function nextMealCard(d) {
     `<i style="width:${x.due ? 100 : x.pct.toFixed(1)}%"></i></div></div>`;
 }
 
+// Zdjęcie zjedzonego dania: zmniejszone do 360 px (JPEG), zapisane w dniu, więc synchronizuje się z rodziną.
+function takePhoto(key) {
+  const inp = document.createElement('input');
+  inp.type = 'file'; inp.accept = 'image/*'; inp.setAttribute('capture', 'environment');
+  inp.style.display = 'none'; document.body.appendChild(inp);
+  inp.addEventListener('change', () => {
+    const f = inp.files && inp.files[0]; inp.remove();
+    if (!f) return;
+    const url = URL.createObjectURL(f), img = new Image();
+    img.onload = () => {
+      const max = 360, s = Math.min(1, max / Math.max(img.width, img.height));
+      const c = document.createElement('canvas'); c.width = Math.round(img.width * s); c.height = Math.round(img.height * s);
+      c.getContext('2d').drawImage(img, 0, 0, c.width, c.height); URL.revokeObjectURL(url);
+      const dd = day(), m = meal(dd, key), prev = m.photo;
+      m.photo = { src: c.toDataURL('image/jpeg', 0.6), at: Date.now() }; dd.u = Date.now();
+      if (!save()) { m.photo = prev; save(true); alert('Brak miejsca w pamięci telefonu na zdjęcie. Usuń starsze zdjęcia.'); }
+      render();
+    };
+    img.onerror = () => { URL.revokeObjectURL(url); alert('Nie udało się wczytać zdjęcia.'); };
+    img.src = url;
+  }, { once: true });
+  inp.click();
+}
+function viewPhoto(src) {
+  const o = document.createElement('div'); o.className = 'photoview'; o.setAttribute('role', 'dialog'); o.setAttribute('aria-label', 'Zdjęcie dania');
+  o.innerHTML = `<img src="${src}" alt="Zdjęcie dania"><button type="button" class="small">Zamknij</button>`;
+  o.addEventListener('click', () => o.remove()); document.body.appendChild(o); o.querySelector('button').focus();
+}
+
 function syncBtn() {
   const ready = typeof ZdsSync !== 'undefined' && ZdsSync.enabled() && su.session && state.fam;
   const st = su.busy ? 'spin' : !ready ? 'off' : su.err ? 'bad' : su.last ? 'ok' : '';
@@ -245,6 +279,7 @@ function viewToday() {
     html += `<div class="meal"><div class="row sb"><div><strong>${name}</strong> <span class="muted">${time}</span></div>` +
       `<span class="row">${`<button type="button" class="plus" data-action="kid-add" data-meal="${key}" aria-label="${kid ? 'Dopisz, co zjadłeś na' : 'Dodaj danie do'} ${esc(name)}" aria-expanded="${addOpen === key}">+</button>`}` +
       `<button type="button" class="plus propbtn" data-action="prop-add" data-meal="${key}" aria-label="Zaproponuj danie na ${esc(name)}" aria-expanded="${addOpen === 'p:' + key}"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9 18h6M10 21h4M12 3a6 6 0 0 0-3.6 10.8c.6.5 1 1.2 1 2V16h5.2v-.2c0-.8.4-1.5 1-2A6 6 0 0 0 12 3z"/></svg></button>` +
+      (m.done ? `<button type="button" class="plus cambtn" data-action="photo" data-meal="${key}" aria-label="${m.photo ? 'Zmień zdjęcie' : 'Zrób zdjęcie'}: ${esc(name)}"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 8h3l2-2.5h6L17 8h3v11H4z"/><circle cx="12" cy="13.5" r="3.5"/></svg></button>` : '') +
       `<button type="button" class="small ${m.done ? 'done' : 'ghost'}" data-action="done" data-meal="${key}" aria-pressed="${m.done}">${m.done ? '✓ Zjedzone' : 'Zjedzone'}</button></span></div>`;
     if (m.items.length) {
       html += '<ul>' + m.items.map((it, i) => {
@@ -273,6 +308,11 @@ function viewToday() {
           `<button type="button" class="small ghost" data-action="del" data-meal="${key}" data-i="${i}" aria-label="Usuń ${esc(it.name)}">✕</button></span></li>`;
       }).join('') + '</ul>';
     }
+    if (m.photo && m.photo.src) {
+      html += `<div class="mphoto"><button type="button" class="ph" data-action="photo-view" data-meal="${key}" aria-label="Powiększ zdjęcie: ${esc(name)}"><img src="${m.photo.src}" alt="Zdjęcie: ${esc(name)}"></button>` +
+        `<span class="muted small">${m.photo.at ? new Date(m.photo.at).toLocaleTimeString('pl-PL', { hour: '2-digit', minute: '2-digit' }) : ''}</span>` +
+        `<button type="button" class="small ghost" data-action="photo-del" data-meal="${key}" aria-label="Usuń zdjęcie">✕</button></div>`;
+    }
     if (addOpen === 'p:' + key) {
       html += `<form data-meal="${key}" data-prop="1" class="kidform propform${kid ? '' : ' parform'}"><label class="sr" for="n-${key}">Propozycja dania</label>` +
         `<input type="text" id="n-${key}" placeholder="Zaproponuj danie" required autocomplete="off">` +
@@ -293,6 +333,13 @@ function viewToday() {
 }
 
 const chk = { q: '', cat: '' };
+const UZU = {};
+function uzuNote(cols) {
+  const shown = Object.keys(UZU).filter((it) => cols.ok.includes(it) || cols.lim.includes(it) || cols.no.includes(it));
+  if (!shown.length) return '';
+  return '<div class="note small"><strong>* Dopisane w aplikacji</strong>, nie ma ich w zaleceniach dietetyka:<ul class="uzu">' +
+    shown.map((it) => `<li><strong>${esc(cap(it))}</strong>: ${esc(UZU[it])}</li>`).join('') + '</ul></div>';
+}
 function colsHtml() {
   const kid = isKid(), nq = norm(chk.q.trim());
   const cols = { ok: [], lim: [], no: [] };
@@ -306,7 +353,7 @@ function colsHtml() {
   const L = kid ? { ok: 'Można', lim: 'Czasem i mało', no: 'Nie teraz' } : { ok: 'Można', lim: 'Z ograniczeniami', no: 'Nie można' };
   return '<div class="cols3">' + ['ok', 'lim', 'no'].map((st) =>
     `<section class="col ${st}" aria-label="${L[st]}"><h2><span aria-hidden="true">${MARK[st]}</span> ${L[st]} <span class="muted">${cols[st].length}</span></h2>` +
-    `<div class="pills">${cols[st].map((it) => `<button type="button" class="pill ${st} tiny" data-action="chk-top" data-it="${esc(it)}" aria-pressed="${(state.chkTop || []).includes(it)}">${esc(cap(it))}</button>`).join('') || '<span class="muted">–</span>'}</div></section>`).join('') + '</div>';
+    `<div class="pills">${cols[st].map((it) => `<button type="button" class="pill ${st} tiny" data-action="chk-top" data-it="${esc(it)}" aria-pressed="${(state.chkTop || []).includes(it)}"${UZU[it] ? ` title="${esc(UZU[it])}"` : ''}>${esc(cap(it))}${UZU[it] ? ' *' : ''}</button>`).join('') || '<span class="muted">–</span>'}</div></section>`).join('') + '</div>' + uzuNote(cols);
 }
 function viewCheck() {
   return '<h1>Czy mogę to zjeść?</h1><div class="grid">' +
@@ -406,6 +453,9 @@ document.addEventListener('click', (e) => {
   else if (a === 'pick-profile') { if (isKid()) return; state.current = t.dataset.id; addOpen = null; }
   else if (a === 'stats-share') return statsShare();
   else if (a === 'stats-mail') return statsMail();
+  else if (a === 'photo') return takePhoto(t.dataset.meal);
+  else if (a === 'photo-view') { const ph = meal(d, t.dataset.meal).photo; if (ph) viewPhoto(ph.src); return; }
+  else if (a === 'photo-del') { delete meal(d, t.dataset.meal).photo; d.u = Date.now(); }
   else if (a === 'prop-add') { const k = 'p:' + t.dataset.meal; addOpen = addOpen === k ? null : k; render(); const i = $('#n-' + t.dataset.meal); if (i) i.focus(); return; }
   else if (a === 'prop-ok') {
     const it = meal(d, t.dataset.meal).items[Number(t.dataset.i)];
@@ -671,6 +721,7 @@ async function init() {
   try {
     const r = await fetch('data/rules.json');
     rules = await r.json();
+    for (const u of rules.uzupelnienia || []) UZU[u.it] = u.uw;
   } catch (e) { /* offline bez cache: wyszukiwarka pusta */ }
   try {
     ku.recipes = (await (await fetch('data/recipes.json')).json()).recipes;
