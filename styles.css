@@ -751,3 +751,12 @@ html[data-theme="laur"] .daycard.alt { background: #e2ddcc; }
 html[data-theme="laur"] .note { background: #f1e2c2; color: #6b4a12; }
 .remember { display: flex; gap: 8px; align-items: center; font-size: 13px; margin: 6px 0; }
 .remember input { width: 20px; height: 20px; min-height: 0; }
+/* Podpowiedzi przy wpisywaniu */
+.sugg { display: flex; flex-wrap: wrap; gap: 6px; margin: 6px 0 4px; }
+.sg { min-height: 30px; height: auto; padding: 5px 11px; border-radius: 15px; font-size: 12.5px; font-weight: 700; box-shadow: none; border: 1px solid transparent; text-align: left; }
+.sg.ok { background: #e2f1e6; color: #1f6b3c; border-color: #c5e3cf; }
+.sg.lim { background: #f8ecd2; color: #7a5200; border-color: #ecd9ae; }
+.sg.no { background: #f6dedb; color: #8f2c24; border-color: #ebc4bf; }
+html[data-tone="dark"] .sg.ok { background: #22413a; color: #9fe3cf; border-color: #2e5a50; }
+html[data-tone="dark"] .sg.lim { background: #4a3b1c; color: #f1c46b; border-color: #5e4b25; }
+html[data-tone="dark"] .sg.no { background: #4a2522; color: #f29a90; border-color: #5e302c; }

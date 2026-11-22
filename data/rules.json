@@ -94,7 +94,8 @@
         "maślanka (mleko, żywe kultury bakterii)",
         "twaróg półtłusty",
         "ser kozi",
-        "ser owczy"
+        "ser owczy",
+        "mleko 2% (krowie)"
       ],
       "ograniczone": [
         "produkty mleczne o obniżonej zawartości tłuszczu",
@@ -329,6 +330,10 @@
     {
       "it": "herbata zielona (słaby napar)",
       "uw": "Jak herbata czarna (słaby napar), która jest w zaleceniach dozwolona. Zawiera kofeinę, więc słaba i nie wieczorem. Do potwierdzenia u dietetyka."
+    },
+    {
+      "it": "mleko 2% (krowie)",
+      "uw": "Zwykłego mleka nie ma w zaleceniach (zakazane jest tylko mleko zagęszczone i w proszku). Dopisane jako dozwolone mleko 2%, do potwierdzenia u dietetyka."
     }
   ]
 }

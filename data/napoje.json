@@ -1,6 +1,13 @@
 {
   "napoje": [
     {
+      "id": "mleko",
+      "name": "Mleko 2%",
+      "ml": 250,
+      "rule": "mleko 2%",
+      "dla": "wszyscy"
+    },
+    {
       "id": "herbata-zielona",
       "name": "Herbata zielona, słaby napar",
       "ml": 250,

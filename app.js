@@ -608,6 +608,12 @@ document.addEventListener('click', (e) => {
   else if (a === 'rep-prep') { const i = $('#smail'); if (i) { state.statsMail = i.value.trim(); save(true); } return reportPrepare(); }
   else if (a === 'rep-send') return reportSend();
   else if (a === 'stats-mail') return statsMail();
+  else if (a === 'sugg') {
+    const inp = document.getElementById(t.dataset.for); if (!inp) return;
+    inp.value = t.dataset.v; const box = t.closest('.sugg'); if (box) box.remove();
+    const f = inp.closest('form'); if (f) { if (f.requestSubmit) f.requestSubmit(); else f.dispatchEvent(new Event('submit', { cancelable: true, bubbles: true })); }
+    return;
+  }
   else if (a === 'open-settings') { tab = tab === 'profile' ? 'dzis' : 'profile'; window.scrollTo(0, 0); return render(); }
   else if (a === 'theme') { state.theme = t.dataset.v; save(true); return render(); }
   else if (a === 'sound') {
@@ -693,7 +699,38 @@ document.addEventListener('submit', (e) => {
   save(); render();
 });
 
+// Podpowiedzi przy wpisywaniu dania lub napoju: produkty z zaleceń, przepisy i napoje. Można też wpisać coś swojego.
+let SUGG = null;
+function suggPool() {
+  if (SUGG) return SUGG;
+  const seen = new Set(), out = [];
+  const add = (name, st, kcal) => { const k = norm(name); if (!k || seen.has(k)) return; seen.add(k); out.push({ name, st, kcal }); };
+  if (typeof allRecipes === 'function') for (const r of allRecipes()) add(r.name, ku.idx ? ZdsRecipes.checkRecipe(ku.idx, r).st : 'ok', r.kcal || 0);
+  if (typeof ku !== 'undefined') for (const x of ku.drinks || []) add(x.name.replace(/,.*$/, ''), 'ok', 0);
+  for (const c of rules.kategorie || []) for (const [st, key] of KEYS) for (const it of c[key]) if (!/:/.test(it) && it.length < 40) add(cap(it.replace(/\s*\(.*\)\s*$/, '')), st, 0);
+  return (SUGG = out);
+}
+function suggHtml(q, id) {
+  const n = norm(q.trim());
+  if (n.length < 2) return '';
+  const pool = suggPool();
+  const starts = pool.filter((x) => norm(x.name).startsWith(n)), rest = pool.filter((x) => !norm(x.name).startsWith(n) && ZdsRecipes.looseMatch(n, x.name));
+  const list = starts.concat(rest).slice(0, 6);
+  if (!list.length) return `<div class="sugg" data-for="${id}"><span class="muted small">Nie ma w bazie: dodasz jako własne.</span></div>`;
+  return `<div class="sugg" data-for="${id}" role="listbox" aria-label="Podpowiedzi">` + list.map((x) =>
+    `<button type="button" class="sg ${x.st}" data-action="sugg" data-for="${id}" data-v="${esc(x.name)}" role="option">${esc(x.name)}</button>`).join('') + '</div>';
+}
+function showSugg(inp) {
+  const f = inp.closest('form'); if (!f) return;
+  let box = f.nextElementSibling && f.nextElementSibling.classList.contains('sugg') ? f.nextElementSibling : null;
+  const h = suggHtml(inp.value, inp.id);
+  if (!h) { if (box) box.remove(); return; }
+  const w = document.createElement('div'); w.innerHTML = h;
+  if (box) box.replaceWith(w.firstElementChild); else f.after(w.firstElementChild);
+}
+
 document.addEventListener('input', (e) => {
+  if (e.target.matches && e.target.matches('form[data-meal] input[type=text], form[data-edit] input[type=text], form[data-drink] input[type=text]')) showSugg(e.target);
   if ((e.target.id === 'an' || e.target.id === 'am') && $('#aest')) $('#aest').innerHTML = actEst();
   if (e.target.id === 'q') { chk.q = e.target.value; $('#cols').innerHTML = colsHtml(); }
   if (e.target.id === 'rq') { ku.q = e.target.value; $('#rlist').innerHTML = listHtml(); }
