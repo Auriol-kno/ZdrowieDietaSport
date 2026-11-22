@@ -749,3 +749,5 @@ html[data-theme="laur"] .gauge.water .gin > i { background: linear-gradient(180d
 html[data-theme="laur"] .gauge.seg .gin > i.on { background: linear-gradient(180deg, #a9bb6a, #4a7a3a); }
 html[data-theme="laur"] .daycard.alt { background: #e2ddcc; }
 html[data-theme="laur"] .note { background: #f1e2c2; color: #6b4a12; }
+.remember { display: flex; gap: 8px; align-items: center; font-size: 13px; margin: 6px 0; }
+.remember input { width: 20px; height: 20px; min-height: 0; }

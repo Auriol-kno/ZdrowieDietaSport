@@ -314,6 +314,8 @@ function syncBtn() {
     '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20 12a8 8 0 0 1-14.3 4.9M4 12a8 8 0 0 1 14.3-4.9"/><path d="M18.5 3.5v4h-4M5.5 20.5v-4h4"/></svg><i></i></button>';
 }
 async function heroSync(btn) {
+  if (btn) btn.classList.add('spin');
+  try { if (credGet()) await ensureSession(!su.session); } catch (e) { /* spróbujemy niżej */ }
   const ready = typeof ZdsSync !== 'undefined' && ZdsSync.enabled() && su.session && state.fam;
   if (btn) btn.classList.add('spin');
   if ('serviceWorker' in navigator) navigator.serviceWorker.getRegistration().then((r) => r && r.update()).catch(() => {});
@@ -727,6 +729,7 @@ function syncCard() {
   if (!su.session) {
     h += `<div class="field"><label for="s-email">E-mail</label><input type="email" id="s-email" autocomplete="email" value="${esc(su.email || '')}"></div>` +
       '<div class="field"><label for="s-pw">Hasło (min. 6 znaków)</label><input type="password" id="s-pw" autocomplete="current-password" minlength="6"></div>' +
+      '<label class="remember"><input type="checkbox" id="s-remember" checked> Zapamiętaj logowanie na tym telefonie (aplikacja zaloguje się sama)</label>' +
       '<div class="row wrap"><button type="button" data-action="sync-pw-in">Zaloguj</button><button type="button" class="ghost" data-action="sync-pw-up">Załóż konto</button></div>' +
       '<p class="muted small">Pierwszy raz: „Załóż konto”. Jeśli przyjdzie mail z potwierdzeniem, kliknij link (wystarczy raz, w dowolnej przeglądarce), a potem wróć tu i „Zaloguj”.</p>';
   } else if (!state.fam) {
@@ -745,7 +748,13 @@ function syncCard() {
         '<button type="button" data-action="sync-join">Dołącz</button>';
     }
   } else {
-    h += `<p class="muted">Rodzina: <strong>${esc(state.fam.name || '')}</strong> · rola: ${esc(state.fam.role)}</p>` +
+    const cr = credGet();
+    h += (cr ? `<p class="muted small">✓ Logowanie zapamiętane na tym telefonie (${esc(cr.e)}). Aplikacja zaloguje się sama.</p>`
+      : '<div class="note small">Ten telefon nie ma zapamiętanego logowania i może się wylogować. Wpisz raz dane, żeby logował się sam:</div>' +
+        `<div class="grid"><div class="field"><label for="r-email" class="muted">E-mail</label><input type="email" id="r-email" autocomplete="email" value="${esc(su.email || '')}"></div>` +
+        '<div class="field"><label for="r-pw" class="muted">Hasło</label><input type="password" id="r-pw" autocomplete="current-password"></div></div>' +
+        '<button type="button" class="ghost" data-action="sync-remember">Zapamiętaj logowanie</button>') +
+      `<p class="muted">Rodzina: <strong>${esc(state.fam.name || '')}</strong> · rola: ${esc(state.fam.role)}</p>` +
       '<div class="row"><button type="button" data-action="sync-now">Synchronizuj teraz</button>' +
       '<button type="button" class="ghost" data-action="sync-out">Wyloguj</button></div>';
     if (state.fam.role === 'rodzic') {
@@ -761,7 +770,13 @@ async function runSync(silent) {
   su.busy = true;
   try {
     await ZdsSync.init();
-    const r = await ZdsSync.syncAll(state.fam.id, state.fam.role, { state, mkId: uid });
+    let r;
+    try { r = await ZdsSync.syncAll(state.fam.id, state.fam.role, { state, mkId: uid }); }
+    catch (e) {
+      if (!authErr(e) || !credGet()) throw e;
+      await ensureSession(true);   // sesja wygasła: logujemy się zapamiętanymi danymi i próbujemy jeszcze raz
+      r = await ZdsSync.syncAll(state.fam.id, state.fam.role, { state, mkId: uid });
+    }
     save(true);
     su.last = Date.now(); su.err = false;
     su.famMissing = r.famMissing;
@@ -800,10 +815,17 @@ async function syncAction(a) {
       } else {
         await ZdsSync.signInPw(email, pw);
       }
+      if (!$('#s-remember') || $('#s-remember').checked) credSave(email, pw);
       su.session = true;
       if (!state.fam) await setMembership();
       if (state.fam) await runSync(true);
       su.msg = 'Zalogowano.'; su.err = false;
+    } else if (a === 'sync-remember') {
+      const email = val('r-email'), pw = ($('#r-pw') || {}).value || '';
+      if (!email || !pw) throw new Error('Wpisz e-mail i hasło.');
+      await ZdsSync.signInPw(email, pw);
+      credSave(email, pw); su.session = true; su.email = email;
+      su.msg = 'Logowanie zapamiętane. Ten telefon będzie logował się sam.'; su.err = false;
     } else if (a === 'sync-otp') {
       const code = val('s-otp').replace(/\s/g, '');
       if (!su.email || !code) throw new Error('Wpisz kod z maila.');
@@ -841,7 +863,7 @@ async function syncAction(a) {
       return runSync(false);
     } else if (a === 'sync-out') {
       await ZdsSync.signOut();
-      state.fam = null; su.session = false; su.msg = 'Wylogowano. Dane lokalne zostały na telefonie.'; su.err = false; save(true);
+      credClear(); state.fam = null; su.session = false; su.msg = 'Wylogowano i usunięto zapamiętane dane logowania. Dane lokalne zostały na telefonie.'; su.err = false; save(true);
     }
   } catch (e) {
     const m = String(e.message || e);
@@ -857,18 +879,37 @@ async function syncAction(a) {
   render();
 }
 
+// Zapamiętane logowanie: telefon, który raz się zalogował, loguje się sam (np. gdy sesja wygaśnie).
+const CRED = 'zds.cred';
+function credSave(e, p) { try { localStorage.setItem(CRED, btoa(unescape(encodeURIComponent(JSON.stringify({ e, p }))))); } catch (x) { /* brak pamięci */ } }
+function credGet() { try { const v = localStorage.getItem(CRED); return v ? JSON.parse(decodeURIComponent(escape(atob(v)))) : null; } catch (x) { return null; } }
+function credClear() { try { localStorage.removeItem(CRED); } catch (x) { /* brak pamięci */ } }
+async function ensureSession(force) {
+  if (typeof ZdsSync === 'undefined' || !ZdsSync.enabled()) return false;
+  await ZdsSync.init();
+  let ok = !force && Boolean(await ZdsSync.session());
+  const c = credGet();
+  if (!ok && c && c.e && c.p) { await ZdsSync.signInPw(c.e, c.p); ok = true; }
+  su.session = ok;
+  if (ok && !state.fam) await setMembership();
+  return ok;
+}
+const authErr = (e) => /jwt|token|auth|401|session|not authenticated|refresh/i.test(String((e && e.message) || e));
+
 async function initSync() {
   if (typeof ZdsSync === 'undefined' || !ZdsSync.enabled()) return;
   try {
-    await ZdsSync.init();
-    su.session = Boolean(await ZdsSync.session());
-    if (su.session && !state.fam) await setMembership();
+    await ensureSession();
     if (su.session && state.fam) await runSync(true);
   } catch (e) { /* brak sieci: działamy lokalnie */ }
   render();
   // Samoodświeżanie: po powrocie do aplikacji i co minutę, gdy jest otwarta
-  const auto = () => { const typing = document.activeElement && /^(INPUT|SELECT|TEXTAREA)$/.test(document.activeElement.tagName);
-    if (su.session && state.fam && !document.hidden && !su.busy && !typing) runSync(true).catch(() => {}); };
+  const auto = async () => {
+    const typing = document.activeElement && /^(INPUT|SELECT|TEXTAREA)$/.test(document.activeElement.tagName);
+    if (document.hidden || su.busy || typing) return;
+    if (!su.session && credGet()) { try { await ensureSession(); render(); } catch (e) { return; } }
+    if (su.session && state.fam) runSync(true).catch(() => {});
+  };
   document.addEventListener('visibilitychange', auto);
   window.addEventListener('focus', auto);
   setInterval(auto, 60000);
