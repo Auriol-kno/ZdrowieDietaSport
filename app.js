@@ -307,6 +307,15 @@ function viewPhoto(src) {
 }
 
 const gearBtn = (cls = '') => `<button type="button" class="gearbtn ${cls}" data-action="open-settings" aria-label="Ustawienia i profile"${tab === 'profile' ? ' aria-pressed="true"' : ''}><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="3.2"/><path d="M12 2.8v2.4M12 18.8v2.4M2.8 12h2.4M18.8 12h2.4M5.5 5.5l1.7 1.7M16.8 16.8l1.7 1.7M5.5 18.5l1.7-1.7M16.8 7.2l1.7-1.7"/><circle cx="12" cy="12" r="6.3"/></svg></button>`;
+// Formularz dodawania / proponowania / poprawiania: nazwa, kcal (jeśli ktoś wie), Dodaj i ✕ do wyjścia bez zapisywania.
+function dishForm(attrs, key, label, ph, val, kcal, btn) {
+  return `<form ${attrs} class="dishform"><label class="sr" for="${val.id}">${esc(label)}</label>` +
+    `<input type="text" id="${val.id}" placeholder="${esc(ph)}" value="${esc(val.v || '')}" required autocomplete="off">` +
+    `<label class="sr" for="${kcal.id}">Kalorie, jeśli wiesz</label><span class="kcalbox"><input type="number" id="${kcal.id}" value="${esc(kcal.v || '')}" placeholder="kcal?" min="0" max="5000" inputmode="numeric"><i>kcal</i></span>` +
+    `<button type="submit" class="small">${esc(btn)}</button>` +
+    `<button type="button" class="small ghost xbtn" data-action="form-cancel" aria-label="Zamknij bez zapisywania">✕</button></form>`;
+}
+
 function syncBtn() {
   const ready = typeof ZdsSync !== 'undefined' && ZdsSync.enabled() && su.session && state.fam;
   const st = su.busy ? 'spin' : !ready ? 'off' : su.err ? 'bad' : su.last ? 'ok' : '';
@@ -386,7 +395,7 @@ function viewToday() {
           const who = it.from === 'dziecko' ? (state.profiles.find((p) => p.role === 'dziecko') || { name: 'dziecko' }).name : 'rodzic';
           const rej = it.rej;
           const state_ = rej ? 'odrzucona' : mine ? 'czeka na odpowiedź' : 'potwierdź albo odrzuć';
-          return `<li class="propitem${rej ? ' rej' : ''}"><span class="propname"><span class="pn">${esc(it.name)}</span>${!kid && it.kcal ? ` <span class="pk">· ${esc(it.kcal)} kcal</span>` : ''}` +
+          return `<li class="propitem${rej ? ' rej' : ''}"><span class="propname"><span class="pn">${esc(it.name)}</span>${it.kcal ? ` <span class="pk">· ${esc(it.kcal)} kcal</span>` : ''}` +
             `<span class="by">proponuje: ${esc(who)} · ${state_}</span></span><span class="li-end">${rej ? '' : itemPill(it.name)}` +
             (rej
               ? `<span class="badge no" aria-label="Odrzucona">✕</span><button type="button" class="small nobtn" data-action="prop-rm" data-meal="${key}" data-i="${i}" aria-label="Usuń z listy ${esc(it.name)}">Usuń</button>`
@@ -396,13 +405,10 @@ function viewToday() {
         }
         const cls = it.kid ? 'kiditem' : it.by === 'rodzic' ? 'paritem' : '';
         if (editOpen === key + '|' + i) {
-          return `<li class="${cls}"><form data-edit="${key}" data-i="${i}" class="editform"><label class="sr" for="e-${key}">Popraw nazwę</label>` +
-            `<input type="text" id="e-${key}" value="${esc(it.name)}" required autocomplete="off">` +
-            (kid ? '' : `<label class="sr" for="ek-${key}">kcal</label><input type="number" id="ek-${key}" value="${esc(it.kcal || '')}" placeholder="kcal" min="0" inputmode="numeric">`) +
-            '<button type="submit" class="small">Zapisz</button></form></li>';
+          return `<li class="${cls} editing">` + dishForm(`data-edit="${key}" data-i="${i}"`, key, 'Popraw nazwę', 'Nazwa dania', { id: 'e-' + key, v: it.name }, { id: 'ek-' + key, v: it.kcal || '' }, 'Zapisz') + '</li>';
         }
         return `<li class="${cls}"><button type="button" class="itemname" data-action="edit-item" data-meal="${key}" data-i="${i}" aria-label="Popraw ${esc(it.name)}">${esc(it.name)}` +
-          `${kid ? '' : it.kcal ? ` <span class="muted">· ${esc(it.kcal)} kcal</span>` : ` <span class="muted">· ≈${estKcal(it.name)} kcal</span>`}${it.by === 'rodzic' ? ' <span class="by">od rodzica</span>' : ''}</button><span class="li-end">${it.acc ? '<span class="badge ok" title="Propozycja zaakceptowana" aria-label="Zaakceptowana">✓</span>' : ''}${itemPill(it.name)}` +
+          `${it.kcal ? ` <span class="muted">· ${esc(it.kcal)} kcal</span>` : kid ? '' : ` <span class="muted">· ≈${estKcal(it.name)} kcal</span>`}${it.by === 'rodzic' ? ' <span class="by">od rodzica</span>' : ''}</button><span class="li-end">${it.acc ? '<span class="badge ok" title="Propozycja zaakceptowana" aria-label="Zaakceptowana">✓</span>' : ''}${itemPill(it.name)}` +
           `<button type="button" class="small ghost" data-action="del" data-meal="${key}" data-i="${i}" aria-label="Usuń ${esc(it.name)}">✕</button></span></li>`;
       }).join('') + '</ul>';
     }
@@ -415,18 +421,8 @@ function viewToday() {
     }
     html += `<div class="addrow"><button type="button" class="addbtn" data-action="kid-add" data-meal="${key}" aria-expanded="${addOpen === key}" aria-label="${kid ? 'Dopisz, co zjadłeś na' : 'Dodaj danie do'} ${esc(name)}"><span class="ic">+</span>Dodaj</button>` +
       (['sniadanie', 'obiad', 'kolacja'].includes(key) ?       `<button type="button" class="addbtn prop" data-action="prop-add" data-meal="${key}" aria-expanded="${addOpen === 'p:' + key}" aria-label="Zaproponuj danie na ${esc(name)}"><span class="ic"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9 18h6M10 21h4M12 3a6 6 0 0 0-3.6 10.8c.6.5 1 1.2 1 2V16h5.2v-.2c0-.8.4-1.5 1-2A6 6 0 0 0 12 3z"/></svg></span>Zaproponuj</button>` : '') + '</div>';
-    if (addOpen === 'p:' + key) {
-      html += `<form data-meal="${key}" data-prop="1" class="kidform propform${kid ? '' : ' parform'}"><label class="sr" for="n-${key}">Propozycja dania</label>` +
-        `<input type="text" id="n-${key}" placeholder="Zaproponuj danie" required autocomplete="off">` +
-        (kid ? '' : `<label class="sr" for="k-${key}">kcal</label><input type="number" id="k-${key}" placeholder="kcal" min="0" inputmode="numeric">`) +
-        '<button type="submit" class="small">Zaproponuj</button></form>';
-    }
-    if (addOpen === key) {
-      html += kid
-        ? `<form data-meal="${key}" class="kidform"><label class="sr" for="n-${key}">Co zjadłeś?</label><input type="text" id="n-${key}" placeholder="np. marchewka" required autocomplete="off"><button type="submit" class="small">Dodaj</button></form>`
-        : `<form data-meal="${key}" class="kidform parform"><label class="sr" for="n-${key}">Danie</label><input type="text" id="n-${key}" placeholder="Danie" required autocomplete="off">` +
-          `<label class="sr" for="k-${key}">kcal</label><input type="number" id="k-${key}" placeholder="kcal" min="0" inputmode="numeric"><button type="submit" class="small">Dodaj</button></form>`;
-    }
+    if (addOpen === 'p:' + key) html += dishForm(`data-meal="${key}" data-prop="1"`, key, 'Propozycja dania', 'Zaproponuj danie', { id: 'n-' + key }, { id: 'k-' + key }, 'Zaproponuj').replace('class="dishform"', 'class="dishform propform"');
+    if (addOpen === key) html += dishForm(`data-meal="${key}"`, key, kid ? 'Co zjadłeś?' : 'Danie', kid ? 'np. marchewka' : 'Danie', { id: 'n-' + key }, { id: 'k-' + key }, 'Dodaj');
     html += '</div>';
   }
   html += '</div>' + activityCard(d);
@@ -608,6 +604,7 @@ document.addEventListener('click', (e) => {
   else if (a === 'rep-prep') { const i = $('#smail'); if (i) { state.statsMail = i.value.trim(); save(true); } return reportPrepare(); }
   else if (a === 'rep-send') return reportSend();
   else if (a === 'stats-mail') return statsMail();
+  else if (a === 'form-cancel') { addOpen = null; editOpen = null; return render(); }
   else if (a === 'sugg') {
     const inp = document.getElementById(t.dataset.for); if (!inp) return;
     inp.value = t.dataset.v; const box = t.closest('.sugg'); if (box) box.remove();
@@ -728,6 +725,8 @@ function showSugg(inp) {
   const w = document.createElement('div'); w.innerHTML = h;
   if (box) box.replaceWith(w.firstElementChild); else f.after(w.firstElementChild);
 }
+
+document.addEventListener('keydown', (e) => { if (e.key === 'Escape' && e.target.closest && e.target.closest('.dishform')) { addOpen = null; editOpen = null; render(); } });
 
 document.addEventListener('input', (e) => {
   if (e.target.matches && e.target.matches('form[data-meal] input[type=text], form[data-edit] input[type=text], form[data-drink] input[type=text]')) showSugg(e.target);

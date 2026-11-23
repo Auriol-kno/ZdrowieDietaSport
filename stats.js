@@ -180,12 +180,25 @@ async function statsShare() {
 function statsMail() {
   const to = mailAddr(); if (!to) return;
   const p = cur(), rows = statsData(p.id, st.range), used = rows.filter((r) => r.has), n = used.length || 1, s = streaks(rows);
-  let body = 'Statystyki diety: ' + p.name + ', ostatnie ' + st.range + ' dni\n\n' +
-    'Średnio: ' + Math.round(used.reduce((a, r) => a + r.kcal, 0) / n) + ' kcal' + (p.kcal ? ' (cel ' + p.kcal + ')' : '') + '\n' +
-    'Seria zgodnych dni: ' + s.curr + ' (najdłuższa ' + s.best + ')\n' +
-    'Aktywność: ' + rows.reduce((a, r) => a + r.act, 0) + ' min\n\nData | kcal | posiłki | woda l | ruch min | zgodny\n';
-  for (const r of rows) body += r.iso + ' | ' + r.kcal + ' | ' + r.done + '/5 | ' + num((r.water / 1000).toFixed(1)) + ' | ' + r.act + ' | ' + (r.good ? 'tak' : 'nie') + '\n';
-  location.href = 'mailto:' + encodeURIComponent(to) + '?subject=' + encodeURIComponent('Statystyki diety: ' + p.name) + '&body=' + encodeURIComponent(body);
+  const dd = (iso) => `${DAYN[new Date(iso + 'T12:00:00').getDay()]} ${iso.slice(8)}.${iso.slice(5, 7)}`;
+  const avgK = Math.round(used.reduce((a, r) => a + r.kcal, 0) / n), actMin = rows.reduce((a, r) => a + r.act, 0);
+  const burnedK = typeof burned === 'function' ? rows.reduce((a, r) => a + ((state.days[r.iso + '|' + p.id] || {}).activities || []).reduce((x, y) => x + burned(y, p), 0), 0) : 0;
+  const L = [];
+  L.push(`RAPORT DIETY: ${p.name.toUpperCase()}`, `${dd(rows[0].iso)} – ${dd(rows[rows.length - 1].iso)} (${st.range} dni)`, '');
+  L.push('PODSUMOWANIE', '────────────');
+  L.push(`• Kalorie średnio: ${avgK} kcal${p.kcal ? ` (cel ${p.kcal})` : ''}`);
+  L.push(`• Dni zgodne z dietą: seria ${s.curr}, najdłuższa ${s.best}`);
+  L.push(`• Woda średnio: ${num((used.reduce((a, r) => a + r.water, 0) / n / 1000).toFixed(1))} l (cel 2 l)`);
+  L.push(`• Ruch: ${actMin} min, spalone ok. ${burnedK} kcal`);
+  const bad = [...new Set(rows.flatMap((r) => r.bad))];
+  L.push(bad.length ? `• Zakazane w tym okresie: ${bad.join(', ')}` : '• Bez zakazanych produktów 👍', '');
+  L.push('DZIEŃ PO DNIU', '─────────────');
+  for (const r of rows) {
+    if (!r.has) { L.push(`${dd(r.iso)}  —  brak wpisów`); continue; }
+    L.push(`${r.good ? '✅' : '▫️'} ${dd(r.iso)}  ·  ${r.kcal} kcal  ·  posiłki ${r.done}/5  ·  woda ${num((r.water / 1000).toFixed(1))} l  ·  ruch ${r.act} min`);
+  }
+  L.push('', 'Szczegóły, oceny dań i zdjęcia posiłków są w arkuszu Excel z aplikacji (Ustawienia → Statystyki → Przygotuj raport).', '', 'ZdrowieDietaSport');
+  location.href = 'mailto:' + encodeURIComponent(to) + '?subject=' + encodeURIComponent(`Raport diety: ${p.name}, ${dd(rows[0].iso)} – ${dd(rows[rows.length - 1].iso)}`) + '&body=' + encodeURIComponent(L.join('\n'));
 }
 
 function kpi(label, val, sub) {

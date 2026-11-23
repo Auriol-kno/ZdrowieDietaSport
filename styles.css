@@ -760,3 +760,30 @@ html[data-theme="laur"] .note { background: #f1e2c2; color: #6b4a12; }
 html[data-tone="dark"] .sg.ok { background: #22413a; color: #9fe3cf; border-color: #2e5a50; }
 html[data-tone="dark"] .sg.lim { background: #4a3b1c; color: #f1c46b; border-color: #5e4b25; }
 html[data-tone="dark"] .sg.no { background: #4a2522; color: #f29a90; border-color: #5e302c; }
+/* Formularz dania: nazwa · kcal (opcjonalnie) · Dodaj · ✕ */
+.dishform { display: grid; grid-template-columns: minmax(0, 1fr) 76px auto 34px; gap: 6px; align-items: center; margin: 6px 0 2px; padding: 6px; border-radius: 18px; background: rgba(255, 255, 255, .5); box-shadow: var(--in); }
+.dishform input[type=text], .dishform input[type=number] { min-height: 40px; height: 40px; min-width: 0; width: 100%; font-size: 15px; padding: 0 12px; }
+.dishform .kcalbox { position: relative; display: block; }
+.dishform .kcalbox input { padding: 0 30px 0 10px; text-align: right; }
+.dishform .kcalbox i { position: absolute; right: 8px; top: 50%; transform: translateY(-50%); font-style: normal; font-size: 10.5px; font-weight: 700; color: var(--muted); pointer-events: none; }
+.dishform button[type=submit] { min-height: 40px; height: 40px; padding: 0 12px; }
+.dishform .xbtn { min-height: 34px; height: 34px; width: 34px; padding: 0; border-radius: 50%; font-size: 13px; }
+.dishform.propform { background: rgba(123, 63, 228, .08); }
+.dishform.propform button[type=submit] { background: #7b3fe4; color: #fff; }
+li.editing { padding: 0 !important; background: transparent !important; box-shadow: none !important; }
+li.editing .dishform { width: 100%; margin: 2px 0; }
+html[data-tone="dark"] .dishform { background: rgba(255, 255, 255, .05); }
+.dishform { grid-template-columns: 112px minmax(0, 1fr) 36px; grid-template-areas: "name name name" "kcal ok x"; }
+.dishform > input[type=text] { grid-area: name; }
+.dishform .kcalbox { grid-area: kcal; }
+.dishform button[type=submit] { grid-area: ok; width: 100%; }
+.dishform button.xbtn { grid-area: x; width: 36px !important; min-width: 36px; max-width: 36px; height: 36px !important; min-height: 36px; padding: 0 !important; border-radius: 50% !important; }
+.dishform .kcalbox input { font-size: 14px; }
+.meal form.dishform, li form.dishform { display: grid; grid-template-columns: 112px minmax(0, 1fr) 36px; grid-template-areas: "name name name" "kcal ok x"; }
+.meal form.dishform > label.sr { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); }
+.dishform .kcalbox input::-webkit-outer-spin-button, .dishform .kcalbox input::-webkit-inner-spin-button { -webkit-appearance: none; margin: 0; }
+.dishform .kcalbox input { -moz-appearance: textfield; }
+.meal .dishform .kcalbox input { width: 100%; }
+.meal .dishform button[type=submit] { background: #3f7d70; color: #fff; box-shadow: none; }
+.meal .dishform.propform button[type=submit] { background: #7b3fe4; }
+.meal .dishform .xbtn { background: var(--card); color: var(--muted); box-shadow: var(--up-s); }

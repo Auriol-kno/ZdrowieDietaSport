@@ -107,10 +107,11 @@ function drawingXml(images) {
   const EMU = 9525;
   return '<?xml version="1.0" encoding="UTF-8" standalone="yes"?>' +
     '<xdr:wsDr xmlns:xdr="http://schemas.openxmlformats.org/drawingml/2006/spreadsheetDrawing" xmlns:a="http://schemas.openxmlformats.org/drawingml/2006/main" xmlns:r="http://schemas.openxmlformats.org/officeDocument/2006/relationships">' +
-    images.map((im, i) => `<xdr:oneCellAnchor><xdr:from><xdr:col>${im.col}</xdr:col><xdr:colOff>${6 * EMU}</xdr:colOff><xdr:row>${im.row}</xdr:row><xdr:rowOff>${6 * EMU}</xdr:rowOff></xdr:from>` +
-      `<xdr:ext cx="${im.w * EMU}" cy="${im.h * EMU}"/><xdr:pic><xdr:nvPicPr><xdr:cNvPr id="${i + 2}" name="Zdjecie ${i + 1}" descr="${XE(im.alt || '')}"/><xdr:cNvPicPr><a:picLocks noChangeAspect="1"/></xdr:cNvPicPr></xdr:nvPicPr>` +
+    // Zdjęcie zakotwiczone w obrębie jednej komórki (od–do), żeby nie „pływało” w podglądzie na telefonie.
+    images.map((im, i) => `<xdr:twoCellAnchor editAs="oneCell"><xdr:from><xdr:col>${im.col}</xdr:col><xdr:colOff>${4 * EMU}</xdr:colOff><xdr:row>${im.row}</xdr:row><xdr:rowOff>${4 * EMU}</xdr:rowOff></xdr:from>` +
+      `<xdr:to><xdr:col>${im.col}</xdr:col><xdr:colOff>${(4 + im.w) * EMU}</xdr:colOff><xdr:row>${im.row}</xdr:row><xdr:rowOff>${(4 + im.h) * EMU}</xdr:rowOff></xdr:to><xdr:pic><xdr:nvPicPr><xdr:cNvPr id="${i + 2}" name="Zdjecie ${i + 1}" descr="${XE(im.alt || '')}"/><xdr:cNvPicPr><a:picLocks noChangeAspect="1"/></xdr:cNvPicPr></xdr:nvPicPr>` +
       `<xdr:blipFill><a:blip r:embed="rId${i + 1}"/><a:stretch><a:fillRect/></a:stretch></xdr:blipFill>` +
-      `<xdr:spPr><a:xfrm><a:off x="0" y="0"/><a:ext cx="${im.w * EMU}" cy="${im.h * EMU}"/></a:xfrm><a:prstGeom prst="rect"><a:avLst/></a:prstGeom></xdr:spPr></xdr:pic><xdr:clientData/></xdr:oneCellAnchor>`).join('') +
+      `<xdr:spPr><a:xfrm><a:off x="0" y="0"/><a:ext cx="${im.w * EMU}" cy="${im.h * EMU}"/></a:xfrm><a:prstGeom prst="rect"><a:avLst/></a:prstGeom></xdr:spPr></xdr:pic><xdr:clientData/></xdr:twoCellAnchor>`).join('') +
     '</xdr:wsDr>';
 }
 
@@ -181,10 +182,10 @@ async function reportWorkbook(n) {
   const H = (arr) => ({ h: 34, c: arr.map((x) => [x, S.head]) });
 
   // --- Posiłki (wiersz na danie) ---
-  const meals = { name: 'Posiłki', cols: [12, 13, 14, 8, 32, 13, 17, 11, 14, 10, 12, 10, 9], rows: [], freeze: 3, merges: ['A1:M1', 'A2:M2'] };
-  meals.rows.push({ h: 30, c: [['Posiłki dzień po dniu', S.title], ...Array(12).fill(['', S.title])] });
+  const meals = { name: 'Posiłki', cols: [12, 13, 14, 8, 32, 13, 17, 11, 14, 10, 12, 10, 18, 18], rows: [], freeze: 3, merges: ['A1:N1', 'A2:N2'], images: [] };
+  meals.rows.push({ h: 30, c: [['Posiłki dzień po dniu', S.title], ...Array(13).fill(['', S.title])] });
   meals.rows.push({ h: 30, c: [['Kcal przyjęte = podane, a jeśli ich brak: wpisane w żółtej kolumnie, a jeśli i tego brak: szacunek typowej porcji. Wpisz dokładne kcal w żółtej kolumnie (pomogą zdjęcia), podsumowanie przeliczy się samo. Liczą się zjedzone posiłki i wszystko, co syn dopisał sam.', S.sub]] });
-  meals.rows.push(H(['Data', 'Dzień', 'Posiłek', 'Pora', 'Danie', 'Kto wpisał', 'Ocena wg zaleceń', 'Kcal podane', 'Kcal do uzupełnienia', 'Kcal szac.', 'Kcal przyjęte', 'Liczone', 'Zdjęcia']));
+  meals.rows.push(H(['Data', 'Dzień', 'Posiłek', 'Pora', 'Danie', 'Kto wpisał', 'Ocena wg zaleceń', 'Kcal podane', 'Kcal do uzupełnienia', 'Kcal szac.', 'Kcal przyjęte', 'Liczone', 'Zdjęcie posiłku', 'Zdjęcie 2']));
   // --- Zdjęcia ---
   const photos = { name: 'Zdjęcia', cols: [12, 13, 14, 9, 40, 30], rows: [], freeze: 3, merges: ['A1:F1', 'A2:F2'], images: [] };
   photos.rows.push({ h: 30, c: [['Zdjęcia zjedzonych dań', S.title], ...Array(5).fill(['', S.title])] });
@@ -215,12 +216,21 @@ async function reportWorkbook(n) {
         if (pl.length) for (const e of pl) { const r = e.rid ? map[e.rid] : null; rowsHere.push([(r ? r.name : e.name) + ' (z planu)', 'plan', r ? r.kcal || null : Number(e.kcal) || null, true]); }
         else rowsHere.push(['(nie wpisano, sprawdź zdjęcie)', '—', null, true]);
       }
+      let first = true;
       for (const [nm, who, kc, cnt] of rowsHere) {
         const zz = z++ % 2 === 1, [rt, rs] = nm.startsWith('(') ? ['—', S.unk] : rateOf(nm.replace(/ \(z planu\)$/, ''));
         const R = meals.rows.length + 1, est = kc ? null : nm.startsWith('(') ? null : estKcal(nm.replace(/ \(z planu\)$/, ''));
         meals.rows.push({ h: 20, c: [[iso, zz ? S.txtZ : S.txt], [wd(iso), zz ? S.txtZ : S.txt], [mn, zz ? S.txtZ : S.txt], [hr, zz ? S.txtZ : S.txt], [nm, zz ? S.txtZ : S.txt],
           [who, zz ? S.txtZ : S.txt], [rt, rs], [kc, zz ? S.numZ : S.num], [kc ? null : '', S.fill], [est, S.unk], [{ f: `IF(N(H${R})>0,H${R},IF(N(I${R})>0,I${R},N(J${R})))` }, S.numB],
-          [cnt ? 'tak' : 'nie', cnt ? S.ok : S.unk], [phs.length || '', zz ? S.numZ : S.num]] });
+          [cnt ? 'tak' : 'nie', cnt ? S.ok : S.unk], [first && phs.length > 2 ? `+${phs.length - 2} w „Zdjęcia”` : '', zz ? S.txtZ : S.txt], ['', zz ? S.txtZ : S.txt]] });
+        if (first && phs.length) {
+          meals.rows[meals.rows.length - 1].h = 80;
+          for (let k = 0; k < Math.min(2, phs.length); k++) {
+            const [w, h] = await imgSize(phs[k].src), sc = Math.min(118 / w, 96 / h, 1);
+            meals.images.push({ row: meals.rows.length - 1, col: 12 + k, src: phs[k].src, w: Math.round(w * sc), h: Math.round(h * sc), alt: `${mn} ${iso}` });
+          }
+        }
+        first = false;
       }
       for (const ph of phs) {
         const [w, h] = await imgSize(ph.src), sc = Math.min(200 / w, 140 / h, 1);
@@ -243,7 +253,7 @@ async function reportWorkbook(n) {
   if (photos.rows.length === 3) photos.rows.push({ c: [['Brak zdjęć w tym okresie.', S.txt]] });
   if (drinks.rows.length === 2) drinks.rows.push({ c: [['Brak napojów w tym okresie.', S.txt]] });
   if (act.rows.length === 3) act.rows.push({ c: [['Brak aktywności w tym okresie.', S.txt]] });
-  meals.filter = `A3:M${meals.rows.length}`;
+  meals.filter = `A3:N${meals.rows.length}`;
 
   // --- Podsumowanie ---
   const rows = statsData(p.id, n), used = rows.filter((r) => r.has), nn = used.length || 1, s = streaks(rows);
