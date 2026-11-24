@@ -365,7 +365,7 @@ function viewToday() {
   } else {
     side = `<div class="card widget"><h2>Posiłki</h2>${mealGauge(d)}<span class="muted">${kid ? 'Dobra robota!' : 'Zjedzone dziś'}</span></div>`;
   }
-  html += nextMealCard(d) + `<div class="widgets">${waterW}${side}</div>`;
+  html += nextMealCard(d) + `<div class="widgets coins">${waterW}${typeof coinColumn === 'function' ? coinColumn(d) : ''}${side}</div>` + (typeof todayCoinCard === 'function' ? todayCoinCard() : '');
 
   if (new Date().getHours() >= FRUIT_DEADLINE_HOUR) {
     html += '<div class="note warn">Owoce jemy tylko do 16:00 i nie na ostatni posiłek.</div>';
@@ -479,6 +479,7 @@ function viewProfiles() {
         : '<p class="muted">Na telefonie syna włącz to raz. Wtedy bez PIN-u nie da się przełączyć na profil rodzica.</p><div class="chips">' +
           kids.map((p) => `<button type="button" class="chip" data-action="kid-device" data-id="${p.id}">To telefon: ${esc(p.name)}</button>`).join('') + '</div>') + '</div>';
   }
+  if (typeof rewardCard === 'function') html += rewardCard();
   if (typeof statsCard === 'function') html += statsCard();
   for (const p of state.profiles) {
     html += `<div class="card" data-pid="${p.id}"><div class="grid">` +
@@ -547,6 +548,7 @@ const NEED_OK = {
   'act-del': (t) => ({ title: `Usunąć aktywność „${lbl(t)}”?`, text: '', yes: 'Usuń' }),
   'k-drink-del': (t) => ({ title: `Usunąć napój „${lbl(t)}”?`, text: '', yes: 'Usuń' }),
   'k-plan-rm': () => ({ title: 'Usunąć danie z planu?', text: '', yes: 'Usuń' }),
+  'rw-pay': () => ({ title: 'Wypłacono pieniądze?', text: 'Licznik „do wypłaty” wyzeruje się. Zarobione monety i statystyki zostają.', yes: 'Tak, wyzeruj' }),
 };
 function askConfirm(o) {
   return new Promise((res) => {
@@ -604,6 +606,7 @@ document.addEventListener('click', (e) => {
   else if (a === 'rep-prep') { const i = $('#smail'); if (i) { state.statsMail = i.value.trim(); save(true); } return reportPrepare(); }
   else if (a === 'rep-send') return reportSend();
   else if (a === 'stats-mail') return statsMail();
+  else if (a.startsWith('rw-') && typeof rewardAction === 'function' && rewardAction(a)) return;
   else if (a === 'form-cancel') { addOpen = null; editOpen = null; return render(); }
   else if (a === 'sugg') {
     const inp = document.getElementById(t.dataset.for); if (!inp) return;
@@ -736,6 +739,7 @@ document.addEventListener('input', (e) => {
 });
 
 document.addEventListener('change', (e) => {
+  if (typeof rewardChange === 'function' && (e.target.dataset.rw || e.target.dataset.rwc) && rewardChange(e.target)) return;
   if (e.target.id === 'pday' && e.target.value) { ku.pd = e.target.value; return render(); }
   if (e.target.id === 'smail') { state.statsMail = e.target.value.trim(); save(true); return; }
   if (e.target.id === 'ccat') { chk.cat = e.target.value; return render(); }

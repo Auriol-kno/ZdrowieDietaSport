@@ -92,3 +92,7 @@ Aplikacja z ekranu początkowego iPhone'a ma osobną pamięć od Safari, więc l
 ## Wspólny plan, przepisy i zakupy
 
 Plan, własne przepisy, lista zakupów, spiżarnia oraz zdrobnienia i waga w profilach synchronizują się w całej rodzinie (tabela `family_data`). Zmiany z kilku telefonów łączą się pozycja po pozycji. W istniejącym projekcie Supabase trzeba raz uruchomić `supabase/migracja-2-wspolne-dane.sql`.
+
+## Monetki motywacyjne
+
+Za każdy dzień spełniający zasady dziecko dostaje monetę (domyślnie 2 zł; bonus za pełny tydzień 5 zł). Na stronie Dziś między kapsułkami Woda i Posiłki jest „fiolka” z 7 monetami tygodnia, a pod nią karta „Dzisiejsza moneta” z brakującymi krokami. Rodzic w Ustawieniach widzi licznik do wypłaty, ustawia kwoty i warunki (posiłki, woda, nic zakazanego, ruch, zdjęcie) i zeruje licznik po wypłacie. Ustawienia synchronizują się w rodzinie.
