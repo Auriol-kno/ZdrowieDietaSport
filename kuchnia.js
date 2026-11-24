@@ -285,8 +285,8 @@ function dayCard(iso, alt) {
     if (items) body += `<ul>${items}</ul>`;
     body += '</div>';
   }
-  return `<div class="card daycard${isWeekend(iso) ? ' we' : ''}${alt ? ' alt' : ''}"><div class="row sb"><div class="row"><h2>${esc(dayTitle(iso))}</h2>${dayChip(iso)}</div>` +
-    (!kid && kcal ? `<span class="muted">ok. ${kcal} kcal${cur().kcal ? ' z ' + cur().kcal : ''}</span>` : '') + `</div>${body}</div>`;
+  return `<div class="card daycard${isWeekend(iso) ? ' we' : ''}${alt ? ' alt' : ''}"><div class="row sb"><div class="row"><h2>${esc(dayTitle(iso))}</h2>${dayChip(iso)}${typeof coinMark === 'function' ? coinMark(iso) : ''}</div>` +
+    (!kid && kcal ? `<span class="muted">ok. ${kcal} kcal${cur().kcal ? ' z ' + cur().kcal : ''}</span>` : '') + `</div>${typeof coinDayBox === 'function' ? coinDayBox(iso) : ''}${body}</div>`;
 }
 
 function viewMonth() {
@@ -304,7 +304,7 @@ function viewMonth() {
     const marks = MEALS.map(([mk]) => ((state.plan[iso + '|' + mk] || []).length ? '<i class="on"></i>' : '<i></i>')).join('');
     const n = MEALS.reduce((a, [mk]) => a + (state.plan[iso + '|' + mk] || []).length, 0);
     h += `<button type="button" class="daycell${isWeekend(iso) ? ' we' : ''}${iso === today ? ' today' : ''}" data-action="k-day" data-day="${iso}" aria-pressed="${iso === ku.sel}" ` +
-      `aria-label="${d}. ${esc(first.toLocaleDateString('pl-PL', { month: 'long' }))}, w planie: ${n}"><b>${d}</b><span class="dots">${marks}</span></button>`;
+      `aria-label="${d}. ${esc(first.toLocaleDateString('pl-PL', { month: 'long' }))}, w planie: ${n}"><b>${d}</b><span class="dots">${marks}</span>${typeof coinMark === 'function' ? coinMark(iso) : ''}</button>`;
   }
   return h + '</div>' + dayCard(ku.sel);
 }

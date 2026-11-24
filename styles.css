@@ -829,3 +829,20 @@ html[data-tone="dark"] .coinvial { border-color: rgba(255, 255, 255, .14); outli
 html[data-tone="dark"] .coinvial::before { background: rgba(255, 255, 255, .12); }
 html[data-tone="dark"] .coincard { background: #3a3220; }
 html[data-tone="dark"] .coincard strong { color: #f3d28a; } html[data-tone="dark"] .coincard span { color: #d8c49a; }
+/* Monety w kalendarzu i zasady elastyczne */
+.coin.mini { width: 16px; height: 16px; font-size: 8px; display: inline-grid; place-items: center; vertical-align: middle; }
+.daycell { position: relative; }
+.daycell .coin.mini { position: absolute; top: 2px; right: 2px; width: 14px; height: 14px; font-size: 7px; }
+.daycard h2 + .daylabel + .coin.mini { margin-left: 2px; }
+.coinday { display: flex; align-items: center; gap: 10px; padding: 8px 10px; margin: 6px 0; border-radius: 16px; background: rgba(242, 193, 78, .14); }
+.coinday span { flex: 1; font-size: 12px; color: var(--muted); }
+.coinday strong { display: block; font-size: 13px; color: #6b4a0a; }
+.coinday button { white-space: nowrap; min-height: 36px; height: 36px; padding: 0 12px; background: #e0a526; color: #3f2a00; }
+.coinday button.ghost { background: var(--card); color: var(--muted); }
+.rw-num { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 8px; margin: 8px 0; }
+.rw-num label { display: flex; flex-direction: column; gap: 4px; font-size: 11.5px; font-weight: 600; color: var(--muted); }
+.rw-num select { min-height: 40px; }
+.rw-swap { display: block; font-size: 13px; font-weight: 600; line-height: 2; padding: 8px 10px; border-radius: 14px; background: rgba(63, 125, 112, .08); }
+.rw-swap input[type=checkbox] { width: 20px; height: 20px; vertical-align: middle; accent-color: #3f7d70; }
+.rw-swap select { min-height: 32px; height: 32px; padding: 0 8px; display: inline-block; width: auto; }
+html[data-tone="dark"] .coinday strong { color: #f3d28a; }

@@ -548,6 +548,7 @@ const NEED_OK = {
   'act-del': (t) => ({ title: `Usunąć aktywność „${lbl(t)}”?`, text: '', yes: 'Usuń' }),
   'k-drink-del': (t) => ({ title: `Usunąć napój „${lbl(t)}”?`, text: '', yes: 'Usuń' }),
   'k-plan-rm': () => ({ title: 'Usunąć danie z planu?', text: '', yes: 'Usuń' }),
+  'rw-grant': (t) => (rw().manual && rw().manual[t.dataset.day] ? { title: 'Cofnąć ręcznie przyznaną monetę?', text: '', yes: 'Cofnij' } : { title: 'Przyznać monetę za ten dzień?', text: `Dzień ${t.dataset.day.slice(8)}.${t.dataset.day.slice(5, 7)} będzie liczony jako dobry, nawet jeśli nie spełnił zasad.`, yes: 'Przyznaj' }),
   'rw-pay': () => ({ title: 'Wypłacono pieniądze?', text: 'Licznik „do wypłaty” wyzeruje się. Zarobione monety i statystyki zostają.', yes: 'Tak, wyzeruj' }),
 };
 function askConfirm(o) {
@@ -606,7 +607,7 @@ document.addEventListener('click', (e) => {
   else if (a === 'rep-prep') { const i = $('#smail'); if (i) { state.statsMail = i.value.trim(); save(true); } return reportPrepare(); }
   else if (a === 'rep-send') return reportSend();
   else if (a === 'stats-mail') return statsMail();
-  else if (a.startsWith('rw-') && typeof rewardAction === 'function' && rewardAction(a)) return;
+  else if (a.startsWith('rw-') && typeof rewardAction === 'function' && rewardAction(a, t)) return;
   else if (a === 'form-cancel') { addOpen = null; editOpen = null; return render(); }
   else if (a === 'sugg') {
     const inp = document.getElementById(t.dataset.for); if (!inp) return;
