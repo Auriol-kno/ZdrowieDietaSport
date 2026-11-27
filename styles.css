@@ -969,3 +969,11 @@ html[data-tone="dark"] button.parentsw.on { background: #2f3f3a; }
 @keyframes zds-shake { 20%, 60% { transform: translateX(-8px); } 40%, 80% { transform: translateX(8px); } }
 @media (prefers-reduced-motion: reduce) { .pinpad.shake { animation: none; } }
 html[data-tone="dark"] .pinpad { background: #2a2825; }
+.msg[data-c="sel"] { cursor: pointer; }
+.msg.sel { outline: 3px solid var(--rose); outline-offset: 2px; }
+.msg.gone { background: transparent; border: 1.5px dashed var(--line); color: var(--muted); font-style: italic; font-size: 14px; }
+.msg.gone.me { background: transparent; color: var(--muted); }
+.msg-act { align-self: flex-end; display: flex; gap: 6px; }
+.chat-undo { display: flex; align-items: center; justify-content: space-between; gap: 10px; padding: 8px 8px 8px 14px; border-radius: 16px; background: var(--ink); color: var(--bg); font-weight: 700; font-size: 14px; }
+.chat-undo[hidden] { display: none; }
+.ask #ask-d { white-space: pre-line; }

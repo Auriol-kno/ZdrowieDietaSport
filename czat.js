@@ -1,13 +1,13 @@
 // Czat rodzinny (pastylka obok synchronizacji) i poglądowy kalendarz miesiąca (klik w datę w nagłówku).
 // Wiadomości jadą razem ze wspólnymi danymi rodziny (family_data → prof, wpisy „_m_<id>”), więc nie trzeba nowej tabeli.
-/* global state, su, save, render, esc, cur, isKid, uid, runSync, MEALS, WATER_GOAL, dayKey, coinMark, kidProfile */
+/* global state, su, save, render, esc, cur, isKid, uid, runSync, askConfirm, MEALS, WATER_GOAL, dayKey, coinMark, kidProfile */
 
 const CHAT_MAX = 200;
 const chatList = () => (state.chat || []).slice().sort((a, b) => a.t - b.t);
 const chatMe = () => { const p = cur(); return p.remoteId || p.id; };
 function chatUnread() {
   const seen = state.chatSeen || 0, me = chatMe();
-  return chatList().filter((m) => m.t > seen && m.from !== me).length;
+  return chatList().filter((m) => m.t > seen && m.from !== me && !m.del).length;
 }
 function chatPill() {
   const n = chatUnread(), kid = isKid();
@@ -18,7 +18,7 @@ function chatPill() {
 
 const QUICK_KID = ['Zjadłem 👍', 'Jestem głodny', 'Co dziś na obiad?', 'Wypiłem wodę 💧', 'Idę na trening'];
 const QUICK_PAR = ['Brawo! 👏', 'Pamiętaj o wodzie 💧', 'Obiad w lodówce', 'Zrób zdjęcie posiłku 📷', 'Kocham Cię ❤️'];
-let chatEl = null, chatPoll = null;
+let chatEl = null, chatPoll = null, chatSel = null, chatUndo = null;
 
 function chatWhen(t) {
   const d = new Date(t), today = dayKey() === d.toLocaleDateString('sv-SE');
@@ -33,15 +33,22 @@ function chatBody() {
     const dd = new Date(m.t).toLocaleDateString('pl-PL', { weekday: 'long', day: 'numeric', month: 'long' });
     const sep = dd !== prevDay ? `<div class="chat-day">${esc(dd)}</div>` : ''; prevDay = dd;
     const mine = m.from === me;
-    return sep + `<div class="msg${mine ? ' me' : ''}${m.role === 'dziecko' ? ' kid' : ''}">${mine ? '' : `<span class="who">${esc(m.name || '')}</span>`}` +
-      `<p>${esc(m.text)}</p><time>${chatWhen(m.t)}</time></div>`;
+    if (m.del) return sep + `<div class="msg gone${mine ? ' me' : ''}"><p>${mine ? 'Usunięto Twoją wiadomość' : `${esc(m.name || '')} usunął(-ęła) wiadomość`}</p><time>${chatWhen(m.t)}</time></div>`;
+    // Usuwać można tylko własne wiadomości: dotknięcie dymka pokazuje „Usuń”, potem potwierdzenie i 10 s na cofnięcie.
+    const open = mine && chatSel === m.id;
+    return sep + `<div class="msg${mine ? ' me' : ''}${m.role === 'dziecko' ? ' kid' : ''}${open ? ' sel' : ''}"${mine ? ` data-c="sel" data-id="${esc(m.id)}" role="button" tabindex="0" aria-expanded="${open}" aria-label="Twoja wiadomość: ${esc(m.text)}. Dotknij, żeby usunąć."` : ''}>` +
+      `${mine ? '' : `<span class="who">${esc(m.name || '')}</span>`}<p>${esc(m.text)}</p><time>${chatWhen(m.t)}</time></div>` +
+      (open ? `<div class="msg-act"><button type="button" class="small ghost" data-c="nosel">Anuluj</button><button type="button" class="small danger" data-c="del" data-id="${esc(m.id)}">Usuń wiadomość</button></div>` : '');
   }).join('');
 }
 function chatRefresh() {
   if (!chatEl) return;
   const box = chatEl.querySelector('.chat-list'), atEnd = box.scrollHeight - box.scrollTop - box.clientHeight < 60;
   const html = chatBody();
-  if (box.dataset.h !== String(html.length) + (state.chat || []).length) { box.innerHTML = html; box.dataset.h = String(html.length) + (state.chat || []).length; if (atEnd) box.scrollTop = box.scrollHeight; }
+  if (box.dataset.h !== html) { const top = box.scrollTop; box.innerHTML = html; box.dataset.h = html; box.scrollTop = atEnd ? box.scrollHeight : top; }
+  const u = chatEl.querySelector('.chat-undo');
+  u.hidden = !chatUndo;
+  if (chatUndo) u.innerHTML = '<span>Wiadomość usunięta</span><button type="button" class="small" data-c="undo">Cofnij</button>';
   state.chatSeen = Date.now(); save(true);
   const st = chatEl.querySelector('.chat-state');
   const online = state.fam && su.session;
@@ -64,22 +71,30 @@ function chatOpen() {
   chatEl = document.createElement('div'); chatEl.className = 'sheetbg';
   chatEl.innerHTML = '<div class="sheet chat" role="dialog" aria-modal="true" aria-labelledby="chat-t">' +
     '<div class="sheet-h"><div><h2 id="chat-t">Czat rodzinny</h2><span class="chat-state small muted"></span></div><button type="button" class="xbtn small ghost" data-c="close" aria-label="Zamknij czat">✕</button></div>' +
-    '<div class="chat-list" aria-live="polite"></div>' +
+    '<div class="chat-list" aria-live="polite"></div><div class="chat-undo" role="status" hidden></div>' +
     '<div class="chat-quick">' + (kid ? QUICK_KID : QUICK_PAR).map((q) => `<button type="button" class="chip" data-c="q">${esc(q)}</button>`).join('') + '</div>' +
     '<form class="chat-form"><label class="sr" for="chat-in">Wiadomość</label><input id="chat-in" type="text" maxlength="500" placeholder="Napisz wiadomość…" autocomplete="off" enterkeyhint="send">' +
     '<button type="submit" aria-label="Wyślij"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 12 20 4l-6 16-2.5-6.5z"/></svg></button></form></div>';
   const close = () => {
-    clearInterval(chatPoll); chatPoll = null; document.removeEventListener('keydown', onKey);
+    clearInterval(chatPoll); chatPoll = null; chatSel = null; chatUndoEnd(); document.removeEventListener('keydown', onKey);
     chatEl.remove(); chatEl = null; document.body.classList.remove('noscroll'); render();
     if (prev && prev.focus && document.contains(prev)) prev.focus(); else { const b = document.querySelector('.chatpill'); if (b) b.focus(); }
   };
-  const onKey = (e) => { if (e.key === 'Escape') close(); };
+  const onKey = (e) => {
+    if (document.querySelector('.askbg')) return;   // otwarte potwierdzenie ma pierwszeństwo
+    if (e.key === 'Escape') { if (chatSel) { chatSel = null; chatRefresh(); } else close(); }
+    else if ((e.key === 'Enter' || e.key === ' ') && e.target.matches && e.target.matches('.msg[data-c="sel"]')) { e.preventDefault(); e.target.click(); }
+  };
   chatEl.addEventListener('click', (e) => {
     e.stopPropagation();
     if (e.target === chatEl) return close();
     const b = e.target.closest('[data-c]'); if (!b) return;
     if (b.dataset.c === 'close') close();
     else if (b.dataset.c === 'q') chatSend(b.textContent);
+    else if (b.dataset.c === 'sel') { chatSel = chatSel === b.dataset.id ? null : b.dataset.id; chatRefresh(); }
+    else if (b.dataset.c === 'nosel') { chatSel = null; chatRefresh(); }
+    else if (b.dataset.c === 'del') chatDelete(b.dataset.id);
+    else if (b.dataset.c === 'undo') chatRestore();
   });
   chatEl.querySelector('form').addEventListener('submit', (e) => { e.preventDefault(); const i = chatEl.querySelector('#chat-in'); chatSend(i.value); i.value = ''; i.focus(); });
   document.addEventListener('keydown', onKey);
@@ -92,6 +107,25 @@ function chatOpen() {
     pull(); chatPoll = setInterval(pull, 8000);
   }
 }
+
+function chatPush() { save(true); if (state.fam && su.session && !su.busy) runSync(true).then(chatRefresh).catch(() => {}); }
+async function chatDelete(id) {
+  const m = (state.chat || []).find((x) => x.id === id);
+  if (!m || m.from !== chatMe() || m.del) return;   // tylko własne wiadomości
+  const yes = await askConfirm({ title: 'Usunąć tę wiadomość?', text: `„${m.text.length > 80 ? m.text.slice(0, 80) + '…' : m.text}”\nZniknie u całej rodziny. Przez 10 sekund możesz to cofnąć.`, yes: 'Usuń' });
+  if (!yes || !chatEl) return;
+  chatUndoEnd();
+  chatUndo = { id, text: m.text, timer: setTimeout(() => { chatUndo = null; chatRefresh(); }, 10000) };
+  m.del = Date.now(); m.text = ''; chatSel = null;
+  chatRefresh(); chatPush();
+}
+function chatRestore() {
+  if (!chatUndo) return;
+  const m = (state.chat || []).find((x) => x.id === chatUndo.id);
+  if (m) { m.text = chatUndo.text; delete m.del; }
+  chatUndoEnd(); chatRefresh(); chatPush();
+}
+function chatUndoEnd() { if (chatUndo) clearTimeout(chatUndo.timer); chatUndo = null; }
 
 // ---------- poglądowy kalendarz miesiąca ----------
 let calEl = null, calMonth = '';

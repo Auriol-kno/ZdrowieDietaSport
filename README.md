@@ -115,3 +115,4 @@ Za każdy dzień spełniający zasady dziecko dostaje monetę (domyślnie 2 zł;
 
 - Duży włącznik na samej górze Ustawień. Włączenie: PIN na klawiaturze numerycznej (kropki wyśrodkowane, C czyści, ⌫ kasuje cyfrę; działa też klawiatura fizyczna). Pierwsze włączenie ustawia 4-cyfrowy PIN wpisany dwa razy.
 - Po włączeniu tryb zostaje włączony także po odświeżeniu i zamknięciu aplikacji (`localStorage` `zds.parent`, poza kopią i synchronizacją), dopóki rodzic sam go nie wyłączy tym samym włącznikiem.
+- Usuwanie wiadomości: tylko własnych. Dotknięcie swojego dymka → „Usuń wiadomość” → potwierdzenie z treścią → przez 10 s przycisk **Cofnij**. Potem treść jest skasowana na stałe, a w rozmowie zostaje znak „Usunięto wiadomość” (synchronizowany do całej rodziny).
