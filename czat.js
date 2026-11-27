@@ -18,7 +18,7 @@ function chatPill() {
 
 const QUICK_KID = ['Zjadłem 👍', 'Jestem głodny', 'Co dziś na obiad?', 'Wypiłem wodę 💧', 'Idę na trening'];
 const QUICK_PAR = ['Brawo! 👏', 'Pamiętaj o wodzie 💧', 'Obiad w lodówce', 'Zrób zdjęcie posiłku 📷', 'Kocham Cię ❤️'];
-let chatEl = null, chatPoll = null, chatSel = null, chatUndo = null;
+let chatEl = null, chatPoll = null, chatSel = null, chatUndo = null, chatFitOff = null;
 
 function chatWhen(t) {
   const d = new Date(t), today = dayKey() === d.toLocaleDateString('sv-SE');
@@ -76,7 +76,7 @@ function chatOpen() {
     '<form class="chat-form"><label class="sr" for="chat-in">Wiadomość</label><input id="chat-in" type="text" maxlength="500" placeholder="Napisz wiadomość…" autocomplete="off" enterkeyhint="send">' +
     '<button type="submit" aria-label="Wyślij"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 12 20 4l-6 16-2.5-6.5z"/></svg></button></form></div>';
   const close = () => {
-    clearInterval(chatPoll); chatPoll = null; chatSel = null; chatUndoEnd(); document.removeEventListener('keydown', onKey);
+    clearInterval(chatPoll); chatPoll = null; chatSel = null; chatUndoEnd(); if (chatFitOff) { chatFitOff(); chatFitOff = null; } document.removeEventListener('keydown', onKey);
     chatEl.remove(); chatEl = null; document.body.classList.remove('noscroll'); render();
     if (prev && prev.focus && document.contains(prev)) prev.focus(); else { const b = document.querySelector('.chatpill'); if (b) b.focus(); }
   };
@@ -99,6 +99,17 @@ function chatOpen() {
   chatEl.querySelector('form').addEventListener('submit', (e) => { e.preventDefault(); const i = chatEl.querySelector('#chat-in'); chatSend(i.value); i.value = ''; i.focus(); });
   document.addEventListener('keydown', onKey);
   document.body.appendChild(chatEl); document.body.classList.add('noscroll');
+  // Klawiatura telefonu zmniejsza widoczny obszar: dopasowujemy okno czatu, żeby pole pisania było zawsze widać.
+  const vv = window.visualViewport;
+  const fit = () => {
+    if (!chatEl || !vv) return;
+    const kb = window.innerHeight - vv.height > 120;
+    chatEl.style.top = vv.offsetTop + 'px'; chatEl.style.height = vv.height + 'px'; chatEl.style.bottom = 'auto';
+    chatEl.classList.toggle('kb', kb);
+    const box = chatEl.querySelector('.chat-list'); if (box) box.scrollTop = box.scrollHeight;
+  };
+  if (vv) { vv.addEventListener('resize', fit); vv.addEventListener('scroll', fit); fit(); }
+  chatFitOff = () => { if (vv) { vv.removeEventListener('resize', fit); vv.removeEventListener('scroll', fit); } };
   chatRefresh();
   const box = chatEl.querySelector('.chat-list'); box.scrollTop = box.scrollHeight;
   chatEl.querySelector('#chat-in').focus({ preventScroll: true });

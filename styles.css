@@ -977,3 +977,30 @@ html[data-tone="dark"] .pinpad { background: #2a2825; }
 .chat-undo { display: flex; align-items: center; justify-content: space-between; gap: 10px; padding: 8px 8px 8px 14px; border-radius: 16px; background: var(--ink); color: var(--bg); font-weight: 700; font-size: 14px; }
 .chat-undo[hidden] { display: none; }
 .ask #ask-d { white-space: pre-line; }
+
+/* czat: mniejsze okno, dopasowanie do klawiatury, płaskie przyciski bez białej poświaty */
+.chat { height: 72%; max-height: 100%; }
+.sheetbg.kb .chat { height: 100%; border-radius: 0; padding-top: 10px; }
+.sheetbg.kb .chat .chat-state { display: none; }
+.chat-list { min-height: 0; }
+.chat-quick { gap: 6px; padding: 2px 2px 4px; margin: 0 -2px; }
+.chat-quick .chip { min-height: 32px; padding: 0 12px; font-size: 13px; }
+.chat .chip, .chat button.ghost, .chat .xbtn, .chat-undo button, .chat-form button {
+  box-shadow: 0 1px 2px rgba(0, 0, 0, .16); border: 1px solid var(--line); }
+.chat-form button { border-color: transparent; }
+.chat .chip:active, .chat button.ghost:active { box-shadow: inset 0 1px 3px rgba(0, 0, 0, .18); }
+.chat-form input { min-height: 44px; box-shadow: inset 0 1px 3px rgba(0, 0, 0, .14); border: 1px solid var(--line); }
+.chat-list { box-shadow: inset 0 1px 4px rgba(0, 0, 0, .12); border: 1px solid var(--line); }
+.chat-undo button { border-color: transparent; }
+html[data-tone="dark"] .chat .chip, html[data-tone="dark"] .chat button.ghost, html[data-tone="dark"] .chat .xbtn { background: #34312d; box-shadow: 0 1px 2px rgba(0, 0, 0, .5); }
+html[data-tone="dark"] .chat-list, html[data-tone="dark"] .chat-form input { background: #23211f; box-shadow: inset 0 1px 4px rgba(0, 0, 0, .5); }
+html[data-tone="dark"] .msg.me, html[data-tone="dark"] .chat-form button, html[data-tone="dark"] .chat-undo button { color: #10261f; }
+html[data-tone="dark"] .chat-undo { background: #ece6df; color: #23211f; }
+html[data-tone="dark"] .msg.me, html[data-tone="dark"] .msg.me.kid { background: #8fd0bf; }
+.msg.me.kid { background: var(--sage-d); }
+/* pastylka czatu w kolorze przycisku synchronizacji w każdym motywie */
+html[data-theme="gray"] .chatpill { background: #e6e6e8; }
+html[data-theme="green"] .chatpill { background: #f4f8f3; }
+html[data-theme="blue"] .chatpill { background: #f3f7fb; }
+html[data-theme="ocean"] .chatpill { background: #f3e4d4; color: #c86f8a; }
+html[data-theme="laur"] .chatpill { background: #f1e2cc; color: #c8683a; }
