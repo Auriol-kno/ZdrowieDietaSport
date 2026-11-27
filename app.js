@@ -76,6 +76,17 @@ function lockKidDevice() {
   if (state.profiles.some((p) => p.id === state.kidDevice)) state.current = state.kidDevice;
 }
 const isKid = () => { lockKidDevice(); return (cur().role === 'dziecko' || Boolean(state.kidDevice)) && !parent; };
+// „Mój profil” na tym telefonie (tylko lokalnie). Gdy rodzic ogląda inny profil, cała aplikacja pokazuje wyraźny pasek podglądu.
+const meProfile = () => state.profiles.find((p) => p.id === state.meId) || state.profiles.find((p) => p.role !== 'dziecko') || state.profiles[0];
+const previewing = () => !isKid() && cur().id !== meProfile().id;
+const pName = (p) => p.nick || p.name;
+function previewBar() {
+  if (!previewing()) return '';
+  const p = cur(), me = meProfile();
+  return '<div class="previewbar" role="status"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M2 12s3.6-6.5 10-6.5S22 12 22 12s-3.6 6.5-10 6.5S2 12 2 12z"/><circle cx="12" cy="12" r="3"/></svg>' +
+    `<span><strong>Podgląd profilu: ${esc(pName(p))}</strong><small>Zmiany trafią do tego profilu, nie Twojego.</small></span>` +
+    `<button type="button" class="small" data-action="pick-profile" data-id="${me.id}" aria-label="Wróć do swojego profilu: ${esc(me.name)}">Wróć do mnie</button></div>`;
+}
 
 function day() {
   const k = dayKey() + '|' + cur().id;
@@ -353,7 +364,7 @@ function viewToday() {
   const now = new Date();
   let html = `<div class="hero"><button type="button" class="hero-plate" data-action="cal-peek" aria-label="Kalendarz miesiąca: postępy i monetki"><span class="hero-day">${now.getDate()}</span>` +
     `<span class="hero-month">${now.toLocaleDateString('pl-PL', { month: 'long' })}</span></button>` +
-    `<div><h1><span class="hi">Cześć,</span> ${esc(p.nick || p.name)}!</h1><div class="hero-sub">${now.toLocaleDateString('pl-PL', { weekday: 'long' })}</div>` +
+    `<div><h1>${previewing() ? `<span class="hi">Podgląd profilu:</span> ${esc(p.nick || p.name)}` : `<span class="hi">Cześć,</span> ${esc(p.nick || p.name)}!`}</h1><div class="hero-sub">${now.toLocaleDateString('pl-PL', { weekday: 'long' })}</div>` +
     (su.last ? `<div class="hero-sync">${su.err ? 'Nie udało się zsynchronizować' : 'Zsynchronizowano ' + new Date(su.last).toLocaleTimeString('pl-PL', { hour: '2-digit', minute: '2-digit' })}</div>` : '') + '</div>' +
     `<div class="hero-acts">${typeof chatPill === 'function' ? chatPill() : ''}${syncBtn()}</div>` + gearBtn('corner') + '</div>';
 
@@ -470,7 +481,11 @@ function viewProfiles() {
     '<span class="ps-track" aria-hidden="true"><span class="ps-knob"></span></span></button>' +
     '<div class="card"><h2>Kto korzysta</h2>' + (isKid()
     ? `<p class="muted">Profil: <strong>${esc(cur().name)}</strong>. Zmiana profilu tylko w trybie rodzica.</p>`
-    : '<div class="chips">' + state.profiles.map((p) => `<button type="button" class="chip" data-action="pick-profile" data-id="${p.id}" aria-pressed="${p.id === state.current}">${esc(p.name)}</button>`).join('') + '</div>') + '</div>' +
+    : (previewing()
+      ? `<p class="whois pv"><b aria-hidden="true">👁</b><span><strong>Podgląd: ${esc(cur().name)}</strong>Widzisz ustawienia i dane tego profilu, nie swoje.</span></p>`
+      : `<p class="whois mine"><b aria-hidden="true">✓</b><span><strong>Korzystasz ze swoich ustawień</strong>Profil: ${esc(meProfile().name)}</span></p>`) +
+      '<div class="chips">' + state.profiles.map((p) => `<button type="button" class="chip${p.id === meProfile().id ? ' mine' : ''}" data-action="pick-profile" data-id="${p.id}" aria-pressed="${p.id === state.current}">${esc(p.name)}${p.id === meProfile().id ? ' <small>(ja)</small>' : ' <small>podgląd</small>'}</button>`).join('') + '</div>' +
+      `<div class="field mesel"><label for="me-sel">Mój profil na tym telefonie</label><select id="me-sel">${state.profiles.map((p) => `<option value="${p.id}"${p.id === meProfile().id ? ' selected' : ''}>${esc(p.name)}</option>`).join('')}</select></div>`) + '</div>' +
     '<div class="card"><h2>Wygląd</h2><div class="chips">' + [['light', 'Jasny'], ['green', 'Zielony'], ['blue', 'Błękitny'], ['ocean', 'Morski (Pelagia)'], ['laur', 'Leśny (Laur)'], ['warm', 'Ciepły przygaszony'], ['gray', 'Szary'], ['dark', 'Ciemny'], ['system', 'Jak w systemie']].map(([v, n]) =>
       `<button type="button" class="chip" data-action="theme" data-v="${v}" aria-pressed="${(state.theme || 'system') === v}">${n}</button>`).join('') + '</div></div>' +
     '';
@@ -515,11 +530,12 @@ function render() {
   if (isKid() && tab === 'przepisy') tab = 'dzis';
   const rt = document.querySelector('.tabs [data-tab=przepisy]'); if (rt) rt.hidden = isKid();
   document.body.classList.toggle('kid', isKid());
+  document.body.classList.toggle('previewing', previewing());
   document.querySelectorAll('.tabs button').forEach((b) => {
     if (b.dataset.tab === tab) b.setAttribute('aria-current', 'page'); else b.removeAttribute('aria-current');
   });
   const views = { dzis: viewToday, sprawdz: viewCheck, przepisy: typeof viewRecipes === 'function' ? viewRecipes : viewToday, plan: typeof viewPlan === 'function' ? viewPlan : viewToday, profile: viewProfiles };
-  $('#view').innerHTML = (tab === 'dzis' ? '' : `<div class="topgear">${gearBtn()}</div>`) + (views[tab] || viewToday)();
+  $("#view").innerHTML = (tab === "dzis" ? "" : `<div class="topgear">${gearBtn()}</div>`) + previewBar() + (views[tab] || viewToday)();
 }
 
 // ---------- zdarzenia ----------
@@ -787,6 +803,7 @@ document.addEventListener('input', (e) => {
 document.addEventListener('change', (e) => {
   if (typeof rewardChange === 'function' && (e.target.dataset.rw || e.target.dataset.rwc) && rewardChange(e.target)) return;
   if (e.target.id === 'pday' && e.target.value) { ku.pd = e.target.value; return render(); }
+  if (e.target.id === 'me-sel') { state.meId = e.target.value; state.current = e.target.value; save(true); return render(); }
   if (e.target.id === 'smail') { state.statsMail = e.target.value.trim(); save(true); return; }
   if (e.target.id === 'ccat') { chk.cat = e.target.value; return render(); }
   if (e.target.id === 'rdev') { ku.dev = e.target.value; return render(); }

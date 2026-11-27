@@ -1004,3 +1004,28 @@ html[data-theme="green"] .chatpill { background: #f4f8f3; }
 html[data-theme="blue"] .chatpill { background: #f3f7fb; }
 html[data-theme="ocean"] .chatpill { background: #f3e4d4; color: #c86f8a; }
 html[data-theme="laur"] .chatpill { background: #f1e2cc; color: #c8683a; }
+
+/* podgląd cudzego profilu: wyraźny pasek na każdym ekranie i bursztynowa ramka */
+.previewbar { position: sticky; top: calc(6px + env(safe-area-inset-top)); z-index: 30; display: flex; align-items: center; gap: 10px; margin: 0 0 12px; padding: 10px 10px 10px 14px; border-radius: 18px;
+  background: repeating-linear-gradient(135deg, #f6c453 0 14px, #f1b93a 14px 28px); color: #3a2a00; box-shadow: 0 4px 14px rgba(120, 80, 0, .3); }
+.previewbar svg { width: 26px; height: 26px; flex: 0 0 auto; fill: none; stroke: currentColor; stroke-width: 2.2; }
+.previewbar > span { flex: 1; display: grid; line-height: 1.2; }
+.previewbar strong { font-size: 16px; }
+.previewbar small { font-size: 12.5px; font-weight: 600; }
+.previewbar button { flex: 0 0 auto; background: #3a2a00; color: #fff7e0; box-shadow: none; border: 0; }
+body.previewing::after { content: ''; position: fixed; inset: 0; z-index: 40; pointer-events: none; border: 4px solid #f1b93a; border-radius: 0; }
+body.previewing .hero { box-shadow: 0 0 0 3px #f1b93a, var(--up); }
+.whois { display: flex; gap: 10px; align-items: center; margin: 4px 0 10px; padding: 10px 12px; border-radius: 14px; font-size: 13.5px; }
+.whois b { width: 28px; height: 28px; flex: 0 0 auto; border-radius: 50%; display: grid; place-items: center; font-size: 15px; }
+.whois span { display: grid; }
+.whois strong { font-size: 15px; }
+.whois.mine { background: var(--sage-t); color: var(--ink); }
+.whois.mine b { background: var(--sage-d); color: #fff; }
+.whois.pv { background: #fbe3a6; color: #3a2a00; }
+.whois.pv b { background: #f1b93a; }
+.chip small { font-size: 11px; font-weight: 600; opacity: .7; }
+.chip.mine { border: 2px solid var(--sage-d); }
+.mesel { margin-top: 10px; }
+html[data-tone="dark"] .whois.mine b { color: #10261f; }
+.topgear + .previewbar { padding-right: 10px; margin-right: 52px; }
+.previewbar { flex-wrap: wrap; } .topgear + .previewbar > span { min-width: 150px; }
