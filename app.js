@@ -52,7 +52,9 @@ function load() {
 }
 
 let state = load();
-let parent = false;
+// Tryb rodzica zostaje włączony (także po odświeżeniu), dopóki rodzic sam go nie wyłączy.
+let parent = (() => { try { return localStorage.getItem('zds.parent') === '1'; } catch (e) { return false; } })();
+const setParent = (v) => { parent = v; try { if (v) localStorage.setItem('zds.parent', '1'); else localStorage.removeItem('zds.parent'); } catch (e) { /* tryb prywatny */ } };
 let tab = 'dzis';
 let rules = { kategorie: [] };
 
@@ -462,14 +464,16 @@ function viewCheck() {
 }
 function viewProfiles() {
   const kd = state.profiles.find((p) => p.id === state.kidDevice);
-  let html = '<h1>Ustawienia i profile</h1><div class="card"><h2>Kto korzysta</h2>' + (isKid()
+  let html = '<h1>Ustawienia i profile</h1>' +
+    `<button type="button" class="parentsw${parent ? ' on' : ''}" data-action="parent-toggle" role="switch" aria-checked="${parent}">` +
+    `<span class="ps-txt"><strong>Tryb rodzica</strong><span>${parent ? 'Włączony. Zostaje włączony, dopóki go nie wyłączysz.' : 'Wyłączony: widok dziecka. Włączenie wymaga PIN-u.'}</span></span>` +
+    '<span class="ps-track" aria-hidden="true"><span class="ps-knob"></span></span></button>' +
+    '<div class="card"><h2>Kto korzysta</h2>' + (isKid()
     ? `<p class="muted">Profil: <strong>${esc(cur().name)}</strong>. Zmiana profilu tylko w trybie rodzica.</p>`
     : '<div class="chips">' + state.profiles.map((p) => `<button type="button" class="chip" data-action="pick-profile" data-id="${p.id}" aria-pressed="${p.id === state.current}">${esc(p.name)}</button>`).join('') + '</div>') + '</div>' +
     '<div class="card"><h2>Wygląd</h2><div class="chips">' + [['light', 'Jasny'], ['green', 'Zielony'], ['blue', 'Błękitny'], ['ocean', 'Morski (Pelagia)'], ['laur', 'Leśny (Laur)'], ['warm', 'Ciepły przygaszony'], ['gray', 'Szary'], ['dark', 'Ciemny'], ['system', 'Jak w systemie']].map(([v, n]) =>
       `<button type="button" class="chip" data-action="theme" data-v="${v}" aria-pressed="${(state.theme || 'system') === v}">${n}</button>`).join('') + '</div></div>' +
-    '<div class="card"><div class="row sb"><div><h2>Tryb rodzica</h2>' +
-    `<span class="muted">${parent ? 'Włączony: widać kalorie, plan i zakupy.' : 'Wyłączony: widok dziecka.'}</span></div>` +
-    `<button type="button" class="small ${parent ? '' : 'ghost'}" data-action="parent-toggle" aria-pressed="${parent}">${parent ? 'Wyłącz' : 'Włącz'}</button></div></div>`;
+    '';
   if (isKid()) return html + '<div class="note warn">Reszta profili jest widoczna tylko w trybie rodzica.</div>';
   const kids = state.profiles.filter((p) => p.role === 'dziecko');
   if (kids.length) {
@@ -520,18 +524,56 @@ function render() {
 
 // ---------- zdarzenia ----------
 function toggleParent() {
-  if (parent) { parent = false; lockKidDevice(); save(true); render(); return; }
-  if (!state.pin) {
-    const p = prompt('Ustaw PIN rodzica (min. 4 cyfry). To tylko zasłona widoku dziecka, nie zabezpieczenie danych.');
-    if (!p) return;
-    if (!/^\d{4,}$/.test(p)) { alert('PIN: co najmniej 4 cyfry.'); return; }
-    state.pin = p; save(); parent = true;
-  } else {
-    const p = prompt('PIN rodzica');
-    if (p !== state.pin) { if (p !== null) alert('Zły PIN.'); return; }
-    parent = true;
-  }
-  render();
+  if (parent) { setParent(false); lockKidDevice(); save(true); render(); return; }
+  pinPad(!state.pin).then((ok) => { if (ok) { setParent(true); render(); } });
+}
+// Klawiatura numeryczna PIN-u: wyśrodkowane kropki, cyfry 0–9, kasowanie. Nowy PIN: 4 cyfry wpisane dwa razy.
+function pinPad(setNew) {
+  return new Promise((res) => {
+    const prev = document.activeElement, len = setNew ? 4 : state.pin.length;
+    let val = '', first = '', step = setNew ? 'new' : 'enter';
+    const title = () => ({ new: 'Ustaw PIN rodzica', again: 'Powtórz PIN', enter: 'PIN rodzica' })[step];
+    const hint = () => ({ new: '4 cyfry. To zasłona widoku dziecka, nie zabezpieczenie danych.', again: 'Wpisz ten sam PIN jeszcze raz.', enter: 'Wpisz PIN, żeby włączyć tryb rodzica.' })[step];
+    const w = document.createElement('div'); w.className = 'askbg pinbg';
+    w.innerHTML = '<div class="pinpad" role="dialog" aria-modal="true" aria-labelledby="pin-t" aria-describedby="pin-d">' +
+      '<button type="button" class="xbtn small ghost" data-k="x" aria-label="Anuluj">✕</button>' +
+      '<h2 id="pin-t"></h2><p id="pin-d" class="muted small"></p><div class="pin-dots" aria-live="polite"></div>' +
+      '<div class="pin-keys">' + ['1', '2', '3', '4', '5', '6', '7', '8', '9', 'c', '0', 'b'].map((k) =>
+        k === 'c' ? '<button type="button" class="ghost pk-fn" data-k="c" aria-label="Wyczyść">C</button>'
+        : k === 'b' ? '<button type="button" class="ghost pk-fn" data-k="b" aria-label="Usuń cyfrę">⌫</button>'
+        : `<button type="button" class="ghost" data-k="${k}">${k}</button>`).join('') + '</div></div>';
+    const pad = w.querySelector('.pinpad');
+    const draw = (err) => {
+      w.querySelector('#pin-t').textContent = title();
+      const d = w.querySelector('#pin-d'); d.textContent = err || hint(); d.classList.toggle('bad', Boolean(err));
+      w.querySelector('.pin-dots').innerHTML = Array.from({ length: len }, (_, i) => `<i class="${i < val.length ? 'on' : ''}"></i>`).join('') +
+        `<span class="sr">Wpisano ${val.length} z ${len} cyfr</span>`;
+    };
+    const done = (v) => { w.remove(); document.removeEventListener('keydown', onKey); if (prev && prev.focus) prev.focus(); res(v); };
+    const shake = (msg) => { pad.classList.remove('shake'); void pad.offsetWidth; pad.classList.add('shake'); val = ''; draw(msg); if (navigator.vibrate) navigator.vibrate(120); };
+    const press = (k) => {
+      if (k === 'x') return done(false);
+      if (k === 'c') { val = ''; return draw(); }
+      if (k === 'b') { val = val.slice(0, -1); return draw(); }
+      if (val.length >= len) return;
+      val += k; draw();
+      if (val.length < len) return;
+      setTimeout(() => {
+        if (step === 'enter') { if (val === state.pin) done(true); else shake('Zły PIN. Spróbuj jeszcze raz.'); }
+        else if (step === 'new') { first = val; val = ''; step = 'again'; draw(); }
+        else if (val === first) { state.pin = val; save(); done(true); }
+        else { step = 'new'; first = ''; shake('PIN-y się różnią. Ustaw PIN od nowa.'); }
+      }, 150);
+    };
+    const onKey = (e) => {
+      if (/^\d$/.test(e.key)) { e.preventDefault(); press(e.key); }
+      else if (e.key === 'Backspace') { e.preventDefault(); press('b'); }
+      else if (e.key === 'Escape') done(false);
+    };
+    w.addEventListener('click', (e) => { e.stopPropagation(); const b = e.target.closest('[data-k]'); if (b) press(b.dataset.k); else if (e.target === w) done(false); });
+    document.addEventListener('keydown', onKey);
+    draw(); document.body.appendChild(w); w.querySelector('[data-k="5"]').focus();
+  });
 }
 
 // Usuwanie tylko po świadomym potwierdzeniu.

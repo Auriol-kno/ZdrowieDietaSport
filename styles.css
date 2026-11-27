@@ -936,3 +936,36 @@ html[data-tone="dark"] .msg.kid { background: #4a3f2a; }
 .hero h1 .hi { display: block; font-size: .72em; font-weight: 700; opacity: .9; }
 .chat-day { text-transform: none; }
 .chat-day::first-letter { text-transform: uppercase; }
+
+/* duży włącznik trybu rodzica na górze ustawień */
+button.parentsw { width: 100%; min-height: 88px; margin: 0 0 16px; padding: 16px 18px; border-radius: 26px; display: flex; align-items: center; justify-content: space-between; gap: 14px;
+  text-align: left; background: var(--bg); color: var(--ink); box-shadow: var(--up); }
+button.parentsw.on { background: var(--sage-t); }
+.ps-txt { display: grid; gap: 2px; }
+.ps-txt strong { font-size: 20px; }
+.ps-txt span { font-size: 14px; font-weight: 600; color: var(--muted); }
+.ps-track { position: relative; flex: 0 0 auto; width: 74px; height: 42px; border-radius: 21px; background: var(--track); box-shadow: var(--in); transition: background .2s; }
+.ps-knob { position: absolute; top: 4px; left: 4px; width: 34px; height: 34px; border-radius: 50%; background: #fff; box-shadow: 0 2px 6px rgba(0, 0, 0, .25); transition: transform .2s; }
+.parentsw.on .ps-track { background: var(--sage-d); }
+.parentsw.on .ps-knob { transform: translateX(32px); }
+@media (prefers-reduced-motion: reduce) { .ps-knob, .ps-track { transition: none; } }
+html[data-tone="dark"] button.parentsw.on { background: #2f3f3a; }
+
+/* klawiatura PIN */
+.pinbg { align-items: center; }
+.pinpad { position: relative; width: 100%; max-width: 340px; background: var(--card); border-radius: 30px; padding: 26px 22px 22px; box-shadow: 0 10px 40px rgba(0, 0, 0, .3);
+  display: flex; flex-direction: column; align-items: center; text-align: center; gap: 6px; box-sizing: border-box; }
+.pinpad h2 { margin: 4px 0 0; }
+.pinpad #pin-d { min-height: 40px; margin: 0; max-width: 260px; }
+.pinpad #pin-d.bad { color: var(--red); font-weight: 700; }
+.pinpad .xbtn { position: absolute; top: 12px; right: 12px; }
+.pin-dots { display: flex; justify-content: center; gap: 16px; margin: 8px 0 14px; }
+.pin-dots i { width: 16px; height: 16px; border-radius: 50%; box-shadow: var(--in); background: var(--bg); transition: background .12s; }
+.pin-dots i.on { background: var(--sage-d); box-shadow: none; }
+.pin-keys { display: grid; grid-template-columns: repeat(3, 72px); gap: 14px 22px; justify-content: center; }
+.pin-keys button { width: 72px; height: 72px; min-height: 72px; padding: 0; border-radius: 50%; font: 700 28px/1 var(--font); }
+.pin-keys .pk-fn { font-size: 20px; color: var(--muted); }
+.pinpad.shake { animation: zds-shake .35s; }
+@keyframes zds-shake { 20%, 60% { transform: translateX(-8px); } 40%, 80% { transform: translateX(8px); } }
+@media (prefers-reduced-motion: reduce) { .pinpad.shake { animation: none; } }
+html[data-tone="dark"] .pinpad { background: #2a2825; }
