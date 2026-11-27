@@ -856,3 +856,83 @@ html[data-tone="dark"] .coinday strong { color: #f3d28a; }
 .bk-list li { display: flex; align-items: center; gap: 0.5rem; padding: 0.5rem 0.6rem; border-radius: 10px; border: 1px solid var(--line, rgba(0,0,0,.12)); }
 .bk-list li > span { flex: 1; display: grid; }
 .bk-list em { font-style: normal; font-size: 0.8rem; opacity: 0.7; }
+
+/* nagłówek: data jako przycisk kalendarza, pastylka czatu obok synchronizacji */
+button.hero-plate { min-height: 0; border: 0; cursor: pointer; font: inherit; }
+button.hero-plate:active { transform: scale(.97); }
+.hero-acts { display: flex; align-items: center; gap: 8px; flex: 0 0 auto; }
+.chatpill { position: relative; width: 46px; height: 68px; min-height: 68px; padding: 0; border-radius: 23px; display: grid; place-items: center;
+  background: #f8f5f1; color: var(--blue); box-shadow: 4px 4px 10px rgba(20, 40, 80, .35), -3px -3px 8px rgba(255, 255, 255, .25); }
+.chatpill svg { width: 24px; height: 24px; fill: none; stroke: currentColor; stroke-width: 2.2; stroke-linecap: round; stroke-linejoin: round; }
+.chatpill b { position: absolute; top: -5px; right: -5px; min-width: 22px; height: 22px; padding: 0 5px; box-sizing: border-box; border-radius: 11px; display: grid; place-items: center;
+  background: #d0463b; color: #fff; font: 800 12px/1 var(--font); border: 2px solid #f8f5f1; }
+.chatpill b.alert { font-size: 15px; animation: zds-ping 1.6s ease-in-out infinite; }
+@keyframes zds-ping { 0%, 100% { transform: scale(1); } 50% { transform: scale(1.18); } }
+@media (prefers-reduced-motion: reduce) { .chatpill b.alert { animation: none; } }
+html[data-tone="dark"] .chatpill { background: #2f2c29; color: #a9bde3; }
+html[data-theme="warm"] .chatpill { background: #e2d9cd; }
+@media (max-width: 420px) {
+  .hero { gap: 10px; padding: 12px; }
+  .hero-plate { min-width: 66px; padding: 8px; }
+  .hero-day { font-size: 28px; line-height: 30px; }
+  .hero h1 { font-size: 20px; line-height: 1.2; }
+}
+body.noscroll { overflow: hidden; }
+
+/* arkusz (czat, podgląd kalendarza) */
+.sheetbg { position: fixed; inset: 0; z-index: 55; background: rgba(40, 34, 28, .45); display: flex; align-items: flex-end; justify-content: center; }
+.sheet { width: 100%; max-width: 520px; max-height: 92vh; background: var(--card); border-radius: 26px 26px 0 0; padding: 16px 16px calc(16px + env(safe-area-inset-bottom));
+  box-shadow: 0 -10px 40px rgba(0, 0, 0, .25); display: flex; flex-direction: column; gap: 10px; box-sizing: border-box; animation: zds-up .22s ease-out; }
+@keyframes zds-up { from { transform: translateY(30px); opacity: .4; } to { transform: none; opacity: 1; } }
+@media (prefers-reduced-motion: reduce) { .sheet { animation: none; } }
+.sheet-h { display: flex; align-items: flex-start; justify-content: space-between; gap: 10px; }
+.sheet-h h2 { margin: 0; }
+.sheet-h .small { display: block; font-size: 13px; }
+html[data-tone="dark"] .sheet { background: #2a2825; }
+
+.chat { height: 86vh; }
+.chat-list { flex: 1; overflow-y: auto; display: flex; flex-direction: column; gap: 6px; padding: 8px 2px; border-radius: 18px; box-shadow: var(--in); padding: 10px; }
+.chat-empty { margin: auto; text-align: center; color: var(--muted); max-width: 260px; }
+.chat-day { align-self: center; font-size: 12px; font-weight: 700; color: var(--muted); margin: 8px 0 2px; text-transform: capitalize; }
+.msg { align-self: flex-start; max-width: 78%; padding: 8px 12px 6px; border-radius: 18px 18px 18px 6px; background: var(--blue-t); color: var(--ink); }
+.msg.kid { background: var(--amber-t); }
+.msg.me { align-self: flex-end; border-radius: 18px 18px 6px 18px; background: var(--sage-d); color: #fff; }
+.msg p { margin: 0; white-space: pre-wrap; word-wrap: break-word; }
+.msg .who { display: block; font-size: 12px; font-weight: 800; opacity: .75; }
+.msg time { display: block; text-align: right; font-size: 11px; opacity: .7; margin-top: 2px; }
+.chat-quick { display: flex; gap: 6px; overflow-x: auto; padding-bottom: 2px; scrollbar-width: none; }
+.chat-quick .chip { flex: 0 0 auto; white-space: nowrap; }
+.chat-form { display: flex; gap: 8px; }
+.chat-form input { flex: 1; min-width: 0; }
+.chat-form button { width: 52px; padding: 0; border-radius: 50%; flex: 0 0 auto; display: grid; place-items: center; }
+.chat-form svg { width: 22px; height: 22px; fill: currentColor; }
+html[data-tone="dark"] .msg { background: #3a3f4a; }
+html[data-tone="dark"] .msg.kid { background: #4a3f2a; }
+
+/* poglądowy kalendarz */
+.peek { overflow-y: auto; }
+.pk-nav { align-items: center; }
+.pk-sum { display: flex; flex-wrap: wrap; justify-content: center; gap: 4px 12px; font-size: 13px; font-weight: 700; }
+.pk-sum span { display: inline-flex; align-items: center; gap: 4px; }
+.pk-grid { display: grid; grid-template-columns: repeat(7, 1fr); gap: 4px; }
+.pk-h { text-align: center; font-size: 12px; font-weight: 700; color: var(--muted); }
+.pk-h.we { color: var(--rose-d); }
+.pk-day { position: relative; display: flex; flex-direction: column; align-items: center; gap: 3px; padding: 6px 0 5px; border-radius: 14px; background: var(--bg); box-shadow: var(--up-s); }
+.pk-day.fut { opacity: .45; box-shadow: none; }
+.pk-day.today { outline: 2px solid var(--blue-d); outline-offset: 1px; }
+.pk-ring { width: 32px; height: 32px; border-radius: 50%; display: grid; place-items: center;
+  background: conic-gradient(var(--sage) calc(var(--p) * 1%), var(--track) 0); }
+.pk-ring b { width: 25px; height: 25px; border-radius: 50%; display: grid; place-items: center; background: var(--bg); font-size: 13px; }
+.pk-dots { display: inline-flex; gap: 2px; }
+.pk-dots i { width: 5px; height: 5px; border-radius: 50%; background: var(--track); }
+.pk-dots i.on { background: var(--sage-d); }
+.pk-w { display: inline-block; width: 8px; height: 8px; border-radius: 50% 50% 50% 0; transform: rotate(-45deg); background: #5aa9e6; }
+.pk-day .pk-w { position: absolute; top: 5px; left: 5px; }
+.pk-day .coin { position: absolute; top: -5px; right: -4px; }
+.pk-full { display: inline-block; width: 10px; height: 10px; border-radius: 50%; background: conic-gradient(var(--sage) 100%, var(--track) 0); }
+.pk-leg { display: flex; flex-wrap: wrap; align-items: center; gap: 4px 6px; margin: 4px 0 0; }
+.pk-leg .coin { display: inline-flex; }
+.hero h1 { white-space: normal; overflow-wrap: anywhere; }
+.hero h1 .hi { display: block; font-size: .72em; font-weight: 700; opacity: .9; }
+.chat-day { text-transform: none; }
+.chat-day::first-letter { text-transform: uppercase; }

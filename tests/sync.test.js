@@ -8,6 +8,20 @@ const ok = (name, fn) => tests.push([name, fn]);
 let idc = 0;
 const mkId = () => 'L' + (++idc);
 
+// ---------- czat rodzinny w family_data.prof ----------
+ok('czat: wiadomości z dwóch telefonów łączą się bez utraty', () => {
+  const base = { profiles: [], plan: {}, recipes: [], pantry: [], shop: { checked: {} } };
+  const a = Object.assign(JSON.parse(JSON.stringify(base)), { chat: [{ id: 'm1', t: 1, from: 'A', text: 'hej' }] });
+  const b = Object.assign(JSON.parse(JSON.stringify(base)), { chat: [{ id: 'm2', t: 2, from: 'B', text: 'cześć' }] });
+  const upA = S.mergeFamily(a, []);
+  const rowsA = upA.map((u) => ({ key: u.key, data: u.data }));
+  const upB = S.mergeFamily(b, rowsA);
+  assert.deepStrictEqual(b.chat.map((m) => m.id), ['m1', 'm2']);
+  const rowsB = rowsA.map((r) => (upB.find((u) => u.key === r.key) ? { key: r.key, data: upB.find((u) => u.key === r.key).data } : r));
+  S.mergeFamily(a, rowsB);
+  assert.deepStrictEqual(a.chat.map((m) => m.text), ['hej', 'cześć']);
+});
+
 // ---------- mergeMembers ----------
 ok('łączy po imieniu, dodaje brakujące, wysyła lokalne bez odpowiednika', () => {
   const local = [{ id: 'a', name: 'Franciszek', role: 'dziecko', kcal: 1750 }, { id: 'b', name: 'Dorosły 2', role: 'dorosły', kcal: 0 }];

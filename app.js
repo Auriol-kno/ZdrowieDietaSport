@@ -349,11 +349,11 @@ function viewToday() {
   const done = MEALS.filter(([k]) => d.meals[k] && d.meals[k].done).length;
   const pct = Math.min(100, Math.round((d.water / WATER_GOAL) * 100));
   const now = new Date();
-  let html = `<div class="hero"><div class="hero-plate"><span class="hero-day">${now.getDate()}</span>` +
-    `<span class="hero-month">${now.toLocaleDateString('pl-PL', { month: 'long' })}</span></div>` +
-    `<div><h1>Cześć, ${esc(p.nick || p.name)}!</h1><div class="hero-sub">${now.toLocaleDateString('pl-PL', { weekday: 'long' })}</div>` +
+  let html = `<div class="hero"><button type="button" class="hero-plate" data-action="cal-peek" aria-label="Kalendarz miesiąca: postępy i monetki"><span class="hero-day">${now.getDate()}</span>` +
+    `<span class="hero-month">${now.toLocaleDateString('pl-PL', { month: 'long' })}</span></button>` +
+    `<div><h1><span class="hi">Cześć,</span> ${esc(p.nick || p.name)}!</h1><div class="hero-sub">${now.toLocaleDateString('pl-PL', { weekday: 'long' })}</div>` +
     (su.last ? `<div class="hero-sync">${su.err ? 'Nie udało się zsynchronizować' : 'Zsynchronizowano ' + new Date(su.last).toLocaleTimeString('pl-PL', { hour: '2-digit', minute: '2-digit' })}</div>` : '') + '</div>' +
-    syncBtn() + gearBtn('corner') + '</div>';
+    `<div class="hero-acts">${typeof chatPill === 'function' ? chatPill() : ''}${syncBtn()}</div>` + gearBtn('corner') + '</div>';
 
   const waterW = `<div class="card widget"><h2>Woda</h2>${gauge(pct, 'water', 'Woda', `${d.water * GLASS_ML / 1000} z 2 l`)}` +
     `<div class="row"><button type="button" class="small" data-action="water" data-d="1" aria-label="Dodaj szklankę">+ 250 ml</button>` +
@@ -607,6 +607,8 @@ document.addEventListener('click', (e) => {
   else if (a === 'rep-prep') { const i = $('#smail'); if (i) { state.statsMail = i.value.trim(); save(true); } return reportPrepare(); }
   else if (a === 'rep-send') return reportSend();
   else if (a === 'stats-mail') return statsMail();
+  else if (a === 'chat-open' && typeof chatOpen === 'function') return chatOpen();
+  else if (a === 'cal-peek' && typeof calOpen === 'function') return calOpen();
   else if (a.startsWith('bk-') && typeof backupAction === 'function' && backupAction(a, t)) return;
   else if (a.startsWith('rw-') && typeof rewardAction === 'function' && rewardAction(a, t)) return;
   else if (a === 'form-cancel') { addOpen = null; editOpen = null; return render(); }

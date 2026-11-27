@@ -193,6 +193,7 @@ const ZdsSync = (() => {
     const rec = {}; for (const r of st.recipes || []) rec[r.id] = r;
     const prof = {}; for (const p of st.profiles || []) if (p.remoteId) prof[p.remoteId] = { nick: p.nick || '', kg: Number(p.kg) || 0 };
     if (st.reward) prof._reward = st.reward;
+    for (const m of (st.chat || []).slice(-200)) if (m && m.id) prof['_m_' + m.id] = m;   // czat rodzinny
     return { plan: st.plan || {}, recipes: rec, pantry: { list: st.pantry || [] }, shop: { checked: (st.shop && st.shop.checked) || {} }, prof };
   }
   function famApply(st, key, v) {
@@ -203,6 +204,7 @@ const ZdsSync = (() => {
     else if (key === 'prof') {
       for (const p of st.profiles || []) if (p.remoteId && v[p.remoteId]) { p.nick = v[p.remoteId].nick || p.nick; if (v[p.remoteId].kg) p.kg = v[p.remoteId].kg; }
       if (v._reward) st.reward = v._reward;
+      st.chat = Object.keys(v).filter((k) => k.startsWith('_m_')).map((k) => v[k]).sort((a, b) => a.t - b.t);
     }
   }
   const FAM_KEYS = ['plan', 'recipes', 'pantry', 'shop', 'prof'];

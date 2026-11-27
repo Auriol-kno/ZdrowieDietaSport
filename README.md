@@ -104,3 +104,9 @@ Za każdy dzień spełniający zasady dziecko dostaje monetę (domyślnie 2 zł;
 - **Zapisz kopię w bazie** – kopia w tabeli `family_backups` (Supabase), lista ostatnich 30 z datą; przywracanie i usuwanie (usuwa tylko rodzic). Wymaga jednorazowo `supabase/migracja-3-kopie-zapasowe.sql` – migracja tylko dodaje tabelę.
 - Przed każdym przywróceniem aplikacja zapisuje kopię bezpieczeństwa obecnych danych (`zds.v1.przed-przywroceniem`) – przycisk **Cofnij przywrócenie**.
 - Przywrócone dni i dane rodziny dostają nowy znacznik czasu, więc po synchronizacji wygrywają z bazą; wpisy, których w kopii nie ma, a są w bazie, zostają.
+
+## Kalendarz w nagłówku i czat rodzinny
+
+- **Data w nagłówku** (ekran Dziś) otwiera poglądowy kalendarz miesiąca: pierścień i kropki z liczbą zjedzonych posiłków, kropla za 2 l wody, monetka za dzień z nagrodą, podsumowanie miesiąca, przełączanie miesięcy.
+- **Pastylka z dymkiem** obok synchronizacji to czat rodziny. U rodzica nowa wiadomość pokazuje czerwony **!**, u dziecka liczbę nowych wiadomości. Szybkie odpowiedzi dla dziecka i rodzica.
+- Wiadomości synchronizują się razem ze wspólnymi danymi rodziny (`family_data`, klucz `prof`, wpisy `_m_<id>`), więc nie wymagają nowej migracji. Przy otwartym czacie odświeżanie co 8 s, poza nim co minutę. Na telefonie trzymamy ostatnie 200 wiadomości.
