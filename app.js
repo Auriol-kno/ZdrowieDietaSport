@@ -491,7 +491,7 @@ function viewProfiles() {
       `<div class="field"><label for="pw-${p.id}">Waga (kg), do spalonych kcal</label><input type="number" id="pw-${p.id}" data-field="kg" min="0" max="300" step="0.5" inputmode="decimal" value="${esc(p.kg || '')}" placeholder="np. ${p.role === 'dziecko' ? 40 : 75}"></div>` +
       `<div class="field"><span>&nbsp;</span><button type="button" class="ghost" data-action="rm-profile" data-id="${p.id}">Usuń profil</button></div></div></div>`;
   }
-  html += '<button type="button" data-action="add-profile">Dodaj profil</button>' + syncCard();
+  html += '<button type="button" data-action="add-profile">Dodaj profil</button>' + syncCard() + (!isKid() && typeof backupCard === 'function' ? backupCard() : '');
   return html;
 }
 
@@ -607,6 +607,7 @@ document.addEventListener('click', (e) => {
   else if (a === 'rep-prep') { const i = $('#smail'); if (i) { state.statsMail = i.value.trim(); save(true); } return reportPrepare(); }
   else if (a === 'rep-send') return reportSend();
   else if (a === 'stats-mail') return statsMail();
+  else if (a.startsWith('bk-') && typeof backupAction === 'function' && backupAction(a, t)) return;
   else if (a.startsWith('rw-') && typeof rewardAction === 'function' && rewardAction(a, t)) return;
   else if (a === 'form-cancel') { addOpen = null; editOpen = null; return render(); }
   else if (a === 'sugg') {

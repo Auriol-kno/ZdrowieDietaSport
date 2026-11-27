@@ -235,8 +235,21 @@ const ZdsSync = (() => {
     return { missing: false, pushed: up.length, pulled: (rows || []).length };
   }
 
+  // ---------- kopie zapasowe w bazie ----------
+  const missingTable = (e) => /family_backups|schema cache|does not exist/i.test((e && e.message) || '');
+  async function backupList(fid) {
+    try { return unwrap(await sb.from('family_backups').select('id, created_at, label, device, size_bytes').eq('family_id', fid).order('created_at', { ascending: false }).limit(30)); }
+    catch (e) { if (missingTable(e)) return null; throw e; }
+  }
+  async function backupSave(fid, data, label, device) {
+    const json = JSON.stringify(data);
+    return unwrap(await sb.from('family_backups').insert({ family_id: fid, data, label, device, size_bytes: json.length }).select('id, created_at').single());
+  }
+  async function backupGet(id) { return unwrap(await sb.from('family_backups').select('data, created_at').eq('id', id).single()); }
+  async function backupDelete(id) { unwrap(await sb.from('family_backups').delete().eq('id', id)); }
+
   return {
-    enabled, init, session, signIn, verifyCode, signUpPw, signInPw, signOut, myMembership, createFamily, familyPreview, joinFamily,
+    enabled, init, backupList, backupSave, backupGet, backupDelete, session, signIn, verifyCode, signUpPw, signInPw, signOut, myMembership, createFamily, familyPreview, joinFamily,
     inviteCode, newInviteCode, pushMember, removeMember, syncAll,
     mergeMembers, dayRowsToPush, applyRemoteDays, mergeMap, mergeFamily,
     _setClient: (c) => { sb = c; }, // tylko do testów

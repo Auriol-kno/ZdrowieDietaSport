@@ -96,3 +96,11 @@ Plan, własne przepisy, lista zakupów, spiżarnia oraz zdrobnienia i waga w pro
 ## Monetki motywacyjne
 
 Za każdy dzień spełniający zasady dziecko dostaje monetę (domyślnie 2 zł; bonus za pełny tydzień 5 zł). Na stronie Dziś między kapsułkami Woda i Posiłki jest „fiolka” z 7 monetami tygodnia, a pod nią karta „Dzisiejsza moneta” z brakującymi krokami. Rodzic w Ustawieniach widzi licznik do wypłaty, ustawia kwoty i warunki (posiłki, woda, nic zakazanego, ruch, zdjęcie) i zeruje licznik po wypłacie. Ustawienia synchronizują się w rodzinie.
+
+## Kopia zapasowa (Ustawienia → Kopia zapasowa, tryb rodzica)
+
+- **Pobierz kopię do pliku** – plik `zdrowie-dieta-kopia-RRRR-MM-DD-GGMM.json` z całym stanem aplikacji (profile, dni z posiłkami/wodą/napojami/ruchem/zdjęciami, plan, przepisy, zakupy, spiżarnia, monetki, ustawienia). Hasła do logowania w kopii nie ma.
+- **Wgraj kopię z pliku** – pokazuje datę utworzenia i zawartość, przywraca dopiero po potwierdzeniu.
+- **Zapisz kopię w bazie** – kopia w tabeli `family_backups` (Supabase), lista ostatnich 30 z datą; przywracanie i usuwanie (usuwa tylko rodzic). Wymaga jednorazowo `supabase/migracja-3-kopie-zapasowe.sql` – migracja tylko dodaje tabelę.
+- Przed każdym przywróceniem aplikacja zapisuje kopię bezpieczeństwa obecnych danych (`zds.v1.przed-przywroceniem`) – przycisk **Cofnij przywrócenie**.
+- Przywrócone dni i dane rodziny dostają nowy znacznik czasu, więc po synchronizacji wygrywają z bazą; wpisy, których w kopii nie ma, a są w bazie, zostają.
